@@ -46,51 +46,51 @@ const fitTiles = [
 export default function Home() {
   return (
     <PageShell>
-      <section className="bg-[#fbfaf4] px-4 pb-16 pt-8 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-[1500px] gap-8 xl:grid-cols-[0.78fr_1.95fr]">
-          <div className="flex min-h-[560px] flex-col justify-center rounded-[28px] bg-[#f4f2ea] p-8 md:p-12 xl:min-h-[690px]">
+      <section className="bg-[#fbfaf4] px-4 pb-10 pt-6 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-[1500px] gap-6 xl:grid-cols-[0.8fr_1.9fr]">
+          <div className="flex min-h-[500px] flex-col justify-center rounded-[28px] bg-[#f4f2ea] p-7 md:p-9 xl:min-h-[590px]">
             <p className="text-sm font-black uppercase tracking-[0.24em] text-[#b98100]">
               Bowling Green, KY
             </p>
-            <h1 className="mt-6 text-balance text-5xl font-black leading-[0.95] tracking-tight text-slate-950 md:text-7xl">
+            <h1 className="mt-5 text-balance text-5xl font-black leading-[0.92] tracking-tight text-slate-950 md:text-6xl xl:text-[4.6rem]">
               Get your best night&apos;s sleep.
             </h1>
-            <p className="mt-7 max-w-md text-xl font-semibold leading-8 text-slate-800">
+            <p className="mt-6 max-w-md text-lg font-semibold leading-7 text-slate-800 xl:text-xl xl:leading-8">
               Explore award-winning mattresses from Puffy, Helix, Nectar, DreamCloud, and more
               with local showroom help.
             </p>
-            <div className="mt-9 flex flex-col gap-4">
+            <div className="mt-7 flex flex-col gap-3">
               <Link
                 href="/collections"
-                className="inline-flex w-full items-center justify-center rounded-full bg-[#f2b705] px-7 py-5 text-base font-black text-slate-950 shadow-sm transition hover:bg-[#dba300] sm:w-fit sm:min-w-64"
+                className="inline-flex w-full items-center justify-center rounded-full bg-[#f2b705] px-7 py-4 text-base font-black text-slate-950 shadow-sm transition hover:bg-[#dba300] sm:w-fit sm:min-w-64"
               >
                 Shop best mattresses
               </Link>
               <a
                 href={storeInfo.primaryPhoneHref}
-                className="inline-flex w-full items-center justify-center rounded-full border-2 border-slate-950 bg-white px-7 py-5 text-base font-black text-slate-950 transition hover:bg-slate-950 hover:text-white sm:w-fit sm:min-w-64"
+                className="inline-flex w-full items-center justify-center rounded-full border-2 border-slate-950 bg-white px-7 py-4 text-base font-black text-slate-950 transition hover:bg-slate-950 hover:text-white sm:w-fit sm:min-w-64"
               >
                 Call for today&apos;s price
               </a>
             </div>
-            <p className="mt-6 max-w-sm text-base leading-7 text-slate-700">
+            <p className="mt-5 max-w-sm text-sm leading-6 text-slate-700 xl:text-base xl:leading-7">
               Prefer in person? Visit either Bowling Green showroom and compare comfort levels
               before you buy.
             </p>
           </div>
 
-          <div className="relative min-h-[560px] overflow-hidden rounded-[28px] bg-[#ebe7df] xl:min-h-[690px]">
+          <div className="relative min-h-[500px] overflow-hidden rounded-[28px] bg-[#ebe7df] xl:min-h-[590px]">
             <Image
               src="/brand-assets/puffy/woman-on-puffy-bed.jpg"
               alt="Woman relaxing on a Puffy mattress"
               fill
               priority
               sizes="(min-width: 1280px) 68vw, 100vw"
-              className="object-cover"
+              className="object-cover object-[42%_52%]"
             />
             <div className="absolute inset-x-0 top-0 flex justify-end p-7 md:p-10">
-              <div className="max-w-sm text-right">
-                <p className="text-2xl font-black leading-tight text-slate-950 md:text-3xl">
+              <div className="max-w-xs text-right md:max-w-sm">
+                <p className="text-2xl font-black leading-tight text-slate-950 md:text-[2rem]">
                   Puffy Monarch comfort, local Discount Mattress pricing.
                 </p>
                 <Link
