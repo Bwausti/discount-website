@@ -73,10 +73,6 @@ export default function Home() {
                 Call for today&apos;s price
               </a>
             </div>
-            <p className="mt-4 max-w-sm text-sm leading-6 text-slate-700">
-              Prefer in person? Visit either Bowling Green showroom and compare comfort levels
-              before you buy.
-            </p>
           </div>
 
           <div className="relative min-h-[430px] overflow-hidden rounded-[26px] bg-[#ebe7df] xl:min-h-[500px]">
