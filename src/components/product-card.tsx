@@ -3,6 +3,11 @@ import Link from "next/link";
 import { Product } from "@/lib/products";
 
 export function ProductCard({ product, priority = false }: { product: Product; priority?: boolean }) {
+  const imageClassName =
+    product.id === "puffy-monarch"
+      ? "object-cover object-[50%_30%] transition duration-500 group-hover:scale-[1.03]"
+      : "object-contain p-5 transition duration-500 group-hover:scale-[1.03]";
+
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">
       <Link href={`/mattresses/${product.id}`} className="block">
@@ -13,7 +18,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             priority={priority}
-            className="object-contain p-5 transition duration-500 group-hover:scale-[1.03]"
+            className={imageClassName}
           />
           {product.badge ? (
             <span className="absolute left-4 top-4 rounded bg-[#cf2333] px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-white">

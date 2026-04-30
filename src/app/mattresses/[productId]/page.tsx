@@ -37,6 +37,14 @@ export default async function ProductPage({ params }: PageProps) {
   const brand = getBrandById(product.brandId);
   const relatedProducts = brand?.products.filter((item) => item.id !== product.id).slice(0, 3) ?? [];
   const gallery = product.gallery.length > 0 ? product.gallery : [product.image];
+  const productImageClassName =
+    product.id === "puffy-monarch"
+      ? "object-cover object-[50%_30%]"
+      : "object-contain p-8";
+  const galleryImageClassName =
+    product.id === "puffy-monarch"
+      ? "object-cover object-[50%_30%]"
+      : "object-contain p-3";
 
   return (
     <PageShell>
@@ -50,7 +58,7 @@ export default async function ProductPage({ params }: PageProps) {
                 fill
                 priority
                 sizes="(min-width: 1024px) 54vw, 100vw"
-                className="object-contain p-8"
+                className={productImageClassName}
               />
               {product.badge ? (
                 <span className="absolute left-5 top-5 rounded bg-[#cf2333] px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-white">
@@ -70,7 +78,7 @@ export default async function ProductPage({ params }: PageProps) {
                       alt={`${product.model} detail`}
                       fill
                       sizes="(min-width: 1024px) 18vw, 33vw"
-                      className="object-contain p-3"
+                      className={galleryImageClassName}
                     />
                   </div>
                 ))}

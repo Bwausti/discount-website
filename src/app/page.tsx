@@ -109,7 +109,7 @@ export default function Home() {
                     alt="Puffy Monarch mattress"
                     fill
                     sizes="120px"
-                    className="object-contain p-2"
+                    className="object-cover object-[50%_30%]"
                   />
                 </div>
                 <div>
