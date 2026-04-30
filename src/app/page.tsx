@@ -87,13 +87,13 @@ export default function Home() {
             <div className="absolute inset-x-0 top-0 flex justify-end p-6 md:p-8">
               <div className="max-w-[17rem] text-right md:max-w-xs">
                 <p className="text-xl font-black leading-tight text-slate-950 md:text-2xl">
-                  Puffy Monarch comfort, local Discount Mattress pricing.
+                  Check out our best sellers before coming into the store.
                 </p>
                 <Link
-                  href="/mattresses/puffy-monarch"
+                  href="/collections"
                   className="mt-4 inline-flex items-center gap-2 text-base font-black text-slate-950 transition hover:text-[#b98100]"
                 >
-                  View Monarch <span aria-hidden="true">→</span>
+                  View best sellers <span aria-hidden="true">→</span>
                 </Link>
               </div>
             </div>
