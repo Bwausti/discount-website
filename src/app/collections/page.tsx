@@ -1,172 +1,171 @@
 import Image from "next/image";
 import Link from "next/link";
-import { brands } from "@/lib/products";
+import { ProductGrid } from "@/components/product-card";
+import { BrandLogoGrid, LeadCta, PageShell, SectionIntro } from "@/components/site-shell";
+import { brands, featuredBrands, productCategories, products } from "@/lib/products";
 
 export const metadata = {
-  title: "Discount Mattress | Top Brands at Discount Prices",
-  description: "Shop top-rated mattresses from expert-approved brands. Best prices in Bowling Green. Free shipping, easy returns, and a 365-night sleep trial.",
+  title: "Mattress Brands and Models",
+  description:
+    "Browse Discount Mattress brands, mattresses, adjustable bases, pillows, and protectors. Call or visit for current Bowling Green showroom pricing.",
 };
 
 export default function CollectionsPage() {
+  const primaryProducts = products.filter((product) => {
+    const brand = brands.find((item) => item.id === product.brandId);
+    return brand?.status !== "ask-in-store";
+  });
+
   return (
-    <div className="min-h-screen bg-[#f4f3eb]">
-      {/* HEADER */}
-      <header className="sticky top-0 z-50 bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <Link href="/" className="flex-shrink-0">
-              <Image
-                src="/logo.png"
-                alt="Discount Mattress"
-                width={200}
-                height={44}
-                className="h-12 w-auto"
-              />
-            </Link>
-            <nav className="hidden md:flex space-x-8">
-              <Link href="/collections" className="text-gray-900 font-medium hover:text-blue-600">
-                Collections
-              </Link>
-              <Link href="/#about" className="text-gray-600 hover:text-blue-600">
-                About
-              </Link>
-              <Link href="/#locations" className="text-gray-600 hover:text-blue-600">
-                Locations
-              </Link>
-            </nav>
-            <div className="flex items-center gap-4">
-              <a href="tel:2704951603" className="text-blue-600 font-semibold">
-                (270) 495-1603
-              </a>
-            </div>
+    <PageShell>
+      <section id="top" className="bg-white px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <SectionIntro
+            align="left"
+            eyebrow="Mattresses"
+            title="Shop the brands first. Then try the right feel in store."
+            body="This catalog is a guide for the showroom conversation: brand, comfort, support, and current local availability."
+          />
+          <div className="relative aspect-[16/10] overflow-hidden rounded border border-slate-200 bg-slate-100 shadow-sm">
+            <Image
+              src="/brand-assets/discount-mattress/hero-bed.jpg"
+              alt="Mattress and bedding display"
+              fill
+              priority
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
+            />
           </div>
         </div>
-      </header>
+      </section>
 
-      {/* HERO */}
-      <section className="bg-gradient-to-r from-slate-800 to-slate-900 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            The Best of the Best
-          </h1>
-          <p className="text-xl text-slate-200 max-w-2xl mx-auto">
-            Start with the top-rated, best-selling mattresses at Discount Mattress. 
-            Every mattress comes from a trusted, tested brand.
+      <section className="border-y border-slate-200 bg-[#162b49] px-4 py-6 text-white sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <p className="text-sm font-bold">
+            No cart. No stale checkout prices. Call or visit for current store pricing.
           </p>
-        </div>
-      </section>
-
-      {/* BENEFITS BAR */}
-      <section className="bg-white py-6 border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-8 text-sm">
-            <div className="flex items-center gap-2 text-gray-700">
-              <span className="text-green-600">✓</span>
-              <span className="font-medium">365 Night Sleep Trial</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-700">
-              <span className="text-green-600">✓</span>
-              <span className="font-medium">Free US Shipping</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-700">
-              <span className="text-green-600">✓</span>
-              <span className="font-medium">Easy Free Returns</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-700">
-              <span className="text-green-600">✓</span>
-              <span className="font-medium">Limited Lifetime Warranty</span>
-            </div>
-            <div className="flex items-center gap-2 text-gray-700">
-              <span className="text-green-600">✓</span>
-              <span className="font-medium">Financing Available</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* BRAND COLLECTIONS */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-            A Fit for Everyone
-          </h2>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {brands.map((brand) => (
-              <Link
-                key={brand.id}
-                href={`/collections/${brand.id}`}
-                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all group"
+          <div className="flex flex-wrap gap-2">
+            {productCategories.map((category) => (
+              <a
+                key={category}
+                href={`#${category.toLowerCase().replaceAll(" ", "-")}`}
+                className="rounded border border-white/25 px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-white/90 transition hover:bg-white/10"
               >
-                <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative">
-                  <div className="text-center p-6">
-                    <h3 className="text-3xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
-                      {brand.name}
-                    </h3>
-                    <p className="text-gray-500 text-sm">{brand.products.length} models</p>
-                  </div>
-                  <div className="absolute bottom-4 right-4">
-                    <span className="text-gray-400 group-hover:text-blue-600 transition-colors">→</span>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <p className="text-gray-600 text-sm mb-4">{brand.tagline}</p>
-                  <p className="text-gray-800 text-sm line-clamp-2">{brand.description}</p>
-                </div>
-              </Link>
+                {category}
+              </a>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ABOUT SECTION */}
-      <section id="about" className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
-              Proven to Work
-            </h2>
-            <p className="text-lg text-gray-600">
-              With {brands.length} brands, 30+ years of experience, and countless awards, 
-              Discount Mattress expertly guides you through the shopping process. 
-              Choose a mattress with confidence, and do it all through a process that feels simple.
-            </p>
+      <section className="px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <SectionIntro
+            eyebrow="Primary brands"
+            title="The core Discount Mattress lineup."
+            body="These are the brands the first version of the new site should feature most heavily."
+          />
+          <div className="mt-10">
+            <BrandLogoGrid brands={featuredBrands} />
           </div>
         </div>
       </section>
 
-      {/* LOCATIONS */}
-      <section id="locations" className="py-16 bg-slate-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-12 text-center">
-            Visit Our Showrooms
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-slate-800 rounded-lg p-8">
-              <h3 className="text-xl font-bold mb-4">Discount Mattress</h3>
-              <p className="text-slate-300 mb-2">1555 Campbell Ln</p>
-              <p className="text-slate-300 mb-2">Bowling Green, KY 42104</p>
-              <p className="text-blue-400 font-semibold mb-4">(270) 495-1603</p>
-              <p className="text-slate-300">Mon–Sat: 10:00 AM – 6:00 PM</p>
-            </div>
-            <div className="bg-slate-800 rounded-lg p-8">
-              <h3 className="text-xl font-bold mb-4">Discount Mattress Outlet</h3>
-              <p className="text-slate-300 mb-2">2734 Russellville Rd</p>
-              <p className="text-slate-300 mb-2">Bowling Green, KY 42101</p>
-              <p className="text-blue-400 font-semibold mb-4">(270) 842-3888</p>
-              <p className="text-slate-300">Mon–Sat: 9:00 AM – 5:30 PM</p>
-              <p className="text-slate-300">Sunday: 12:00 PM – 5:00 PM</p>
-            </div>
+      <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <SectionIntro
+              align="left"
+              eyebrow="Brand pages"
+              title="Browse by collection."
+              body="Each page is designed around local comparison, strong visuals, and quick call or visit actions."
+            />
+          </div>
+          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {brands.map((brand) => (
+              <BrandCard key={brand.id} brand={brand} />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-gray-900 text-gray-400 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-          <p>© {new Date().getFullYear()} Discount Mattress. All rights reserved.</p>
+      {productCategories.map((category) => {
+        const categoryProducts = primaryProducts.filter((product) => product.category === category);
+        if (categoryProducts.length === 0) return null;
+
+        return (
+          <section
+            key={category}
+            id={category.toLowerCase().replaceAll(" ", "-")}
+            className="px-4 py-16 sm:px-6 lg:px-8"
+          >
+            <div className="mx-auto max-w-7xl">
+              <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                <SectionIntro
+                  align="left"
+                  eyebrow={category}
+                  title={`${category} options`}
+                  body="Use these cards to shortlist what you want to try, then call for current pricing and floor availability."
+                />
+                <a
+                  href="#top"
+                  className="rounded border border-slate-300 px-4 py-2 text-center text-sm font-black text-slate-800 transition hover:border-[#cf2333] hover:text-[#cf2333]"
+                >
+                  Back to top
+                </a>
+              </div>
+              <ProductGrid products={categoryProducts} />
+            </div>
+          </section>
+        );
+      })}
+
+      <LeadCta
+        title="Have a model in mind?"
+        body="Call the store before you drive over. The team can confirm current pricing, floor models, and which location is best for what you want to try."
+      />
+    </PageShell>
+  );
+}
+
+function BrandCard({ brand }: { brand: (typeof brands)[number] }) {
+  return (
+    <Link
+      href={`/collections/${brand.id}`}
+      className="group overflow-hidden rounded border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
+    >
+      <div className="relative aspect-[16/9] overflow-hidden bg-slate-100">
+        {brand.heroImage ? (
+          <Image
+            src={brand.heroImage}
+            alt={`${brand.name} collection`}
+            fill
+            sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
+            className="object-cover transition duration-500 group-hover:scale-[1.04]"
+          />
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 to-transparent" />
+        <div className="absolute bottom-4 left-4 right-4">
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-white/75">
+            {brand.status === "ask-in-store" ? "Ask in store" : `${brand.products.length} models`}
+          </p>
+          <h2 className="mt-1 text-2xl font-black text-white">{brand.name}</h2>
         </div>
-      </footer>
-    </div>
+      </div>
+      <div className="p-5">
+        <p className="font-bold text-slate-950">{brand.tagline}</p>
+        <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-600">{brand.description}</p>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {brand.collectionHighlights.slice(0, 3).map((highlight) => (
+            <span
+              key={highlight}
+              className="rounded bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700"
+            >
+              {highlight}
+            </span>
+          ))}
+        </div>
+      </div>
+    </Link>
   );
 }

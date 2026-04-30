@@ -1,26 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "Discount Mattress | Bowling Green, KY",
-  description: "Sleep better for less in Bowling Green. Top mattress brands at discount prices. Visit our showroom at 1555 Campbell Ln or 2734 Russellville Rd.",
-  keywords: "mattress, bedding, sleep, discount mattress, Bowling Green KY, Helix, Nectar, Puffy, DreamCloud",
+  metadataBase: new URL("https://www.discountmattressbg.com"),
+  title: {
+    default: "Discount Mattress | Bowling Green Mattress Store",
+    template: "%s | Discount Mattress",
+  },
+  description:
+    "Shop top mattress brands locally in Bowling Green, KY. Call for current pricing or visit Discount Mattress and Discount Mattress Outlet.",
+  keywords:
+    "mattress store Bowling Green KY, discount mattress, Helix, Nectar, Puffy, DreamCloud, Bedgear, Naturepedic, Serta",
   openGraph: {
-    title: "Discount Mattress | Bowling Green, KY",
-    description: "Sleep better for less in Bowling Green. Top mattress brands at discount prices.",
+    title: "Discount Mattress | Bowling Green Mattress Store",
+    description:
+      "Call or visit two Bowling Green mattress showrooms for current pricing, local guidance, and top sleep brands.",
     type: "website",
-  }
+    images: ["/brand-assets/discount-mattress/hero-bed.jpg"],
+  },
 };
 
 export default function RootLayout({
@@ -31,28 +28,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
-      <head>
-        {/* Google Analytics - replace G-XXXXXXXXXX with your GA4 ID */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-XXXXXXXXXX');
-            `
-          }}
-        />
-        {/* Facebook Pixel - replace XXXXXXXX with your Pixel ID */}
-        <noscript>
-          <img height="1" width="1" style={{display:'none'}}
-            src="https://www.facebook.com/tr?id=XXXXXXXXXX&ev=PageView&noscript=1"
-          />
-        </noscript>
-      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { brands } from "@/lib/products";
 import { notFound } from "next/navigation";
+import { ProductGrid } from "@/components/product-card";
+import { LeadCta, LocationCards, PageShell } from "@/components/site-shell";
+import { brands, getBrandById, storeInfo } from "@/lib/products";
 
 interface PageProps {
   params: Promise<{ brand: string }>;
@@ -15,213 +17,192 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps) {
   const { brand: brandId } = await params;
-  const brand = brands.find((b) => b.id === brandId);
+  const brand = getBrandById(brandId);
   if (!brand) return {};
-  
+
   return {
-    title: `${brand.name} Mattresses | Discount Mattress`,
-    description: `Shop ${brand.name} mattresses at Discount Mattress. ${brand.tagline}`,
+    title: `${brand.name} Mattresses`,
+    description: `${brand.tagline} Browse ${brand.name} models at Discount Mattress in Bowling Green, KY.`,
   };
 }
 
 export default async function BrandCollectionPage({ params }: PageProps) {
   const { brand: brandId } = await params;
-  const brand = brands.find((b) => b.id === brandId);
-  
+  const brand = getBrandById(brandId);
+
   if (!brand) {
     notFound();
   }
 
-  return (
-    <div className="min-h-screen bg-[#f4f3eb]">
-      {/* HEADER */}
-      <header className="sticky top-0 z-50 bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <Link href="/" className="flex-shrink-0">
-              <Image
-                src="/logo.png"
-                alt="Discount Mattress"
-                width={200}
-                height={44}
-                className="h-12 w-auto"
-              />
-            </Link>
-            <nav className="hidden md:flex space-x-8">
-              <Link href="/collections" className="text-gray-900 font-medium hover:text-blue-600">
-                Collections
-              </Link>
-              <Link href="/#about" className="text-gray-600 hover:text-blue-600">
-                About
-              </Link>
-              <Link href="/#locations" className="text-gray-600 hover:text-blue-600">
-                Locations
-              </Link>
-            </nav>
-            <div className="flex items-center gap-4">
-              <a href="tel:2704951603" className="text-blue-600 font-semibold">
-                (270) 495-1603
-              </a>
-            </div>
-          </div>
-        </div>
-      </header>
+  const heroImage = brand.heroImage ?? brand.products[0]?.image;
 
-      {/* BRAND HERO */}
-      <section className="bg-gradient-to-r from-slate-800 to-slate-900 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+  return (
+    <PageShell>
+      <section className="relative isolate overflow-hidden bg-[#101827]">
+        {heroImage ? (
+          <Image
+            src={heroImage}
+            alt={`${brand.name} mattress collection`}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover opacity-50"
+          />
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#08111f] via-[#08111f]/82 to-[#08111f]/35" />
+        <div className="relative mx-auto grid min-h-[480px] max-w-7xl gap-10 px-4 py-16 text-white sm:px-6 lg:grid-cols-[1.1fr_0.7fr] lg:items-center lg:px-8">
+          <div>
+            <p className="text-sm font-black uppercase tracking-[0.26em] text-white/70">
+              Discount Mattress collection
+            </p>
+            <h1 className="mt-5 text-balance text-5xl font-black tracking-tight md:text-7xl">
               {brand.name}
             </h1>
-            <p className="text-xl text-slate-200 mb-2">{brand.tagline}</p>
-            <p className="text-lg text-slate-300">{brand.description}</p>
-          </div>
-        </div>
-      </section>
-
-      {/* BENEFITS BAR */}
-      <section className="bg-white py-4 border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-6 text-sm">
-            <span className="text-gray-600">
-              <span className="text-green-600 font-bold">{brand.products[0]?.trial || 100}</span> Night Sleep Trial
-            </span>
-            <span className="text-gray-600">
-              <span className="text-green-600 font-bold">Free</span> Shipping
-            </span>
-            <span className="text-gray-600">
-              <span className="text-green-600 font-bold">Easy</span> Returns
-            </span>
-            <span className="text-gray-600">
-              <span className="text-green-600 font-bold">{brand.products[0]?.warranty || '10 years'}</span> Warranty
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* PRODUCT GRID */}
-      <section className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {brand.products.map((product) => (
-              <div
-                key={product.id}
-                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all"
+            <p className="mt-5 max-w-2xl text-xl leading-9 text-slate-100">{brand.tagline}</p>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-200">{brand.description}</p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a
+                href={storeInfo.primaryPhoneHref}
+                className="rounded bg-[#cf2333] px-7 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-white transition hover:bg-[#a91c2a]"
               >
-                {/* PRODUCT IMAGE */}
-                <div className="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                  <div className="text-center p-6">
-                    <span className="text-4xl">🛏️</span>
-                    <p className="text-gray-500 text-sm mt-2">{product.model}</p>
-                  </div>
-                </div>
-                
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {product.model}
-                  </h3>
-                  
-                  {/* SPECS */}
-                  <div className="space-y-2 mb-4 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-500">Type</span>
-                      <span className="text-gray-900 capitalize">{product.type}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-500">Height</span>
-                      <span className="text-gray-900">{product.height}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-500">Firmness</span>
-                      <span className="text-gray-900">{product.firmness}</span>
-                    </div>
-                    {product.bestFor && product.bestFor.length > 0 && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-500">Best For</span>
-                        <span className="text-gray-900 text-right">{product.bestFor.join(', ')}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* PRICE */}
-                  <div className="border-t pt-4 mb-4">
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-gray-500">Queen</span>
-                      <span className="text-2xl font-bold text-gray-900">
-                        {product.priceQueen ? `$${product.priceQueen}` : 'Call for price'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* FEATURES */}
-                  <div className="mb-4">
-                    <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Key Features</p>
-                    <ul className="text-sm text-gray-600 space-y-1">
-                      {product.keyFeatures.slice(0, 4).map((feature, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <span className="text-green-500 text-xs">✓</span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* CTA */}
-                  <div className="flex gap-2">
-                    <a
-                      href="tel:2704951603"
-                      className="flex-1 text-center py-3 border border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-50 transition-colors"
-                    >
-                      Call for Price
-                    </a>
-                    <a
-                      href="#locations"
-                      className="flex-1 text-center py-3 bg-blue-600 rounded-md text-white font-medium hover:bg-blue-700 transition-colors"
-                    >
-                      Visit Us
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
+                Call for price
+              </a>
+              <Link
+                href="/locations"
+                className="rounded border border-white/45 px-7 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
+              >
+                Visit store
+              </Link>
+            </div>
+          </div>
+          <div className="rounded border border-white/20 bg-white/95 p-6 shadow-2xl">
+            {brand.logo ? (
+              <Image
+                src={brand.logo}
+                alt={`${brand.name} logo`}
+                width={280}
+                height={120}
+                unoptimized
+                className="mx-auto max-h-24 w-auto object-contain"
+              />
+            ) : (
+              <p className="text-center text-3xl font-black text-slate-950">{brand.name}</p>
+            )}
+            <div className="mt-6 grid grid-cols-2 gap-3 text-slate-900">
+              <Metric label="Models" value={`${brand.products.length}`} />
+              <Metric
+                label="Status"
+                value={brand.status === "ask-in-store" ? "Confirm" : "Featured"}
+              />
+            </div>
+            <p className="mt-5 rounded bg-slate-100 p-4 text-sm font-semibold leading-6 text-slate-700">
+              {brand.showroomNote}
+            </p>
           </div>
         </div>
       </section>
 
-      {/* CTA SECTION */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            Ready to find your perfect mattress?
-          </h2>
-          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            Visit our showroom to try any model in person. Our sleep experts will help you find 
-            the perfect match — no pressure, just guidance.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="#locations"
-              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+      <section className="border-b border-slate-200 bg-white px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-wrap gap-3">
+          {brand.collectionHighlights.map((highlight) => (
+            <span
+              key={highlight}
+              className="rounded bg-slate-100 px-4 py-2 text-sm font-black text-slate-800"
             >
-              Visit Our Showroom
-            </a>
-            <a
+              {highlight}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      <section className="px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-3xl">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">
+                Models
+              </p>
+              <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
+                {brand.name} options
+              </h2>
+              <p className="mt-4 text-lg leading-8 text-slate-600">
+                Shortlist what looks right, then call to confirm current pricing and which location
+                has the best comparison set.
+              </p>
+            </div>
+            <Link
               href="/collections"
-              className="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+              className="rounded border border-slate-300 px-5 py-3 text-center text-sm font-black text-slate-800 transition hover:border-[#cf2333] hover:text-[#cf2333]"
             >
-              View All Brands
-            </a>
+              All brands
+            </Link>
           </div>
+          <ProductGrid products={brand.products} priorityCount={3} />
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-gray-900 text-gray-400 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-          <p>© {new Date().getFullYear()} Discount Mattress. All rights reserved.</p>
+      {brand.galleryImages.length > 0 ? (
+        <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-8 max-w-3xl">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">
+                Visual guide
+              </p>
+              <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
+                Brand details and showroom context.
+              </h2>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {brand.galleryImages.slice(0, 6).map((image, index) => (
+                <div
+                  key={image}
+                  className={index === 0 ? "relative aspect-[16/10] overflow-hidden rounded border border-slate-200 bg-slate-100 md:col-span-2" : "relative aspect-[16/10] overflow-hidden rounded border border-slate-200 bg-slate-100"}
+                >
+                  <Image
+                    src={image}
+                    alt={`${brand.name} visual ${index + 1}`}
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">
+              Try in store
+            </p>
+            <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
+              Call before you drive.
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              The team can tell you which location is best for {brand.name}, current prices, and
+              what related models are worth trying side by side.
+            </p>
+          </div>
+          <LocationCards compact />
         </div>
-      </footer>
+      </section>
+
+      <LeadCta
+        title={`Want help choosing ${brand.name}?`}
+        body="Call the store and describe how you sleep. They can point you toward the right firmness before you arrive."
+      />
+    </PageShell>
+  );
+}
+
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded bg-slate-100 p-4 text-center">
+      <p className="text-xs font-black uppercase tracking-[0.18em] text-slate-500">{label}</p>
+      <p className="mt-1 text-xl font-black text-slate-950">{value}</p>
     </div>
   );
 }
