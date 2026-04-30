@@ -4,28 +4,30 @@ import { Brand, storeInfo } from "@/lib/products";
 
 const navItems = [
   { label: "Mattresses", href: "/collections" },
+  { label: "Brands", href: "/collections#brands" },
+  { label: "Accessories", href: "/collections#pillow" },
   { label: "Financing", href: "/financing" },
-  { label: "FAQ", href: "/faq" },
   { label: "Locations", href: "/locations" },
 ];
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur">
-      <div className="bg-[#162b49] text-white">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-2 text-xs font-semibold sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-          <p>Bowling Green mattress showrooms with local help and call-for-price savings.</p>
-          <div className="flex flex-wrap gap-x-4 gap-y-1 text-white/80">
-            <a href={storeInfo.primaryPhoneHref} className="hover:text-white">
-              {storeInfo.primaryPhone}
-            </a>
-            <Link href="/financing" className="hover:text-white">
-              Financing available
-            </Link>
-          </div>
+    <header className="sticky top-0 z-50 border-b border-[#dedbd2] bg-[#fffef9]/95 backdrop-blur">
+      <div className="border-b border-[#dedbd2] bg-[#f2efe5] text-slate-950">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-2 px-4 py-2 text-center text-sm font-black sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
+          <div className="hidden lg:block" />
+          <Link href="/collections/puffy" className="justify-self-center hover:text-[#b98100]">
+            Local Spring Sale: Puffy Monarch and more →
+          </Link>
+          <a
+            href={storeInfo.primaryPhoneHref}
+            className="hidden justify-self-end rounded-full border border-slate-950 px-5 py-2 text-sm font-black transition hover:bg-slate-950 hover:text-white lg:inline-flex"
+          >
+            {storeInfo.primaryPhone}
+          </a>
         </div>
       </div>
-      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-24 lg:px-8">
         <Link href="/" className="flex min-w-0 items-center">
           <Image
             src="/brand-assets/discount-mattress/logo.png"
@@ -33,15 +35,15 @@ export function SiteHeader() {
             width={260}
             height={44}
             priority
-            className="h-11 w-auto max-w-[220px] object-contain sm:max-w-[260px]"
+            className="h-10 w-auto max-w-[190px] object-contain sm:max-w-[245px]"
           />
         </Link>
-        <div className="hidden items-center gap-7 lg:flex">
+        <div className="hidden items-center gap-8 lg:flex">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-semibold text-slate-700 transition hover:text-[#cf2333]"
+              className="text-base font-bold text-slate-900 transition hover:text-[#b98100]"
             >
               {item.label}
             </Link>
@@ -50,22 +52,22 @@ export function SiteHeader() {
         <div className="flex items-center gap-3">
           <a
             href={storeInfo.primaryPhoneHref}
-            className="hidden rounded border border-slate-300 px-4 py-2 text-sm font-bold text-slate-900 transition hover:border-[#cf2333] hover:text-[#cf2333] sm:inline-flex"
+            className="hidden rounded-full border border-slate-950 px-4 py-2 text-sm font-black text-slate-950 transition hover:bg-slate-950 hover:text-white sm:inline-flex lg:hidden"
           >
-            Call now
+            Call
           </a>
           <Link
-            href="/locations"
-            className="rounded bg-[#cf2333] px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-[#a91c2a]"
+            href="/faq"
+            className="rounded-full bg-[#f2b705] px-5 py-3 text-sm font-black text-slate-950 shadow-sm transition hover:bg-[#dba300]"
           >
-            Visit store
+            Store FAQ
           </Link>
         </div>
       </nav>
-      <div className="border-t border-slate-100 bg-white px-4 py-2 lg:hidden">
+      <div className="border-t border-[#dedbd2] bg-[#fffef9] px-4 py-2 lg:hidden">
         <div className="mx-auto flex max-w-7xl gap-4 overflow-x-auto text-sm font-semibold text-slate-700">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="shrink-0 hover:text-[#cf2333]">
+            <Link key={item.href} href={item.href} className="shrink-0 hover:text-[#b98100]">
               {item.label}
             </Link>
           ))}
@@ -153,7 +155,7 @@ export function SiteFooter() {
 
 export function PageShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#f7f8fb] text-slate-950">
+    <div className="min-h-screen bg-[#fbfaf4] text-slate-950">
       <SiteHeader />
       <main>{children}</main>
       <StickyMobileCall />

@@ -46,55 +46,102 @@ const fitTiles = [
 export default function Home() {
   return (
     <PageShell>
-      <section className="relative isolate overflow-hidden bg-[#101827]">
-        <Image
-          src="/brand-assets/discount-mattress/hero-bed.jpg"
-          alt="Comfortable mattress showroom styling"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-55"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#08111f] via-[#08111f]/80 to-[#08111f]/35" />
-        <div className="relative mx-auto flex min-h-[560px] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 lg:min-h-[640px] lg:px-8">
-          <div className="max-w-3xl text-white">
-            <p className="text-sm font-black uppercase tracking-[0.26em] text-white/75">
-              Bowling Green, Kentucky
+      <section className="bg-[#fbfaf4] px-4 pb-16 pt-8 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-[1500px] gap-8 xl:grid-cols-[0.78fr_1.95fr]">
+          <div className="flex min-h-[560px] flex-col justify-center rounded-[28px] bg-[#f4f2ea] p-8 md:p-12 xl:min-h-[690px]">
+            <p className="text-sm font-black uppercase tracking-[0.24em] text-[#b98100]">
+              Bowling Green, KY
             </p>
-            <h1 className="mt-5 text-balance text-5xl font-black tracking-tight md:text-7xl">
-              Discount Mattress
+            <h1 className="mt-6 text-balance text-5xl font-black leading-[0.95] tracking-tight text-slate-950 md:text-7xl">
+              Get your best night&apos;s sleep.
             </h1>
-            <p className="mt-6 max-w-2xl text-xl leading-9 text-slate-100">
-              Try the brands people research online, then buy with local help, current showroom
-              pricing, and two Bowling Green locations.
+            <p className="mt-7 max-w-md text-xl font-semibold leading-8 text-slate-800">
+              Explore award-winning mattresses from Puffy, Helix, Nectar, DreamCloud, and more
+              with local showroom help.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-9 flex flex-col gap-4">
               <Link
                 href="/collections"
-                className="rounded bg-[#cf2333] px-7 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-white shadow-lg transition hover:bg-[#a91c2a]"
+                className="inline-flex w-full items-center justify-center rounded-full bg-[#f2b705] px-7 py-5 text-base font-black text-slate-950 shadow-sm transition hover:bg-[#dba300] sm:w-fit sm:min-w-64"
               >
-                Browse mattresses
+                Shop best mattresses
               </Link>
               <a
                 href={storeInfo.primaryPhoneHref}
-                className="rounded border border-white/45 px-7 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
+                className="inline-flex w-full items-center justify-center rounded-full border-2 border-slate-950 bg-white px-7 py-5 text-base font-black text-slate-950 transition hover:bg-slate-950 hover:text-white sm:w-fit sm:min-w-64"
               >
-                Call for price
+                Call for today&apos;s price
               </a>
+            </div>
+            <p className="mt-6 max-w-sm text-base leading-7 text-slate-700">
+              Prefer in person? Visit either Bowling Green showroom and compare comfort levels
+              before you buy.
+            </p>
+          </div>
+
+          <div className="relative min-h-[560px] overflow-hidden rounded-[28px] bg-[#ebe7df] xl:min-h-[690px]">
+            <Image
+              src="/brand-assets/puffy/woman-on-puffy-bed.jpg"
+              alt="Woman relaxing on a Puffy mattress"
+              fill
+              priority
+              sizes="(min-width: 1280px) 68vw, 100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-x-0 top-0 flex justify-end p-7 md:p-10">
+              <div className="max-w-sm text-right">
+                <p className="text-2xl font-black leading-tight text-slate-950 md:text-3xl">
+                  Puffy Monarch comfort, local Discount Mattress pricing.
+                </p>
+                <Link
+                  href="/mattresses/puffy-monarch"
+                  className="mt-5 inline-flex items-center gap-2 text-lg font-black text-slate-950 transition hover:text-[#b98100]"
+                >
+                  View Monarch <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </div>
+            <div className="absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/70 bg-white/90 p-4 shadow-2xl backdrop-blur md:bottom-8 md:left-auto md:right-8 md:w-[390px]">
+              <div className="grid grid-cols-[120px_1fr] gap-4">
+                <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#f4f2ea]">
+                  <Image
+                    src="/product-assets/puffy/puffy-monarch-1.jpg"
+                    alt="Puffy Monarch mattress"
+                    fill
+                    sizes="120px"
+                    className="object-contain p-2"
+                  />
+                </div>
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.18em] text-[#b98100]">
+                    Featured model
+                  </p>
+                  <h2 className="mt-1 text-xl font-black text-slate-950">Puffy Monarch</h2>
+                  <p className="mt-2 text-sm font-semibold leading-5 text-slate-700">
+                    16&quot; ultra-luxury hybrid with a plush, premium feel.
+                  </p>
+                  <Link
+                    href="/collections/puffy"
+                    className="mt-3 inline-flex text-sm font-black text-slate-950 underline decoration-[#f2b705] decoration-4 underline-offset-4"
+                  >
+                    See Puffy collection
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="border-b border-slate-200 bg-white">
-        <div className="mx-auto grid max-w-7xl gap-4 px-4 py-5 text-sm font-bold text-slate-700 sm:px-6 md:grid-cols-3 lg:px-8">
-          <p>Call or visit for current pricing.</p>
-          <p>Compare national and specialty brands in person.</p>
-          <p>Two local showrooms in Bowling Green.</p>
+      <section className="border-y border-[#dedbd2] bg-white">
+        <div className="mx-auto grid max-w-7xl gap-4 px-4 py-7 text-center text-base font-black text-slate-900 sm:px-6 md:grid-cols-3 lg:px-8">
+          <p>Call or visit for current pricing</p>
+          <p>Compare national and specialty brands in person</p>
+          <p>Two local showrooms in Bowling Green</p>
         </div>
       </section>
 
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
+      <section id="brands" className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionIntro
             eyebrow="Brands"
