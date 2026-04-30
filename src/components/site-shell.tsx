@@ -14,20 +14,20 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#dedbd2] bg-[#fffef9]/95 backdrop-blur">
       <div className="border-b border-[#dedbd2] bg-[#f2efe5] text-slate-950">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-2 px-4 py-2 text-center text-sm font-black sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-2 px-4 py-1.5 text-center text-sm font-black sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
           <div className="hidden lg:block" />
           <Link href="/collections/puffy" className="justify-self-center hover:text-[#b98100]">
             Local Spring Sale: Puffy Monarch and more →
           </Link>
           <a
             href={storeInfo.primaryPhoneHref}
-            className="hidden justify-self-end rounded-full border border-slate-950 px-5 py-2 text-sm font-black transition hover:bg-slate-950 hover:text-white lg:inline-flex"
+            className="hidden justify-self-end rounded-full border border-slate-950 px-4 py-1.5 text-sm font-black transition hover:bg-slate-950 hover:text-white lg:inline-flex"
           >
             {storeInfo.primaryPhone}
           </a>
         </div>
       </div>
-      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-24 lg:px-8">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-8">
         <Link href="/" className="flex min-w-0 items-center">
           <Image
             src="/brand-assets/discount-mattress/logo.png"
@@ -35,7 +35,7 @@ export function SiteHeader() {
             width={260}
             height={44}
             priority
-            className="h-10 w-auto max-w-[190px] object-contain sm:max-w-[245px]"
+            className="h-8 w-auto max-w-[180px] object-contain sm:h-9 sm:max-w-[235px]"
           />
         </Link>
         <div className="hidden items-center gap-8 lg:flex">
@@ -43,7 +43,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-base font-bold text-slate-900 transition hover:text-[#b98100]"
+            className="text-sm font-bold text-slate-900 transition hover:text-[#b98100] xl:text-base"
             >
               {item.label}
             </Link>
@@ -58,7 +58,7 @@ export function SiteHeader() {
           </a>
           <Link
             href="/faq"
-            className="rounded-full bg-[#f2b705] px-5 py-3 text-sm font-black text-slate-950 shadow-sm transition hover:bg-[#dba300]"
+            className="rounded-full bg-[#f2b705] px-4 py-2.5 text-sm font-black text-slate-950 shadow-sm transition hover:bg-[#dba300]"
           >
             Store FAQ
           </Link>
@@ -250,28 +250,84 @@ export function LocationCards({ compact = false }: { compact?: boolean }) {
 }
 
 export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
+  const spotlightBrands = brands.slice(0, 3);
+  const supportingBrands = brands.slice(3);
+
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-      {brands.map((brand) => (
-        <Link
-          key={brand.id}
-          href={`/collections/${brand.id}`}
-          className="group flex h-24 items-center justify-center rounded border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#cf2333] hover:shadow-md"
-        >
-          {brand.logo ? (
-            <Image
-              src={brand.logo}
-              alt={`${brand.name} logo`}
-              width={170}
-              height={70}
-              unoptimized
-              className="max-h-14 w-auto max-w-full object-contain transition group-hover:scale-[1.03]"
-            />
-          ) : (
-            <span className="text-center text-sm font-black text-slate-800">{brand.name}</span>
-          )}
-        </Link>
-      ))}
+    <div className="space-y-5">
+      <div className="grid gap-5 lg:grid-cols-3">
+        {spotlightBrands.map((brand) => (
+          <Link
+            key={brand.id}
+            href={`/collections/${brand.id}`}
+            className="group relative min-h-64 overflow-hidden rounded-[24px] bg-slate-950 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            {brand.heroImage ? (
+              <Image
+                src={brand.heroImage}
+                alt={`${brand.name} collection`}
+                fill
+                sizes="(min-width: 1024px) 33vw, 100vw"
+                className="object-cover opacity-70 transition duration-500 group-hover:scale-105"
+              />
+            ) : null}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-6">
+              <div className="flex h-20 max-w-52 items-center rounded-2xl bg-white/92 px-5 shadow-lg backdrop-blur">
+                {brand.logo ? (
+                  <Image
+                    src={brand.logo}
+                    alt={`${brand.name} logo`}
+                    width={180}
+                    height={76}
+                    unoptimized
+                    className="max-h-14 w-auto max-w-full object-contain"
+                  />
+                ) : (
+                  <span className="text-lg font-black text-slate-950">{brand.name}</span>
+                )}
+              </div>
+              <p className="mt-5 text-sm font-black uppercase tracking-[0.18em] text-[#f2b705]">
+                Featured collection
+              </p>
+              <h3 className="mt-2 text-2xl font-black text-white">{brand.tagline}</h3>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {brand.collectionHighlights.slice(0, 2).map((highlight) => (
+                  <span
+                    key={highlight}
+                    className="rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-white backdrop-blur"
+                  >
+                    {highlight}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        {supportingBrands.map((brand) => (
+          <Link
+            key={brand.id}
+            href={`/collections/${brand.id}`}
+            className="group flex h-28 items-center justify-center rounded-[18px] border border-[#dedbd2] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#f2b705] hover:shadow-lg"
+          >
+            {brand.logo ? (
+              <Image
+                src={brand.logo}
+                alt={`${brand.name} logo`}
+                width={170}
+                height={70}
+                unoptimized
+                className="max-h-14 w-auto max-w-full object-contain transition group-hover:scale-[1.04]"
+              />
+            ) : (
+              <span className="text-center text-sm font-black text-slate-800">{brand.name}</span>
+            )}
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
