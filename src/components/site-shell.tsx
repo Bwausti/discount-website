@@ -250,28 +250,84 @@ export function LocationCards({ compact = false }: { compact?: boolean }) {
 }
 
 export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
+  const spotlightBrands = brands.slice(0, 3);
+  const supportingBrands = brands.slice(3);
+
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-      {brands.map((brand) => (
-        <Link
-          key={brand.id}
-          href={`/collections/${brand.id}`}
-          className="group flex h-24 items-center justify-center rounded border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#cf2333] hover:shadow-md"
-        >
-          {brand.logo ? (
-            <Image
-              src={brand.logo}
-              alt={`${brand.name} logo`}
-              width={170}
-              height={70}
-              unoptimized
-              className="max-h-14 w-auto max-w-full object-contain transition group-hover:scale-[1.03]"
-            />
-          ) : (
-            <span className="text-center text-sm font-black text-slate-800">{brand.name}</span>
-          )}
-        </Link>
-      ))}
+    <div className="space-y-5">
+      <div className="grid gap-5 lg:grid-cols-3">
+        {spotlightBrands.map((brand) => (
+          <Link
+            key={brand.id}
+            href={`/collections/${brand.id}`}
+            className="group relative min-h-64 overflow-hidden rounded-[24px] bg-slate-950 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            {brand.heroImage ? (
+              <Image
+                src={brand.heroImage}
+                alt={`${brand.name} collection`}
+                fill
+                sizes="(min-width: 1024px) 33vw, 100vw"
+                className="object-cover opacity-70 transition duration-500 group-hover:scale-105"
+              />
+            ) : null}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-6">
+              <div className="flex h-20 max-w-52 items-center rounded-2xl bg-white/92 px-5 shadow-lg backdrop-blur">
+                {brand.logo ? (
+                  <Image
+                    src={brand.logo}
+                    alt={`${brand.name} logo`}
+                    width={180}
+                    height={76}
+                    unoptimized
+                    className="max-h-14 w-auto max-w-full object-contain"
+                  />
+                ) : (
+                  <span className="text-lg font-black text-slate-950">{brand.name}</span>
+                )}
+              </div>
+              <p className="mt-5 text-sm font-black uppercase tracking-[0.18em] text-[#f2b705]">
+                Featured collection
+              </p>
+              <h3 className="mt-2 text-2xl font-black text-white">{brand.tagline}</h3>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {brand.collectionHighlights.slice(0, 2).map((highlight) => (
+                  <span
+                    key={highlight}
+                    className="rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-white backdrop-blur"
+                  >
+                    {highlight}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        {supportingBrands.map((brand) => (
+          <Link
+            key={brand.id}
+            href={`/collections/${brand.id}`}
+            className="group flex h-28 items-center justify-center rounded-[18px] border border-[#dedbd2] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#f2b705] hover:shadow-lg"
+          >
+            {brand.logo ? (
+              <Image
+                src={brand.logo}
+                alt={`${brand.name} logo`}
+                width={170}
+                height={70}
+                unoptimized
+                className="max-h-14 w-auto max-w-full object-contain transition group-hover:scale-[1.04]"
+              />
+            ) : (
+              <span className="text-center text-sm font-black text-slate-800">{brand.name}</span>
+            )}
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }

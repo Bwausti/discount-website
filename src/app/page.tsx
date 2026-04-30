@@ -137,13 +137,36 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="brands" className="px-4 py-16 sm:px-6 lg:px-8">
+      <section id="brands" className="bg-[#f2efe5] px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <SectionIntro
-            eyebrow="Brands"
-            title="The online names, the local showroom help."
-            body="Start with the brands people already trust, then narrow the decision by comfort, support, and what is actually available today."
-          />
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+            <SectionIntro
+              align="left"
+              eyebrow="Brands"
+              title="Online favorites, fitted locally."
+              body="Start with brands people already trust, then use our Bowling Green showroom team to compare comfort, support, and what is actually available today."
+            />
+            <div className="grid grid-cols-3 overflow-hidden rounded-[24px] border border-[#dedbd2] bg-white text-center shadow-sm">
+              <div className="p-5">
+                <p className="text-3xl font-black text-slate-950">12+</p>
+                <p className="mt-1 text-xs font-black uppercase tracking-[0.16em] text-slate-500">
+                  Brands
+                </p>
+              </div>
+              <div className="border-x border-[#dedbd2] p-5">
+                <p className="text-3xl font-black text-slate-950">2</p>
+                <p className="mt-1 text-xs font-black uppercase tracking-[0.16em] text-slate-500">
+                  Stores
+                </p>
+              </div>
+              <div className="p-5">
+                <p className="text-3xl font-black text-slate-950">0</p>
+                <p className="mt-1 text-xs font-black uppercase tracking-[0.16em] text-slate-500">
+                  Cart pressure
+                </p>
+              </div>
+            </div>
+          </div>
           <div className="mt-10">
             <BrandLogoGrid brands={featuredBrands.slice(0, 12)} />
           </div>
