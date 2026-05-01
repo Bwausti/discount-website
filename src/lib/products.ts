@@ -96,6 +96,9 @@ const priceSources = {
   puffyKing: "https://puffy.com/pages/king-mattresses",
   puffyCalKing: "https://puffy.com/pages/california-king-mattresses",
   puffySplitKing: "https://puffy.com/pages/split-king-mattresses",
+  helixCore: "https://helixsleep.com/pages/queen-size-mattresses",
+  helixLuxe: "https://helixsleep.com/products/midnight-luxe/queen-tencel",
+  helixPlus: "https://helixsleep.com/products/plus",
   dreamcloudPremier: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/queen",
   dreamcloudLuxe: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress",
   nectarClassic: "https://www.nectarsleep.com/mattress/queen",
@@ -146,6 +149,160 @@ const puffyVariantPrices = {
   ],
 } as const satisfies Record<string, readonly ProductPriceVariant[]>;
 
+const helixVariantPrices = {
+  core: [
+    { label: "Twin", amount: "$799", sourceUrl: priceSources.helixCore },
+    { label: "Twin XL", amount: "$899", sourceUrl: priceSources.helixCore },
+    { label: "Full", amount: "$999", sourceUrl: priceSources.helixCore },
+    { label: "Queen", amount: "$1,099", sourceUrl: priceSources.helixCore },
+    { label: "King", amount: "$1,449", sourceUrl: priceSources.helixCore },
+    { label: "CA King", amount: "$1,449", sourceUrl: priceSources.helixCore },
+  ],
+  luxe: [
+    { label: "Twin", amount: "$1,149", sourceUrl: priceSources.helixLuxe },
+    { label: "Twin XL", amount: "$1,349", sourceUrl: priceSources.helixLuxe },
+    { label: "Full", amount: "$1,649", sourceUrl: priceSources.helixLuxe },
+    { label: "Queen", amount: "$1,919", sourceUrl: priceSources.helixLuxe },
+    { label: "King", amount: "$2,339", sourceUrl: priceSources.helixLuxe },
+    { label: "CA King", amount: "$2,339", sourceUrl: priceSources.helixLuxe },
+  ],
+  plus: [
+    { label: "Twin", amount: "$849", sourceUrl: priceSources.helixPlus },
+    { label: "Twin XL", amount: "$949", sourceUrl: priceSources.helixPlus },
+    { label: "Full", amount: "$1,049", sourceUrl: priceSources.helixPlus },
+    { label: "Queen", amount: "$1,199", sourceUrl: priceSources.helixPlus },
+    { label: "King", amount: "$1,449", sourceUrl: priceSources.helixPlus },
+    { label: "CA King", amount: "$1,449", sourceUrl: priceSources.helixPlus },
+  ],
+} as const satisfies Record<string, readonly ProductPriceVariant[]>;
+
+const nectarVariantPrices = {
+  classic: [
+    { label: "Twin", amount: "$369", sourceUrl: "https://www.nectarsleep.com/mattress/twin" },
+    { label: "Twin XL", amount: "$549", sourceUrl: "https://www.nectarsleep.com/mattress/twin-xl" },
+    { label: "Full", amount: "$599", sourceUrl: "https://www.nectarsleep.com/mattress/full" },
+    { label: "Queen", amount: "$689", sourceUrl: priceSources.nectarClassic },
+    { label: "King", amount: "$899", sourceUrl: "https://www.nectarsleep.com/mattress/king" },
+    { label: "Cal King", amount: "$849", sourceUrl: "https://www.nectarsleep.com/mattress/cal-king" },
+    { label: "Split King", amount: "$1,098", sourceUrl: "https://www.nectarsleep.com/mattress/split-king" },
+  ],
+  premier: [
+    {
+      label: "Twin",
+      amount: "$549",
+      sourceUrl: "https://www.nectarsleep.com/mattresses/premier-memory-foam-mattress/twin",
+    },
+    {
+      label: "Twin XL",
+      amount: "$749",
+      sourceUrl: "https://www.nectarsleep.com/mattresses/premier-memory-foam-mattress/twin-xl",
+    },
+    {
+      label: "Full",
+      amount: "$899",
+      sourceUrl: "https://www.nectarsleep.com/mattresses/premier-memory-foam-mattress/full",
+    },
+    { label: "Queen", amount: "$949", sourceUrl: priceSources.nectarPremier },
+    {
+      label: "King",
+      amount: "$1,099",
+      sourceUrl: "https://www.nectarsleep.com/mattresses/premier-memory-foam-mattress/king",
+    },
+    {
+      label: "Cal King",
+      amount: "$1,099",
+      sourceUrl: "https://www.nectarsleep.com/mattresses/premier-memory-foam-mattress/cal-king",
+    },
+  ],
+  luxe: [
+    {
+      label: "Twin",
+      amount: "$999",
+      sourceUrl: "https://www.nectarsleep.com/mattresses/luxe-memory-foam-mattress/twin",
+    },
+    {
+      label: "Twin XL",
+      amount: "$1,099",
+      sourceUrl: "https://www.nectarsleep.com/mattresses/luxe-memory-foam-mattress/twin-xl",
+    },
+    {
+      label: "Full",
+      amount: "$1,199",
+      sourceUrl: "https://www.nectarsleep.com/mattresses/luxe-memory-foam-mattress/full",
+    },
+    { label: "Queen", amount: "$1,249", sourceUrl: priceSources.nectarLuxe },
+    {
+      label: "King",
+      amount: "$1,499",
+      sourceUrl: "https://www.nectarsleep.com/mattresses/luxe-memory-foam-mattress/king",
+    },
+    {
+      label: "Cal King",
+      amount: "$1,499",
+      sourceUrl: "https://www.nectarsleep.com/mattresses/luxe-memory-foam-mattress/cal-king",
+    },
+  ],
+} as const satisfies Record<string, readonly ProductPriceVariant[]>;
+
+const dreamcloudVariantPrices = {
+  premier: [
+    {
+      label: "Twin",
+      amount: "$799",
+      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/twin",
+    },
+    {
+      label: "Twin XL",
+      amount: "$899",
+      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/twin-xl",
+    },
+    {
+      label: "Full",
+      amount: "$999",
+      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/full",
+    },
+    { label: "Queen", amount: "$1,099", sourceUrl: priceSources.dreamcloudPremier },
+    {
+      label: "King",
+      amount: "$1,299",
+      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/king",
+    },
+    {
+      label: "Cal King",
+      amount: "$1,299",
+      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/cal-king",
+    },
+  ],
+  luxe: [
+    {
+      label: "Twin",
+      amount: "$1,099",
+      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/twin",
+    },
+    {
+      label: "Twin XL",
+      amount: "$1,299",
+      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/twin-xl",
+    },
+    {
+      label: "Full",
+      amount: "$1,399",
+      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/full",
+    },
+    { label: "Queen", amount: "$1,499", sourceUrl: priceSources.dreamcloudLuxe },
+    {
+      label: "King",
+      amount: "$1,699",
+      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/king",
+    },
+    {
+      label: "Cal King",
+      amount: "$1,699",
+      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/cal-king",
+    },
+  ],
+} as const satisfies Record<string, readonly ProductPriceVariant[]>;
+
 function withBrandAssets(brand: BrandDraft): Brand {
   const assetBundle = getBrandAssetBundle(brand.id);
 
@@ -191,10 +348,12 @@ export const brands: Brand[] = [
         image: "/product-assets/helix/helix-sunset-core-1.png",
         availability: "Ask what Helix models are on the floor today.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,099",
+          amount: "$799",
+          label: "Starting price",
           sourceName: "Helix",
-          sourceUrl: priceSources.helixQueen,
+          sourceUrl: priceSources.helixCore,
         }),
+        priceVariants: helixVariantPrices.core,
       },
       {
         id: "helix-moonlight",
@@ -211,10 +370,12 @@ export const brands: Brand[] = [
         image: "/brand-assets/helix/hero.webp",
         availability: "Call for current Helix availability.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,099",
+          amount: "$799",
+          label: "Starting price",
           sourceName: "Helix",
-          sourceUrl: priceSources.helixQueen,
+          sourceUrl: priceSources.helixCore,
         }),
+        priceVariants: helixVariantPrices.core,
       },
       {
         id: "helix-midnight",
@@ -237,10 +398,12 @@ export const brands: Brand[] = [
         ],
         availability: "A strong starting point for most showroom visits.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,099",
+          amount: "$799",
+          label: "Starting price",
           sourceName: "Helix",
-          sourceUrl: priceSources.helixQueen,
+          sourceUrl: priceSources.helixCore,
         }),
+        priceVariants: helixVariantPrices.core,
       },
       {
         id: "helix-dusk",
@@ -257,10 +420,12 @@ export const brands: Brand[] = [
         image: "/product-assets/helix/helix-dusk-1.png",
         availability: "Call for current Helix floor models.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,099",
+          amount: "$799",
+          label: "Starting price",
           sourceName: "Helix",
-          sourceUrl: priceSources.helixQueen,
+          sourceUrl: priceSources.helixCore,
         }),
+        priceVariants: helixVariantPrices.core,
       },
       {
         id: "helix-dawn",
@@ -277,10 +442,12 @@ export const brands: Brand[] = [
         image: "/product-assets/helix/helix-dawn-core-1.png",
         availability: "Call to confirm firmness options in store.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,099",
+          amount: "$799",
+          label: "Starting price",
           sourceName: "Helix",
-          sourceUrl: priceSources.helixQueen,
+          sourceUrl: priceSources.helixCore,
         }),
+        priceVariants: helixVariantPrices.core,
       },
       {
         id: "helix-twilight",
@@ -297,10 +464,12 @@ export const brands: Brand[] = [
         image: "/product-assets/helix/helix-twilight-core-1.png",
         availability: "Ask the team to compare Twilight with Dawn.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,099",
+          amount: "$799",
+          label: "Starting price",
           sourceName: "Helix",
-          sourceUrl: priceSources.helixQueen,
+          sourceUrl: priceSources.helixCore,
         }),
+        priceVariants: helixVariantPrices.core,
       },
       {
         id: "helix-plus",
@@ -317,10 +486,12 @@ export const brands: Brand[] = [
         image: "/product-assets/helix/helix-plus-core-1.png",
         availability: "Call for current Plus and Luxe options.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,199",
+          amount: "$849",
+          label: "Starting price",
           sourceName: "Helix",
-          sourceUrl: priceSources.helixQueen,
+          sourceUrl: priceSources.helixPlus,
         }),
+        priceVariants: helixVariantPrices.plus,
       },
       {
         id: "helix-midnight-luxe",
@@ -342,10 +513,12 @@ export const brands: Brand[] = [
         ],
         availability: "Ask which Luxe models are ready to try.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,919",
+          amount: "$1,149",
+          label: "Starting price",
           sourceName: "Helix",
-          sourceUrl: priceSources.helixQueen,
+          sourceUrl: priceSources.helixLuxe,
         }),
+        priceVariants: helixVariantPrices.luxe,
       },
     ],
   }),
@@ -525,10 +698,12 @@ export const brands: Brand[] = [
         ],
         availability: "Call for current DreamCloud pricing.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,099",
+          amount: "$799",
+          label: "Starting price",
           sourceName: "DreamCloud",
           sourceUrl: priceSources.dreamcloudPremier,
         }),
+        priceVariants: dreamcloudVariantPrices.premier,
       },
       {
         id: "dreamcloud-rest",
@@ -551,10 +726,12 @@ export const brands: Brand[] = [
         ],
         availability: "Ask whether Luxe Hybrid is available to try.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,499",
+          amount: "$1,099",
+          label: "Starting price",
           sourceName: "DreamCloud",
           sourceUrl: priceSources.dreamcloudLuxe,
         }),
+        priceVariants: dreamcloudVariantPrices.luxe,
       },
     ],
   }),
@@ -589,10 +766,12 @@ export const brands: Brand[] = [
         ],
         availability: "Call for current Nectar specials.",
         onlinePrice: officialOnlinePrice({
-          amount: "$649",
+          amount: "$369",
+          label: "Starting price",
           sourceName: "Nectar",
           sourceUrl: priceSources.nectarClassic,
         }),
+        priceVariants: nectarVariantPrices.classic,
       },
       {
         id: "nectar-premier",
@@ -614,10 +793,12 @@ export const brands: Brand[] = [
         ],
         availability: "A strong upgrade to compare against Classic.",
         onlinePrice: officialOnlinePrice({
-          amount: "$949",
+          amount: "$549",
+          label: "Starting price",
           sourceName: "Nectar",
           sourceUrl: priceSources.nectarPremier,
         }),
+        priceVariants: nectarVariantPrices.premier,
       },
       {
         id: "nectar-premier-copper",
@@ -640,10 +821,12 @@ export const brands: Brand[] = [
         ],
         availability: "Call for current Luxe model availability.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,249",
+          amount: "$999",
+          label: "Starting price",
           sourceName: "Nectar",
           sourceUrl: priceSources.nectarLuxe,
         }),
+        priceVariants: nectarVariantPrices.luxe,
       },
     ],
   }),
