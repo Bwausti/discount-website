@@ -260,7 +260,7 @@ export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
           <Link
             key={brand.id}
             href={`/collections/${brand.id}`}
-            className="group relative min-h-64 overflow-hidden rounded-[24px] bg-slate-950 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+            className="group relative min-h-[19rem] overflow-hidden rounded-[24px] bg-slate-950 shadow-sm transition hover:-translate-y-1 hover:shadow-xl lg:min-h-[21rem]"
           >
             {brand.heroImage ? (
               <Image
@@ -272,8 +272,12 @@ export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
               />
             ) : null}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6">
-              <div className="flex h-20 max-w-52 items-center rounded-2xl bg-white/92 px-5 shadow-lg backdrop-blur">
+            <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+              <div
+                className={`flex h-16 items-center rounded-2xl bg-white/92 px-5 shadow-lg backdrop-blur ${
+                  brand.id === "helix" ? "max-w-36" : "max-w-48"
+                }`}
+              >
                 {brand.logo ? (
                   <Image
                     src={brand.logo}
@@ -281,17 +285,19 @@ export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
                     width={180}
                     height={76}
                     unoptimized
-                    className="max-h-14 w-auto max-w-full object-contain"
+                    className="max-h-11 w-auto max-w-full object-contain"
                   />
                 ) : (
                   <span className="text-lg font-black text-slate-950">{brand.name}</span>
                 )}
               </div>
-              <p className="mt-5 text-sm font-black uppercase tracking-[0.18em] text-[#f2b705]">
+              <p className="mt-4 text-sm font-black uppercase tracking-[0.18em] text-[#f2b705]">
                 Featured collection
               </p>
-              <h3 className="mt-2 text-2xl font-black text-white">{brand.tagline}</h3>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <h3 className="mt-2 text-[1.65rem] font-black leading-tight text-white">
+                {brand.tagline}
+              </h3>
+              <div className="mt-3 flex flex-wrap gap-2">
                 {brand.collectionHighlights.slice(0, 2).map((highlight) => (
                   <span
                     key={highlight}
