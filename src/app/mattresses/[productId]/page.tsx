@@ -172,7 +172,7 @@ export default async function ProductPage({ params }: PageProps) {
                 </p>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
                   The store can confirm current local price, size availability, delivery, and any
-                  showroom offers before you drive over.
+                  current store offers.
                 </p>
               </div>
             </div>
@@ -225,8 +225,8 @@ export default async function ProductPage({ params }: PageProps) {
               Who should try it?
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
-              Use this as a starting point. Comfort is personal, and the showroom comparison is the
-              point of the site.
+              Use this as a starting point. Comfort is personal, and in-store comparison is the
+              best way to choose.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -283,13 +283,13 @@ export default async function ProductPage({ params }: PageProps) {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">
-              Try locally
+              Try in store
             </p>
             <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
-              Ask which showroom is best.
+              Find the right showroom.
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
-              Inventory and floor models can change. Calling first makes the visit easier.
+              Floor models can change. Calling first makes the visit easier.
             </p>
           </div>
           <LocationCards compact />
