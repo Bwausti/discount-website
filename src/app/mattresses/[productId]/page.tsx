@@ -37,13 +37,14 @@ export default async function ProductPage({ params }: PageProps) {
   const brand = getBrandById(product.brandId);
   const relatedProducts = brand?.products.filter((item) => item.id !== product.id).slice(0, 3) ?? [];
   const gallery = product.gallery.length > 0 ? product.gallery : [product.image];
+  const usesLifestyleCrop = product.brandId === "puffy";
   const productImageClassName =
-    product.id === "puffy-monarch"
-      ? "object-cover object-[50%_30%]"
+    usesLifestyleCrop
+      ? "object-cover object-[50%_36%]"
       : "object-contain p-8";
   const galleryImageClassName =
-    product.id === "puffy-monarch"
-      ? "object-cover object-[50%_30%]"
+    usesLifestyleCrop
+      ? "object-cover object-[50%_36%]"
       : "object-contain p-3";
 
   return (
@@ -51,7 +52,7 @@ export default async function ProductPage({ params }: PageProps) {
       <section className="bg-white px-4 py-12 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
           <div>
-            <div className="relative aspect-[4/3] overflow-hidden rounded border border-slate-200 bg-slate-100 shadow-sm">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] border border-[#dedbd2] bg-slate-100 shadow-sm">
               <Image
                 src={product.image}
                 alt={product.model}
@@ -71,7 +72,7 @@ export default async function ProductPage({ params }: PageProps) {
                 {gallery.slice(0, 3).map((image) => (
                   <div
                     key={image}
-                    className="relative aspect-[4/3] overflow-hidden rounded border border-slate-200 bg-slate-100"
+                    className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[#dedbd2] bg-slate-100"
                   >
                     <Image
                       src={image}
@@ -106,11 +107,68 @@ export default async function ProductPage({ params }: PageProps) {
             </p>
             <p className="mt-4 text-base leading-7 text-slate-600">{product.availability}</p>
 
-            <div className="mt-8 rounded border border-slate-200 bg-[#f7f8fb] p-5">
+            <div className="mt-8 grid gap-4 sm:grid-cols-[0.9fr_1.1fr]">
+              <div className="rounded-[24px] border border-[#dedbd2] bg-[#fbfaf4] p-5 shadow-sm">
+                {product.onlinePrice ? (
+                  <>
+                    <p className="text-xs font-black uppercase tracking-[0.18em] text-[#b78200]">
+                      {product.onlinePrice.label}
+                    </p>
+                    <p className="mt-3 text-5xl font-black tracking-tight text-slate-950">
+                      {product.onlinePrice.amount}
+                    </p>
+                    <p className="mt-3 text-sm font-semibold leading-6 text-slate-600">
+                      Pulled from{" "}
+                      <a
+                        href={product.onlinePrice.sourceUrl}
+                        className="font-black text-slate-950 underline decoration-[#f2b705] decoration-2 underline-offset-4"
+                      >
+                        {product.onlinePrice.sourceName}
+                      </a>{" "}
+                      on {product.onlinePrice.asOf}.
+                    </p>
+                    {product.onlinePrice.note ? (
+                      <p className="mt-2 text-xs font-semibold leading-5 text-slate-500">
+                        {product.onlinePrice.note}
+                      </p>
+                    ) : null}
+                  </>
+                ) : (
+                  <>
+                    <p className="text-xs font-black uppercase tracking-[0.18em] text-[#b78200]">
+                      Local price
+                    </p>
+                    <p className="mt-3 text-4xl font-black tracking-tight text-slate-950">
+                      Call or visit
+                    </p>
+                    <p className="mt-3 text-sm font-semibold leading-6 text-slate-600">
+                      This line is best priced through the showroom because stock, size, and local
+                      promotions can change quickly.
+                    </p>
+                  </>
+                )}
+              </div>
+              <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-[#cf2333]">
+                  Discount Mattress price
+                </p>
+                <p className="mt-3 text-3xl font-black tracking-tight text-slate-950">
+                  Call for today&apos;s local offer.
+                </p>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  The online number is a reference point. The store can confirm size, current
+                  availability, delivery, and any local pricing before you drive over.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-4 rounded-[24px] border border-slate-200 bg-[#f7f8fb] p-5">
               <p className="text-sm font-black uppercase tracking-[0.18em] text-[#cf2333]">
                 Local purchase path
               </p>
-              <p className="mt-3 text-2xl font-black text-slate-950">Call for today&apos;s price.</p>
+              <p className="mt-3 text-2xl font-black text-slate-950">
+                Try it locally before you decide.
+              </p>
               <p className="mt-2 text-sm leading-6 text-slate-600">
                 Discount Mattress does not need an online cart here. The best next step is to call
                 or visit so the team can confirm size, availability, delivery, and current offers.
