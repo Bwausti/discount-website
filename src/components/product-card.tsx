@@ -3,9 +3,10 @@ import Link from "next/link";
 import { Product } from "@/lib/products";
 
 export function ProductCard({ product, priority = false }: { product: Product; priority?: boolean }) {
+  const startingPrice = product.priceVariants?.[0]?.amount ?? product.onlinePrice?.amount;
   const imageClassName =
     product.id === "puffy-monarch"
-      ? "object-cover object-[50%_34%] transition duration-500 group-hover:scale-[1.04]"
+      ? "scale-[1.18] object-cover object-[50%_22%] transition duration-500 group-hover:scale-[1.22]"
       : "object-contain p-6 transition duration-500 group-hover:scale-[1.04]";
 
   return (
@@ -25,13 +26,13 @@ export function ProductCard({ product, priority = false }: { product: Product; p
               {product.badge}
             </span>
           ) : null}
-          {product.onlinePrice ? (
+          {startingPrice ? (
             <div className="absolute bottom-4 left-4 rounded-2xl bg-white/95 px-4 py-3 shadow-lg backdrop-blur">
               <p className="text-[0.62rem] font-black uppercase tracking-[0.16em] text-slate-500">
-                Online ref.
+                From
               </p>
               <p className="text-2xl font-black tracking-tight text-slate-950">
-                {product.onlinePrice.amount}
+                {startingPrice}
               </p>
             </div>
           ) : null}
@@ -70,17 +71,17 @@ export function ProductCard({ product, priority = false }: { product: Product; p
 
         <div className="mt-auto pt-5">
           <div className="rounded-2xl border border-[#dedbd2] bg-[#fbfaf4] p-4">
-            {product.onlinePrice ? (
+            {startingPrice ? (
               <>
                 <p className="text-[0.65rem] font-black uppercase tracking-[0.16em] text-[#b78200]">
-                  {product.onlinePrice.label}
+                  Prices
                 </p>
                 <p className="mt-1 text-3xl font-black tracking-tight text-slate-950">
-                  {product.onlinePrice.amount}
+                  From {startingPrice}
                 </p>
                 <p className="mt-1 text-xs font-semibold leading-5 text-slate-600">
-                  Local Discount Mattress pricing may be lower. Call or visit for today&apos;s
-                  showroom price.
+                  See size pricing on the product page, then call for today&apos;s local showroom
+                  offer.
                 </p>
               </>
             ) : (
