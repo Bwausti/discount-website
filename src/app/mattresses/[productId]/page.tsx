@@ -38,13 +38,25 @@ export default async function ProductPage({ params }: PageProps) {
   const relatedProducts = brand?.products.filter((item) => item.id !== product.id).slice(0, 3) ?? [];
   const gallery = product.gallery.length > 0 ? product.gallery : [product.image];
   const usesLifestyleCrop = product.brandId === "puffy";
+  const priceRows =
+    product.priceVariants ??
+    (product.onlinePrice
+      ? [
+          {
+            label: product.category === "Mattress" ? "Queen" : "Price",
+            amount: product.onlinePrice.amount,
+            sourceUrl: product.onlinePrice.sourceUrl,
+          },
+        ]
+      : []);
+  const startingPrice = priceRows[0]?.amount;
   const productImageClassName =
     usesLifestyleCrop
-      ? "object-cover object-[50%_36%]"
+      ? "scale-[1.24] object-cover object-[50%_22%]"
       : "object-contain p-8";
   const galleryImageClassName =
     usesLifestyleCrop
-      ? "object-cover object-[50%_36%]"
+      ? "scale-[1.16] object-cover object-[50%_22%]"
       : "object-contain p-3";
 
   return (
@@ -107,45 +119,41 @@ export default async function ProductPage({ params }: PageProps) {
             </p>
             <p className="mt-4 text-base leading-7 text-slate-600">{product.availability}</p>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-[0.9fr_1.1fr]">
+            <div className="mt-8 grid gap-4 sm:grid-cols-[1.15fr_0.85fr]">
               <div className="rounded-[24px] border border-[#dedbd2] bg-[#fbfaf4] p-5 shadow-sm">
-                {product.onlinePrice ? (
-                  <>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
                     <p className="text-xs font-black uppercase tracking-[0.18em] text-[#b78200]">
-                      {product.onlinePrice.label}
+                      Prices
                     </p>
-                    <p className="mt-3 text-5xl font-black tracking-tight text-slate-950">
-                      {product.onlinePrice.amount}
+                    <p className="mt-2 text-4xl font-black tracking-tight text-slate-950">
+                      {startingPrice ? `From ${startingPrice}` : "Call or visit"}
                     </p>
-                    <p className="mt-3 text-sm font-semibold leading-6 text-slate-600">
-                      Pulled from{" "}
-                      <a
-                        href={product.onlinePrice.sourceUrl}
-                        className="font-black text-slate-950 underline decoration-[#f2b705] decoration-2 underline-offset-4"
-                      >
-                        {product.onlinePrice.sourceName}
-                      </a>{" "}
-                      on {product.onlinePrice.asOf}.
-                    </p>
-                    {product.onlinePrice.note ? (
-                      <p className="mt-2 text-xs font-semibold leading-5 text-slate-500">
-                        {product.onlinePrice.note}
-                      </p>
-                    ) : null}
-                  </>
+                  </div>
+                </div>
+                {priceRows.length > 0 ? (
+                  <div className="mt-5 overflow-hidden rounded-2xl border border-[#dedbd2] bg-white">
+                    <div className="grid grid-cols-2 bg-slate-950 px-4 py-3 text-[0.68rem] font-black uppercase tracking-[0.16em] text-white">
+                      <span>Size</span>
+                      <span className="text-right">Price</span>
+                    </div>
+                    <div className="divide-y divide-slate-100">
+                      {priceRows.map((price) => (
+                        <div
+                          key={`${price.label}-${price.amount}`}
+                          className="grid grid-cols-2 px-4 py-3 text-sm font-black text-slate-950"
+                        >
+                          <span>{price.label}</span>
+                          <span className="text-right">{price.amount}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 ) : (
-                  <>
-                    <p className="text-xs font-black uppercase tracking-[0.18em] text-[#b78200]">
-                      Local price
-                    </p>
-                    <p className="mt-3 text-4xl font-black tracking-tight text-slate-950">
-                      Call or visit
-                    </p>
-                    <p className="mt-3 text-sm font-semibold leading-6 text-slate-600">
-                      This line is best priced through the showroom because stock, size, and local
-                      promotions can change quickly.
-                    </p>
-                  </>
+                  <p className="mt-4 text-sm font-semibold leading-6 text-slate-600">
+                    Pricing for this model depends on showroom stock, selected size, and current
+                    local offers.
+                  </p>
                 )}
               </div>
               <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
@@ -156,8 +164,8 @@ export default async function ProductPage({ params }: PageProps) {
                   Call for today&apos;s local offer.
                 </p>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  The online number is a reference point. The store can confirm size, current
-                  availability, delivery, and any local pricing before you drive over.
+                  The store can confirm current local price, size availability, delivery, and any
+                  showroom offers before you drive over.
                 </p>
               </div>
             </div>
