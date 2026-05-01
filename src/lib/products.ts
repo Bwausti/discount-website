@@ -99,6 +99,20 @@ const priceSources = {
   helixCore: "https://helixsleep.com/pages/queen-size-mattresses",
   helixLuxe: "https://helixsleep.com/products/midnight-luxe/queen-tencel",
   helixPlus: "https://helixsleep.com/products/plus",
+  helixPlusLuxe: "https://helixsleep.com/products/helix-plus-luxe",
+  helixPlusElite: "https://helixsleep.com/products/helix-plus-elite",
+  helixSunsetLuxe: "https://helixsleep.com/products/sunset-luxe",
+  helixMoonlightLuxe: "https://helixsleep.com/products/moonlight-luxe",
+  helixMidnightLuxe: "https://helixsleep.com/products/midnight-luxe",
+  helixDuskLuxe: "https://helixsleep.com/products/dusk-luxe",
+  helixDawnLuxe: "https://helixsleep.com/products/dawn-luxe",
+  helixTwilightLuxe: "https://helixsleep.com/products/twilight-luxe",
+  helixSunsetElite: "https://helixsleep.com/products/sunset-elite",
+  helixMoonlightElite: "https://helixsleep.com/products/moonlight-elite",
+  helixMidnightElite: "https://helixsleep.com/products/midnight-elite",
+  helixDuskElite: "https://helixsleep.com/products/dusk-elite",
+  helixDawnElite: "https://helixsleep.com/products/dawn-elite",
+  helixTwilightElite: "https://helixsleep.com/products/twilight-elite",
   dreamcloudPremier: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/queen",
   dreamcloudLuxe: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress",
   nectarClassic: "https://www.nectarsleep.com/mattress/queen",
@@ -173,6 +187,22 @@ const helixVariantPrices = {
     { label: "Queen", amount: "$1,199", sourceUrl: priceSources.helixPlus },
     { label: "King", amount: "$1,449", sourceUrl: priceSources.helixPlus },
     { label: "CA King", amount: "$1,449", sourceUrl: priceSources.helixPlus },
+  ],
+  plusLuxe: [
+    { label: "Twin", amount: "$1,218", sourceUrl: priceSources.helixPlusLuxe },
+    { label: "Twin XL", amount: "$1,406", sourceUrl: priceSources.helixPlusLuxe },
+    { label: "Full", amount: "$1,687", sourceUrl: priceSources.helixPlusLuxe },
+    { label: "Queen", amount: "$1,874", sourceUrl: priceSources.helixPlusLuxe },
+    { label: "King", amount: "$2,249", sourceUrl: priceSources.helixPlusLuxe },
+    { label: "CA King", amount: "$2,249", sourceUrl: priceSources.helixPlusLuxe },
+  ],
+  elite: [
+    { label: "Twin", amount: "$1,874", sourceUrl: priceSources.helixMidnightElite },
+    { label: "Twin XL", amount: "$2,062", sourceUrl: priceSources.helixMidnightElite },
+    { label: "Full", amount: "$2,483", sourceUrl: priceSources.helixMidnightElite },
+    { label: "Queen", amount: "$2,998", sourceUrl: priceSources.helixMidnightElite },
+    { label: "King", amount: "$3,374", sourceUrl: priceSources.helixMidnightElite },
+    { label: "CA King", amount: "$3,374", sourceUrl: priceSources.helixMidnightElite },
   ],
 } as const satisfies Record<string, readonly ProductPriceVariant[]>;
 
@@ -320,6 +350,382 @@ function withBrandAssets(brand: BrandDraft): Brand {
   };
 }
 
+type HelixPriceTier = keyof typeof helixVariantPrices;
+
+function helixPrices(tier: HelixPriceTier, sourceUrl: string) {
+  return helixVariantPrices[tier].map((price) => ({
+    ...price,
+    sourceUrl,
+  }));
+}
+
+function helixDraft({
+  id,
+  model,
+  type,
+  height,
+  firmness,
+  feel,
+  badge,
+  bestFor,
+  keyFeatures,
+  image,
+  gallery,
+  sourceUrl,
+  priceTier,
+}: Omit<ProductDraft, "brand" | "brandId" | "category" | "availability" | "onlinePrice" | "priceVariants" | "trial" | "warranty"> & {
+  sourceUrl: string;
+  priceTier: HelixPriceTier;
+}): ProductDraft {
+  const priceVariants = helixPrices(priceTier, sourceUrl);
+
+  return {
+    id,
+    model,
+    category: "Mattress",
+    type,
+    height,
+    firmness,
+    feel,
+    badge,
+    bestFor,
+    keyFeatures,
+    trial: "120 nights",
+    warranty: "Limited lifetime",
+    image,
+    gallery,
+    availability: "Call to confirm current showroom availability.",
+    onlinePrice: officialOnlinePrice({
+      amount: priceVariants[0]?.amount ?? "Call",
+      label: "Starting price",
+      sourceName: "Helix",
+      sourceUrl,
+    }),
+    priceVariants,
+  };
+}
+
+const helixCoreComforts = [
+  {
+    id: "helix-sunset",
+    model: "Helix Sunset",
+    firmness: "Soft",
+    feel: "Plush pressure relief",
+    badge: "Side sleeper",
+    bestFor: ["Side sleepers", "Shoulder pressure", "Plush comfort"],
+    keyFeatures: ["Soft comfort layers", "Wrapped coil support", "Pressure-relieving surface"],
+    image: "/product-assets/helix/helix-sunset-core-1.png",
+  },
+  {
+    id: "helix-moonlight",
+    model: "Helix Moonlight",
+    firmness: "Medium-soft",
+    feel: "Light contouring",
+    bestFor: ["Back sleepers", "Stomach sleepers", "Gentler support"],
+    keyFeatures: ["Soft feel", "Balanced sink", "Easy moving comfort"],
+    image: "/brand-assets/helix/hero.webp",
+  },
+  {
+    id: "helix-midnight",
+    model: "Helix Midnight",
+    firmness: "Medium",
+    feel: "Balanced support",
+    badge: "Best seller",
+    bestFor: ["Side sleepers", "Couples", "All-around comfort"],
+    keyFeatures: ["Medium feel", "Motion isolation", "Wrapped coil lift"],
+    image: "/product-assets/helix/helix-midnight-1.webp",
+    gallery: [
+      "/product-assets/helix/helix-midnight-1.webp",
+      "/product-assets/helix/helix-midnight-2.jpg",
+      "/product-assets/helix/helix-midnight-3.jpg",
+    ],
+  },
+  {
+    id: "helix-dusk",
+    model: "Helix Dusk",
+    firmness: "Medium-firm",
+    feel: "Even support",
+    bestFor: ["Back sleepers", "Stomach sleepers", "Support seekers"],
+    keyFeatures: ["Responsive comfort", "Durable edge support", "Hybrid construction"],
+    image: "/product-assets/helix/helix-dusk-core-1.png",
+  },
+  {
+    id: "helix-dawn",
+    model: "Helix Dawn",
+    firmness: "Firm",
+    feel: "Traditional firm",
+    bestFor: ["Back sleepers", "Stomach sleepers", "Minimal sink"],
+    keyFeatures: ["Firm top feel", "Stable coil support", "Low-profile contouring"],
+    image: "/product-assets/helix/helix-dawn-core-1.png",
+  },
+  {
+    id: "helix-twilight",
+    model: "Helix Twilight",
+    firmness: "Firm",
+    feel: "Firm pressure relief",
+    bestFor: ["Side sleepers", "Higher support needs", "Firm mattress shoppers"],
+    keyFeatures: ["Firm comfort surface", "High-density foams", "Hybrid lift"],
+    image: "/product-assets/helix/helix-twilight-core-1.png",
+  },
+] satisfies Array<Omit<Parameters<typeof helixDraft>[0], "type" | "height" | "sourceUrl" | "priceTier">>;
+
+const helixLuxeComforts = [
+  {
+    base: "Sunset",
+    id: "helix-sunset-luxe",
+    firmness: "Soft",
+    feel: "Plush pillow top",
+    badge: "Luxe",
+    bestFor: ["Side sleepers", "Pressure relief", "Pillow top comfort"],
+    image: "/product-assets/helix/helix-sunset-luxe-1.webp",
+    gallery: [
+      "/product-assets/helix/helix-sunset-luxe-1.webp",
+      "/product-assets/helix/helix-sunset-luxe-2.jpg",
+      "/product-assets/helix/helix-sunset-luxe-3.jpg",
+    ],
+    sourceUrl: priceSources.helixSunsetLuxe,
+  },
+  {
+    base: "Moonlight",
+    id: "helix-moonlight-luxe",
+    firmness: "Medium-soft",
+    feel: "Soft contour with lumbar support",
+    bestFor: ["Back sleepers", "Stomach sleepers", "Softer luxury feel"],
+    image: "/brand-assets/helix/hero.webp",
+    sourceUrl: priceSources.helixMoonlightLuxe,
+  },
+  {
+    base: "Midnight",
+    id: "helix-midnight-luxe",
+    firmness: "Medium",
+    feel: "Plush top, supportive core",
+    badge: "Premium pick",
+    bestFor: ["Side sleepers", "Couples", "Cooling upgrade shoppers"],
+    image: "/product-assets/helix/helix-midnight-luxe-2.webp",
+    gallery: [
+      "/product-assets/helix/helix-midnight-luxe-2.webp",
+      "/product-assets/helix/helix-midnight-luxe-3.png",
+    ],
+    sourceUrl: priceSources.helixMidnightLuxe,
+  },
+  {
+    base: "Dusk",
+    id: "helix-dusk-luxe",
+    firmness: "Medium-firm",
+    feel: "Balanced luxury support",
+    bestFor: ["Back sleepers", "Stomach sleepers", "Couples"],
+    image: "/product-assets/helix/helix-dusk-luxe-1.png",
+    sourceUrl: priceSources.helixDuskLuxe,
+  },
+  {
+    base: "Dawn",
+    id: "helix-dawn-luxe",
+    firmness: "Firm",
+    feel: "Firm pillow top",
+    bestFor: ["Back sleepers", "Stomach sleepers", "Firm luxury shoppers"],
+    image: "/product-assets/helix/helix-dawn-luxe-1.png",
+    sourceUrl: priceSources.helixDawnLuxe,
+  },
+  {
+    base: "Twilight",
+    id: "helix-twilight-luxe",
+    firmness: "Firm",
+    feel: "Firm pressure relief",
+    bestFor: ["Side sleepers", "Firm feel shoppers", "Lumbar support"],
+    image: "/product-assets/helix/helix-twilight-luxe-1.png",
+    sourceUrl: priceSources.helixTwilightLuxe,
+  },
+] satisfies Array<{
+  base: string;
+  id: string;
+  firmness: string;
+  feel: string;
+  badge?: string;
+  bestFor: string[];
+  image: string;
+  gallery?: string[];
+  sourceUrl: string;
+}>;
+
+const helixEliteComforts = [
+  {
+    base: "Sunset",
+    id: "helix-sunset-elite",
+    firmness: "Soft",
+    feel: "Ultra-plush cooling luxury",
+    image: "/product-assets/helix/helix-sunset-elite-1.png",
+    gallery: [
+      "/product-assets/helix/helix-sunset-elite-1.png",
+      "/product-assets/helix/helix-sunset-elite-2.png",
+    ],
+    sourceUrl: priceSources.helixSunsetElite,
+  },
+  {
+    base: "Moonlight",
+    id: "helix-moonlight-elite",
+    firmness: "Medium-soft",
+    feel: "Soft Elite support",
+    image: "/brand-assets/helix/hero.webp",
+    sourceUrl: priceSources.helixMoonlightElite,
+  },
+  {
+    base: "Midnight",
+    id: "helix-midnight-elite",
+    firmness: "Medium",
+    feel: "Elite side-sleeper comfort",
+    image: "/product-assets/helix/helix-midnight-elite-1.png",
+    gallery: [
+      "/product-assets/helix/helix-midnight-elite-1.png",
+      "/product-assets/helix/helix-midnight-elite-2.png",
+    ],
+    sourceUrl: priceSources.helixMidnightElite,
+  },
+  {
+    base: "Dusk",
+    id: "helix-dusk-elite",
+    firmness: "Medium-firm",
+    feel: "Elite balanced support",
+    image: "/product-assets/helix/helix-dusk-elite-1.png",
+    gallery: [
+      "/product-assets/helix/helix-dusk-elite-1.png",
+      "/product-assets/helix/helix-dusk-elite-2.png",
+    ],
+    sourceUrl: priceSources.helixDuskElite,
+  },
+  {
+    base: "Dawn",
+    id: "helix-dawn-elite",
+    firmness: "Firm",
+    feel: "Elite firm support",
+    image: "/product-assets/helix/helix-dawn-elite-1.png",
+    sourceUrl: priceSources.helixDawnElite,
+  },
+  {
+    base: "Twilight",
+    id: "helix-twilight-elite",
+    firmness: "Firm",
+    feel: "Elite firm pressure relief",
+    image: "/product-assets/helix/helix-twilight-elite-1.png",
+    gallery: [
+      "/product-assets/helix/helix-twilight-elite-1.png",
+      "/product-assets/helix/helix-twilight-elite-2.png",
+    ],
+    sourceUrl: priceSources.helixTwilightElite,
+  },
+] satisfies Array<{
+  base: string;
+  id: string;
+  firmness: string;
+  feel: string;
+  image: string;
+  gallery?: string[];
+  sourceUrl: string;
+}>;
+
+const helixProducts: ProductDraft[] = [
+  ...helixCoreComforts.map((product) =>
+    helixDraft({
+      ...product,
+      type: "Hybrid",
+      height: "11.5 in",
+      sourceUrl: priceSources.helixCore,
+      priceTier: "core",
+    }),
+  ),
+  helixDraft({
+    id: "helix-plus",
+    model: "Helix Plus",
+    type: "Hybrid",
+    height: "13 in",
+    firmness: "Firm",
+    feel: "Extra supportive",
+    badge: "Plus support",
+    bestFor: ["Big and tall sleepers", "Couples", "Long-term durability"],
+    keyFeatures: ["Higher density materials", "Extra support layer", "Reinforced edge feel"],
+    image: "/product-assets/helix/helix-plus-core-1.png",
+    sourceUrl: priceSources.helixPlus,
+    priceTier: "plus",
+  }),
+  ...helixLuxeComforts.map((product) =>
+    helixDraft({
+      id: product.id,
+      model: `Helix ${product.base} Luxe`,
+      type: "Luxury hybrid",
+      height: "13.5 in",
+      firmness: product.firmness,
+      feel: product.feel,
+      badge: product.badge,
+      bestFor: product.bestFor,
+      keyFeatures: [
+        "Premium quilted pillow top",
+        "Zoned lumbar support",
+        "TENCEL and GlacioTex cooling options",
+      ],
+      image: product.image,
+      gallery: product.gallery,
+      sourceUrl: product.sourceUrl,
+      priceTier: "luxe",
+    }),
+  ),
+  helixDraft({
+    id: "helix-plus-luxe",
+    model: "Helix Plus Luxe",
+    type: "Luxury hybrid",
+    height: "13.5 in",
+    firmness: "Medium-firm",
+    feel: "Plus-size support with pillow top comfort",
+    badge: "Plus Luxe",
+    bestFor: ["Plus-size sleepers", "All sleeping positions", "Back support"],
+    keyFeatures: [
+      "Premium pillow top",
+      "ErgoAlign support option",
+      "GlacioTex cooling cover option",
+    ],
+    image: "/product-assets/helix/helix-plus-luxe-1.png",
+    sourceUrl: priceSources.helixPlusLuxe,
+    priceTier: "plusLuxe",
+  }),
+  ...helixEliteComforts.map((product) =>
+    helixDraft({
+      id: product.id,
+      model: `Helix ${product.base} Elite`,
+      type: "Elite luxury hybrid",
+      height: "15 in",
+      firmness: product.firmness,
+      feel: product.feel,
+      badge: "Elite",
+      bestFor: ["Premium comfort", "Hot sleepers", "Advanced support"],
+      keyFeatures: [
+        "GlacioTex Elite cooling cover",
+        "ErgoAlign contour layer",
+        "Microcoil comfort layers",
+      ],
+      image: product.image,
+      gallery: product.gallery,
+      sourceUrl: product.sourceUrl,
+      priceTier: "elite",
+    }),
+  ),
+  helixDraft({
+    id: "helix-plus-elite",
+    model: "Helix Plus Elite",
+    type: "Elite luxury hybrid",
+    height: "15 in",
+    firmness: "Medium-firm",
+    feel: "Top-tier plus-size support",
+    badge: "Elite Plus",
+    bestFor: ["Plus-size sleepers", "Hot sleepers", "Maximum support"],
+    keyFeatures: [
+      "GlacioTex Elite cooling cover",
+      "ErgoAlign contour layer",
+      "Reinforced support up to 2000 lbs",
+    ],
+    image: "/product-assets/helix/helix-plus-elite-1.png",
+    sourceUrl: priceSources.helixPlusElite,
+    priceTier: "elite",
+  }),
+];
+
 export const brands: Brand[] = [
   withBrandAssets({
     id: "helix",
@@ -330,197 +736,12 @@ export const brands: Brand[] = [
       "Helix gives shoppers an easy way to compare soft, medium, firm, Luxe, Elite, and Plus options in one clear lineup.",
     showroomNote:
       "Best for shoppers who know their sleep position and want a clear comfort recommendation.",
-    collectionHighlights: ["Soft to firm range", "Hybrid support", "Luxe and Elite upgrades"],
-    products: [
-      {
-        id: "helix-sunset",
-        model: "Helix Sunset",
-        category: "Mattress",
-        type: "Hybrid",
-        height: "11.5 in",
-        firmness: "Soft",
-        feel: "Plush pressure relief",
-        badge: "Side sleeper",
-        bestFor: ["Side sleepers", "Shoulder pressure", "Plush comfort"],
-        keyFeatures: ["Soft comfort layers", "Wrapped coil support", "Pressure-relieving surface"],
-        trial: "100 nights",
-        warranty: "10 years",
-        image: "/product-assets/helix/helix-sunset-core-1.png",
-        availability: "Ask what Helix models are on the floor today.",
-        onlinePrice: officialOnlinePrice({
-          amount: "$799",
-          label: "Starting price",
-          sourceName: "Helix",
-          sourceUrl: priceSources.helixCore,
-        }),
-        priceVariants: helixVariantPrices.core,
-      },
-      {
-        id: "helix-moonlight",
-        model: "Helix Moonlight",
-        category: "Mattress",
-        type: "Foam",
-        height: "10 in",
-        firmness: "Medium-soft",
-        feel: "Light contouring",
-        bestFor: ["Combination sleepers", "Lighter bodies", "Gentler support"],
-        keyFeatures: ["Memory foam feel", "Balanced sink", "Easy moving comfort"],
-        trial: "100 nights",
-        warranty: "10 years",
-        image: "/brand-assets/helix/hero.webp",
-        availability: "Call for current Helix availability.",
-        onlinePrice: officialOnlinePrice({
-          amount: "$799",
-          label: "Starting price",
-          sourceName: "Helix",
-          sourceUrl: priceSources.helixCore,
-        }),
-        priceVariants: helixVariantPrices.core,
-      },
-      {
-        id: "helix-midnight",
-        model: "Helix Midnight",
-        category: "Mattress",
-        type: "Hybrid",
-        height: "11.5 in",
-        firmness: "Medium",
-        feel: "Balanced support",
-        badge: "Best seller",
-        bestFor: ["Side sleepers", "Couples", "All-around comfort"],
-        keyFeatures: ["Medium feel", "Motion isolation", "Wrapped coil lift"],
-        trial: "100 nights",
-        warranty: "10 years",
-        image: "/product-assets/helix/helix-midnight-1.webp",
-        gallery: [
-          "/product-assets/helix/helix-midnight-1.webp",
-          "/product-assets/helix/helix-midnight-2.jpg",
-          "/product-assets/helix/helix-midnight-3.jpg",
-        ],
-        availability: "A strong starting point for most showroom visits.",
-        onlinePrice: officialOnlinePrice({
-          amount: "$799",
-          label: "Starting price",
-          sourceName: "Helix",
-          sourceUrl: priceSources.helixCore,
-        }),
-        priceVariants: helixVariantPrices.core,
-      },
-      {
-        id: "helix-dusk",
-        model: "Helix Dusk",
-        category: "Mattress",
-        type: "Hybrid",
-        height: "12 in",
-        firmness: "Medium-firm",
-        feel: "Even support",
-        bestFor: ["Back sleepers", "Stomach sleepers", "Support seekers"],
-        keyFeatures: ["Responsive comfort", "Durable edge support", "Hybrid construction"],
-        trial: "100 nights",
-        warranty: "10 years",
-        image: "/product-assets/helix/helix-dusk-1.png",
-        availability: "Call for current Helix floor models.",
-        onlinePrice: officialOnlinePrice({
-          amount: "$799",
-          label: "Starting price",
-          sourceName: "Helix",
-          sourceUrl: priceSources.helixCore,
-        }),
-        priceVariants: helixVariantPrices.core,
-      },
-      {
-        id: "helix-dawn",
-        model: "Helix Dawn",
-        category: "Mattress",
-        type: "Hybrid",
-        height: "12 in",
-        firmness: "Firm",
-        feel: "Traditional firm",
-        bestFor: ["Back sleepers", "Stomach sleepers", "Minimal sink"],
-        keyFeatures: ["Firm top feel", "Stable coil support", "Low-profile contouring"],
-        trial: "100 nights",
-        warranty: "10 years",
-        image: "/product-assets/helix/helix-dawn-core-1.png",
-        availability: "Call to confirm firmness options in store.",
-        onlinePrice: officialOnlinePrice({
-          amount: "$799",
-          label: "Starting price",
-          sourceName: "Helix",
-          sourceUrl: priceSources.helixCore,
-        }),
-        priceVariants: helixVariantPrices.core,
-      },
-      {
-        id: "helix-twilight",
-        model: "Helix Twilight",
-        category: "Mattress",
-        type: "Hybrid",
-        height: "12 in",
-        firmness: "Firm",
-        feel: "Firm pressure relief",
-        bestFor: ["Stomach sleepers", "Higher support needs", "Firm mattress shoppers"],
-        keyFeatures: ["Firm comfort surface", "High-density foams", "Hybrid lift"],
-        trial: "100 nights",
-        warranty: "10 years",
-        image: "/product-assets/helix/helix-twilight-core-1.png",
-        availability: "Ask the team to compare Twilight with Dawn.",
-        onlinePrice: officialOnlinePrice({
-          amount: "$799",
-          label: "Starting price",
-          sourceName: "Helix",
-          sourceUrl: priceSources.helixCore,
-        }),
-        priceVariants: helixVariantPrices.core,
-      },
-      {
-        id: "helix-plus",
-        model: "Helix Plus",
-        category: "Mattress",
-        type: "Hybrid",
-        height: "13 in",
-        firmness: "Firm",
-        feel: "Extra supportive",
-        bestFor: ["Big and tall sleepers", "Couples", "Long-term durability"],
-        keyFeatures: ["Higher density materials", "Extra support layer", "Reinforced edge feel"],
-        trial: "100 nights",
-        warranty: "10 years",
-        image: "/product-assets/helix/helix-plus-core-1.png",
-        availability: "Call for current Plus and Luxe options.",
-        onlinePrice: officialOnlinePrice({
-          amount: "$849",
-          label: "Starting price",
-          sourceName: "Helix",
-          sourceUrl: priceSources.helixPlus,
-        }),
-        priceVariants: helixVariantPrices.plus,
-      },
-      {
-        id: "helix-midnight-luxe",
-        model: "Helix Midnight Luxe",
-        category: "Mattress",
-        type: "Luxury hybrid",
-        height: "14 in",
-        firmness: "Medium",
-        feel: "Plush top, supportive core",
-        badge: "Premium pick",
-        bestFor: ["Side sleepers", "Couples", "Cooling upgrade shoppers"],
-        keyFeatures: ["Pillow top comfort", "Zoned lumbar support", "Cooling cover option"],
-        trial: "100 nights",
-        warranty: "15 years",
-        image: "/product-assets/helix/helix-midnight-luxe-2.webp",
-        gallery: [
-          "/product-assets/helix/helix-midnight-luxe-2.webp",
-          "/product-assets/helix/helix-midnight-luxe-3.png",
-        ],
-        availability: "Ask which Luxe models are ready to try.",
-        onlinePrice: officialOnlinePrice({
-          amount: "$1,149",
-          label: "Starting price",
-          sourceName: "Helix",
-          sourceUrl: priceSources.helixLuxe,
-        }),
-        priceVariants: helixVariantPrices.luxe,
-      },
+    collectionHighlights: [
+      "Core, Luxe, and Elite",
+      "ErgoAlign support options",
+      "GlacioTex cooling covers",
     ],
+    products: helixProducts,
   }),
   withBrandAssets({
     id: "puffy",
@@ -1466,6 +1687,13 @@ export const featuredProducts = [
   "nectar-premier",
   "naturepedic-eos",
   "bedtech-btx4",
+].map((id) => products.find((product) => product.id === id)!);
+
+export const sleepSystemAddOns = [
+  "bedtech-btx4",
+  "bedtech-bt3000",
+  "bedgear-storm",
+  "bedgear-balance",
 ].map((id) => products.find((product) => product.id === id)!);
 
 export const productCategories = [
