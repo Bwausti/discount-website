@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductGrid } from "@/components/product-card";
 import { LeadCta, LocationCards, PageShell } from "@/components/site-shell";
-import { brands, getBrandById, storeInfo } from "@/lib/products";
+import { brands, getBrandById, sleepSystemAddOns, storeInfo } from "@/lib/products";
 
 interface PageProps {
   params: Promise<{ brand: string }>;
@@ -36,6 +36,10 @@ export default async function BrandCollectionPage({ params }: PageProps) {
 
   const heroImage = brand.heroImage ?? brand.products[0]?.image;
   const heroProducts = brand.products.slice(0, 3);
+  const showSleepSystemAddOns =
+    brand.products.some((product) => product.category === "Mattress") &&
+    brand.id !== "bedgear" &&
+    brand.id !== "bedtech";
 
   return (
     <PageShell>
@@ -169,6 +173,8 @@ export default async function BrandCollectionPage({ params }: PageProps) {
         </div>
       </section>
 
+      {brand.id === "helix" ? <HelixCollectionGuide /> : null}
+
       <section className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
@@ -194,6 +200,26 @@ export default async function BrandCollectionPage({ params }: PageProps) {
           <ProductGrid products={brand.products} priorityCount={3} />
         </div>
       </section>
+
+      {showSleepSystemAddOns ? (
+        <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-8 max-w-3xl">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">
+                Complete the setup
+              </p>
+              <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
+                Pair your mattress with a base or pillow.
+              </h2>
+              <p className="mt-4 text-lg leading-8 text-slate-600">
+                Try the mattress with an adjustable base and a fitted pillow so the showroom
+                comparison feels closer to how you will actually sleep at home.
+              </p>
+            </div>
+            <ProductGrid products={sleepSystemAddOns} />
+          </div>
+        </section>
+      ) : null}
 
       {brand.galleryImages.length > 0 ? (
         <section className="bg-white px-4 py-16 sm:px-6 lg:px-8">
@@ -249,6 +275,70 @@ export default async function BrandCollectionPage({ params }: PageProps) {
         body="Call the store and describe how you sleep. They can point you toward the right firmness before you arrive."
       />
     </PageShell>
+  );
+}
+
+function HelixCollectionGuide() {
+  const collectionCards = [
+    {
+      name: "Core",
+      detail: "11.5 in hybrids in soft, medium, and firm feels.",
+      points: ["Sunset, Moonlight, Midnight", "Dusk, Dawn, Twilight", "Best value path"],
+    },
+    {
+      name: "Luxe",
+      detail: "13.5 in pillow top upgrades with more support choices.",
+      points: ["All six main feels", "ErgoAlign option", "GlacioTex cooling options"],
+    },
+    {
+      name: "Elite",
+      detail: "15 in luxury builds with premium cooling and contouring.",
+      points: ["All six main feels", "ErgoAlign included", "GlacioTex Elite cooling"],
+    },
+    {
+      name: "Plus",
+      detail: "Extra-supportive options for plus-size sleepers.",
+      points: ["Helix Plus", "Plus Luxe", "Plus Elite"],
+    },
+  ];
+
+  return (
+    <section className="bg-white px-4 py-14 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-8 max-w-3xl">
+          <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">
+            Helix lineup
+          </p>
+          <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
+            Core, Luxe, Elite, and Plus are all listed.
+          </h2>
+          <p className="mt-4 text-lg leading-8 text-slate-600">
+            Start with your sleep position and firmness, then compare support and cooling upgrades
+            in the showroom.
+          </p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {collectionCards.map((card) => (
+            <article
+              key={card.name}
+              className="rounded-[24px] border border-[#dedbd2] bg-[#fbfaf4] p-5 shadow-sm"
+            >
+              <h3 className="text-3xl font-black tracking-tight text-slate-950">{card.name}</h3>
+              <p className="mt-3 text-sm font-semibold leading-6 text-slate-700">
+                {card.detail}
+              </p>
+              <ul className="mt-5 grid gap-2 text-sm font-bold text-slate-900">
+                {card.points.map((point) => (
+                  <li key={point} className="rounded-full bg-white px-3 py-2">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
