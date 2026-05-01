@@ -43,108 +43,108 @@ export default async function BrandCollectionPage({ params }: PageProps) {
 
   return (
     <PageShell>
-      <section className="bg-[#fbfaf4] px-4 pb-10 pt-5 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-[1500px] gap-5 xl:grid-cols-[0.78fr_1.55fr]">
-          <div className="flex flex-col justify-center rounded-[26px] bg-[#f4f2ea] p-6 md:p-8 xl:min-h-[510px]">
-            <p className="text-xs font-black uppercase tracking-[0.24em] text-[#b98100]">
-              Bowling Green collection
-            </p>
-            <h1 className="mt-4 text-balance text-4xl font-black leading-[0.95] tracking-tight text-slate-950 md:text-5xl xl:text-[4.15rem]">
-              {brand.name} mattresses
-            </h1>
-            <p className="mt-5 text-xl font-black leading-8 text-slate-950">{brand.tagline}</p>
-            <p className="mt-4 max-w-xl text-base font-semibold leading-7 text-slate-700">
-              {brand.description}
-            </p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              {brand.collectionHighlights.slice(0, 3).map((highlight) => (
-                <span
-                  key={highlight}
-                  className="rounded-full bg-white px-3 py-1.5 text-xs font-black text-slate-800 shadow-sm"
-                >
-                  {highlight}
-                </span>
-              ))}
-            </div>
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a
-                href={storeInfo.primaryPhoneHref}
-                className="inline-flex items-center justify-center rounded-full bg-[#f2b705] px-6 py-3.5 text-sm font-black text-slate-950 shadow-sm transition hover:bg-[#dba300]"
-              >
-                Call for today&apos;s price
-              </a>
-              <Link
-                href="/locations"
-                className="inline-flex items-center justify-center rounded-full border-2 border-slate-950 bg-white px-6 py-3.5 text-sm font-black text-slate-950 transition hover:bg-slate-950 hover:text-white"
-              >
-                Visit a showroom
-              </Link>
-            </div>
-          </div>
+      <section className="bg-[#fbfaf4] px-4 py-6 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="relative overflow-hidden rounded-[28px] bg-slate-950 shadow-sm">
+            {heroImage ? (
+              <Image
+                src={heroImage}
+                alt={`${brand.name} mattress collection`}
+                fill
+                priority
+                sizes="100vw"
+                className="object-cover opacity-80"
+              />
+            ) : null}
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/15 via-slate-950/35 to-slate-950/92 lg:bg-gradient-to-r lg:from-slate-950/92 lg:via-slate-950/50 lg:to-slate-950/15" />
+            <div className="relative z-10 grid min-h-[620px] gap-8 p-5 sm:p-8 lg:min-h-[560px] lg:grid-cols-[0.95fr_1.05fr] lg:p-10">
+              <div className="flex flex-col justify-between">
+                <div className="inline-flex min-h-16 w-fit max-w-[230px] items-center rounded-2xl bg-white/92 px-5 py-3 shadow-xl backdrop-blur">
+                  {brand.logo ? (
+                    <Image
+                      src={brand.logo}
+                      alt={`${brand.name} logo`}
+                      width={220}
+                      height={90}
+                      unoptimized
+                      className="max-h-12 w-auto max-w-full object-contain"
+                    />
+                  ) : (
+                    <p className="text-xl font-black text-slate-950">{brand.name}</p>
+                  )}
+                </div>
 
-          <div className="relative overflow-hidden rounded-[26px] bg-white p-3 shadow-sm xl:min-h-[510px]">
-            <div className="relative min-h-[360px] overflow-hidden rounded-[22px] bg-[#ebe7df] xl:min-h-[484px]">
-              {heroImage ? (
-                <Image
-                  src={heroImage}
-                  alt={`${brand.name} mattress collection`}
-                  fill
-                  priority
-                  sizes="(min-width: 1280px) 58vw, 100vw"
-                  className="object-cover"
-                />
-              ) : null}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-transparent to-white/20" />
-            </div>
-            <div className="absolute left-6 top-6 flex min-h-28 w-[min(270px,calc(100%-48px))] items-center rounded-[22px] bg-white/94 px-6 shadow-xl backdrop-blur">
-              {brand.logo ? (
-                <Image
-                  src={brand.logo}
-                  alt={`${brand.name} logo`}
-                  width={250}
-                  height={110}
-                  unoptimized
-                  className="max-h-20 w-auto max-w-full object-contain"
-                />
-              ) : (
-                <p className="text-2xl font-black text-slate-950">{brand.name}</p>
-              )}
-            </div>
-            <div className="absolute bottom-6 left-6 right-6">
-              <div className="grid overflow-hidden rounded-[22px] bg-white/94 shadow-xl backdrop-blur md:grid-cols-[0.75fr_1.25fr]">
-                <div className="border-b border-[#dedbd2] p-5 md:border-b-0 md:border-r">
-                  <p className="text-xs font-black uppercase tracking-[0.2em] text-[#b98100]">
-                    Showroom note
+                <div className="max-w-2xl pt-24 lg:pt-12">
+                  <p className="text-xs font-black uppercase tracking-[0.24em] text-[#f2b705]">
+                    Bowling Green collection
                   </p>
-                  <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+                  <h1 className="mt-4 text-balance text-4xl font-black leading-[0.95] tracking-tight text-white md:text-5xl xl:text-[4.5rem]">
+                    {brand.name} mattresses
+                  </h1>
+                  <p className="mt-5 max-w-xl text-xl font-black leading-8 text-white">
+                    {brand.tagline}
+                  </p>
+                  <p className="mt-4 max-w-xl text-base font-semibold leading-7 text-white/78">
+                    {brand.description}
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {brand.collectionHighlights.slice(0, 3).map((highlight) => (
+                      <span
+                        key={highlight}
+                        className="rounded-full bg-white/14 px-3 py-1.5 text-xs font-black text-white ring-1 ring-white/18 backdrop-blur"
+                      >
+                        {highlight}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                    <a
+                      href={storeInfo.primaryPhoneHref}
+                      className="inline-flex items-center justify-center rounded-full bg-[#f2b705] px-6 py-3.5 text-sm font-black text-slate-950 shadow-sm transition hover:bg-[#ffd24d]"
+                    >
+                      Call for today&apos;s price
+                    </a>
+                    <Link
+                      href="/locations"
+                      className="inline-flex items-center justify-center rounded-full border border-white/45 bg-white/10 px-6 py-3.5 text-sm font-black text-white backdrop-blur transition hover:bg-white hover:text-slate-950"
+                    >
+                      Visit a showroom
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-end">
+                <div className="w-full rounded-[24px] border border-white/15 bg-white/92 p-4 shadow-2xl backdrop-blur md:p-5">
+                  <p className="max-w-xl text-lg font-black leading-7 text-slate-950">
                     {brand.showroomNote}
                   </p>
-                </div>
-                <div className="grid grid-cols-3 gap-2 p-3">
-                  {heroProducts.map((product) => (
-                    <Link
-                      key={product.id}
-                      href={`/mattresses/${product.id}`}
-                      className="group rounded-2xl bg-[#f4f2ea] p-2 transition hover:bg-[#ede8dc]"
-                    >
-                      <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-white">
-                        <Image
-                          src={product.image}
-                          alt={product.model}
-                          fill
-                          sizes="160px"
-                          className={
-                            product.id === "puffy-monarch"
-                              ? "object-cover object-[50%_30%] transition group-hover:scale-[1.03]"
-                              : "object-contain p-2 transition group-hover:scale-[1.03]"
-                          }
-                        />
-                      </div>
-                      <p className="mt-2 truncate text-xs font-black text-slate-950">
-                        {product.model}
-                      </p>
-                    </Link>
-                  ))}
+                  <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                    {heroProducts.map((product) => (
+                      <Link
+                        key={product.id}
+                        href={`/mattresses/${product.id}`}
+                        className="group overflow-hidden rounded-2xl bg-[#f4f2ea] transition hover:-translate-y-0.5 hover:bg-[#eee9dc]"
+                      >
+                        <div className="relative aspect-[5/4] overflow-hidden bg-[#ebe7df]">
+                          <Image
+                            src={product.image}
+                            alt={product.model}
+                            fill
+                            sizes="180px"
+                            className={
+                              product.id === "puffy-monarch"
+                                ? "object-cover object-[50%_30%] transition group-hover:scale-[1.03]"
+                                : "object-contain p-3 transition group-hover:scale-[1.03]"
+                            }
+                          />
+                        </div>
+                        <p className="p-3 text-sm font-black leading-tight text-slate-950">
+                          {product.model}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -226,10 +226,10 @@ export default async function BrandCollectionPage({ params }: PageProps) {
           <div className="mx-auto max-w-7xl">
             <div className="mb-8 max-w-3xl">
               <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">
-                Visual guide
+                Brand gallery
               </p>
               <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
-                Brand details and showroom context.
+                More ways to compare {brand.name}.
               </h2>
             </div>
             <div className="grid gap-4 md:grid-cols-3">
@@ -259,7 +259,7 @@ export default async function BrandCollectionPage({ params }: PageProps) {
               Try in store
             </p>
             <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
-              Call before you drive.
+              Plan your visit.
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
               The team can tell you which location is best for {brand.name}, current prices, and
