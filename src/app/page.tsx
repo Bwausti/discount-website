@@ -259,10 +259,10 @@ export default function Home() {
             </h2>
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {[
-                "No checkout cart or fake online inventory.",
-                "Clear call-for-price paths on every model.",
+                "Current prices confirmed by phone or in store.",
+                "Easy ways to call, visit, and compare.",
                 "Brand pages that help shoppers compare before visiting.",
-                "Policy and warranty language that stays store-confirmed.",
+                "Friendly help with comfort, delivery, and warranty questions.",
               ].map((item) => (
                 <div key={item} className="rounded border border-slate-200 bg-[#f7f8fb] p-4">
                   <p className="text-sm font-bold leading-6 text-slate-800">{item}</p>
