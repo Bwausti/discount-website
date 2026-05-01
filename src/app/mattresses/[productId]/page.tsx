@@ -3,7 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductGrid } from "@/components/product-card";
 import { LeadCta, LocationCards, PageShell } from "@/components/site-shell";
-import { getBrandById, getProductById, products, storeInfo } from "@/lib/products";
+import {
+  getBrandById,
+  getProductById,
+  products,
+  sleepSystemAddOns,
+  storeInfo,
+} from "@/lib/products";
 
 interface PageProps {
   params: Promise<{ productId: string }>;
@@ -38,6 +44,7 @@ export default async function ProductPage({ params }: PageProps) {
   const relatedProducts = brand?.products.filter((item) => item.id !== product.id).slice(0, 3) ?? [];
   const gallery = product.gallery.length > 0 ? product.gallery : [product.image];
   const usesLifestyleCrop = product.brandId === "puffy";
+  const showAddOns = product.category === "Mattress";
   const priceRows =
     product.priceVariants ??
     (product.onlinePrice
@@ -251,6 +258,26 @@ export default async function ProductPage({ params }: PageProps) {
           </div>
         </div>
       </section>
+
+      {showAddOns ? (
+        <section className="bg-[#f2efe5] px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-8 max-w-3xl">
+              <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">
+                Complete the bed
+              </p>
+              <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
+                Add a base or pillow while you compare.
+              </h2>
+              <p className="mt-4 text-lg leading-8 text-slate-600">
+                Adjustable bases and pillows can change how a mattress feels. Try them together in
+                the showroom before you decide.
+              </p>
+            </div>
+            <ProductGrid products={sleepSystemAddOns} />
+          </div>
+        </section>
+      ) : null}
 
       <section className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr]">
