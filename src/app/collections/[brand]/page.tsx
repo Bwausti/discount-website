@@ -35,79 +35,133 @@ export default async function BrandCollectionPage({ params }: PageProps) {
   }
 
   const heroImage = brand.heroImage ?? brand.products[0]?.image;
+  const heroProducts = brand.products.slice(0, 3);
 
   return (
     <PageShell>
-      <section className="relative isolate overflow-hidden bg-[#101827]">
-        {heroImage ? (
-          <Image
-            src={heroImage}
-            alt={`${brand.name} mattress collection`}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover opacity-50"
-          />
-        ) : null}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#08111f] via-[#08111f]/82 to-[#08111f]/35" />
-        <div className="relative mx-auto grid min-h-[480px] max-w-7xl gap-10 px-4 py-16 text-white sm:px-6 lg:grid-cols-[1.1fr_0.7fr] lg:items-center lg:px-8">
-          <div>
-            <p className="text-sm font-black uppercase tracking-[0.26em] text-white/70">
-              Discount Mattress collection
+      <section className="bg-[#fbfaf4] px-4 pb-10 pt-5 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-[1500px] gap-5 xl:grid-cols-[0.78fr_1.55fr]">
+          <div className="flex flex-col justify-center rounded-[26px] bg-[#f4f2ea] p-6 md:p-8 xl:min-h-[510px]">
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-[#b98100]">
+              Bowling Green collection
             </p>
-            <h1 className="mt-5 text-balance text-5xl font-black tracking-tight md:text-7xl">
-              {brand.name}
+            <h1 className="mt-4 text-balance text-4xl font-black leading-[0.95] tracking-tight text-slate-950 md:text-5xl xl:text-[4.15rem]">
+              {brand.name} mattresses
             </h1>
-            <p className="mt-5 max-w-2xl text-xl leading-9 text-slate-100">{brand.tagline}</p>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-200">{brand.description}</p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <p className="mt-5 text-xl font-black leading-8 text-slate-950">{brand.tagline}</p>
+            <p className="mt-4 max-w-xl text-base font-semibold leading-7 text-slate-700">
+              {brand.description}
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {brand.collectionHighlights.slice(0, 3).map((highlight) => (
+                <span
+                  key={highlight}
+                  className="rounded-full bg-white px-3 py-1.5 text-xs font-black text-slate-800 shadow-sm"
+                >
+                  {highlight}
+                </span>
+              ))}
+            </div>
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a
                 href={storeInfo.primaryPhoneHref}
-                className="rounded bg-[#cf2333] px-7 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-white transition hover:bg-[#a91c2a]"
+                className="inline-flex items-center justify-center rounded-full bg-[#f2b705] px-6 py-3.5 text-sm font-black text-slate-950 shadow-sm transition hover:bg-[#dba300]"
               >
-                Call for price
+                Call for today&apos;s price
               </a>
               <Link
                 href="/locations"
-                className="rounded border border-white/45 px-7 py-4 text-center text-sm font-black uppercase tracking-[0.12em] text-white transition hover:bg-white/10"
+                className="inline-flex items-center justify-center rounded-full border-2 border-slate-950 bg-white px-6 py-3.5 text-sm font-black text-slate-950 transition hover:bg-slate-950 hover:text-white"
               >
-                Visit store
+                Visit a showroom
               </Link>
             </div>
           </div>
-          <div className="rounded border border-white/20 bg-white/95 p-6 shadow-2xl">
-            {brand.logo ? (
-              <Image
-                src={brand.logo}
-                alt={`${brand.name} logo`}
-                width={280}
-                height={120}
-                unoptimized
-                className="mx-auto max-h-24 w-auto object-contain"
-              />
-            ) : (
-              <p className="text-center text-3xl font-black text-slate-950">{brand.name}</p>
-            )}
-            <div className="mt-6 grid grid-cols-2 gap-3 text-slate-900">
-              <Metric label="Models" value={`${brand.products.length}`} />
-              <Metric
-                label="Status"
-                value={brand.status === "ask-in-store" ? "Confirm" : "Featured"}
-              />
+
+          <div className="relative overflow-hidden rounded-[26px] bg-white p-3 shadow-sm xl:min-h-[510px]">
+            <div className="relative min-h-[360px] overflow-hidden rounded-[22px] bg-[#ebe7df] xl:min-h-[484px]">
+              {heroImage ? (
+                <Image
+                  src={heroImage}
+                  alt={`${brand.name} mattress collection`}
+                  fill
+                  priority
+                  sizes="(min-width: 1280px) 58vw, 100vw"
+                  className="object-cover"
+                />
+              ) : null}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-transparent to-white/20" />
             </div>
-            <p className="mt-5 rounded bg-slate-100 p-4 text-sm font-semibold leading-6 text-slate-700">
-              {brand.showroomNote}
-            </p>
+            <div className="absolute left-6 top-6 flex min-h-28 w-[min(270px,calc(100%-48px))] items-center rounded-[22px] bg-white/94 px-6 shadow-xl backdrop-blur">
+              {brand.logo ? (
+                <Image
+                  src={brand.logo}
+                  alt={`${brand.name} logo`}
+                  width={250}
+                  height={110}
+                  unoptimized
+                  className="max-h-20 w-auto max-w-full object-contain"
+                />
+              ) : (
+                <p className="text-2xl font-black text-slate-950">{brand.name}</p>
+              )}
+            </div>
+            <div className="absolute bottom-6 left-6 right-6">
+              <div className="grid overflow-hidden rounded-[22px] bg-white/94 shadow-xl backdrop-blur md:grid-cols-[0.75fr_1.25fr]">
+                <div className="border-b border-[#dedbd2] p-5 md:border-b-0 md:border-r">
+                  <p className="text-xs font-black uppercase tracking-[0.2em] text-[#b98100]">
+                    Showroom note
+                  </p>
+                  <p className="mt-2 text-sm font-bold leading-6 text-slate-800">
+                    {brand.showroomNote}
+                  </p>
+                </div>
+                <div className="grid grid-cols-3 gap-2 p-3">
+                  {heroProducts.map((product) => (
+                    <Link
+                      key={product.id}
+                      href={`/mattresses/${product.id}`}
+                      className="group rounded-2xl bg-[#f4f2ea] p-2 transition hover:bg-[#ede8dc]"
+                    >
+                      <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-white">
+                        <Image
+                          src={product.image}
+                          alt={product.model}
+                          fill
+                          sizes="160px"
+                          className={
+                            product.id === "puffy-monarch"
+                              ? "object-cover object-[50%_30%] transition group-hover:scale-[1.03]"
+                              : "object-contain p-2 transition group-hover:scale-[1.03]"
+                          }
+                        />
+                      </div>
+                      <p className="mt-2 truncate text-xs font-black text-slate-950">
+                        {product.model}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="border-b border-slate-200 bg-white px-4 py-6 sm:px-6 lg:px-8">
+      <section className="border-b border-[#dedbd2] bg-white px-4 py-5 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-3 sm:grid-cols-3">
+          <Metric label="Models" value={`${brand.products.length}`} />
+          <Metric label="Shop" value={brand.status === "ask-in-store" ? "Confirm" : "Featured"} />
+          <Metric label="Pricing" value="Call or visit" />
+        </div>
+      </section>
+
+      <section className="bg-[#f2efe5] px-4 py-6 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-wrap gap-3">
           {brand.collectionHighlights.map((highlight) => (
             <span
               key={highlight}
-              className="rounded bg-slate-100 px-4 py-2 text-sm font-black text-slate-800"
+              className="rounded-full bg-white px-4 py-2 text-sm font-black text-slate-800 shadow-sm"
             >
               {highlight}
             </span>
