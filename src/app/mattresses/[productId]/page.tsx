@@ -172,14 +172,14 @@ export default async function ProductPage({ params }: PageProps) {
 
             <div className="mt-4 rounded-[24px] border border-slate-200 bg-[#f7f8fb] p-5">
               <p className="text-sm font-black uppercase tracking-[0.18em] text-[#cf2333]">
-                Local purchase path
+                Visit or call
               </p>
               <p className="mt-3 text-2xl font-black text-slate-950">
-                Try it locally before you decide.
+                Try it in store before you decide.
               </p>
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                Discount Mattress does not need an online cart here. The best next step is to call
-                or visit so the team can confirm size, availability, delivery, and current offers.
+                Call or visit so the team can confirm size, availability, delivery, and current
+                offers.
               </p>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 <a
