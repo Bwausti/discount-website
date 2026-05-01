@@ -28,6 +28,7 @@ export interface Product {
   gallery: string[];
   availability: string;
   onlinePrice?: ProductPrice;
+  priceVariants?: readonly ProductPriceVariant[];
 }
 
 export interface ProductPrice {
@@ -37,6 +38,12 @@ export interface ProductPrice {
   sourceUrl: string;
   asOf: string;
   note?: string;
+}
+
+export interface ProductPriceVariant {
+  label: string;
+  amount: string;
+  sourceUrl: string;
 }
 
 interface ProductDraft extends Omit<Product, "brandId" | "brand" | "gallery"> {
@@ -83,6 +90,12 @@ function officialOnlinePrice({
 const priceSources = {
   helixQueen: "https://helixsleep.com/pages/queen-size-mattresses",
   puffyQueen: "https://puffy.com/pages/queen-mattresses",
+  puffyTwin: "https://puffy.com/pages/twin-mattresses",
+  puffyTwinXl: "https://puffy.com/pages/twin-xl-mattresses",
+  puffyFull: "https://puffy.com/pages/full-mattresses",
+  puffyKing: "https://puffy.com/pages/king-mattresses",
+  puffyCalKing: "https://puffy.com/pages/california-king-mattresses",
+  puffySplitKing: "https://puffy.com/pages/split-king-mattresses",
   dreamcloudPremier: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/queen",
   dreamcloudLuxe: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress",
   nectarClassic: "https://www.nectarsleep.com/mattress/queen",
@@ -95,6 +108,43 @@ const priceSources = {
   naturepedicEos: "https://www.naturepedic.com/eos-classic-organic-mattress-buy",
   sertaIcomfort: "https://www.serta.com/mattresses/icomfort",
 } as const;
+
+const puffyVariantPrices = {
+  cloud: [
+    { label: "Twin", amount: "$449", sourceUrl: priceSources.puffyTwin },
+    { label: "Twin XL", amount: "$649", sourceUrl: priceSources.puffyTwinXl },
+    { label: "Full", amount: "$799", sourceUrl: priceSources.puffyFull },
+    { label: "Queen", amount: "$949", sourceUrl: priceSources.puffyQueen },
+    { label: "King", amount: "$1,249", sourceUrl: priceSources.puffyKing },
+    { label: "Cal King", amount: "$1,249", sourceUrl: priceSources.puffyCalKing },
+    { label: "Split King", amount: "$1,498", sourceUrl: priceSources.puffySplitKing },
+  ],
+  lux: [
+    { label: "Twin", amount: "$749", sourceUrl: priceSources.puffyTwin },
+    { label: "Twin XL", amount: "$1,099", sourceUrl: priceSources.puffyTwinXl },
+    { label: "Full", amount: "$1,349", sourceUrl: priceSources.puffyFull },
+    { label: "Queen", amount: "$1,549", sourceUrl: priceSources.puffyQueen },
+    { label: "King", amount: "$1,749", sourceUrl: priceSources.puffyKing },
+    { label: "Cal King", amount: "$1,749", sourceUrl: priceSources.puffyCalKing },
+    { label: "Split King", amount: "$2,198", sourceUrl: priceSources.puffySplitKing },
+  ],
+  royal: [
+    { label: "Twin", amount: "$1,089", sourceUrl: priceSources.puffyTwin },
+    { label: "Twin XL", amount: "$1,499", sourceUrl: priceSources.puffyTwinXl },
+    { label: "Full", amount: "$2,199", sourceUrl: priceSources.puffyFull },
+    { label: "Queen", amount: "$2,449", sourceUrl: priceSources.puffyQueen },
+    { label: "King", amount: "$2,749", sourceUrl: priceSources.puffyKing },
+    { label: "Cal King", amount: "$2,749", sourceUrl: priceSources.puffyCalKing },
+    { label: "Split King", amount: "$2,998", sourceUrl: priceSources.puffySplitKing },
+  ],
+  monarch: [
+    { label: "Twin XL", amount: "$1,799", sourceUrl: priceSources.puffyTwinXl },
+    { label: "Queen", amount: "$3,199", sourceUrl: priceSources.puffyQueen },
+    { label: "King", amount: "$3,849", sourceUrl: priceSources.puffyKing },
+    { label: "Cal King", amount: "$3,849", sourceUrl: priceSources.puffyCalKing },
+    { label: "Split King", amount: "$3,898", sourceUrl: priceSources.puffySplitKing },
+  ],
+} as const satisfies Record<string, readonly ProductPriceVariant[]>;
 
 function withBrandAssets(brand: BrandDraft): Brand {
   const assetBundle = getBrandAssetBundle(brand.id);
@@ -330,12 +380,12 @@ export const brands: Brand[] = [
         ],
         availability: "Call for current Puffy offers.",
         onlinePrice: officialOnlinePrice({
-          amount: "$949",
-          label: "Official online queen sale price",
+          amount: "$449",
+          label: "Starting sale price",
           sourceName: "Puffy",
-          sourceUrl: priceSources.puffyQueen,
-          note: "Shown with APRILSALE on Puffy's queen mattress page.",
+          sourceUrl: priceSources.puffyTwin,
         }),
+        priceVariants: puffyVariantPrices.cloud,
       },
       {
         id: "puffy-lux",
@@ -358,12 +408,12 @@ export const brands: Brand[] = [
         ],
         availability: "Ask to compare Lux foam and hybrid options.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,549",
-          label: "Official online queen sale price",
+          amount: "$749",
+          label: "Starting sale price",
           sourceName: "Puffy",
-          sourceUrl: priceSources.puffyQueen,
-          note: "Shown with APRILSALE on Puffy's queen mattress page.",
+          sourceUrl: priceSources.puffyTwin,
         }),
+        priceVariants: puffyVariantPrices.lux,
       },
       {
         id: "puffy-lux-hybrid",
@@ -380,12 +430,12 @@ export const brands: Brand[] = [
         image: "/product-assets/puffy/puffy-lux-2.jpg",
         availability: "Call for current hybrid availability.",
         onlinePrice: officialOnlinePrice({
-          amount: "$1,549",
-          label: "Official online queen sale price",
+          amount: "$749",
+          label: "Starting sale price",
           sourceName: "Puffy",
-          sourceUrl: priceSources.puffyQueen,
-          note: "Shown with APRILSALE on Puffy's queen mattress page.",
+          sourceUrl: priceSources.puffyTwin,
         }),
+        priceVariants: puffyVariantPrices.lux,
       },
       {
         id: "puffy-royal-hybrid",
@@ -407,12 +457,12 @@ export const brands: Brand[] = [
         ],
         availability: "Ask the showroom team about Royal and Monarch comparisons.",
         onlinePrice: officialOnlinePrice({
-          amount: "$2,449",
-          label: "Official online queen sale price",
+          amount: "$1,089",
+          label: "Starting sale price",
           sourceName: "Puffy",
-          sourceUrl: priceSources.puffyQueen,
-          note: "Shown with APRILSALE on Puffy's queen mattress page.",
+          sourceUrl: priceSources.puffyTwin,
         }),
+        priceVariants: puffyVariantPrices.royal,
       },
       {
         id: "puffy-monarch",
@@ -435,12 +485,12 @@ export const brands: Brand[] = [
         ],
         availability: "Call for today's Monarch availability.",
         onlinePrice: officialOnlinePrice({
-          amount: "$3,199",
-          label: "Official online queen sale price",
+          amount: "$1,799",
+          label: "Starting sale price",
           sourceName: "Puffy",
-          sourceUrl: priceSources.puffyQueen,
-          note: "Shown with APRILSALE on Puffy's queen mattress page.",
+          sourceUrl: priceSources.puffyTwinXl,
         }),
+        priceVariants: puffyVariantPrices.monarch,
       },
     ],
   }),
@@ -1298,7 +1348,7 @@ export const faqItems = [
   {
     question: "Do you show prices?",
     answer:
-      "The site shows official online reference prices for many direct-to-consumer models when a reliable brand source is available. Local Discount Mattress pricing, size availability, and promotions should still be confirmed by phone or in the showroom.",
+      "The site shows available prices by size for many models. Local Discount Mattress pricing, size availability, and promotions should still be confirmed by phone or in the showroom.",
   },
   {
     question: "Do you offer financing?",
