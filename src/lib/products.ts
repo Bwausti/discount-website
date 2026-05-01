@@ -574,10 +574,6 @@ const helixEliteComforts = [
     firmness: "Medium",
     feel: "Elite side-sleeper comfort",
     image: "/product-assets/helix/helix-midnight-elite-1.png",
-    gallery: [
-      "/product-assets/helix/helix-midnight-elite-1.png",
-      "/product-assets/helix/helix-midnight-elite-2.png",
-    ],
     sourceUrl: priceSources.helixMidnightElite,
   },
   {
@@ -1348,7 +1344,12 @@ export const brands: Brand[] = [
         bestFor: ["Head elevation", "Reading in bed", "Base upgrades"],
         keyFeatures: ["Wireless control", "Head and foot articulation", "Modern base profile"],
         warranty: "Ask in store",
-        image: "/brand-assets/bedtech/btx4.webp",
+        image: "/brand-assets/bedtech/official-hero-bases.jpg",
+        gallery: [
+          "/brand-assets/bedtech/official-hero-bases.jpg",
+          "/brand-assets/bedtech/bt3000.webp",
+          "/brand-assets/bedtech/btx4.webp",
+        ],
         availability: "Call for current base sizes and stock.",
       },
       {
