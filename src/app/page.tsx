@@ -8,7 +8,7 @@ import {
   SectionIntro,
 } from "@/components/site-shell";
 import { ProductGrid } from "@/components/product-card";
-import { featuredBrands, featuredProducts, storeInfo } from "@/lib/products";
+import { featuredBrands, featuredProducts, sleepSystemAddOns, storeInfo } from "@/lib/products";
 
 const fitTiles = [
   {
@@ -192,6 +192,26 @@ export default function Home() {
           <div className="mt-10">
             <ProductGrid products={featuredProducts} priorityCount={3} />
           </div>
+        </div>
+      </section>
+
+      <section className="bg-[#f2efe5] px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+            <SectionIntro
+              align="left"
+              eyebrow="Add-ons"
+              title="Finish the sleep setup."
+              body="A great mattress feels better when the base and pillow match how you sleep. Try these with your shortlist in store."
+            />
+            <Link
+              href="/collections/bedgear"
+              className="rounded border border-slate-300 bg-white px-5 py-3 text-center text-sm font-black text-slate-800 transition hover:border-[#cf2333] hover:text-[#cf2333]"
+            >
+              View accessories
+            </Link>
+          </div>
+          <ProductGrid products={sleepSystemAddOns} />
         </div>
       </section>
 
