@@ -133,8 +133,8 @@ export default async function BrandCollectionPage({ params }: PageProps) {
                             fill
                             sizes="180px"
                             className={
-                              product.id === "puffy-monarch"
-                                ? "object-cover object-[50%_30%] transition group-hover:scale-[1.03]"
+                              product.brandId === "puffy"
+                                ? "object-cover object-center transition group-hover:scale-[1.03]"
                                 : "object-contain p-3 transition group-hover:scale-[1.03]"
                             }
                           />

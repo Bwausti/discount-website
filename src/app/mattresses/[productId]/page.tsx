@@ -59,11 +59,11 @@ export default async function ProductPage({ params }: PageProps) {
   const startingPrice = priceRows[0]?.amount;
   const productImageClassName =
     usesLifestyleCrop
-      ? "scale-[1.24] object-cover object-[50%_22%]"
+      ? "object-cover object-center"
       : "object-contain p-8";
   const galleryImageClassName =
     usesLifestyleCrop
-      ? "scale-[1.16] object-cover object-[50%_22%]"
+      ? "object-cover object-center"
       : "object-contain p-3";
 
   return (

@@ -5,8 +5,8 @@ import { Product } from "@/lib/products";
 export function ProductCard({ product, priority = false }: { product: Product; priority?: boolean }) {
   const startingPrice = product.priceVariants?.[0]?.amount ?? product.onlinePrice?.amount;
   const imageClassName =
-    product.id === "puffy-monarch"
-      ? "scale-[1.18] object-cover object-[50%_22%] transition duration-500 group-hover:scale-[1.22]"
+    product.brandId === "puffy"
+      ? "object-cover object-center transition duration-500 group-hover:scale-[1.03]"
       : "object-contain p-6 transition duration-500 group-hover:scale-[1.04]";
 
   return (

@@ -762,11 +762,11 @@ export const brands: Brand[] = [
         keyFeatures: ["Cooling gel cloud layer", "Stain-resistant cover", "Pressure relief"],
         trial: "101 nights",
         warranty: "Lifetime",
-        image: "/product-assets/puffy/puffy-cloud-1.jpg",
+        image: "/product-assets/puffy-refresh/cloud-crop-01.webp",
         gallery: [
-          "/product-assets/puffy/puffy-cloud-1.jpg",
-          "/product-assets/puffy/puffy-cloud-2.jpg",
-          "/product-assets/puffy/puffy-cloud-3.jpg",
+          "/product-assets/puffy-refresh/cloud-crop-01.webp",
+          "/product-assets/puffy-refresh/cloud-crop-02.webp",
+          "/product-assets/puffy-refresh/cloud-crop-03.webp",
         ],
         availability: "Call for current Puffy offers.",
         onlinePrice: officialOnlinePrice({
@@ -790,11 +790,11 @@ export const brands: Brand[] = [
         keyFeatures: ["Cooling gel foam", "Climate comfort layer", "Deep contouring"],
         trial: "101 nights",
         warranty: "Lifetime",
-        image: "/product-assets/puffy/puffy-lux-1.jpg",
+        image: "/product-assets/puffy-refresh/lux-crop-01.webp",
         gallery: [
-          "/product-assets/puffy/puffy-lux-1.jpg",
-          "/product-assets/puffy/puffy-lux-2.jpg",
-          "/product-assets/puffy/puffy-lux-3.jpg",
+          "/product-assets/puffy-refresh/lux-crop-01.webp",
+          "/product-assets/puffy-refresh/lux-crop-02.webp",
+          "/product-assets/puffy-refresh/lux-crop-03.webp",
         ],
         availability: "Ask to compare Lux foam and hybrid options.",
         onlinePrice: officialOnlinePrice({
@@ -817,7 +817,7 @@ export const brands: Brand[] = [
         keyFeatures: ["Coil support", "Cooling foam", "Better edge response"],
         trial: "101 nights",
         warranty: "Lifetime",
-        image: "/product-assets/puffy/puffy-lux-2.jpg",
+        image: "/product-assets/puffy-refresh/lux-crop-02.webp",
         availability: "Call for current hybrid availability.",
         onlinePrice: officialOnlinePrice({
           amount: "$749",
@@ -839,11 +839,11 @@ export const brands: Brand[] = [
         keyFeatures: ["Quilted comfort top", "Advanced cooling", "Responsive support"],
         trial: "101 nights",
         warranty: "Lifetime",
-        image: "/product-assets/puffy/puffy-royal-1.jpg",
+        image: "/product-assets/puffy-refresh/royal-crop-01.webp",
         gallery: [
-          "/product-assets/puffy/puffy-royal-1.jpg",
-          "/product-assets/puffy/puffy-royal-2.jpg",
-          "/product-assets/puffy/puffy-royal-3.jpg",
+          "/product-assets/puffy-refresh/royal-crop-01.webp",
+          "/product-assets/puffy-refresh/royal-crop-02.webp",
+          "/product-assets/puffy-refresh/royal-crop-03.webp",
         ],
         availability: "Ask the showroom team about Royal and Monarch comparisons.",
         onlinePrice: officialOnlinePrice({
@@ -867,11 +867,11 @@ export const brands: Brand[] = [
         keyFeatures: ["Diamond foam", "Ultra-premium profile", "Cloud-like pressure relief"],
         trial: "101 nights",
         warranty: "Lifetime",
-        image: "/product-assets/puffy/puffy-monarch-1.jpg",
+        image: "/product-assets/puffy-refresh/monarch-crop-01.webp",
         gallery: [
-          "/product-assets/puffy/puffy-monarch-1.jpg",
-          "/product-assets/puffy/puffy-monarch-2.jpg",
-          "/product-assets/puffy/puffy-monarch-3.jpg",
+          "/product-assets/puffy-refresh/monarch-crop-01.webp",
+          "/product-assets/puffy-refresh/monarch-crop-02.webp",
+          "/product-assets/puffy-refresh/monarch-crop-03.webp",
         ],
         availability: "Call for today's Monarch availability.",
         onlinePrice: officialOnlinePrice({
