@@ -27,6 +27,16 @@ export interface Product {
   image: string;
   gallery: string[];
   availability: string;
+  onlinePrice?: ProductPrice;
+}
+
+export interface ProductPrice {
+  amount: string;
+  label: string;
+  sourceName: string;
+  sourceUrl: string;
+  asOf: string;
+  note?: string;
 }
 
 interface ProductDraft extends Omit<Product, "brandId" | "brand" | "gallery"> {
@@ -50,6 +60,41 @@ export interface Brand {
 interface BrandDraft extends Omit<Brand, "logo" | "heroImage" | "galleryImages" | "products"> {
   products: ProductDraft[];
 }
+
+const OFFICIAL_PRICE_AS_OF = "May 1, 2026";
+
+function officialOnlinePrice({
+  amount,
+  sourceName,
+  sourceUrl,
+  label = "Official online queen price",
+  note,
+}: Omit<ProductPrice, "asOf" | "label"> & { label?: string }): ProductPrice {
+  return {
+    amount,
+    label,
+    sourceName,
+    sourceUrl,
+    asOf: OFFICIAL_PRICE_AS_OF,
+    note,
+  };
+}
+
+const priceSources = {
+  helixQueen: "https://helixsleep.com/pages/queen-size-mattresses",
+  puffyQueen: "https://puffy.com/pages/queen-mattresses",
+  dreamcloudPremier: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/queen",
+  dreamcloudLuxe: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress",
+  nectarClassic: "https://www.nectarsleep.com/mattress/queen",
+  nectarPremier: "https://www.nectarsleep.com/mattresses/premier-memory-foam-mattress/queen",
+  nectarLuxe: "https://www.nectarsleep.com/mattresses/luxe-memory-foam-mattress/queen",
+  bedgearM3: "https://bedgear.com/products/m3-performance-mattress",
+  bedgearStorm: "https://bedgear.com/products/storm-performance-pillow",
+  bedgearBalance: "https://bedgear.com/products/balance-performance-pillow",
+  bedgearDriTec: "https://bedgear.com/products/dri-tec-mattress-protector",
+  naturepedicEos: "https://www.naturepedic.com/eos-classic-organic-mattress-buy",
+  sertaIcomfort: "https://www.serta.com/mattresses/icomfort",
+} as const;
 
 function withBrandAssets(brand: BrandDraft): Brand {
   const assetBundle = getBrandAssetBundle(brand.id);
@@ -95,6 +140,11 @@ export const brands: Brand[] = [
         warranty: "10 years",
         image: "/product-assets/helix/helix-sunset-core-1.png",
         availability: "Ask what Helix models are on the floor today.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,099",
+          sourceName: "Helix",
+          sourceUrl: priceSources.helixQueen,
+        }),
       },
       {
         id: "helix-moonlight",
@@ -110,6 +160,11 @@ export const brands: Brand[] = [
         warranty: "10 years",
         image: "/brand-assets/helix/hero.webp",
         availability: "Call for current Helix availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,099",
+          sourceName: "Helix",
+          sourceUrl: priceSources.helixQueen,
+        }),
       },
       {
         id: "helix-midnight",
@@ -131,6 +186,11 @@ export const brands: Brand[] = [
           "/product-assets/helix/helix-midnight-3.jpg",
         ],
         availability: "A strong starting point for most showroom visits.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,099",
+          sourceName: "Helix",
+          sourceUrl: priceSources.helixQueen,
+        }),
       },
       {
         id: "helix-dusk",
@@ -146,6 +206,11 @@ export const brands: Brand[] = [
         warranty: "10 years",
         image: "/product-assets/helix/helix-dusk-1.png",
         availability: "Call for current Helix floor models.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,099",
+          sourceName: "Helix",
+          sourceUrl: priceSources.helixQueen,
+        }),
       },
       {
         id: "helix-dawn",
@@ -161,6 +226,11 @@ export const brands: Brand[] = [
         warranty: "10 years",
         image: "/product-assets/helix/helix-dawn-core-1.png",
         availability: "Call to confirm firmness options in store.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,099",
+          sourceName: "Helix",
+          sourceUrl: priceSources.helixQueen,
+        }),
       },
       {
         id: "helix-twilight",
@@ -176,6 +246,11 @@ export const brands: Brand[] = [
         warranty: "10 years",
         image: "/product-assets/helix/helix-twilight-core-1.png",
         availability: "Ask the team to compare Twilight with Dawn.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,099",
+          sourceName: "Helix",
+          sourceUrl: priceSources.helixQueen,
+        }),
       },
       {
         id: "helix-plus",
@@ -191,6 +266,11 @@ export const brands: Brand[] = [
         warranty: "10 years",
         image: "/product-assets/helix/helix-plus-core-1.png",
         availability: "Call for current Plus and Luxe options.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,199",
+          sourceName: "Helix",
+          sourceUrl: priceSources.helixQueen,
+        }),
       },
       {
         id: "helix-midnight-luxe",
@@ -211,6 +291,11 @@ export const brands: Brand[] = [
           "/product-assets/helix/helix-midnight-luxe-3.png",
         ],
         availability: "Ask which Luxe models are ready to try.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,919",
+          sourceName: "Helix",
+          sourceUrl: priceSources.helixQueen,
+        }),
       },
     ],
   }),
@@ -244,6 +329,13 @@ export const brands: Brand[] = [
           "/product-assets/puffy/puffy-cloud-3.jpg",
         ],
         availability: "Call for current Puffy offers.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$949",
+          label: "Official online queen sale price",
+          sourceName: "Puffy",
+          sourceUrl: priceSources.puffyQueen,
+          note: "Shown with APRILSALE on Puffy's queen mattress page.",
+        }),
       },
       {
         id: "puffy-lux",
@@ -265,6 +357,13 @@ export const brands: Brand[] = [
           "/product-assets/puffy/puffy-lux-3.jpg",
         ],
         availability: "Ask to compare Lux foam and hybrid options.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,549",
+          label: "Official online queen sale price",
+          sourceName: "Puffy",
+          sourceUrl: priceSources.puffyQueen,
+          note: "Shown with APRILSALE on Puffy's queen mattress page.",
+        }),
       },
       {
         id: "puffy-lux-hybrid",
@@ -280,6 +379,13 @@ export const brands: Brand[] = [
         warranty: "Lifetime",
         image: "/product-assets/puffy/puffy-lux-2.jpg",
         availability: "Call for current hybrid availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,549",
+          label: "Official online queen sale price",
+          sourceName: "Puffy",
+          sourceUrl: priceSources.puffyQueen,
+          note: "Shown with APRILSALE on Puffy's queen mattress page.",
+        }),
       },
       {
         id: "puffy-royal-hybrid",
@@ -300,6 +406,13 @@ export const brands: Brand[] = [
           "/product-assets/puffy/puffy-royal-3.jpg",
         ],
         availability: "Ask the showroom team about Royal and Monarch comparisons.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$2,449",
+          label: "Official online queen sale price",
+          sourceName: "Puffy",
+          sourceUrl: priceSources.puffyQueen,
+          note: "Shown with APRILSALE on Puffy's queen mattress page.",
+        }),
       },
       {
         id: "puffy-monarch",
@@ -321,6 +434,13 @@ export const brands: Brand[] = [
           "/product-assets/puffy/puffy-monarch-3.jpg",
         ],
         availability: "Call for today's Monarch availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$3,199",
+          label: "Official online queen sale price",
+          sourceName: "Puffy",
+          sourceUrl: priceSources.puffyQueen,
+          note: "Shown with APRILSALE on Puffy's queen mattress page.",
+        }),
       },
     ],
   }),
@@ -354,13 +474,18 @@ export const brands: Brand[] = [
           "/product-assets/dreamcloud/dreamcloud-premier-3.webp",
         ],
         availability: "Call for current DreamCloud pricing.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,099",
+          sourceName: "DreamCloud",
+          sourceUrl: priceSources.dreamcloudPremier,
+        }),
       },
       {
         id: "dreamcloud-rest",
-        model: "DreamCloud Premier Rest",
+        model: "DreamCloud Luxe Hybrid",
         category: "Mattress",
         type: "Luxury hybrid",
-        height: "16 in",
+        height: "14 in",
         firmness: "Medium",
         feel: "Deep plush comfort",
         badge: "Luxury",
@@ -374,7 +499,12 @@ export const brands: Brand[] = [
           "/product-assets/dreamcloud/dreamcloud-rest-2.webp",
           "/product-assets/dreamcloud/dreamcloud-rest-3.webp",
         ],
-        availability: "Ask whether Premier Rest is available to try.",
+        availability: "Ask whether Luxe Hybrid is available to try.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,499",
+          sourceName: "DreamCloud",
+          sourceUrl: priceSources.dreamcloudLuxe,
+        }),
       },
     ],
   }),
@@ -408,6 +538,11 @@ export const brands: Brand[] = [
           "/product-assets/nectar/nectar-classic-3.webp",
         ],
         availability: "Call for current Nectar specials.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$649",
+          sourceName: "Nectar",
+          sourceUrl: priceSources.nectarClassic,
+        }),
       },
       {
         id: "nectar-premier",
@@ -428,16 +563,21 @@ export const brands: Brand[] = [
           "/product-assets/nectar/nectar-premier-3.webp",
         ],
         availability: "A strong upgrade to compare against Classic.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$949",
+          sourceName: "Nectar",
+          sourceUrl: priceSources.nectarPremier,
+        }),
       },
       {
         id: "nectar-premier-copper",
-        model: "Nectar Premier Copper",
+        model: "Nectar Luxe Memory Foam",
         category: "Mattress",
         type: "Memory foam",
         height: "14 in",
         firmness: "Medium",
         feel: "Maximum cooling foam",
-        badge: "Coolest",
+        badge: "Luxe",
         bestFor: ["Hot sleepers", "Side sleepers", "Premium foam shoppers"],
         keyFeatures: ["Copper-infused cover", "Maximum cooling", "Premium quilted top"],
         trial: "365 nights",
@@ -448,7 +588,12 @@ export const brands: Brand[] = [
           "/product-assets/nectar/nectar-copper-2.webp",
           "/product-assets/nectar/nectar-copper-3.webp",
         ],
-        availability: "Call for current Copper model availability.",
+        availability: "Call for current Luxe model availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,249",
+          sourceName: "Nectar",
+          sourceUrl: priceSources.nectarLuxe,
+        }),
       },
     ],
   }),
@@ -476,6 +621,12 @@ export const brands: Brand[] = [
         warranty: "10 years",
         image: "/brand-assets/bedgear/m3-product.png",
         availability: "Ask the showroom team about Bedgear mattress options.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$2,999.99",
+          label: "Official online mattress price",
+          sourceName: "BEDGEAR",
+          sourceUrl: priceSources.bedgearM3,
+        }),
       },
       {
         id: "bedgear-storm",
@@ -495,6 +646,12 @@ export const brands: Brand[] = [
           "/product-assets/bedgear/bedgear-storm-3.jpg",
         ],
         availability: "Try pillow heights in store.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$199.99",
+          label: "Official online pillow price",
+          sourceName: "BEDGEAR",
+          sourceUrl: priceSources.bedgearStorm,
+        }),
       },
       {
         id: "bedgear-balance",
@@ -513,6 +670,12 @@ export const brands: Brand[] = [
           "/product-assets/bedgear/bedgear-balance-3.jpg",
         ],
         availability: "Ask for pillow fitting help.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$99.99",
+          label: "Official online pillow price",
+          sourceName: "BEDGEAR",
+          sourceUrl: priceSources.bedgearBalance,
+        }),
       },
       {
         id: "bedgear-dri-tec",
@@ -530,6 +693,12 @@ export const brands: Brand[] = [
           "/product-assets/bedgear/bedgear-dritec-3.jpg",
         ],
         availability: "Available with most mattress purchases.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$159.99",
+          label: "Official online queen protector price",
+          sourceName: "BEDGEAR",
+          sourceUrl: priceSources.bedgearDriTec,
+        }),
       },
     ],
   }),
@@ -564,6 +733,11 @@ export const brands: Brand[] = [
           "/product-assets/naturepedic/naturepedic-eos-3.jpg",
         ],
         availability: "Ask which EOS configurations are on display.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$3,799",
+          sourceName: "Naturepedic",
+          sourceUrl: priceSources.naturepedicEos,
+        }),
       },
       {
         id: "naturepedic-eos-trilux",
@@ -579,6 +753,11 @@ export const brands: Brand[] = [
         warranty: "20 years",
         image: "/brand-assets/naturepedic/eos-detail.webp",
         availability: "Call for current EOS Trilux availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$4,399",
+          sourceName: "Naturepedic",
+          sourceUrl: priceSources.naturepedicEos,
+        }),
       },
       {
         id: "naturepedic-chorus",
@@ -878,6 +1057,12 @@ export const brands: Brand[] = [
           "/product-assets/serta/serta-icomfort-3.jpg",
         ],
         availability: "Ask for current Serta and iComfort floor models.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,199",
+          label: "Official online selected price",
+          sourceName: "Serta",
+          sourceUrl: priceSources.sertaIcomfort,
+        }),
       },
       {
         id: "serta-icomfort-hybrid",
@@ -1113,7 +1298,7 @@ export const faqItems = [
   {
     question: "Do you show prices?",
     answer:
-      "Many mattress prices and promotions change by brand, size, and inventory. The site points shoppers to call for today's price instead of running a checkout cart.",
+      "The site shows official online reference prices for many direct-to-consumer models when a reliable brand source is available. Local Discount Mattress pricing, size availability, and promotions should still be confirmed by phone or in the showroom.",
   },
   {
     question: "Do you offer financing?",
