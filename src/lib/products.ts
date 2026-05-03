@@ -423,7 +423,11 @@ const helixCoreComforts = [
     feel: "Light contouring",
     bestFor: ["Back sleepers", "Stomach sleepers", "Gentler support"],
     keyFeatures: ["Soft feel", "Balanced sink", "Easy moving comfort"],
-    image: "/brand-assets/helix/hero.webp",
+    image: "/product-assets/helix/helix-moonlight-core-1.png",
+    gallery: [
+      "/product-assets/helix/helix-moonlight-core-1.png",
+      "/product-assets/helix/helix-moonlight-core-2.png",
+    ],
   },
   {
     id: "helix-midnight",
@@ -491,7 +495,11 @@ const helixLuxeComforts = [
     firmness: "Medium-soft",
     feel: "Soft contour with lumbar support",
     bestFor: ["Back sleepers", "Stomach sleepers", "Softer luxury feel"],
-    image: "/brand-assets/helix/hero.webp",
+    image: "/product-assets/helix/helix-moonlight-luxe-1.png",
+    gallery: [
+      "/product-assets/helix/helix-moonlight-luxe-1.png",
+      "/product-assets/helix/helix-moonlight-luxe-2.png",
+    ],
     sourceUrl: priceSources.helixMoonlightLuxe,
   },
   {
