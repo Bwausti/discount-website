@@ -43,7 +43,7 @@ export default async function ProductPage({ params }: PageProps) {
   const brand = getBrandById(product.brandId);
   const relatedProducts = brand?.products.filter((item) => item.id !== product.id).slice(0, 3) ?? [];
   const gallery = product.gallery.length > 0 ? product.gallery : [product.image];
-  const usesLifestyleCrop = product.brandId === "puffy";
+  const usesLifestyleCrop = product.brandId === "puffy" || product.brandId === "nectar";
   const showAddOns = product.category === "Mattress";
   const priceRows =
     product.priceVariants ??

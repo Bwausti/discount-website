@@ -22,6 +22,7 @@ const financingOptions = [
   },
   {
     name: "Snap Finance",
+    logo: "/financing/snap-finance.svg",
     copy: "Confirm current availability and terms directly with the store.",
   },
 ];

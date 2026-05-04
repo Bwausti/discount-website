@@ -60,6 +60,8 @@ const sources = {
   sertaIcomfortPro: "https://www.serta.com/products/icomfort-hybrid-mattress",
   sertaCascade: "https://www.serta.com/products/perfect-sleeper-mattres-2026",
   sertaCanyon: "https://www.serta.com/products/perfect-sleeper-cascade-canyon-firm-mattress",
+  bedtechAdjustableBeds: "https://www.bedtech.com/collections/adjustable-beds",
+  bedtechBases: "https://www.bedtech.com/collections/bases",
 };
 
 const pranaKarmaElitePrices: readonly ProductPriceVariant[] = [
@@ -133,7 +135,129 @@ function mattress(
   };
 }
 
+function bedtechProduct(
+  id: string,
+  model: string,
+  type: string,
+  amount: string,
+  sourceUrl: string,
+  image: string,
+  extra: Partial<Omit<Product, "id" | "brandId" | "brand" | "model" | "category" | "type" | "image" | "gallery" | "availability" | "bestFor" | "keyFeatures" | "onlinePrice">> & {
+    gallery?: string[];
+    bestFor?: string[];
+    keyFeatures?: string[];
+    availability?: string;
+  } = {},
+): Omit<Product, "brandId" | "brand" | "gallery"> & { gallery?: string[] } {
+  const { gallery, bestFor, keyFeatures, availability, ...rest } = extra;
+  return {
+    id,
+    model,
+    category: "Adjustable base",
+    type,
+    image,
+    gallery,
+    bestFor: bestFor ?? ["Mattress upgrades", "Better bed support", "Complete sleep systems"],
+    keyFeatures: keyFeatures ?? ["Pairs with compatible mattresses", "Clean bedroom profile", "Supportive foundation"],
+    availability: availability ?? "Call or visit to confirm current sizes and showroom availability.",
+    onlinePrice: price(amount, "BedTech", sourceUrl),
+    ...rest,
+  };
+}
+
 export const brands: Brand[] = baseBrands.map((base) => {
+  if (base.id === "bedtech") {
+    const adjustableGallery = [
+      "/brand-assets/bedtech/official-hero-bases.jpg",
+      "/brand-assets/bedtech/bt6500.webp",
+      "/brand-assets/bedtech/bt3000.webp",
+      "/brand-assets/bedtech/btx4.webp",
+    ];
+
+    return patchBrand(base, {
+      id: base.id,
+      name: base.name,
+      status: "primary",
+      tagline: "Adjustable beds and bedroom bases for a complete sleep setup.",
+      description:
+        "BedTech adds the support layer under the mattress: adjustable beds for head and foot elevation plus platform and foundation bases for cleaner support.",
+      showroomNote: "Compare adjustable features, heights, remotes, and foundation options with the mattress you are considering.",
+      collectionHighlights: ["Adjustable beds", "Platform bases", "Foundation upgrades"],
+      products: [
+        bedtechProduct("bedtech-bt6500", "BT6500 Adjustable Bed", "Premium adjustable bed", "$1,999", sources.bedtechAdjustableBeds, "/brand-assets/bedtech/bt6500.webp", {
+          badge: "Top Tier",
+          feel: "Premium adjustability",
+          bestFor: ["Primary bedrooms", "Premium feature shoppers", "Head and foot elevation"],
+          keyFeatures: ["Advanced positioning", "Comfort presets", "Premium support system"],
+          gallery: adjustableGallery,
+        }),
+        bedtechProduct("bedtech-bt3000", "BT3000 Adjustable Bed", "Adjustable bed", "$1,499", sources.bedtechAdjustableBeds, "/brand-assets/bedtech/bt3000.webp", {
+          badge: "Featured",
+          feel: "Comfort upgrade",
+          bestFor: ["Couples", "Lifestyle comfort", "Base upgrade shoppers"],
+          keyFeatures: ["Head and foot articulation", "Preset positions", "Quiet operation"],
+          gallery: ["/brand-assets/bedtech/bt3000.webp", "/brand-assets/bedtech/official-hero-bases.jpg", "/brand-assets/bedtech/btx4.webp"],
+        }),
+        bedtechProduct("bedtech-bt2500", "BT2500 Adjustable Bed", "Adjustable bed", "$1,299", sources.bedtechAdjustableBeds, "/brand-assets/bedtech/official-hero-bases.jpg", {
+          feel: "Step-up adjustability",
+          bestFor: ["Head and foot elevation", "Guest suites", "Everyday comfort upgrades"],
+          keyFeatures: ["Adjustable comfort", "Wireless control", "Compatible mattress support"],
+          gallery: adjustableGallery,
+        }),
+        bedtechProduct("bedtech-bt2000", "BT2000 Adjustable Bed", "Adjustable bed", "$1,149", sources.bedtechAdjustableBeds, "/brand-assets/bedtech/bt2000.webp", {
+          feel: "Everyday adjustability",
+          bestFor: ["Entry adjustable bed", "Simple elevation", "Guest rooms"],
+          keyFeatures: ["Head lift", "Remote control", "Easy mattress pairing"],
+          gallery: ["/brand-assets/bedtech/bt2000.webp", "/brand-assets/bedtech/official-hero-bases.jpg", "/brand-assets/bedtech/btx4.webp"],
+        }),
+        bedtechProduct("bedtech-btx5", "BTX5 Adjustable Bed", "Adjustable bed", "$1,249", sources.bedtechAdjustableBeds, "/brand-assets/bedtech/official-hero-bases.jpg", {
+          feel: "Feature-rich value",
+          bestFor: ["Adjustable comfort", "Better bedroom setup", "Value-focused upgrades"],
+          keyFeatures: ["Head and foot elevation", "Wireless control", "Modern support profile"],
+          gallery: adjustableGallery,
+        }),
+        bedtechProduct("bedtech-btx4", "BTX4 Adjustable Bed", "Adjustable bed", "$1,049", sources.bedtechAdjustableBeds, "/brand-assets/bedtech/btx4.webp", {
+          badge: "Adjustable",
+          feel: "Lifestyle upgrade",
+          bestFor: ["Head elevation", "Reading in bed", "Base upgrades"],
+          keyFeatures: ["Wireless control", "Head and foot articulation", "Modern base profile"],
+          gallery: ["/brand-assets/bedtech/btx4.webp", "/brand-assets/bedtech/official-hero-bases.jpg", "/brand-assets/bedtech/bt3000.webp"],
+        }),
+        bedtechProduct("bedtech-bthu", "BTHU Adjustable Bed", "Adjustable bed", "$749", sources.bedtechAdjustableBeds, "/brand-assets/bedtech/official-hero-bases.jpg", {
+          badge: "Value",
+          feel: "Simple adjustability",
+          bestFor: ["First adjustable bed", "Value shoppers", "Head elevation"],
+          keyFeatures: ["Adjustable support", "Straightforward controls", "Easy mattress pairing"],
+          gallery: adjustableGallery,
+        }),
+        bedtechProduct("bedtech-upholstered-platform", "Upholstered Platform", "Platform base", "$239", sources.bedtechBases, "/brand-assets/bedtech/official-lifestyle.jpg", {
+          feel: "Upholstered support",
+          bestFor: ["Clean bedroom style", "Platform support", "Simple mattress setup"],
+          keyFeatures: ["Upholstered finish", "Platform-style support", "No box spring needed with compatible mattresses"],
+          gallery: ["/brand-assets/bedtech/official-lifestyle.jpg", "/brand-assets/bedtech/official-hero-bases.jpg"],
+        }),
+        bedtechProduct("bedtech-standard-foundation", "Standard Foundation", "Foundation base", "$169", sources.bedtechBases, "/brand-assets/bedtech/official-lifestyle.jpg", {
+          feel: "Classic foundation support",
+          bestFor: ["Traditional bed setup", "Mattress support", "Value foundation shoppers"],
+          keyFeatures: ["Stable foundation", "Clean profile", "Easy pairing with compatible frames"],
+          gallery: ["/brand-assets/bedtech/official-lifestyle.jpg", "/brand-assets/bedtech/official-hero-bases.jpg"],
+        }),
+        bedtechProduct("bedtech-high-rise-platform", "High Rise Platform", "Platform base", "$159", sources.bedtechBases, "/brand-assets/bedtech/official-lifestyle.jpg", {
+          feel: "Raised platform support",
+          bestFor: ["Extra under-bed clearance", "Simple support", "Guest rooms"],
+          keyFeatures: ["High-rise profile", "Platform support", "Storage-friendly clearance"],
+          gallery: ["/brand-assets/bedtech/official-lifestyle.jpg", "/brand-assets/bedtech/official-hero-bases.jpg"],
+        }),
+        bedtechProduct("bedtech-modern-platform", "Modern Platform", "Platform base", "$159", sources.bedtechBases, "/brand-assets/bedtech/official-lifestyle.jpg", {
+          feel: "Modern platform support",
+          bestFor: ["Minimal bedroom style", "Simple support", "Value base shoppers"],
+          keyFeatures: ["Modern low-profile look", "Platform support", "Easy bedroom setup"],
+          gallery: ["/brand-assets/bedtech/official-lifestyle.jpg", "/brand-assets/bedtech/official-hero-bases.jpg"],
+        }),
+      ],
+    });
+  }
+
   if (base.id === "posh-and-lavish") {
     return patchBrand(base, {
       id: base.id,
@@ -192,15 +316,15 @@ export const brands: Brand[] = baseBrands.map((base) => {
       showroomNote: "Best for shoppers who want a proven online brand with clear comfort upgrades and local showroom help.",
       collectionHighlights: ["Memory foam and hybrid", "Classic to Ultra", "365-night trial"],
       products: [
-        mattress("nectar-classic", "Nectar Classic Memory Foam", "Memory foam", "/product-assets/nectar/nectar-classic-1.webp", "$369", sources.nectarClassic, { height: "12 in", firmness: "Medium-firm", feel: "Supportive contour", badge: "Value", sourceName: "Nectar" }),
-        mattress("nectar-classic-hybrid", "Nectar Classic Hybrid", "Hybrid", "/product-assets/nectar/nectar-classic-1.webp", "$349", sources.nectarClassicHybrid, { height: "12 in", firmness: "Medium-firm", feel: "Responsive support", badge: "Hybrid value", sourceName: "Nectar" }),
-        mattress("nectar-premier", "Nectar Premier Memory Foam", "Memory foam", "/product-assets/nectar/nectar-premier-1.webp", "$549", sources.nectarPremier, { height: "13 in", firmness: "Medium", feel: "Cool contouring", sourceName: "Nectar", gallery: ["/product-assets/nectar/nectar-premier-1.webp", "/product-assets/nectar/nectar-premier-2.webp"] }),
-        mattress("nectar-premier-hybrid", "Nectar Premier Hybrid", "Hybrid", "/product-assets/nectar/nectar-premier-1.webp", "$799", sources.nectarPremierHybrid, { height: "13 in", firmness: "Medium", feel: "Cool hybrid contour", badge: "Best seller", sourceName: "Nectar" }),
-        mattress("nectar-luxe-memory-foam", "Nectar Luxe Memory Foam", "Memory foam", "/product-assets/nectar/nectar-copper-1.webp", "$999", sources.nectarLuxe, { height: "14 in", firmness: "Medium", feel: "Premium cooling foam", badge: "Luxe", sourceName: "Nectar", gallery: ["/product-assets/nectar/nectar-copper-1.webp", "/product-assets/nectar/nectar-copper-2.webp"] }),
-        mattress("nectar-luxe-hybrid", "Nectar Luxe Hybrid", "Hybrid", "/product-assets/nectar/nectar-copper-2.webp", "$1,099", sources.nectarLuxeHybrid, { height: "14 in", firmness: "Medium", feel: "Cool, supportive lift", badge: "Cooling", sourceName: "Nectar" }),
-        mattress("nectar-ultra-memory-foam", "Nectar Ultra Memory Foam", "Memory foam", "/brand-assets/nectar/ultra-product.webp", "$1,799", sources.nectarUltra, { height: "15 in", firmness: "Medium-soft", feel: "Deep pressure relief", badge: "Top Tier", sourceName: "Nectar" }),
-        mattress("nectar-ultra-hybrid", "Nectar Ultra Hybrid", "Hybrid", "/brand-assets/nectar/ultra-product.webp", "$1,599", sources.nectarUltraHybrid, { height: "15 in", firmness: "Medium-soft", feel: "Plush cooling support", badge: "Top Tier", sourceName: "Nectar" }),
-        mattress("nectar-kids", "Nectar Kids Mattress", "Kids mattress", "/product-assets/nectar/nectar-classic-3.webp", undefined, sources.nectarKids, { firmness: "Medium-firm", feel: "Supportive kids comfort" }),
+        mattress("nectar-classic", "Nectar Classic Memory Foam", "Memory foam", "/product-assets/nectar/nectar-classic-1.webp", "$369", sources.nectarClassic, { height: "12 in", firmness: "Medium-firm", feel: "Supportive contour", badge: "Value", sourceName: "Nectar", gallery: ["/product-assets/nectar/nectar-classic-1.webp", "/product-assets/nectar-refresh/classic-memory-detail.png", "/product-assets/nectar-refresh/classic-memory.png"] }),
+        mattress("nectar-classic-hybrid", "Nectar Classic Hybrid", "Hybrid", "/product-assets/nectar-refresh/classic-hybrid.png", "$349", sources.nectarClassicHybrid, { height: "12 in", firmness: "Medium-firm", feel: "Responsive support", badge: "Hybrid value", sourceName: "Nectar", gallery: ["/product-assets/nectar-refresh/classic-hybrid.png", "/product-assets/nectar-refresh/classic-hybrid-detail.png", "/brand-assets/nectar/feature-02.jpg"] }),
+        mattress("nectar-premier", "Nectar Premier Memory Foam", "Memory foam", "/product-assets/nectar-refresh/premier-memory.png", "$549", sources.nectarPremier, { height: "13 in", firmness: "Medium", feel: "Cool contouring", sourceName: "Nectar", gallery: ["/product-assets/nectar-refresh/premier-memory.png", "/product-assets/nectar-refresh/premier-memory-detail.png", "/product-assets/nectar/nectar-premier-3.webp"] }),
+        mattress("nectar-premier-hybrid", "Nectar Premier Hybrid", "Hybrid", "/product-assets/nectar-refresh/premier-hybrid.png", "$799", sources.nectarPremierHybrid, { height: "13 in", firmness: "Medium", feel: "Cool hybrid contour", badge: "Best seller", sourceName: "Nectar", gallery: ["/product-assets/nectar-refresh/premier-hybrid.png", "/product-assets/nectar-refresh/premier-hybrid-detail.png", "/brand-assets/nectar/feature-03.jpg"] }),
+        mattress("nectar-luxe-memory-foam", "Nectar Luxe Memory Foam", "Memory foam", "/product-assets/nectar-refresh/luxe-memory.png", "$999", sources.nectarLuxe, { height: "14 in", firmness: "Medium", feel: "Premium cooling foam", badge: "Luxe", sourceName: "Nectar", gallery: ["/product-assets/nectar-refresh/luxe-memory.png", "/product-assets/nectar-refresh/luxe-memory-detail.png", "/brand-assets/nectar/feature-04.jpg"] }),
+        mattress("nectar-luxe-hybrid", "Nectar Luxe Hybrid", "Hybrid", "/product-assets/nectar-refresh/luxe-hybrid.png", "$1,099", sources.nectarLuxeHybrid, { height: "14 in", firmness: "Medium", feel: "Cool, supportive lift", badge: "Cooling", sourceName: "Nectar", gallery: ["/product-assets/nectar-refresh/luxe-hybrid.png", "/product-assets/nectar-refresh/luxe-hybrid-detail.png", "/product-assets/nectar/nectar-copper-2.webp"] }),
+        mattress("nectar-ultra-memory-foam", "Nectar Ultra Memory Foam", "Memory foam", "/product-assets/nectar-refresh/ultra-memory.png", "$1,799", sources.nectarUltra, { height: "15 in", firmness: "Medium-soft", feel: "Deep pressure relief", badge: "Top Tier", sourceName: "Nectar", gallery: ["/product-assets/nectar-refresh/ultra-memory.png", "/product-assets/nectar-refresh/ultra-memory-detail.png", "/brand-assets/nectar/ultra-product.webp"] }),
+        mattress("nectar-ultra-hybrid", "Nectar Ultra Hybrid", "Hybrid", "/product-assets/nectar-refresh/ultra-hybrid.png", "$1,599", sources.nectarUltraHybrid, { height: "15 in", firmness: "Medium-soft", feel: "Plush cooling support", badge: "Top Tier", sourceName: "Nectar", gallery: ["/product-assets/nectar-refresh/ultra-hybrid.png", "/product-assets/nectar-refresh/ultra-hybrid-detail.png", "/brand-assets/nectar/ultra-product.webp"] }),
+        mattress("nectar-kids", "Nectar Kids Mattress", "Kids mattress", "/product-assets/nectar-refresh/kids.png", undefined, sources.nectarKids, { firmness: "Medium-firm", feel: "Supportive kids comfort", gallery: ["/product-assets/nectar-refresh/kids.png", "/product-assets/nectar-refresh/kids-detail.png", "/product-assets/nectar/nectar-classic-3.webp"] }),
       ],
     });
   }
@@ -513,7 +637,21 @@ export const brands: Brand[] = baseBrands.map((base) => {
 export const products = brands.flatMap((brand) => brand.products);
 export const featuredBrands = brands.filter((brand) => brand.status === "primary");
 export const featuredProducts = ["helix-midnight", "puffy-monarch", "dreamcloud-premier", "nectar-premier", "naturepedic-eos-classic", "bedtech-btx4"].map((id) => products.find((item) => item.id === id)!);
-export const sleepSystemAddOns = ["bedtech-btx4", "bedtech-bt3000", "bedgear-storm", "bedgear-balance"].map((id) => products.find((item) => item.id === id)!);
+export const sleepSystemAddOns = [
+  "bedtech-bt6500",
+  "bedtech-bt3000",
+  "bedtech-bt2500",
+  "bedtech-bt2000",
+  "bedtech-btx5",
+  "bedtech-btx4",
+  "bedtech-bthu",
+  "bedtech-upholstered-platform",
+  "bedtech-standard-foundation",
+  "bedtech-high-rise-platform",
+  "bedtech-modern-platform",
+  "bedgear-storm",
+  "bedgear-balance",
+].map((id) => products.find((item) => item.id === id)!);
 
 export { faqItems, productCategories, storeInfo };
 

@@ -77,12 +77,12 @@ export default function Home() {
 
           <div className="relative min-h-[430px] overflow-hidden rounded-[26px] bg-[#ebe7df] xl:min-h-[500px]">
             <Image
-              src="/brand-assets/puffy/woman-on-puffy-bed.jpg"
-              alt="Woman relaxing on a Puffy mattress"
+              src="/product-assets/puffy-refresh/monarch-hero-wide.webp"
+              alt="Puffy Monarch mattress in a bedroom"
               fill
               priority
               sizes="(min-width: 1280px) 68vw, 100vw"
-              className="hidden object-cover object-[42%_52%] md:block"
+              className="hidden object-cover object-center md:block"
             />
             <Image
               src="/product-assets/puffy-refresh/monarch-hero-wide.webp"

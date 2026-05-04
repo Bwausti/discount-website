@@ -75,13 +75,17 @@ export const brandAssetBundles = [
     aliases: ["Nectar Sleep"],
     status: "primary",
     logo: "/brand-assets/nectar/logo.png",
-    heroImage: "/brand-assets/nectar/ultra-product.webp",
+    heroImage: "/brand-assets/nectar/tile.jpg",
     galleryImages: [
       "/brand-assets/nectar/dark-wordmark.png",
       "/brand-assets/nectar/feature-01.jpg",
       "/brand-assets/nectar/feature-02.jpg",
       "/brand-assets/nectar/feature-03.jpg",
       "/brand-assets/nectar/feature-04.jpg",
+      "/product-assets/nectar-refresh/classic-hybrid.png",
+      "/product-assets/nectar-refresh/premier-hybrid.png",
+      "/product-assets/nectar-refresh/luxe-memory.png",
+      "/product-assets/nectar-refresh/ultra-hybrid.png",
     ],
     sourceUrls: [
       "https://www.discountmattressbg.com/",
@@ -95,7 +99,7 @@ export const brandAssetBundles = [
     aliases: ["BEDGEAR"],
     status: "primary",
     logo: "/brand-assets/bedgear/logo.png",
-    heroImage: "/brand-assets/bedgear/hero.jpg",
+    heroImage: "/brand-assets/bedgear/tile.jpg",
     galleryImages: [
       "/brand-assets/bedgear/wide-detail.jpg",
       "/brand-assets/bedgear/m3-product.png",
@@ -112,7 +116,7 @@ export const brandAssetBundles = [
     aliases: ["NaturePedic", "Naturepedic EOS"],
     status: "primary",
     logo: "/brand-assets/naturepedic/discount-logo.jpg",
-    heroImage: "/brand-assets/naturepedic/hero.jpg",
+    heroImage: "/brand-assets/naturepedic/tile.jpg",
     galleryImages: [
       "/brand-assets/naturepedic/eos-classic.webp",
       "/brand-assets/naturepedic/eos-detail.webp",
@@ -156,7 +160,7 @@ export const brandAssetBundles = [
     aliases: ["Prana Sleep", "PranaSleep Karma"],
     status: "primary",
     logo: "/brand-assets/pranasleep/logo.png",
-    heroImage: "/brand-assets/pranasleep/hero.jpg",
+    heroImage: "/brand-assets/pranasleep/tile.jpg",
     galleryImages: [
       "/brand-assets/pranasleep/karma-elite.webp",
       "/brand-assets/pranasleep/showroom.jpeg",
@@ -260,7 +264,7 @@ export const brandAssetBundles = [
     aliases: ["Corsicana Mattress"],
     status: "legacy",
     logo: "/brand-assets/corsicana/logo.svg",
-    heroImage: "/brand-assets/corsicana/hero.png",
+    heroImage: "/brand-assets/corsicana/tile.jpg",
     galleryImages: [
       "/brand-assets/corsicana/wordmark.png",
       "/brand-assets/corsicana/lifestyle.jpg",
