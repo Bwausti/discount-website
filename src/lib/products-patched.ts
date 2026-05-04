@@ -512,7 +512,7 @@ export const brands: Brand[] = baseBrands.map((base) => {
 
 export const products = brands.flatMap((brand) => brand.products);
 export const featuredBrands = brands.filter((brand) => brand.status === "primary");
-export const featuredProducts = ["helix-midnight", "puffy-monarch", "dreamcloud-premier", "nectar-premier", "naturepedic-eos", "bedtech-btx4"].map((id) => products.find((item) => item.id === id)!);
+export const featuredProducts = ["helix-midnight", "puffy-monarch", "dreamcloud-premier", "nectar-premier", "naturepedic-eos-classic", "bedtech-btx4"].map((id) => products.find((item) => item.id === id)!);
 export const sleepSystemAddOns = ["bedtech-btx4", "bedtech-bt3000", "bedgear-storm", "bedgear-balance"].map((id) => products.find((item) => item.id === id)!);
 
 export { faqItems, productCategories, storeInfo };
