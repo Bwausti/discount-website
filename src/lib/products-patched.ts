@@ -1,5 +1,7 @@
 import { brands as baseBrands, faqItems, productCategories, storeInfo } from "./products";
 import type { Brand, Product, ProductPrice, ProductPriceVariant } from "./products";
+import catalogOverrides from "../../data/catalog-overrides.json";
+import type { CatalogOverrides, ProductOverride } from "./catalog-overrides";
 
 export type {
   Brand,
@@ -8,9 +10,11 @@ export type {
   ProductCategory,
   ProductPrice,
   ProductPriceVariant,
+  ProductPromo,
 } from "./products";
 
 const asOf = "May 1, 2026";
+const overrides = catalogOverrides as CatalogOverrides;
 
 function price(amount: string, sourceName: string, sourceUrl: string, label = "Price guide"): ProductPrice {
   return { amount, label, sourceName, sourceUrl, asOf };
@@ -18,6 +22,67 @@ function price(amount: string, sourceName: string, sourceUrl: string, label = "P
 
 function p(brand: Brand, item: Omit<Product, "brandId" | "brand" | "gallery"> & { gallery?: string[] }): Product {
   return { ...item, brandId: brand.id, brand: brand.name, gallery: item.gallery ?? [item.image] };
+}
+
+function overrideDate() {
+  return overrides.updatedAt ? new Date(overrides.updatedAt).toLocaleDateString("en-US") : asOf;
+}
+
+function firstPriceRow(product: Product) {
+  return product.priceVariants?.[0] ?? (product.onlinePrice ? {
+    label: product.category === "Mattress" ? "Queen" : "Price",
+    amount: product.onlinePrice.amount,
+    sourceUrl: product.onlinePrice.sourceUrl,
+  } : undefined);
+}
+
+function applyProductOverride(product: Product): Product | null {
+  const override: ProductOverride | undefined = overrides.products?.[product.id];
+  if (!override) return product;
+  if (override.hidden) return null;
+
+  const existingPrice = firstPriceRow(product);
+  const hasPriceOverride = Boolean(override.priceAmount || override.priceLabel);
+  const priceAmount = override.priceAmount || existingPrice?.amount || product.onlinePrice?.amount || "Price needed";
+  const priceLabel = override.priceLabel || existingPrice?.label || product.onlinePrice?.label || "Price guide";
+  const priceSourceUrl = product.onlinePrice?.sourceUrl || existingPrice?.sourceUrl || `/collections/${product.brandId}`;
+
+  return {
+    ...product,
+    badge: override.badge ?? product.badge,
+    availability: override.availability ?? product.availability,
+    onlinePrice: hasPriceOverride
+      ? {
+          ...(product.onlinePrice ?? {
+            sourceName: product.brand,
+            note: "Admin override",
+          }),
+          amount: priceAmount,
+          label: priceLabel,
+          sourceName: product.onlinePrice?.sourceName ?? product.brand,
+          sourceUrl: priceSourceUrl,
+          asOf: overrideDate(),
+        }
+      : product.onlinePrice,
+    priceVariants: hasPriceOverride
+      ? [
+          {
+            label: priceLabel,
+            amount: priceAmount,
+            sourceUrl: priceSourceUrl,
+          },
+        ]
+      : product.priceVariants,
+    promo:
+      override.promoHeadline || override.promoValue || override.promoCode
+        ? {
+            headline: override.promoHeadline || product.promo?.headline || "Current showroom offer",
+            value: override.promoValue || product.promo?.value,
+            code: override.promoCode || product.promo?.code,
+            asOf: overrideDate(),
+          }
+        : product.promo,
+  };
 }
 
 function patchBrand(
@@ -165,7 +230,7 @@ function bedtechProduct(
   };
 }
 
-export const brands: Brand[] = baseBrands.map((base) => {
+const patchedBrands: Brand[] = baseBrands.map((base) => {
   if (base.id === "bedtech") {
     const adjustableGallery = [
       "/brand-assets/bedtech/official-hero-bases.jpg",
@@ -634,9 +699,18 @@ export const brands: Brand[] = baseBrands.map((base) => {
   return base;
 });
 
+export const brands: Brand[] = patchedBrands.map((brand) => ({
+  ...brand,
+  products: brand.products
+    .map(applyProductOverride)
+    .filter((product): product is Product => Boolean(product)),
+}));
+
 export const products = brands.flatMap((brand) => brand.products);
 export const featuredBrands = brands.filter((brand) => brand.status === "primary");
-export const featuredProducts = ["helix-midnight", "puffy-monarch", "dreamcloud-premier", "nectar-premier", "naturepedic-eos-classic", "bedtech-btx4"].map((id) => products.find((item) => item.id === id)!);
+export const featuredProducts = ["helix-midnight", "puffy-monarch", "dreamcloud-premier", "nectar-premier", "naturepedic-eos-classic", "bedtech-btx4"]
+  .map((id) => products.find((item) => item.id === id))
+  .filter((product): product is Product => Boolean(product));
 export const sleepSystemAddOns = [
   "bedtech-bt6500",
   "bedtech-bt3000",
@@ -651,9 +725,38 @@ export const sleepSystemAddOns = [
   "bedtech-modern-platform",
   "bedgear-storm",
   "bedgear-balance",
-].map((id) => products.find((item) => item.id === id)!);
+]
+  .map((id) => products.find((item) => item.id === id))
+  .filter((product): product is Product => Boolean(product));
 
 export { faqItems, productCategories, storeInfo };
+
+export function productPriceRows(product: Product) {
+  return (
+    product.priceVariants ??
+    (product.onlinePrice
+      ? [
+          {
+            label: product.category === "Mattress" ? "Queen" : "Price",
+            amount: product.onlinePrice.amount,
+            sourceUrl: product.onlinePrice.sourceUrl,
+          },
+        ]
+      : [])
+  );
+}
+
+export function visibleProductPrice(product: Product) {
+  const firstVariant = productPriceRows(product)[0];
+
+  return {
+    amount: firstVariant?.amount ?? product.onlinePrice?.amount ?? "Price needed",
+    label: firstVariant?.label ?? product.onlinePrice?.label ?? "Price guide",
+    sourceName: product.onlinePrice?.sourceName ?? product.brand,
+    sourceUrl: firstVariant?.sourceUrl ?? product.onlinePrice?.sourceUrl ?? `/collections/${product.brandId}`,
+    asOf: product.onlinePrice?.asOf ?? asOf,
+  };
+}
 
 export function getBrandById(id: string) {
   return brands.find((brand) => brand.id === id);

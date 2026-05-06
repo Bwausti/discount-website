@@ -79,6 +79,11 @@ export function ProductCard({ product, priority = false }: { product: Product; p
                 <p className="mt-1 text-3xl font-black tracking-tight text-slate-950">
                   From {startingPrice}
                 </p>
+                {product.promo?.value ? (
+                  <p className="mt-1 text-xs font-black uppercase tracking-[0.12em] text-[#cf2333]">
+                    {product.promo.value}
+                  </p>
+                ) : null}
               </>
             ) : (
               <>

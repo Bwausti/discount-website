@@ -165,13 +165,14 @@ export default async function ProductPage({ params }: PageProps) {
               </div>
               <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
                 <p className="text-xs font-black uppercase tracking-[0.18em] text-[#cf2333]">
-                  Discount Mattress offer
+                  {product.promo?.headline ?? "Discount Mattress offer"}
                 </p>
                 <p className="mt-3 text-3xl font-black tracking-tight text-slate-950">
-                  Call for today&apos;s local offer.
+                  {product.promo?.value ?? "Call for today&apos;s local offer."}
                 </p>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  The store can confirm today&apos;s local offer, size availability, delivery, and any
+                  {product.promo?.code ? `Mention code ${product.promo.code}. ` : ""}
+                  The store can confirm today&apos;s local offer, size availability, delivery, and
                   current promotions.
                 </p>
               </div>

@@ -29,6 +29,7 @@ export interface Product {
   availability: string;
   onlinePrice?: ProductPrice;
   priceVariants?: readonly ProductPriceVariant[];
+  promo?: ProductPromo;
 }
 
 export interface ProductPrice {
@@ -44,6 +45,13 @@ export interface ProductPriceVariant {
   label: string;
   amount: string;
   sourceUrl: string;
+}
+
+export interface ProductPromo {
+  headline: string;
+  value?: string;
+  code?: string;
+  asOf?: string;
 }
 
 interface ProductDraft extends Omit<Product, "brandId" | "brand" | "gallery"> {
