@@ -216,12 +216,12 @@ export const brands: Brand[] = baseBrands.map((base) => {
           keyFeatures: ["Head and foot elevation", "Wireless control", "Modern support profile"],
           gallery: adjustableGallery,
         }),
-        bedtechProduct("bedtech-btx4", "BTX4 Adjustable Bed", "Adjustable bed", "$1,049", sources.bedtechAdjustableBeds, "/brand-assets/bedtech/btx4.webp", {
+        bedtechProduct("bedtech-btx4", "BTX4 Adjustable Bed", "Adjustable bed", "$1,049", sources.bedtechAdjustableBeds, "/brand-assets/bedtech/btx4-base.webp", {
           badge: "Adjustable",
           feel: "Lifestyle upgrade",
           bestFor: ["Head elevation", "Reading in bed", "Base upgrades"],
           keyFeatures: ["Wireless control", "Head and foot articulation", "Modern base profile"],
-          gallery: ["/brand-assets/bedtech/btx4.webp", "/brand-assets/bedtech/official-hero-bases.jpg", "/brand-assets/bedtech/bt3000.webp"],
+          gallery: ["/brand-assets/bedtech/btx4-base.webp", "/brand-assets/bedtech/official-hero-bases.jpg", "/brand-assets/bedtech/btx4.webp"],
         }),
         bedtechProduct("bedtech-bthu", "BTHU Adjustable Bed", "Adjustable bed", "$749", sources.bedtechAdjustableBeds, "/brand-assets/bedtech/official-hero-bases.jpg", {
           badge: "Value",

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ProductGrid } from "@/components/product-card";
 import { LeadCta, LocationCards, PageShell } from "@/components/site-shell";
 import { brands, getBrandById, sleepSystemAddOns, storeInfo } from "@/lib/products";
+import type { Product } from "@/lib/products";
 
 interface PageProps {
   params: Promise<{ brand: string }>;
@@ -40,6 +41,34 @@ export default async function BrandCollectionPage({ params }: PageProps) {
     brand.products.some((product) => product.category === "Mattress") &&
     brand.id !== "bedgear" &&
     brand.id !== "bedtech";
+  const helixProductSections =
+    brand.id === "helix"
+      ? [
+          {
+            id: "core",
+            eyebrow: "Core",
+            title: "Helix Core",
+            body: "The most approachable Helix starting point: six comfort feels plus Helix Plus.",
+            products: brand.products.filter(
+              (product) => !product.model.includes("Luxe") && !product.model.includes("Elite"),
+            ),
+          },
+          {
+            id: "luxe",
+            eyebrow: "Luxe",
+            title: "Helix Luxe",
+            body: "Pillow-top comfort, zoned lumbar support, and more cooling-cover choices.",
+            products: brand.products.filter((product) => product.model.includes("Luxe")),
+          },
+          {
+            id: "elite",
+            eyebrow: "Elite",
+            title: "Helix Elite",
+            body: "The tallest Helix builds with premium cooling, contouring, and support upgrades.",
+            products: brand.products.filter((product) => product.model.includes("Elite")),
+          },
+        ].filter((section) => section.products.length > 0)
+      : [];
 
   return (
     <PageShell>
@@ -197,7 +226,23 @@ export default async function BrandCollectionPage({ params }: PageProps) {
               All brands
             </Link>
           </div>
-          <ProductGrid products={brand.products} priorityCount={3} />
+          {helixProductSections.length > 0 ? (
+            <div className="grid gap-12">
+              {helixProductSections.map((section, index) => (
+                <CollectionProductGroup
+                  key={section.id}
+                  id={section.id}
+                  eyebrow={section.eyebrow}
+                  title={section.title}
+                  body={section.body}
+                  products={section.products}
+                  priorityCount={index === 0 ? 3 : 0}
+                />
+              ))}
+            </div>
+          ) : (
+            <ProductGrid products={brand.products} priorityCount={3} />
+          )}
         </div>
       </section>
 
@@ -284,60 +329,129 @@ function HelixCollectionGuide() {
       name: "Core",
       detail: "11.5 in hybrids in soft, medium, and firm feels.",
       points: ["Sunset, Moonlight, Midnight", "Dusk, Dawn, Twilight", "Best value path"],
+      href: "#core",
+      image: "/product-assets/helix/helix-midnight-1.webp",
+      price: "from $799",
     },
     {
       name: "Luxe",
       detail: "13.5 in pillow top upgrades with more support choices.",
       points: ["All six main feels", "ErgoAlign option", "GlacioTex cooling options"],
+      href: "#luxe",
+      image: "/product-assets/helix/helix-midnight-luxe-2.webp",
+      price: "from $1,149",
     },
     {
       name: "Elite",
       detail: "15 in luxury builds with premium cooling and contouring.",
       points: ["All six main feels", "ErgoAlign included", "GlacioTex Elite cooling"],
-    },
-    {
-      name: "Plus",
-      detail: "Extra-supportive options for plus-size sleepers.",
-      points: ["Helix Plus", "Plus Luxe", "Plus Elite"],
+      href: "#elite",
+      image: "/product-assets/helix/helix-midnight-elite-1.png",
+      price: "from $1,874",
     },
   ];
 
   return (
-    <section className="bg-white px-4 py-14 sm:px-6 lg:px-8">
+    <section className="bg-white px-4 py-12 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-8 max-w-3xl">
-          <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">
-            Helix lineup
-          </p>
-          <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
-            Core, Luxe, Elite, and Plus are all listed.
-          </h2>
-          <p className="mt-4 text-lg leading-8 text-slate-600">
-            Start with your sleep position and firmness, then compare support and cooling upgrades
-            in the showroom.
-          </p>
+        <div className="mb-8 grid gap-5 lg:grid-cols-[0.78fr_1.22fr] lg:items-end">
+          <div className="max-w-3xl">
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">
+              Helix choices
+            </p>
+            <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
+              Start with the Helix comfort level that fits your budget.
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-slate-600">
+              Core, Luxe, and Elite all come in soft, medium, and firm feels. Start with the price
+              and comfort level, then choose the feel you want to try.
+            </p>
+          </div>
+          <div className="rounded-lg border border-slate-200 bg-[#f7f6f1] p-5">
+            <p className="text-sm font-black text-slate-950">Need extra support?</p>
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              Helix Plus, Plus Luxe, and Plus Elite are grouped with the closest matching comfort
+              level so they are easier to find.
+            </p>
+          </div>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 lg:grid-cols-3">
           {collectionCards.map((card) => (
-            <article
+            <a
               key={card.name}
-              className="rounded-[24px] border border-[#dedbd2] bg-[#fbfaf4] p-5 shadow-sm"
+              href={card.href}
+              className="group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-[#cf2333] hover:shadow-lg"
             >
-              <h3 className="text-3xl font-black tracking-tight text-slate-950">{card.name}</h3>
-              <p className="mt-3 text-sm font-semibold leading-6 text-slate-700">
-                {card.detail}
-              </p>
-              <ul className="mt-5 grid gap-2 text-sm font-bold text-slate-900">
-                {card.points.map((point) => (
-                  <li key={point} className="rounded-full bg-white px-3 py-2">
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </article>
+              <div className="relative aspect-[16/10] bg-[#f1f3f6]">
+                <Image
+                  src={card.image}
+                  alt={`Helix ${card.name}`}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                  className="object-contain p-6 transition duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+              <div className="p-5">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h3 className="text-3xl font-black tracking-tight text-slate-950">
+                      {card.name}
+                    </h3>
+                    <p className="mt-1 text-sm font-black uppercase tracking-[0.14em] text-[#cf2333]">
+                      {card.price}
+                    </p>
+                  </div>
+                  <span className="rounded bg-slate-950 px-3 py-2 text-xs font-black text-white">
+                    View
+                  </span>
+                </div>
+                <p className="mt-3 text-sm font-semibold leading-6 text-slate-700">
+                  {card.detail}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {card.points.map((point) => (
+                    <span
+                      key={point}
+                      className="rounded bg-[#f7f6f1] px-3 py-2 text-xs font-bold text-slate-800"
+                    >
+                      {point}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </a>
           ))}
         </div>
       </div>
+    </section>
+  );
+}
+
+function CollectionProductGroup({
+  id,
+  eyebrow,
+  title,
+  body,
+  products,
+  priorityCount = 0,
+}: {
+  id: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  products: Product[];
+  priorityCount?: number;
+}) {
+  return (
+    <section id={id} className="scroll-mt-36">
+      <div className="mb-6 max-w-3xl">
+        <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">{eyebrow}</p>
+        <h3 className="mt-2 text-3xl font-black tracking-tight text-slate-950 md:text-4xl">
+          {title}
+        </h3>
+        <p className="mt-3 text-lg leading-8 text-slate-600">{body}</p>
+      </div>
+      <ProductGrid products={products} priorityCount={priorityCount} />
     </section>
   );
 }

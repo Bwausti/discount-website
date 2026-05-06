@@ -11,6 +11,7 @@ export const metadata = {
 };
 
 export default function CollectionsPage() {
+  const visibleBrands = brands.filter((brand) => brand.id !== "serta-sleep-retreat");
   const primaryProducts = products.filter((product) => {
     const brand = brands.find((item) => item.id === product.brandId);
     return brand?.status !== "ask-in-store";
@@ -82,7 +83,7 @@ export default function CollectionsPage() {
             />
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {brands.map((brand) => (
+            {visibleBrands.map((brand) => (
               <BrandCard key={brand.id} brand={brand} />
             ))}
           </div>

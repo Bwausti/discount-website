@@ -75,7 +75,7 @@ export const brandAssetBundles = [
     aliases: ["Nectar Sleep"],
     status: "primary",
     logo: "/brand-assets/nectar/logo.png",
-    heroImage: "/brand-assets/nectar/tile.jpg",
+    heroImage: "/product-assets/nectar-refresh/luxe-hybrid.png",
     galleryImages: [
       "/brand-assets/nectar/dark-wordmark.png",
       "/brand-assets/nectar/feature-01.jpg",
@@ -99,7 +99,7 @@ export const brandAssetBundles = [
     aliases: ["BEDGEAR"],
     status: "primary",
     logo: "/brand-assets/bedgear/logo.png",
-    heroImage: "/brand-assets/bedgear/tile.jpg",
+    heroImage: "/brand-assets/bedgear/m3-product.png",
     galleryImages: [
       "/brand-assets/bedgear/wide-detail.jpg",
       "/brand-assets/bedgear/m3-product.png",
@@ -116,7 +116,7 @@ export const brandAssetBundles = [
     aliases: ["NaturePedic", "Naturepedic EOS"],
     status: "primary",
     logo: "/brand-assets/naturepedic/discount-logo.jpg",
-    heroImage: "/brand-assets/naturepedic/tile.jpg",
+    heroImage: "/brand-assets/naturepedic/eos-classic.webp",
     galleryImages: [
       "/brand-assets/naturepedic/eos-classic.webp",
       "/brand-assets/naturepedic/eos-detail.webp",
@@ -160,7 +160,7 @@ export const brandAssetBundles = [
     aliases: ["Prana Sleep", "PranaSleep Karma"],
     status: "primary",
     logo: "/brand-assets/pranasleep/logo.png",
-    heroImage: "/brand-assets/pranasleep/tile.jpg",
+    heroImage: "/brand-assets/pranasleep/karma-elite.webp",
     galleryImages: [
       "/brand-assets/pranasleep/karma-elite.webp",
       "/brand-assets/pranasleep/showroom.jpeg",
@@ -245,7 +245,7 @@ export const brandAssetBundles = [
     aliases: ["Serta Mattress"],
     status: "secondary",
     logo: "/brand-assets/serta/logo.svg",
-    heroImage: "/brand-assets/serta/sheep-stretch.jpg",
+    heroImage: "/brand-assets/serta/icomfort-preview.jpg",
     galleryImages: [
       "/brand-assets/serta/discount-logo.png",
       "/brand-assets/serta/sheep-lifestyle.jpg",

@@ -284,8 +284,18 @@ export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
             href={`/collections/${brand.id}`}
             className="group flex min-h-[22rem] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-[#cf2333]/40 hover:shadow-xl"
           >
-            <div className="flex h-32 items-center justify-center border-b border-slate-200 bg-[#f7f8fb] px-8">
-              <div className="flex h-20 w-full max-w-[15rem] items-center justify-center rounded-md bg-white px-6 py-4 shadow-sm ring-1 ring-slate-200">
+            <div className="relative flex h-36 items-center justify-center overflow-hidden border-b border-slate-200 bg-slate-950 px-8">
+              {brand.heroImage ? (
+                <Image
+                  src={brand.heroImage}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                  className="object-cover opacity-55 transition duration-500 group-hover:scale-[1.03]"
+                />
+              ) : null}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-slate-950/25 to-slate-950/55" />
+              <div className="relative flex h-20 w-full max-w-[15rem] items-center justify-center rounded-md bg-white/95 px-6 py-4 shadow-lg ring-1 ring-white/70 backdrop-blur">
                 {brand.logo ? (
                   <Image
                     src={brand.logo}
