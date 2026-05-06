@@ -12,7 +12,7 @@ export type {
 
 const asOf = "May 1, 2026";
 
-function price(amount: string, sourceName: string, sourceUrl: string, label = "Starting price"): ProductPrice {
+function price(amount: string, sourceName: string, sourceUrl: string, label = "Price guide"): ProductPrice {
   return { amount, label, sourceName, sourceUrl, asOf };
 }
 

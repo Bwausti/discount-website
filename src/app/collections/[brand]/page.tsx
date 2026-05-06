@@ -131,7 +131,7 @@ export default async function BrandCollectionPage({ params }: PageProps) {
                       href={storeInfo.primaryPhoneHref}
                       className="inline-flex items-center justify-center rounded-full bg-[#f2b705] px-6 py-3.5 text-sm font-black text-slate-950 shadow-sm transition hover:bg-[#ffd24d]"
                     >
-                      Call for today&apos;s price
+                      Call for today&apos;s local offer
                     </a>
                     <Link
                       href="/locations"
@@ -185,7 +185,7 @@ export default async function BrandCollectionPage({ params }: PageProps) {
         <div className="mx-auto grid max-w-7xl gap-3 sm:grid-cols-3">
           <Metric label="Models" value={`${brand.products.length}`} />
           <Metric label="Shop" value={brand.status === "ask-in-store" ? "Confirm" : "Featured"} />
-          <Metric label="Pricing" value="Call or visit" />
+          <Metric label="Value" value="Local offers" />
         </div>
       </section>
 
@@ -215,8 +215,8 @@ export default async function BrandCollectionPage({ params }: PageProps) {
                 {brand.name} options
               </h2>
               <p className="mt-4 text-lg leading-8 text-slate-600">
-                Shortlist what looks right, then call to confirm current pricing and which location
-                has the best comparison set.
+                Shortlist what looks right, then call to confirm availability, local offers, and
+                which location has the best comparison set.
               </p>
             </div>
             <Link
@@ -307,8 +307,8 @@ export default async function BrandCollectionPage({ params }: PageProps) {
               Plan your visit.
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
-              The team can tell you which location is best for {brand.name}, current prices, and
-              what related models are worth trying side by side.
+              The team can tell you which location is best for {brand.name}, today&apos;s local offers,
+              and what related models are worth trying side by side.
             </p>
           </div>
           <LocationCards compact />
@@ -360,11 +360,11 @@ function HelixCollectionGuide() {
               Helix choices
             </p>
             <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
-              Start with the Helix comfort level that fits your budget.
+              Start with the Helix comfort level that fits how you sleep.
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
-              Core, Luxe, and Elite all come in soft, medium, and firm feels. Start with the price
-              and comfort level, then choose the feel you want to try.
+              Core, Luxe, and Elite all come in soft, medium, and firm feels. Compare the
+              construction level, then choose the feel you want to try.
             </p>
           </div>
           <div className="rounded-lg border border-slate-200 bg-[#f7f6f1] p-5">

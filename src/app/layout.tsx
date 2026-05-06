@@ -8,13 +8,13 @@ export const metadata: Metadata = {
     template: "%s | Discount Mattress",
   },
   description:
-    "Shop top mattress brands locally in Bowling Green, KY. Call for current pricing or visit Discount Mattress and Discount Mattress Outlet.",
+    "Shop top mattress brands locally in Bowling Green, KY. Call or visit Discount Mattress and Discount Mattress Outlet for local help and today's offers.",
   keywords:
     "mattress store Bowling Green KY, discount mattress, Helix, Nectar, Puffy, DreamCloud, Bedgear, Naturepedic, Serta",
   openGraph: {
     title: "Discount Mattress | Bowling Green Mattress Store",
     description:
-      "Call or visit two Bowling Green mattress showrooms for current pricing, local guidance, and top sleep brands.",
+      "Call or visit two Bowling Green mattress showrooms for local guidance, today's offers, and top sleep brands.",
     type: "website",
     images: ["/brand-assets/discount-mattress/hero-bed.jpg"],
   },

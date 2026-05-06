@@ -5,17 +5,17 @@ import { faqItems, storeInfo } from "@/lib/products";
 export const metadata = {
   title: "FAQ and Store Policies",
   description:
-    "Discount Mattress FAQ for local mattress shopping, current pricing, financing, warranty details, and comfort exchange policy confirmation.",
+    "Discount Mattress FAQ for local mattress shopping, financing, warranty details, and comfort exchange policy confirmation.",
 };
 
 const policyCards = [
   {
     title: "Comfort exchange",
-    copy: "Exact comfort exchange terms should be entered only after Discount Mattress confirms the current store policy. Until then, use call-first language.",
+    copy: "Ask the store team to walk you through the current comfort exchange terms before you buy.",
   },
   {
     title: "Returns and refunds",
-    copy: "The public terms say refunds are handled according to store policies. This page is structured for owner-approved details.",
+    copy: "Refund and return details can vary by purchase, so confirm the policy with the store team.",
   },
   {
     title: "Warranties",
@@ -35,7 +35,7 @@ export default function FaqPage() {
           <SectionIntro
             eyebrow="FAQ"
             title="Clear answers for local mattress shopping."
-            body="This page keeps the promise level careful: call for current prices, confirm policies in store, and avoid publishing comfort exchange details until the owner signs off."
+            body="Use this page to prepare for your visit, then call or stop in for today's local offers and policy details."
           />
         </div>
       </section>
@@ -47,11 +47,11 @@ export default function FaqPage() {
               Policies
             </p>
             <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
-              Publish what the store can stand behind.
+              Know what to ask before you buy.
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
-              The new site should feel confident, but policy language needs to be exact. This
-              structure is ready for final owner-approved wording.
+              Mattress policies can vary by brand, model, delivery choice, and promotion. A quick
+              call or showroom visit is the best way to confirm the details for your purchase.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <a

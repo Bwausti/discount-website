@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps) {
 
   return {
     title: `${product.model}`,
-    description: `See ${product.model} details from ${product.brand}. Call Discount Mattress in Bowling Green for current pricing and showroom availability.`,
+    description: `See ${product.model} details from ${product.brand}. Call Discount Mattress in Bowling Green for showroom availability and today's local offers.`,
   };
 }
 
@@ -165,14 +165,14 @@ export default async function ProductPage({ params }: PageProps) {
               </div>
               <div className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
                 <p className="text-xs font-black uppercase tracking-[0.18em] text-[#cf2333]">
-                  Discount Mattress price
+                  Discount Mattress offer
                 </p>
                 <p className="mt-3 text-3xl font-black tracking-tight text-slate-950">
                   Call for today&apos;s local offer.
                 </p>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  The store can confirm current local price, size availability, delivery, and any
-                  current store offers.
+                  The store can confirm today&apos;s local offer, size availability, delivery, and any
+                  current promotions.
                 </p>
               </div>
             </div>
@@ -185,8 +185,8 @@ export default async function ProductPage({ params }: PageProps) {
                 Try it in store before you decide.
               </p>
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                Call or visit so the team can confirm size, availability, delivery, and current
-                offers.
+                Call or visit so the team can confirm size, availability, delivery, and today&apos;s
+                local offers.
               </p>
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 <a
@@ -322,7 +322,7 @@ export default async function ProductPage({ params }: PageProps) {
 
       <LeadCta
         title={`Want to try the ${product.model}?`}
-        body="Call first for current price, showroom availability, delivery options, and nearby alternatives worth testing."
+        body="Call first for showroom availability, today's local offer, delivery options, and nearby alternatives worth testing."
       />
     </PageShell>
   );

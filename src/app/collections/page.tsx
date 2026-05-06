@@ -7,7 +7,7 @@ import { brands, featuredBrands, productCategories, products } from "@/lib/produ
 export const metadata = {
   title: "Mattress Brands and Models",
   description:
-    "Browse Discount Mattress brands, mattresses, adjustable bases, pillows, and protectors. Call or visit for current Bowling Green showroom pricing.",
+    "Browse Discount Mattress brands, mattresses, adjustable bases, pillows, and protectors in Bowling Green.",
 };
 
 export default function CollectionsPage() {
@@ -43,7 +43,7 @@ export default function CollectionsPage() {
       <section className="border-y border-slate-200 bg-[#162b49] px-4 py-6 text-white sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <p className="text-sm font-bold">
-            No cart. No stale checkout prices. Call or visit for current store pricing.
+            Nationwide price guarantee on comparable mattresses. Call or visit for today&apos;s local offer.
           </p>
           <div className="flex flex-wrap gap-2">
             {productCategories.map((category) => (
@@ -106,7 +106,7 @@ export default function CollectionsPage() {
                   align="left"
                   eyebrow={category}
                   title={`${category} options`}
-                  body="Use these cards to shortlist what you want to try, then call for current pricing and floor availability."
+                  body="Use these cards to shortlist what you want to try, then call for floor availability and today's local offer."
                 />
                 <a
                   href="#top"
@@ -123,7 +123,7 @@ export default function CollectionsPage() {
 
       <LeadCta
         title="Have a model in mind?"
-        body="Call the store before you drive over. The team can confirm current pricing, floor models, and which location is best for what you want to try."
+        body="Call the store before you drive over. The team can confirm floor models, local offers, and which location is best for what you want to try."
       />
     </PageShell>
   );

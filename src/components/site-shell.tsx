@@ -18,7 +18,7 @@ export function SiteHeader() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-2 px-4 py-2 text-center text-xs font-black uppercase tracking-[0.14em] sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
           <p className="hidden justify-self-start text-white/75 lg:block">Bowling Green, KY</p>
           <p className="justify-self-center text-white">
-            Prices shown • Local help • Two Bowling Green stores
+            Nationwide price guarantee • Local help • Two Bowling Green stores
           </p>
           <TrackedLink
             href={storeInfo.primaryPhoneHref}
@@ -95,8 +95,8 @@ export function SiteFooter() {
             className="h-10 w-auto brightness-0 invert"
           />
           <p className="mt-5 max-w-md text-sm leading-6 text-slate-300">
-            Local help choosing a mattress, strong brand selection, and current prices for
-            Bowling Green shoppers.
+            Local help choosing a mattress, strong brand selection, and a nationwide price
+            guarantee for Bowling Green shoppers.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <TrackedLink
@@ -160,7 +160,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-white/10 px-4 py-5 text-center text-xs text-slate-400">
-        © {new Date().getFullYear()} Discount Mattress. Call or visit for current offers,
+        © {new Date().getFullYear()} Discount Mattress. Call or visit for today&apos;s local offers,
         promotions, and policy details.
       </div>
     </footer>
@@ -367,7 +367,7 @@ export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
 
 export function LeadCta({
   title = "Ready to try a better mattress?",
-  body = "See prices before you visit, then call or stop in to test comfort levels in person.",
+  body = "Start with the brands you like, then call or stop in to test comfort levels in person.",
 }: {
   title?: string;
   body?: string;

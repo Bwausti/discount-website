@@ -54,11 +54,11 @@ export default function Home() {
               Discount Mattress • Bowling Green, KY
             </p>
             <h1 className="mt-5 text-balance text-5xl font-black leading-[0.95] tracking-tight text-slate-950 md:text-6xl xl:text-[4.75rem]">
-              Brand-name mattresses, priced clearly, fitted locally.
+              Brand-name mattresses, matched locally, backed by strong value.
             </h1>
             <p className="mt-6 max-w-2xl text-lg font-semibold leading-8 text-slate-700">
-              See real prices on Helix, Puffy, Nectar, DreamCloud, Naturepedic, Bedgear, and more,
-              then visit us to find the mattress that feels right.
+              Shop Helix, Puffy, Nectar, DreamCloud, Naturepedic, Bedgear, and more, then visit us
+              to find the mattress that feels right.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <TrackedLink
@@ -88,7 +88,7 @@ export default function Home() {
             </div>
             <div className="mt-10 grid gap-3 text-sm font-black text-slate-900 sm:grid-cols-3">
               <div className="border-l-4 border-[#cf2333] bg-slate-50 px-4 py-3">
-                Prices shown up front
+                Nationwide price guarantee
               </div>
               <div className="border-l-4 border-[#f2b705] bg-slate-50 px-4 py-3">
                 Two local showrooms
@@ -155,7 +155,7 @@ export default function Home() {
 
       <section className="border-y border-[#dedbd2] bg-white">
         <div className="mx-auto grid max-w-7xl gap-4 px-4 py-5 text-center text-sm font-black text-slate-900 sm:px-6 md:grid-cols-3 lg:px-8">
-          <p>Prices shown before you visit</p>
+          <p>Nationwide price guarantee</p>
           <p>Compare national and specialty brands in person</p>
           <p>Two local showrooms in Bowling Green</p>
         </div>
@@ -186,7 +186,7 @@ export default function Home() {
               <div className="p-5">
                 <p className="text-3xl font-black text-slate-950">$</p>
                 <p className="mt-1 text-xs font-black uppercase tracking-[0.16em] text-slate-500">
-                  Clear pricing
+                  Strong value
                 </p>
               </div>
             </div>
@@ -279,11 +279,11 @@ export default function Home() {
               Local help
             </p>
             <h2 className="mt-3 text-balance text-4xl font-black tracking-tight text-slate-950 md:text-5xl">
-              Built around real prices, store visits, and real comfort testing.
+              Built around national brands, store visits, and real comfort testing.
             </h2>
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {[
-                "Current prices confirmed by phone or in store.",
+                "Nationwide price guarantee on comparable mattresses.",
                 "Easy ways to call, visit, and compare.",
                 "Brand pages that help shoppers compare before visiting.",
                 "Friendly help with comfort, delivery, and warranty questions.",
@@ -318,7 +318,7 @@ export default function Home() {
               align="left"
               eyebrow="Visit"
               title="Two Bowling Green locations."
-              body="Call ahead to confirm current offers, model availability, delivery questions, and policy details."
+              body="Call ahead to confirm today's local offers, model availability, delivery questions, and policy details."
             />
             <LocationCards compact />
           </div>

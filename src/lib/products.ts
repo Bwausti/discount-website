@@ -74,7 +74,7 @@ function officialOnlinePrice({
   amount,
   sourceName,
   sourceUrl,
-  label = "Official online queen price",
+  label = "Price guide",
   note,
 }: Omit<ProductPrice, "asOf" | "label"> & { label?: string }): ProductPrice {
   return {
@@ -397,7 +397,7 @@ function helixDraft({
     availability: "Call to confirm current showroom availability.",
     onlinePrice: officialOnlinePrice({
       amount: priceVariants[0]?.amount ?? "Call",
-      label: "Starting price",
+      label: "Price guide",
       sourceName: "Helix",
       sourceUrl,
     }),
@@ -779,7 +779,7 @@ export const brands: Brand[] = [
         availability: "Call for current Puffy offers.",
         onlinePrice: officialOnlinePrice({
           amount: "$449",
-          label: "Starting sale price",
+          label: "Sale price guide",
           sourceName: "Puffy",
           sourceUrl: priceSources.puffyTwin,
         }),
@@ -807,7 +807,7 @@ export const brands: Brand[] = [
         availability: "Ask to compare Lux foam and hybrid options.",
         onlinePrice: officialOnlinePrice({
           amount: "$749",
-          label: "Starting sale price",
+          label: "Sale price guide",
           sourceName: "Puffy",
           sourceUrl: priceSources.puffyTwin,
         }),
@@ -829,7 +829,7 @@ export const brands: Brand[] = [
         availability: "Call for current hybrid availability.",
         onlinePrice: officialOnlinePrice({
           amount: "$749",
-          label: "Starting sale price",
+          label: "Sale price guide",
           sourceName: "Puffy",
           sourceUrl: priceSources.puffyTwin,
         }),
@@ -856,7 +856,7 @@ export const brands: Brand[] = [
         availability: "Ask the showroom team about Royal and Monarch comparisons.",
         onlinePrice: officialOnlinePrice({
           amount: "$1,089",
-          label: "Starting sale price",
+          label: "Sale price guide",
           sourceName: "Puffy",
           sourceUrl: priceSources.puffyTwin,
         }),
@@ -884,7 +884,7 @@ export const brands: Brand[] = [
         availability: "Call for today's Monarch availability.",
         onlinePrice: officialOnlinePrice({
           amount: "$1,799",
-          label: "Starting sale price",
+          label: "Sale price guide",
           sourceName: "Puffy",
           sourceUrl: priceSources.puffyTwinXl,
         }),
@@ -924,7 +924,7 @@ export const brands: Brand[] = [
         availability: "Call for current DreamCloud pricing.",
         onlinePrice: officialOnlinePrice({
           amount: "$799",
-          label: "Starting price",
+          label: "Price guide",
           sourceName: "DreamCloud",
           sourceUrl: priceSources.dreamcloudPremier,
         }),
@@ -952,7 +952,7 @@ export const brands: Brand[] = [
         availability: "Ask whether Luxe Hybrid is available to try.",
         onlinePrice: officialOnlinePrice({
           amount: "$1,099",
-          label: "Starting price",
+          label: "Price guide",
           sourceName: "DreamCloud",
           sourceUrl: priceSources.dreamcloudLuxe,
         }),
@@ -992,7 +992,7 @@ export const brands: Brand[] = [
         availability: "Call for current Nectar specials.",
         onlinePrice: officialOnlinePrice({
           amount: "$369",
-          label: "Starting price",
+          label: "Price guide",
           sourceName: "Nectar",
           sourceUrl: priceSources.nectarClassic,
         }),
@@ -1019,7 +1019,7 @@ export const brands: Brand[] = [
         availability: "A strong upgrade to compare against Classic.",
         onlinePrice: officialOnlinePrice({
           amount: "$549",
-          label: "Starting price",
+          label: "Price guide",
           sourceName: "Nectar",
           sourceUrl: priceSources.nectarPremier,
         }),
@@ -1047,7 +1047,7 @@ export const brands: Brand[] = [
         availability: "Call for current Luxe model availability.",
         onlinePrice: officialOnlinePrice({
           amount: "$999",
-          label: "Starting price",
+          label: "Price guide",
           sourceName: "Nectar",
           sourceUrl: priceSources.nectarLuxe,
         }),
@@ -1081,7 +1081,7 @@ export const brands: Brand[] = [
         availability: "Ask the showroom team about Bedgear mattress options.",
         onlinePrice: officialOnlinePrice({
           amount: "$2,999.99",
-          label: "Official online mattress price",
+          label: "Mattress price guide",
           sourceName: "BEDGEAR",
           sourceUrl: priceSources.bedgearM3,
         }),
@@ -1106,7 +1106,7 @@ export const brands: Brand[] = [
         availability: "Try pillow heights in store.",
         onlinePrice: officialOnlinePrice({
           amount: "$199.99",
-          label: "Official online pillow price",
+          label: "Pillow price guide",
           sourceName: "BEDGEAR",
           sourceUrl: priceSources.bedgearStorm,
         }),
@@ -1130,7 +1130,7 @@ export const brands: Brand[] = [
         availability: "Ask for pillow fitting help.",
         onlinePrice: officialOnlinePrice({
           amount: "$99.99",
-          label: "Official online pillow price",
+          label: "Pillow price guide",
           sourceName: "BEDGEAR",
           sourceUrl: priceSources.bedgearBalance,
         }),
@@ -1153,7 +1153,7 @@ export const brands: Brand[] = [
         availability: "Available with most mattress purchases.",
         onlinePrice: officialOnlinePrice({
           amount: "$159.99",
-          label: "Official online queen protector price",
+          label: "Protector price guide",
           sourceName: "BEDGEAR",
           sourceUrl: priceSources.bedgearDriTec,
         }),
@@ -1522,7 +1522,7 @@ export const brands: Brand[] = [
         availability: "Ask for current Serta and iComfort floor models.",
         onlinePrice: officialOnlinePrice({
           amount: "$1,199",
-          label: "Official online selected price",
+          label: "Price guide",
           sourceName: "Serta",
           sourceUrl: priceSources.sertaIcomfort,
         }),
@@ -1763,12 +1763,12 @@ export const faqItems = [
   {
     question: "Can I buy online?",
     answer:
-      "This site is built for local shopping. Call or visit either Bowling Green showroom for current pricing, floor models, and delivery options.",
+      "This site is built for local shopping. Call or visit either Bowling Green showroom for floor models, delivery options, and today's local offers.",
   },
   {
-    question: "Do you show prices?",
+    question: "How should I use the prices on this site?",
     answer:
-      "The site shows available prices by size for many models. Local Discount Mattress pricing, size availability, and promotions should still be confirmed by phone or in the showroom.",
+      "Use them as a helpful shopping guide. Prices and promotions can change, and Discount Mattress can confirm today's local offer by phone or in the showroom.",
   },
   {
     question: "Do you offer financing?",
@@ -1778,7 +1778,7 @@ export const faqItems = [
   {
     question: "What is the comfort exchange policy?",
     answer:
-      "The public terms say refunds follow store policies. The exact comfort exchange language should be confirmed by Discount Mattress before publishing firm promises.",
+      "Comfort exchange and return details can vary by purchase. Ask the store team to confirm the current policy before you buy.",
   },
   {
     question: "Do warranties come from Discount Mattress or the brand?",
