@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { TrackedLink } from "@/components/tracked-link";
 import { Brand, storeInfo } from "@/lib/products";
 
 const navItems = [
@@ -12,19 +13,21 @@ const navItems = [
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[#dedbd2] bg-[#fffef9]/95 backdrop-blur">
-      <div className="border-b border-[#dedbd2] bg-[#f2efe5] text-slate-950">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-2 px-4 py-1.5 text-center text-sm font-black sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
-          <div className="hidden lg:block" />
-          <Link href="/collections/puffy" className="justify-self-center hover:text-[#b98100]">
-            Local Spring Sale: Puffy Monarch and more →
-          </Link>
-          <a
+    <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/96 backdrop-blur">
+      <div className="border-b border-slate-200 bg-slate-950 text-white">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-2 px-4 py-2 text-center text-xs font-black uppercase tracking-[0.14em] sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
+          <p className="hidden justify-self-start text-white/75 lg:block">Bowling Green, KY</p>
+          <p className="justify-self-center text-white">
+            Prices shown • Local help • Two Bowling Green stores
+          </p>
+          <TrackedLink
             href={storeInfo.primaryPhoneHref}
-            className="hidden justify-self-end rounded-full border border-slate-950 px-4 py-1.5 text-sm font-black transition hover:bg-slate-950 hover:text-white lg:inline-flex"
+            eventName="phone_click"
+            eventLabel="header_primary_phone"
+            className="hidden justify-self-end rounded border border-white/30 px-3 py-1.5 text-xs font-black text-white transition hover:bg-white hover:text-slate-950 lg:inline-flex"
           >
             {storeInfo.primaryPhone}
-          </a>
+          </TrackedLink>
         </div>
       </div>
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-8">
@@ -43,31 +46,33 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-            className="text-sm font-bold text-slate-900 transition hover:text-[#b98100] xl:text-base"
+              className="text-sm font-bold text-slate-700 transition hover:text-[#cf2333] xl:text-base"
             >
               {item.label}
             </Link>
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <a
+          <TrackedLink
             href={storeInfo.primaryPhoneHref}
-            className="hidden rounded-full border border-slate-950 px-4 py-2 text-sm font-black text-slate-950 transition hover:bg-slate-950 hover:text-white sm:inline-flex lg:hidden"
+            eventName="phone_click"
+            eventLabel="header_mobile_phone"
+            className="hidden rounded border border-slate-300 px-4 py-2 text-sm font-black text-slate-950 transition hover:border-slate-950 sm:inline-flex lg:hidden"
           >
             Call
-          </a>
+          </TrackedLink>
           <Link
-            href="/faq"
-            className="rounded-full bg-[#f2b705] px-4 py-2.5 text-sm font-black text-slate-950 shadow-sm transition hover:bg-[#dba300]"
+            href="/locations"
+            className="rounded bg-[#f2b705] px-4 py-2.5 text-sm font-black text-slate-950 shadow-sm transition hover:bg-[#dba300]"
           >
-            Store FAQ
+            Visit
           </Link>
         </div>
       </nav>
-      <div className="border-t border-[#dedbd2] bg-[#fffef9] px-4 py-2 lg:hidden">
+      <div className="border-t border-slate-200 bg-white px-4 py-2 lg:hidden">
         <div className="mx-auto flex max-w-7xl gap-4 overflow-x-auto text-sm font-semibold text-slate-700">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="shrink-0 hover:text-[#b98100]">
+            <Link key={item.href} href={item.href} className="shrink-0 hover:text-[#cf2333]">
               {item.label}
             </Link>
           ))}
@@ -90,22 +95,26 @@ export function SiteFooter() {
             className="h-10 w-auto brightness-0 invert"
           />
           <p className="mt-5 max-w-md text-sm leading-6 text-slate-300">
-            Local mattress guidance, strong brand selection, and current showroom pricing for
-            Bowling Green sleepers.
+            Local help choosing a mattress, strong brand selection, and current prices for
+            Bowling Green shoppers.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <a
+            <TrackedLink
               href={storeInfo.primaryPhoneHref}
+              eventName="phone_click"
+              eventLabel="footer_primary_phone"
               className="rounded bg-white px-4 py-2 text-sm font-bold text-[#101827] transition hover:bg-slate-200"
             >
               Call {storeInfo.primaryPhone}
-            </a>
-            <Link
+            </TrackedLink>
+            <TrackedLink
               href="/locations"
+              eventName="directions_click"
+              eventLabel="footer_directions"
               className="rounded border border-white/30 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10"
             >
               Get directions
-            </Link>
+            </TrackedLink>
           </div>
         </div>
         <div>
@@ -137,16 +146,21 @@ export function SiteFooter() {
                 <p>
                   {location.city}, {location.state} {location.zip}
                 </p>
-                <a href={location.phoneHref} className="font-semibold text-white hover:text-slate-200">
+                <TrackedLink
+                  href={location.phoneHref}
+                  eventName="phone_click"
+                  eventLabel={`footer_${location.name}_phone`}
+                  className="font-semibold text-white hover:text-slate-200"
+                >
                   {location.phone}
-                </a>
+                </TrackedLink>
               </div>
             ))}
           </div>
         </div>
       </div>
       <div className="border-t border-white/10 px-4 py-5 text-center text-xs text-slate-400">
-        © {new Date().getFullYear()} Discount Mattress. Call or visit for current pricing,
+        © {new Date().getFullYear()} Discount Mattress. Call or visit for current offers,
         promotions, and policy details.
       </div>
     </footer>
@@ -155,7 +169,7 @@ export function SiteFooter() {
 
 export function PageShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#fbfaf4] text-slate-950">
+    <div className="min-h-screen bg-[#f7f6f1] text-slate-950">
       <SiteHeader />
       <main>{children}</main>
       <StickyMobileCall />
@@ -168,18 +182,22 @@ export function StickyMobileCall() {
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white p-3 shadow-[0_-12px_30px_rgba(15,23,42,0.12)] sm:hidden">
       <div className="grid grid-cols-2 gap-2">
-        <a
+        <TrackedLink
           href={storeInfo.primaryPhoneHref}
+          eventName="phone_click"
+          eventLabel="sticky_mobile_phone"
           className="rounded bg-[#162b49] px-3 py-3 text-center text-sm font-bold text-white"
         >
           Call now
-        </a>
-        <Link
+        </TrackedLink>
+        <TrackedLink
           href="/locations"
+          eventName="directions_click"
+          eventLabel="sticky_mobile_directions"
           className="rounded bg-[#cf2333] px-3 py-3 text-center text-sm font-bold text-white"
         >
           Directions
-        </Link>
+        </TrackedLink>
       </div>
     </div>
   );
@@ -227,20 +245,24 @@ export function LocationCards({ compact = false }: { compact?: boolean }) {
               {!compact ? <p className="mt-3 text-sm text-slate-600">{location.note}</p> : null}
             </div>
             <div className="flex shrink-0 flex-row gap-2 sm:flex-col">
-              <a
+              <TrackedLink
                 href={location.phoneHref}
+                eventName="phone_click"
+                eventLabel={`${location.name}_phone`}
                 className="rounded bg-[#162b49] px-4 py-2 text-center text-sm font-bold text-white transition hover:bg-[#223d63]"
               >
                 Call
-              </a>
-              <a
+              </TrackedLink>
+              <TrackedLink
                 href={location.mapUrl}
+                eventName="directions_click"
+                eventLabel={`${location.name}_directions`}
                 target="_blank"
                 rel="noreferrer"
                 className="rounded border border-slate-300 px-4 py-2 text-center text-sm font-bold text-slate-800 transition hover:border-[#cf2333] hover:text-[#cf2333]"
               >
                 Directions
-              </a>
+              </TrackedLink>
             </div>
           </div>
         </article>
@@ -260,20 +282,10 @@ export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
           <Link
             key={brand.id}
             href={`/collections/${brand.id}`}
-            className="group relative min-h-64 overflow-hidden rounded-[24px] bg-slate-950 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+            className="group flex min-h-[22rem] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-[#cf2333]/40 hover:shadow-xl"
           >
-            {brand.heroImage ? (
-              <Image
-                src={brand.heroImage}
-                alt={`${brand.name} collection`}
-                fill
-                sizes="(min-width: 1024px) 33vw, 100vw"
-                className="object-cover opacity-70 transition duration-500 group-hover:scale-105"
-              />
-            ) : null}
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6">
-              <div className="flex h-20 max-w-52 items-center rounded-2xl bg-white/92 px-5 shadow-lg backdrop-blur">
+            <div className="flex h-32 items-center justify-center border-b border-slate-200 bg-[#f7f8fb] px-8">
+              <div className="flex h-20 w-full max-w-[15rem] items-center justify-center rounded-md bg-white px-6 py-4 shadow-sm ring-1 ring-slate-200">
                 {brand.logo ? (
                   <Image
                     src={brand.logo}
@@ -281,26 +293,37 @@ export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
                     width={180}
                     height={76}
                     unoptimized
-                    className="max-h-14 w-auto max-w-full object-contain"
+                    className="h-auto max-h-12 w-auto max-w-full object-contain"
                   />
                 ) : (
                   <span className="text-lg font-black text-slate-950">{brand.name}</span>
                 )}
               </div>
-              <p className="mt-5 text-sm font-black uppercase tracking-[0.18em] text-[#f2b705]">
-                Featured collection
+            </div>
+
+            <div className="flex flex-1 flex-col p-5 sm:p-6">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-[#cf2333]">
+                Featured brand
               </p>
-              <h3 className="mt-2 text-2xl font-black text-white">{brand.tagline}</h3>
-              <div className="mt-4 flex flex-wrap gap-2">
+              <h3 className="mt-3 text-2xl font-black tracking-tight text-slate-950">
+                {brand.name}
+              </h3>
+              <p className="mt-3 text-lg font-black leading-7 text-slate-900">
+                {brand.tagline}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
                 {brand.collectionHighlights.slice(0, 2).map((highlight) => (
                   <span
                     key={highlight}
-                    className="rounded-full bg-white/15 px-3 py-1 text-xs font-bold text-white backdrop-blur"
+                    className="rounded bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-700"
                   >
                     {highlight}
                   </span>
                 ))}
               </div>
+              <p className="mt-auto pt-5 text-sm font-black text-[#cf2333] transition group-hover:text-[#a91c2a]">
+                Browse {brand.name}
+              </p>
             </div>
           </Link>
         ))}
@@ -311,7 +334,7 @@ export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
           <Link
             key={brand.id}
             href={`/collections/${brand.id}`}
-            className="group flex h-28 items-center justify-center rounded-[18px] border border-[#dedbd2] bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#f2b705] hover:shadow-lg"
+            className="group flex h-28 items-center justify-center rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-[#f2b705] hover:shadow-lg"
           >
             {brand.logo ? (
               <Image
@@ -334,7 +357,7 @@ export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
 
 export function LeadCta({
   title = "Ready to try a better mattress?",
-  body = "Call for today's prices or visit a Bowling Green showroom to compare comfort levels in person.",
+  body = "See prices before you visit, then call or stop in to test comfort levels in person.",
 }: {
   title?: string;
   body?: string;
