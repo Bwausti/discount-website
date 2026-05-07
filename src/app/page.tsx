@@ -54,11 +54,10 @@ export default function Home() {
               Discount Mattress • Bowling Green, KY
             </p>
             <h1 className="mt-5 text-balance text-5xl font-black leading-[0.95] tracking-tight text-slate-950 md:text-6xl xl:text-[4.75rem]">
-              Brand-name mattresses, matched locally, backed by strong value.
+              Better sleep starts in store.
             </h1>
             <p className="mt-6 max-w-2xl text-lg font-semibold leading-8 text-slate-700">
-              Shop Helix, Puffy, Nectar, DreamCloud, Naturepedic, Bedgear, and more, then visit us
-              to find the mattress that feels right.
+              Shop trusted brands, compare real comfort, and find the right fit locally.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <TrackedLink
