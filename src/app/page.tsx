@@ -47,9 +47,9 @@ const fitTiles = [
 export default function Home() {
   return (
     <PageShell>
-      <section className="bg-white px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-          <div className="py-6 lg:py-12">
+      <section className="bg-white px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-start">
+          <div className="py-4 lg:py-6">
             <p className="text-xs font-black uppercase tracking-[0.24em] text-[#cf2333]">
               Discount Mattress • Bowling Green, KY
             </p>
