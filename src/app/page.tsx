@@ -7,9 +7,8 @@ import {
   PageShell,
   SectionIntro,
 } from "@/components/site-shell";
-import { ProductGrid } from "@/components/product-card";
 import { TrackedLink } from "@/components/tracked-link";
-import { featuredBrands, featuredProducts, storeInfo } from "@/lib/products";
+import { featuredBrands, storeInfo } from "@/lib/products";
 
 const collectionTiles = [
   {
@@ -69,8 +68,6 @@ const serviceTiles = [
     copy: "Call or stop by for today’s availability, promotions, financing, delivery, and policy details.",
   },
 ];
-
-const bestSellerProducts = featuredProducts.slice(0, 3);
 
 export default function Home() {
   return (
@@ -235,28 +232,6 @@ export default function Home() {
                 </div>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-[#f7f6f1] px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-            <SectionIntro
-              align="left"
-              eyebrow="Best sellers"
-              title="A tight first shortlist."
-              body="Three strong, easy-to-compare starting points. Use these as a first pass, then call or visit to confirm the best fit."
-            />
-            <Link
-              href="/collections"
-              className="rounded border border-slate-300 bg-white px-5 py-3 text-center text-sm font-black text-slate-800 transition hover:border-[#cf2333] hover:text-[#cf2333]"
-            >
-              Browse the full catalog
-            </Link>
-          </div>
-          <div className="mt-10">
-            <ProductGrid products={bestSellerProducts} priorityCount={3} />
           </div>
         </div>
       </section>
