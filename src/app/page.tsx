@@ -9,17 +9,38 @@ import {
 } from "@/components/site-shell";
 import { ProductGrid } from "@/components/product-card";
 import { TrackedLink } from "@/components/tracked-link";
-import { featuredBrands, featuredProducts, sleepSystemAddOns, storeInfo } from "@/lib/products";
+import { featuredBrands, featuredProducts, storeInfo } from "@/lib/products";
 
-const fitTiles = [
+const collectionTiles = [
+  {
+    title: "Mattresses",
+    copy: "Start with the core floor: foam, hybrid, innerspring, organic, and premium comfort options.",
+    href: "/collections",
+    image: "/brand-assets/discount-mattress/hero-bed.jpg",
+  },
+  {
+    title: "Adjustable bases",
+    copy: "Compare BedTech bases for head lift, foot lift, massage, split setups, and cleaner support.",
+    href: "/collections/bedtech",
+    image: "/brand-assets/bedtech/official-hero-bases.jpg",
+  },
+  {
+    title: "Pillows and protectors",
+    copy: "Finish the bed with cooling pillows, mattress protectors, and bedding that fits your setup.",
+    href: "/collections/bedgear",
+    image: "/brand-assets/bedgear/wide-detail.jpg",
+  },
+];
+
+const comfortTiles = [
   {
     title: "Pressure relief",
-    copy: "Soft and medium mattresses for side sleepers who wake up sore.",
+    copy: "Soft and medium options for side sleepers who wake up sore.",
     href: "/collections/helix",
   },
   {
     title: "Cooling comfort",
-    copy: "Nectar, Puffy, Serta, and Bedgear options built for warmer sleepers.",
+    copy: "Nectar, Puffy, Serta, and Bedgear options for warmer sleepers.",
     href: "/collections/nectar",
   },
   {
@@ -29,20 +50,27 @@ const fitTiles = [
   },
   {
     title: "Organic materials",
-    copy: "Naturepedic choices for shoppers who want organic cotton, wool, and latex.",
+    copy: "Naturepedic choices with organic cotton, wool, latex, and cleaner materials.",
     href: "/collections/naturepedic",
   },
+];
+
+const serviceTiles = [
   {
-    title: "Adjustable bases",
-    copy: "BedTech bases that make reading, watching TV, and relaxing easier.",
-    href: "/collections/bedtech",
+    title: "Shortlist before you visit",
+    copy: "Use the collection pages to narrow brand, comfort, and price range before walking in.",
   },
   {
-    title: "Pillows and protectors",
-    copy: "Bedgear accessories to complete and protect the mattress purchase.",
-    href: "/collections/bedgear",
+    title: "Compare comfort in person",
+    copy: "Try your top choices side by side and get help matching firmness, support, and sleep position.",
+  },
+  {
+    title: "Confirm current offers",
+    copy: "Call or stop by for today’s availability, promotions, financing, delivery, and policy details.",
   },
 ];
+
+const bestSellerProducts = featuredProducts.slice(0, 3);
 
 export default function Home() {
   return (
@@ -172,52 +200,76 @@ export default function Home() {
           <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <SectionIntro
               align="left"
-              eyebrow="Featured"
-              title="Good places to start."
-              body="A smaller set of strong choices so your first visit starts in the right place."
+              eyebrow="Collections"
+              title="Start with the right department."
+              body="The homepage should not make you sort through every floor model. Pick the collection that matches what you need, then compare the details from there."
             />
             <Link
               href="/collections"
               className="rounded border border-slate-300 px-5 py-3 text-center text-sm font-black text-slate-800 transition hover:border-[#cf2333] hover:text-[#cf2333]"
             >
-              See all mattresses
+              View all collections
             </Link>
           </div>
-          <div className="mt-10">
-            <ProductGrid products={featuredProducts} priorityCount={3} />
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {collectionTiles.map((tile) => (
+              <Link
+                key={tile.title}
+                href={tile.href}
+                className="group overflow-hidden rounded border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-[#cf2333] hover:shadow-lg"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
+                  <Image
+                    src={tile.image}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 33vw, 100vw"
+                    className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+                <div className="p-6">
+                  <h2 className="text-2xl font-black tracking-tight text-slate-950 transition group-hover:text-[#cf2333]">
+                    {tile.title}
+                  </h2>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">{tile.copy}</p>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="bg-[#f7f6f1] px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
             <SectionIntro
               align="left"
-              eyebrow="Add-ons"
-              title="Finish the sleep setup."
-              body="A great mattress feels better when the base and pillow match how you sleep. Try these with your shortlist in store."
+              eyebrow="Best sellers"
+              title="A tight first shortlist."
+              body="Three strong, easy-to-compare starting points. Use these as a first pass, then call or visit to confirm the best fit."
             />
             <Link
-              href="/collections/bedgear"
+              href="/collections"
               className="rounded border border-slate-300 bg-white px-5 py-3 text-center text-sm font-black text-slate-800 transition hover:border-[#cf2333] hover:text-[#cf2333]"
             >
-              View accessories
+              Browse the full catalog
             </Link>
           </div>
-          <ProductGrid products={sleepSystemAddOns} />
+          <div className="mt-10">
+            <ProductGrid products={bestSellerProducts} priorityCount={3} />
+          </div>
         </div>
       </section>
 
       <section className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionIntro
-            eyebrow="Shop by fit"
-            title="A faster way to find the right floor model."
-              body="Start with how you sleep, then narrow the choices before you come in."
+            eyebrow="Shop by need"
+            title="Narrow by comfort before you come in."
+            body="Use these paths when you know the problem you are trying to solve, but not the exact mattress yet."
           />
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {fitTiles.map((tile) => (
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {comfortTiles.map((tile) => (
               <Link
                 key={tile.title}
                 href={tile.href}
@@ -249,17 +301,15 @@ export default function Home() {
               Local help
             </p>
             <h2 className="mt-3 text-balance text-4xl font-black tracking-tight text-slate-950 md:text-5xl">
-              Built around real prices, store visits, and real comfort testing.
+              Service that turns browsing into the right showroom visit.
             </h2>
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {[
-                "Prices and current offers are easy to find.",
-                "Easy ways to call, visit, and narrow your choices.",
-                "Brand pages that help you decide what to try first.",
-                "Friendly help with comfort, delivery, and warranty questions.",
-              ].map((item) => (
-                <div key={item} className="rounded border border-slate-200 bg-[#f7f8fb] p-4">
-                  <p className="text-sm font-bold leading-6 text-slate-800">{item}</p>
+              {serviceTiles.map((item) => (
+                <div key={item.title} className="rounded border border-slate-200 bg-[#f7f8fb] p-5">
+                  <h3 className="text-base font-black text-slate-950">{item.title}</h3>
+                  <p className="mt-2 text-sm font-semibold leading-6 text-slate-700">
+                    {item.copy}
+                  </p>
                 </div>
               ))}
             </div>

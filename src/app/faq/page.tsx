@@ -5,21 +5,21 @@ import { faqItems, storeInfo } from "@/lib/products";
 export const metadata = {
   title: "FAQ and Store Policies",
   description:
-    "Discount Mattress FAQ for local mattress shopping, current pricing, financing, warranty details, and comfort exchange policy confirmation.",
+    "Discount Mattress FAQ for local mattress shopping, prices, financing, warranty details, and store policy questions.",
 };
 
 const policyCards = [
   {
     title: "Comfort exchange",
-    copy: "Exact comfort exchange terms should be entered only after Discount Mattress confirms the current store policy. Until then, use call-first language.",
+    copy: "Ask the showroom team about current comfort exchange terms before purchase so the expectations are clear.",
   },
   {
     title: "Returns and refunds",
-    copy: "The public terms say refunds are handled according to store policies. This page is structured for owner-approved details.",
+    copy: "Return and refund details can vary by item, condition, and promotion. Confirm the policy before you buy.",
   },
   {
     title: "Warranties",
-    copy: "Warranty coverage varies by brand and model. Product pages summarize known brand programs and direct shoppers to confirm before purchase.",
+    copy: "Warranty coverage varies by brand and model. Product pages summarize known programs, and the store can confirm details.",
   },
   {
     title: "Delivery and setup",
@@ -35,7 +35,7 @@ export default function FaqPage() {
           <SectionIntro
             eyebrow="FAQ"
             title="Clear answers for local mattress shopping."
-            body="This page keeps the promise level careful: call for current prices, confirm policies in store, and avoid publishing comfort exchange details until the owner signs off."
+            body="See prices before you visit, then confirm current offers, availability, delivery, financing, and policy details with the store."
           />
         </div>
       </section>
@@ -47,18 +47,18 @@ export default function FaqPage() {
               Policies
             </p>
             <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-950">
-              Publish what the store can stand behind.
+              Know the details before you buy.
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
-              The new site should feel confident, but policy language needs to be exact. This
-              structure is ready for final owner-approved wording.
+              Mattress policies can depend on the brand, model, protector, delivery setup, and
+              promotion. The showroom team can walk through the current details with you.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
               <a
                 href={storeInfo.primaryPhoneHref}
                 className="rounded bg-[#cf2333] px-5 py-3 text-center text-sm font-black text-white transition hover:bg-[#a91c2a]"
               >
-                Call for details
+                Call {storeInfo.primaryPhone}
               </a>
               <Link
                 href="/locations"
@@ -102,13 +102,15 @@ export default function FaqPage() {
           <div className="grid gap-6 md:grid-cols-[1fr_1.2fr] md:items-center">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.22em] text-[#cf2333]">
-                Publishing note
+                Before purchase
               </p>
-              <h2 className="mt-3 text-3xl font-black text-slate-950">Comfort exchange copy is a placeholder.</h2>
+              <h2 className="mt-3 text-3xl font-black text-slate-950">
+                Confirm the full policy at the showroom.
+              </h2>
             </div>
             <p className="text-base leading-7 text-slate-600">
-              Once the store provides the exact comfort exchange, delivery, return, and protector
-              requirements, this page can be updated without changing the overall design.
+              Ask about delivery timing, setup, removal, financing terms, warranty coverage,
+              protector requirements, comfort exchange terms, and any active promotion details.
             </p>
           </div>
         </div>

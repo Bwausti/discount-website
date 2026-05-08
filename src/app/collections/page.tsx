@@ -7,7 +7,7 @@ import { brands, featuredBrands, productCategories, products } from "@/lib/produ
 export const metadata = {
   title: "Mattress Brands and Models",
   description:
-    "Browse Discount Mattress brands, mattresses, adjustable bases, pillows, and protectors. Call or visit for current Bowling Green showroom pricing.",
+    "Browse Discount Mattress brands, mattresses, adjustable bases, pillows, and protectors with prices shown before you visit.",
 };
 
 export default function CollectionsPage() {
@@ -24,7 +24,7 @@ export default function CollectionsPage() {
             align="left"
             eyebrow="Mattresses"
             title="Shop the brands first. Then try the right feel in store."
-            body="This catalog is a guide for the showroom conversation: brand, comfort, support, and current local availability."
+            body="Use this page to see what we carry, what it costs, and which choices are worth trying first."
           />
           <div className="relative aspect-[16/10] overflow-hidden rounded border border-slate-200 bg-slate-100 shadow-sm">
             <Image
@@ -42,7 +42,7 @@ export default function CollectionsPage() {
       <section className="border-y border-slate-200 bg-[#162b49] px-4 py-6 text-white sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <p className="text-sm font-bold">
-            No cart. No stale checkout prices. Call or visit for current store pricing.
+            Compare prices before you visit. Call or stop in to confirm today&apos;s offers and what is on the floor.
           </p>
           <div className="flex flex-wrap gap-2">
             {productCategories.map((category) => (
@@ -61,9 +61,9 @@ export default function CollectionsPage() {
       <section className="px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <SectionIntro
-            eyebrow="Primary brands"
-            title="The core Discount Mattress lineup."
-            body="These are the brands the first version of the new site should feature most heavily."
+            eyebrow="Brands"
+            title="Start with brands you already know."
+            body="Then compare comfort and support in person so you can feel the difference."
           />
           <div className="mt-10">
             <BrandLogoGrid brands={featuredBrands} />
@@ -77,8 +77,8 @@ export default function CollectionsPage() {
             <SectionIntro
               align="left"
               eyebrow="Brand pages"
-              title="Browse by collection."
-              body="Each page is designed around local comparison, strong visuals, and quick call or visit actions."
+              title="Choose a brand to explore."
+              body="Each brand page shows prices, comfort choices, and the easiest next step for a local visit."
             />
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -105,7 +105,7 @@ export default function CollectionsPage() {
                   align="left"
                   eyebrow={category}
                   title={`${category} options`}
-                  body="Use these cards to shortlist what you want to try, then call for current pricing and floor availability."
+                  body="Use these cards to pick what you want to try, then call or visit to confirm today&apos;s offers and floor availability."
                 />
                 <a
                   href="#top"
@@ -122,7 +122,7 @@ export default function CollectionsPage() {
 
       <LeadCta
         title="Have a model in mind?"
-        body="Call the store before you drive over. The team can confirm current pricing, floor models, and which location is best for what you want to try."
+        body="Call the store before you drive over. The team can confirm current offers, floor models, and which location is best for what you want to try."
       />
     </PageShell>
   );
