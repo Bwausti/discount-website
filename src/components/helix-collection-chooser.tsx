@@ -32,7 +32,7 @@ const collectionDetails: Record<
     image: "/product-assets/helix/helix-midnight-luxe-2.webp",
     price: "from $1,149",
     summary: "Adds a premium pillow top, zoned support, and more cooling-cover choices.",
-    bestFor: "Pressure relief, couples, shoppers who want a plusher step-up feel",
+    bestFor: "Best seller, pressure relief, couples, shoppers who want a plusher step-up feel",
   },
   elite: {
     label: "Elite",
@@ -44,9 +44,15 @@ const collectionDetails: Record<
 };
 
 export function HelixCollectionChooser({ choices }: { choices: HelixGroupChoice[] }) {
-  const [selectedId, setSelectedId] = useState(choices[0]?.group.id ?? "core");
+  const defaultSelectedId = choices.some((choice) => choice.group.id === "luxe")
+    ? "luxe"
+    : choices[0]?.group.id ?? "luxe";
+  const [selectedId, setSelectedId] = useState(defaultSelectedId);
   const selected = useMemo(
-    () => choices.find((choice) => choice.group.id === selectedId) ?? choices[0],
+    () =>
+      choices.find((choice) => choice.group.id === selectedId) ??
+      choices.find((choice) => choice.group.id === "luxe") ??
+      choices[0],
     [choices, selectedId],
   );
 
@@ -83,6 +89,7 @@ export function HelixCollectionChooser({ choices }: { choices: HelixGroupChoice[
           {choices.map((choice) => {
             const details = collectionDetails[choice.group.id];
             const isSelected = choice.group.id === selected.group.id;
+            const isBestSeller = choice.group.id === "luxe";
 
             return (
               <button
@@ -108,6 +115,11 @@ export function HelixCollectionChooser({ choices }: { choices: HelixGroupChoice[
                 <div className="p-5">
                   <div className="flex items-start justify-between gap-4">
                     <div>
+                      {isBestSeller ? (
+                        <p className="mb-2 w-fit rounded bg-[#f2b705] px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.14em] text-slate-950">
+                          Best seller
+                        </p>
+                      ) : null}
                       <h3 className="text-3xl font-black tracking-tight text-slate-950">
                         {details.label}
                       </h3>
