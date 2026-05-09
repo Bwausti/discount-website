@@ -29,6 +29,8 @@ export interface Product {
   availability: string;
   onlinePrice?: ProductPrice;
   priceVariants?: readonly ProductPriceVariant[];
+  merchandising?: ProductMerchandising;
+  priceDisplay?: ProductPriceDisplay;
   promo?: ProductPromo;
 }
 
@@ -47,11 +49,45 @@ export interface ProductPriceVariant {
   sourceUrl: string;
 }
 
+export type PriceDisplayMode =
+  | "exact"
+  | "starting_at"
+  | "sale_reference"
+  | "msrp_reference"
+  | "local_reference";
+
+export interface ProductPriceDisplay {
+  mode: PriceDisplayMode;
+  amount: string;
+  label: string;
+  sourceName: string;
+  sourceUrl: string;
+  asOf: string;
+  note?: string;
+}
+
 export interface ProductPromo {
   headline: string;
   value?: string;
   code?: string;
-  asOf?: string;
+  sourceUrl?: string;
+  asOf: string;
+}
+
+export interface ProductMerchandising {
+  groupId: string;
+  groupName: string;
+  groupSort: number;
+  productSort: number;
+  comparisonLabel?: string;
+}
+
+export interface ProductGroup {
+  id: string;
+  name: string;
+  eyebrow: string;
+  description: string;
+  productIds: readonly string[];
 }
 
 interface ProductDraft extends Omit<Product, "brandId" | "brand" | "gallery"> {
@@ -69,20 +105,24 @@ export interface Brand {
   heroImage?: string;
   galleryImages: readonly string[];
   collectionHighlights: string[];
+  productGroups: readonly ProductGroup[];
+  promo?: ProductPromo;
   products: Product[];
 }
 
-interface BrandDraft extends Omit<Brand, "logo" | "heroImage" | "galleryImages" | "products"> {
+interface BrandDraft extends Omit<Brand, "logo" | "heroImage" | "galleryImages" | "products" | "productGroups"> {
+  productGroups?: readonly ProductGroup[];
   products: ProductDraft[];
 }
 
 const OFFICIAL_PRICE_AS_OF = "May 1, 2026";
+const PROMO_AS_OF = "May 4, 2026";
 
 function officialOnlinePrice({
   amount,
   sourceName,
   sourceUrl,
-  label = "Price guide",
+  label = "Official online queen price",
   note,
 }: Omit<ProductPrice, "asOf" | "label"> & { label?: string }): ProductPrice {
   return {
@@ -93,6 +133,65 @@ function officialOnlinePrice({
     asOf: OFFICIAL_PRICE_AS_OF,
     note,
   };
+}
+
+function saleReferencePrice(price: ProductPrice): ProductPriceDisplay {
+  return {
+    mode: "sale_reference",
+    amount: price.amount,
+    label: price.label,
+    sourceName: price.sourceName,
+    sourceUrl: price.sourceUrl,
+    asOf: price.asOf,
+    note: price.note,
+  };
+}
+
+export function productPriceRows(product: Product) {
+  return (
+    product.priceVariants ??
+    (product.onlinePrice
+      ? [
+          {
+            label: product.category === "Mattress" ? "Queen" : "Price",
+            amount: product.onlinePrice.amount,
+            sourceUrl: product.onlinePrice.sourceUrl,
+          },
+        ]
+      : [])
+  );
+}
+
+export function visibleProductPrice(product: Product): ProductPriceDisplay {
+  if (product.priceDisplay) return product.priceDisplay;
+  if (product.onlinePrice) return saleReferencePrice(product.onlinePrice);
+
+  const firstVariant = productPriceRows(product)[0];
+  if (firstVariant) {
+    return {
+      mode: "starting_at",
+      amount: firstVariant.amount,
+      label: "Starting reference price",
+      sourceName: product.brand,
+      sourceUrl: firstVariant.sourceUrl,
+      asOf: OFFICIAL_PRICE_AS_OF,
+    };
+  }
+
+  return {
+    mode: "msrp_reference",
+    amount: "Price needed",
+    label: "Reference price pending",
+    sourceName: product.brand,
+    sourceUrl: `/collections/${product.brandId}`,
+    asOf: OFFICIAL_PRICE_AS_OF,
+    note: "Call or visit to confirm today's price.",
+  };
+}
+
+export function productsForGroup(brand: Brand, group: ProductGroup) {
+  const byId = new Map(brand.products.map((product) => [product.id, product]));
+  return group.productIds.map((id) => byId.get(id)).filter((product): product is Product => Boolean(product));
 }
 
 const priceSources = {
@@ -121,11 +220,21 @@ const priceSources = {
   helixDuskElite: "https://helixsleep.com/products/dusk-elite",
   helixDawnElite: "https://helixsleep.com/products/dawn-elite",
   helixTwilightElite: "https://helixsleep.com/products/twilight-elite",
-  dreamcloudPremier: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/queen",
-  dreamcloudLuxe: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress",
+  dreamcloudClassicHybrid: "https://www.dreamcloudsleep.com/mattress/queen",
+  dreamcloudClassicMemoryFoam: "https://www.dreamcloudsleep.com/mattresses/memory-foam-mattress/queen",
+  dreamcloudPremierHybrid: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/queen",
+  dreamcloudPremierMemoryFoam: "https://www.dreamcloudsleep.com/mattresses/premier-memory-foam-mattress/queen",
+  dreamcloudLuxeHybrid: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/queen",
+  dreamcloudLuxeMemoryFoam: "https://www.dreamcloudsleep.com/mattresses/luxe-memory-foam-mattress/queen",
+  dreamcloudUltraHybrid: "https://www.dreamcloudsleep.com/mattresses/ultra-hybrid-mattress/queen",
+  dreamcloudUltraMemoryFoam: "https://www.dreamcloudsleep.com/mattresses/ultra-memory-foam-mattress/queen",
+  dreamcloudPressureSmart: "https://www.dreamcloudsleep.com/mattresses/pressuresmart-firm-mattress/queen",
   nectarClassic: "https://www.nectarsleep.com/mattress/queen",
   nectarPremier: "https://www.nectarsleep.com/mattresses/premier-memory-foam-mattress/queen",
   nectarLuxe: "https://www.nectarsleep.com/mattresses/luxe-memory-foam-mattress/queen",
+  nectarClassicHybrid: "https://www.nectarsleep.com/mattresses/hybrid-mattress",
+  nectarPremierHybrid: "https://www.nectarsleep.com/mattresses/premier-hybrid-mattress/queen",
+  nectarLuxeHybrid: "https://www.nectarsleep.com/mattresses/luxe-hybrid-mattress",
   bedgearM3: "https://bedgear.com/products/m3-performance-mattress",
   bedgearStorm: "https://bedgear.com/products/storm-performance-pillow",
   bedgearBalance: "https://bedgear.com/products/balance-performance-pillow",
@@ -280,64 +389,94 @@ const nectarVariantPrices = {
       sourceUrl: "https://www.nectarsleep.com/mattresses/luxe-memory-foam-mattress/cal-king",
     },
   ],
+  classicHybrid: [
+    { label: "Queen", amount: "$799", sourceUrl: priceSources.nectarClassicHybrid },
+  ],
+  premierHybrid: [
+    { label: "Full", amount: "$1,099", sourceUrl: "https://www.nectarsleep.com/mattresses/premier-hybrid-mattress/full" },
+    { label: "Queen", amount: "$1,099", sourceUrl: priceSources.nectarPremierHybrid },
+    { label: "Cal King", amount: "$1,299", sourceUrl: "https://www.nectarsleep.com/mattresses/premier-hybrid-mattress/calKing" },
+  ],
+  luxeHybrid: [
+    { label: "Queen", amount: "$1,549", sourceUrl: priceSources.nectarLuxeHybrid },
+  ],
 } as const satisfies Record<string, readonly ProductPriceVariant[]>;
 
 const dreamcloudVariantPrices = {
-  premier: [
-    {
-      label: "Twin",
-      amount: "$799",
-      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/twin",
-    },
-    {
-      label: "Twin XL",
-      amount: "$899",
-      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/twin-xl",
-    },
-    {
-      label: "Full",
-      amount: "$999",
-      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/full",
-    },
-    { label: "Queen", amount: "$1,099", sourceUrl: priceSources.dreamcloudPremier },
-    {
-      label: "King",
-      amount: "$1,299",
-      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/king",
-    },
-    {
-      label: "Cal King",
-      amount: "$1,299",
-      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/cal-king",
-    },
+  classicHybrid: [
+    { label: "Twin", amount: "$349", sourceUrl: "https://www.dreamcloudsleep.com/mattress/twin" },
+    { label: "Twin XL", amount: "$549", sourceUrl: "https://www.dreamcloudsleep.com/mattress/twin-xl" },
+    { label: "Full", amount: "$599", sourceUrl: "https://www.dreamcloudsleep.com/mattress/full" },
+    { label: "Queen", amount: "$649", sourceUrl: priceSources.dreamcloudClassicHybrid },
+    { label: "King", amount: "$849", sourceUrl: "https://www.dreamcloudsleep.com/mattress/king" },
+    { label: "Cal King", amount: "$849", sourceUrl: "https://www.dreamcloudsleep.com/mattress/cal-king" },
+    { label: "Split King", amount: "$1,098", sourceUrl: "https://www.dreamcloudsleep.com/mattress/split-king" },
   ],
-  luxe: [
-    {
-      label: "Twin",
-      amount: "$1,099",
-      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/twin",
-    },
-    {
-      label: "Twin XL",
-      amount: "$1,299",
-      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/twin-xl",
-    },
-    {
-      label: "Full",
-      amount: "$1,399",
-      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/full",
-    },
-    { label: "Queen", amount: "$1,499", sourceUrl: priceSources.dreamcloudLuxe },
-    {
-      label: "King",
-      amount: "$1,699",
-      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/king",
-    },
-    {
-      label: "Cal King",
-      amount: "$1,699",
-      sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/cal-king",
-    },
+  classicMemoryFoam: [
+    { label: "Twin", amount: "$299", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/memory-foam-mattress/twin" },
+    { label: "Twin XL", amount: "$649", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/memory-foam-mattress/twin-xl" },
+    { label: "Full", amount: "$699", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/memory-foam-mattress/full" },
+    { label: "Queen", amount: "$749", sourceUrl: priceSources.dreamcloudClassicMemoryFoam },
+    { label: "King", amount: "$949", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/memory-foam-mattress/king" },
+    { label: "Cal King", amount: "$949", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/memory-foam-mattress/cal-king" },
+    { label: "Split King", amount: "$1,298", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/memory-foam-mattress/split-king" },
+  ],
+  premierHybrid: [
+    { label: "Twin", amount: "$799", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/twin" },
+    { label: "Twin XL", amount: "$899", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/twin-xl" },
+    { label: "Full", amount: "$999", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/full" },
+    { label: "Queen", amount: "$1,099", sourceUrl: priceSources.dreamcloudPremierHybrid },
+    { label: "King", amount: "$1,299", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/king" },
+    { label: "Cal King", amount: "$1,299", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/cal-king" },
+    { label: "Split King", amount: "$1,798", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-hybrid-mattress/split-king" },
+  ],
+  premierMemoryFoam: [
+    { label: "Twin", amount: "$899", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-memory-foam-mattress/twin" },
+    { label: "Twin XL", amount: "$999", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-memory-foam-mattress/twin-xl" },
+    { label: "Full", amount: "$1,099", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-memory-foam-mattress/full" },
+    { label: "Queen", amount: "$1,199", sourceUrl: priceSources.dreamcloudPremierMemoryFoam },
+    { label: "King", amount: "$1,399", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-memory-foam-mattress/king" },
+    { label: "Cal King", amount: "$1,399", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-memory-foam-mattress/cal-king" },
+    { label: "Split King", amount: "$1,998", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/premier-memory-foam-mattress/split-king" },
+  ],
+  luxeHybrid: [
+    { label: "Twin", amount: "$1,099", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/twin" },
+    { label: "Twin XL", amount: "$1,299", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/twin-xl" },
+    { label: "Full", amount: "$1,399", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/full" },
+    { label: "Queen", amount: "$1,499", sourceUrl: priceSources.dreamcloudLuxeHybrid },
+    { label: "King", amount: "$1,699", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/king" },
+    { label: "Cal King", amount: "$1,699", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/cal-king" },
+    { label: "Split King", amount: "$2,598", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-hybrid-mattress/split-king" },
+  ],
+  luxeMemoryFoam: [
+    { label: "Twin", amount: "$1,199", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-memory-foam-mattress/twin" },
+    { label: "Twin XL", amount: "$1,399", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-memory-foam-mattress/twin-xl" },
+    { label: "Full", amount: "$1,499", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-memory-foam-mattress/full" },
+    { label: "Queen", amount: "$1,599", sourceUrl: priceSources.dreamcloudLuxeMemoryFoam },
+    { label: "King", amount: "$1,799", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-memory-foam-mattress/king" },
+    { label: "Cal King", amount: "$1,799", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-memory-foam-mattress/cal-king" },
+    { label: "Split King", amount: "$2,798", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/luxe-memory-foam-mattress/split-king" },
+  ],
+  ultraHybrid: [
+    { label: "Twin", amount: "$1,299", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-hybrid-mattress/twin" },
+    { label: "Twin XL", amount: "$1,599", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-hybrid-mattress/twin-xl" },
+    { label: "Full", amount: "$1,599", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-hybrid-mattress/full" },
+    { label: "Queen", amount: "$1,999", sourceUrl: priceSources.dreamcloudUltraHybrid },
+    { label: "King", amount: "$2,199", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-hybrid-mattress/king" },
+    { label: "Cal King", amount: "$2,199", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-hybrid-mattress/cal-king" },
+    { label: "Split King", amount: "$3,198", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-hybrid-mattress/split-king" },
+  ],
+  ultraMemoryFoam: [
+    { label: "Twin", amount: "$1,499", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-memory-foam-mattress/twin" },
+    { label: "Twin XL", amount: "$1,799", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-memory-foam-mattress/twinXL" },
+    { label: "Full", amount: "$1,799", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-memory-foam-mattress/full" },
+    { label: "Queen", amount: "$2,199", sourceUrl: priceSources.dreamcloudUltraMemoryFoam },
+    { label: "King", amount: "$2,399", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-memory-foam-mattress/king" },
+    { label: "Cal King", amount: "$2,399", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-memory-foam-mattress/calKing" },
+    { label: "Split King", amount: "$3,598", sourceUrl: "https://www.dreamcloudsleep.com/mattresses/ultra-memory-foam-mattress/splitKing" },
+  ],
+  pressureSmart: [
+    { label: "Queen", amount: "$1,549", sourceUrl: priceSources.dreamcloudPressureSmart },
   ],
 } as const satisfies Record<string, readonly ProductPriceVariant[]>;
 
@@ -349,6 +488,7 @@ function withBrandAssets(brand: BrandDraft): Brand {
     logo: assetBundle?.logo,
     heroImage: assetBundle?.heroImage,
     galleryImages: assetBundle?.galleryImages ?? [],
+    productGroups: brand.productGroups ?? [],
     products: brand.products.map((product) => ({
       ...product,
       brandId: brand.id,
@@ -386,6 +526,8 @@ function helixDraft({
   priceTier: HelixPriceTier;
 }): ProductDraft {
   const priceVariants = helixPrices(priceTier, sourceUrl);
+  const groupId = priceTier === "elite" ? "elite" : priceTier === "luxe" || priceTier === "plusLuxe" ? "luxe" : "core";
+  const groupName = groupId === "elite" ? "Elite Collection" : groupId === "luxe" ? "Luxe Collection" : "Core Collection";
 
   return {
     id,
@@ -405,11 +547,35 @@ function helixDraft({
     availability: "Call to confirm current showroom availability.",
     onlinePrice: officialOnlinePrice({
       amount: priceVariants[0]?.amount ?? "Call",
-      label: "Price guide",
+      label: "Starting price",
       sourceName: "Helix",
       sourceUrl,
+      note: "D2C sale-reference pricing; verify current event promo before launch.",
     }),
     priceVariants,
+    priceDisplay: {
+      mode: "sale_reference",
+      amount: priceVariants[0]?.amount ?? "Price needed",
+      label: "D2C sale price from",
+      sourceName: "Helix",
+      sourceUrl,
+      asOf: PROMO_AS_OF,
+      note: "Helix was advertising 25% off sitewide with code MEMDAY25 when last checked.",
+    },
+    promo: {
+      headline: "Memorial Day Sale",
+      value: "25% off sitewide",
+      code: "MEMDAY25",
+      sourceUrl,
+      asOf: PROMO_AS_OF,
+    },
+    merchandising: {
+      groupId,
+      groupName,
+      groupSort: groupId === "core" ? 1 : groupId === "luxe" ? 2 : 3,
+      productSort: priceTier === "plus" || priceTier === "plusLuxe" ? 90 : id.includes("sunset") ? 10 : id.includes("moonlight") ? 20 : id.includes("midnight") ? 30 : id.includes("dusk") ? 40 : id.includes("dawn") ? 50 : id.includes("twilight") ? 60 : 99,
+      comparisonLabel: groupName,
+    },
   };
 }
 
@@ -724,7 +890,7 @@ const helixProducts: ProductDraft[] = [
     type: "Elite luxury hybrid",
     height: "15 in",
     firmness: "Medium-firm",
-    feel: "Top-tier plus-size support",
+    feel: "Maximum plus-size support",
     badge: "Elite Plus",
     bestFor: ["Plus-size sleepers", "Hot sleepers", "Maximum support"],
     keyFeatures: [
@@ -745,13 +911,70 @@ export const brands: Brand[] = [
     status: "primary",
     tagline: "Personalized hybrids for every sleep style.",
     description:
-      "Helix gives shoppers an easy way to compare soft, medium, firm, Luxe, Elite, and Plus options in one clear lineup.",
+      "Helix makes it easier to shop by sleep position, comfort feel, and price level.",
     showroomNote:
       "Best for shoppers who know their sleep position and want a clear comfort recommendation.",
     collectionHighlights: [
       "Core, Luxe, and Elite",
       "ErgoAlign support options",
       "GlacioTex cooling covers",
+    ],
+    promo: {
+      headline: "Memorial Day Sale",
+      value: "25% off sitewide",
+      code: "MEMDAY25",
+      sourceUrl: priceSources.helixMidnightElite,
+      asOf: PROMO_AS_OF,
+    },
+    productGroups: [
+      {
+        id: "core",
+        name: "Core Collection",
+        eyebrow: "11.5 in best value hybrids",
+        description:
+          "Core is the lower starting price: soft, medium, and firm choices, plus Helix Plus.",
+        productIds: [
+          "helix-sunset",
+          "helix-moonlight",
+          "helix-midnight",
+          "helix-dusk",
+          "helix-dawn",
+          "helix-twilight",
+          "helix-plus",
+        ],
+      },
+      {
+        id: "luxe",
+        name: "Luxe Collection",
+        eyebrow: "13.5 in pillow top upgrades",
+        description:
+          "Luxe adds a premium pillow top, zoned lumbar support, and more cooling-cover choices.",
+        productIds: [
+          "helix-sunset-luxe",
+          "helix-moonlight-luxe",
+          "helix-midnight-luxe",
+          "helix-dusk-luxe",
+          "helix-dawn-luxe",
+          "helix-twilight-luxe",
+          "helix-plus-luxe",
+        ],
+      },
+      {
+        id: "elite",
+        name: "Elite Collection",
+        eyebrow: "15 in highest-comfort choices",
+        description:
+          "Elite gives you the most upgraded Helix feel, with more cooling and contouring included.",
+        productIds: [
+          "helix-sunset-elite",
+          "helix-moonlight-elite",
+          "helix-midnight-elite",
+          "helix-dusk-elite",
+          "helix-dawn-elite",
+          "helix-twilight-elite",
+          "helix-plus-elite",
+        ],
+      },
     ],
     products: helixProducts,
   }),
@@ -765,6 +988,16 @@ export const brands: Brand[] = [
     showroomNote:
       "Best for shoppers who want a soft, pressure-relieving mattress with an easy good-better-best story.",
     collectionHighlights: ["Foam and hybrid choices", "Cooling comfort", "Made in USA story"],
+    productGroups: [
+      {
+        id: "comfort-ladder",
+        name: "Puffy Mattress Ladder",
+        eyebrow: "Cloud, Lux, Royal, Monarch",
+        description:
+          "Puffy merchandises as a simple step-up ladder from Cloud memory foam to Lux, Royal, and Monarch hybrid luxury.",
+        productIds: ["puffy-cloud", "puffy-lux-hybrid", "puffy-royal-hybrid", "puffy-monarch"],
+      },
+    ],
     products: [
       {
         id: "puffy-cloud",
@@ -787,7 +1020,7 @@ export const brands: Brand[] = [
         availability: "Call for current Puffy offers.",
         onlinePrice: officialOnlinePrice({
           amount: "$449",
-          label: "Sale price guide",
+          label: "Starting sale price",
           sourceName: "Puffy",
           sourceUrl: priceSources.puffyTwin,
         }),
@@ -815,7 +1048,7 @@ export const brands: Brand[] = [
         availability: "Ask to compare Lux foam and hybrid options.",
         onlinePrice: officialOnlinePrice({
           amount: "$749",
-          label: "Sale price guide",
+          label: "Starting sale price",
           sourceName: "Puffy",
           sourceUrl: priceSources.puffyTwin,
         }),
@@ -837,7 +1070,7 @@ export const brands: Brand[] = [
         availability: "Call for current hybrid availability.",
         onlinePrice: officialOnlinePrice({
           amount: "$749",
-          label: "Sale price guide",
+          label: "Starting sale price",
           sourceName: "Puffy",
           sourceUrl: priceSources.puffyTwin,
         }),
@@ -864,7 +1097,7 @@ export const brands: Brand[] = [
         availability: "Ask the showroom team about Royal and Monarch comparisons.",
         onlinePrice: officialOnlinePrice({
           amount: "$1,089",
-          label: "Sale price guide",
+          label: "Starting sale price",
           sourceName: "Puffy",
           sourceUrl: priceSources.puffyTwin,
         }),
@@ -878,7 +1111,7 @@ export const brands: Brand[] = [
         height: "16 in",
         firmness: "Medium",
         feel: "Tall, plush, premium",
-        badge: "Top tier",
+        badge: "Highest comfort",
         bestFor: ["Premium comfort", "Hot sleepers", "Showpiece bedrooms"],
         keyFeatures: ["Diamond foam", "Ultra-premium profile", "Cloud-like pressure relief"],
         trial: "101 nights",
@@ -892,7 +1125,7 @@ export const brands: Brand[] = [
         availability: "Call for today's Monarch availability.",
         onlinePrice: officialOnlinePrice({
           amount: "$1,799",
-          label: "Sale price guide",
+          label: "Starting sale price",
           sourceName: "Puffy",
           sourceUrl: priceSources.puffyTwinXl,
         }),
@@ -904,13 +1137,105 @@ export const brands: Brand[] = [
     id: "dreamcloud",
     name: "DreamCloud",
     status: "primary",
-    tagline: "Hotel-inspired luxury without the hotel price.",
+    tagline: "Classic, Premier, Luxe, and Ultra comfort in hybrid and memory foam.",
     description:
-      "DreamCloud pairs quilted tops, foam comfort layers, and supportive hybrid construction for a luxury feel.",
+      "DreamCloud is easiest to shop as a ladder: choose Hybrid or Memory Foam, then step from Classic value into Premier, Luxe, or Ultra comfort.",
     showroomNote:
       "Best for shoppers who want a substantial, upscale mattress that still feels approachable.",
-    collectionHighlights: ["Quilted euro tops", "Hybrid support", "Luxury value"],
+    collectionHighlights: ["Hybrid and memory foam", "Classic to Ultra", "365-night trial"],
+    productGroups: [
+      {
+        id: "hybrid-mattresses",
+        name: "DreamCloud Hybrid Mattresses",
+        eyebrow: "Classic to Ultra hybrids",
+        description:
+          "Hybrid models add wrapped coil support under DreamCloud's quilted comfort layers for more lift and edge support.",
+        productIds: [
+          "dreamcloud-classic-hybrid",
+          "dreamcloud-premier",
+          "dreamcloud-luxe-hybrid",
+          "dreamcloud-ultra-hybrid",
+        ],
+      },
+      {
+        id: "memory-foam-mattresses",
+        name: "DreamCloud Memory Foam Mattresses",
+        eyebrow: "Classic to Ultra foam",
+        description:
+          "Memory foam models keep the same good-better-best ladder with a quieter, more contouring feel.",
+        productIds: [
+          "dreamcloud-classic-memory-foam",
+          "dreamcloud-premier-memory-foam",
+          "dreamcloud-luxe-memory-foam",
+          "dreamcloud-ultra-memory-foam",
+        ],
+      },
+      {
+        id: "pressuresmart",
+        name: "DreamCloud PressureSmart",
+        eyebrow: "Targeted support",
+        description:
+          "PressureSmart adds targeted lumbar support and a firmer specialty feel for shoppers comparing support-first options.",
+        productIds: ["dreamcloud-pressuresmart"],
+      },
+    ],
     products: [
+      {
+        id: "dreamcloud-classic-hybrid",
+        model: "DreamCloud Classic Hybrid",
+        category: "Mattress",
+        type: "Hybrid",
+        height: "12 in",
+        firmness: "Firm",
+        feel: "Supportive comfort",
+        badge: "Best Value",
+        bestFor: ["Value shoppers", "Back sleepers", "Hybrid support"],
+        keyFeatures: ["Quilted top", "Memory foam comfort", "Wrapped coil support"],
+        trial: "365 nights",
+        warranty: "Forever",
+        image: "/brand-assets/dreamcloud/classic-product.webp",
+        gallery: [
+          "/brand-assets/dreamcloud/classic-product.webp",
+          "/brand-assets/dreamcloud/comparison.png",
+          "/product-assets/dreamcloud/dreamcloud-premier-1.webp",
+        ],
+        availability: "Call or visit to confirm current showroom availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$349",
+          label: "Starting price",
+          sourceName: "DreamCloud",
+          sourceUrl: priceSources.dreamcloudClassicHybrid,
+        }),
+        priceVariants: dreamcloudVariantPrices.classicHybrid,
+      },
+      {
+        id: "dreamcloud-classic-memory-foam",
+        model: "DreamCloud Classic Memory Foam",
+        category: "Mattress",
+        type: "Memory foam",
+        height: "12 in",
+        firmness: "Firm",
+        feel: "Contouring support",
+        badge: "Best Value",
+        bestFor: ["Foam feel", "Pressure relief", "Motion isolation"],
+        keyFeatures: ["Quilted top", "Contour foam comfort", "No-coil support"],
+        trial: "365 nights",
+        warranty: "Forever",
+        image: "/brand-assets/dreamcloud/classic-product.webp",
+        gallery: [
+          "/brand-assets/dreamcloud/classic-product.webp",
+          "/brand-assets/dreamcloud/comparison.png",
+          "/product-assets/dreamcloud/dreamcloud-rest-1.webp",
+        ],
+        availability: "Call or visit to confirm current showroom availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$299",
+          label: "Starting price",
+          sourceName: "DreamCloud",
+          sourceUrl: priceSources.dreamcloudClassicMemoryFoam,
+        }),
+        priceVariants: dreamcloudVariantPrices.classicMemoryFoam,
+      },
       {
         id: "dreamcloud-premier",
         model: "DreamCloud Premier Hybrid",
@@ -929,23 +1254,50 @@ export const brands: Brand[] = [
           "/product-assets/dreamcloud/dreamcloud-premier-2.webp",
           "/product-assets/dreamcloud/dreamcloud-premier-3.webp",
         ],
-        availability: "Call for current DreamCloud pricing.",
+        availability: "Call or visit to confirm current showroom availability.",
         onlinePrice: officialOnlinePrice({
           amount: "$799",
-          label: "Price guide",
+          label: "Starting price",
           sourceName: "DreamCloud",
-          sourceUrl: priceSources.dreamcloudPremier,
+          sourceUrl: priceSources.dreamcloudPremierHybrid,
         }),
-        priceVariants: dreamcloudVariantPrices.premier,
+        priceVariants: dreamcloudVariantPrices.premierHybrid,
       },
       {
-        id: "dreamcloud-rest",
+        id: "dreamcloud-premier-memory-foam",
+        model: "DreamCloud Premier Memory Foam",
+        category: "Mattress",
+        type: "Memory foam",
+        height: "13 in",
+        firmness: "Medium-firm",
+        feel: "Cushioned contour",
+        bestFor: ["Foam feel", "Couples", "Pressure relief"],
+        keyFeatures: ["Quilted euro top", "Contour foam comfort", "Motion isolation"],
+        trial: "365 nights",
+        warranty: "Forever",
+        image: "/product-assets/dreamcloud/dreamcloud-premier-1.webp",
+        gallery: [
+          "/product-assets/dreamcloud/dreamcloud-premier-1.webp",
+          "/product-assets/dreamcloud/dreamcloud-premier-2.webp",
+          "/product-assets/dreamcloud/dreamcloud-premier-3.webp",
+        ],
+        availability: "Call or visit to confirm current showroom availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$899",
+          label: "Starting price",
+          sourceName: "DreamCloud",
+          sourceUrl: priceSources.dreamcloudPremierMemoryFoam,
+        }),
+        priceVariants: dreamcloudVariantPrices.premierMemoryFoam,
+      },
+      {
+        id: "dreamcloud-luxe-hybrid",
         model: "DreamCloud Luxe Hybrid",
         category: "Mattress",
-        type: "Luxury hybrid",
+        type: "Hybrid",
         height: "14 in",
         firmness: "Medium",
-        feel: "Deep plush comfort",
+        feel: "Targeted support",
         badge: "Luxury",
         bestFor: ["Premium comfort", "Side sleepers", "Hotel-style feel"],
         keyFeatures: ["Extra pillow top", "Tall profile", "Multiple comfort layers"],
@@ -957,14 +1309,126 @@ export const brands: Brand[] = [
           "/product-assets/dreamcloud/dreamcloud-rest-2.webp",
           "/product-assets/dreamcloud/dreamcloud-rest-3.webp",
         ],
-        availability: "Ask whether Luxe Hybrid is available to try.",
+        availability: "Call or visit to confirm current showroom availability.",
         onlinePrice: officialOnlinePrice({
           amount: "$1,099",
-          label: "Price guide",
+          label: "Starting price",
           sourceName: "DreamCloud",
-          sourceUrl: priceSources.dreamcloudLuxe,
+          sourceUrl: priceSources.dreamcloudLuxeHybrid,
         }),
-        priceVariants: dreamcloudVariantPrices.luxe,
+        priceVariants: dreamcloudVariantPrices.luxeHybrid,
+      },
+      {
+        id: "dreamcloud-luxe-memory-foam",
+        model: "DreamCloud Luxe Memory Foam",
+        category: "Mattress",
+        type: "Memory foam",
+        height: "14 in",
+        firmness: "Medium",
+        feel: "Plush contour",
+        badge: "Luxury",
+        bestFor: ["Premium foam", "Side sleepers", "Motion isolation"],
+        keyFeatures: ["Extra pillow top", "Tall profile", "Deep contouring comfort"],
+        trial: "365 nights",
+        warranty: "Forever",
+        image: "/product-assets/dreamcloud/dreamcloud-rest-1.webp",
+        gallery: [
+          "/product-assets/dreamcloud/dreamcloud-rest-1.webp",
+          "/product-assets/dreamcloud/dreamcloud-rest-2.webp",
+          "/product-assets/dreamcloud/dreamcloud-rest-3.webp",
+        ],
+        availability: "Call or visit to confirm current showroom availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,199",
+          label: "Starting price",
+          sourceName: "DreamCloud",
+          sourceUrl: priceSources.dreamcloudLuxeMemoryFoam,
+        }),
+        priceVariants: dreamcloudVariantPrices.luxeMemoryFoam,
+      },
+      {
+        id: "dreamcloud-ultra-hybrid",
+        model: "DreamCloud Ultra Hybrid",
+        category: "Mattress",
+        type: "Hybrid",
+        height: "15 in",
+        firmness: "Medium-soft",
+        feel: "Indulgent plush support",
+        badge: "Premium",
+        bestFor: ["Highest comfort", "Side sleepers", "Luxury shoppers"],
+        keyFeatures: ["Premium quilted top", "Advanced comfort layers", "Wrapped coil support"],
+        trial: "365 nights",
+        warranty: "Forever",
+        image: "/product-assets/dreamcloud/dreamcloud-rest-3.webp",
+        gallery: [
+          "/product-assets/dreamcloud/dreamcloud-rest-3.webp",
+          "/product-assets/dreamcloud/dreamcloud-rest-2.webp",
+          "/product-assets/dreamcloud/dreamcloud-premier-3.webp",
+        ],
+        availability: "Call or visit to confirm current showroom availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,299",
+          label: "Starting price",
+          sourceName: "DreamCloud",
+          sourceUrl: priceSources.dreamcloudUltraHybrid,
+        }),
+        priceVariants: dreamcloudVariantPrices.ultraHybrid,
+      },
+      {
+        id: "dreamcloud-ultra-memory-foam",
+        model: "DreamCloud Ultra Memory Foam",
+        category: "Mattress",
+        type: "Memory foam",
+        height: "15 in",
+        firmness: "Medium",
+        feel: "Deep contour",
+        badge: "Premium",
+        bestFor: ["Highest foam comfort", "Pressure relief", "Motion isolation"],
+        keyFeatures: ["Premium quilted top", "Deep comfort layers", "No-coil support"],
+        trial: "365 nights",
+        warranty: "Forever",
+        image: "/product-assets/dreamcloud/dreamcloud-premier-3.webp",
+        gallery: [
+          "/product-assets/dreamcloud/dreamcloud-premier-3.webp",
+          "/product-assets/dreamcloud/dreamcloud-rest-3.webp",
+          "/brand-assets/dreamcloud/comparison.png",
+        ],
+        availability: "Call or visit to confirm current showroom availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,499",
+          label: "Starting price",
+          sourceName: "DreamCloud",
+          sourceUrl: priceSources.dreamcloudUltraMemoryFoam,
+        }),
+        priceVariants: dreamcloudVariantPrices.ultraMemoryFoam,
+      },
+      {
+        id: "dreamcloud-pressuresmart",
+        model: "DreamCloud PressureSmart Firm",
+        category: "Mattress",
+        type: "Specialty hybrid",
+        height: "Ask in store",
+        firmness: "Firm",
+        feel: "Targeted lumbar support",
+        badge: "Specialty",
+        bestFor: ["Firm support", "Back sleepers", "Lumbar support"],
+        keyFeatures: ["PressureSmart lumbar band", "Wrapped coil support", "Cooling top"],
+        trial: "365 nights",
+        warranty: "Forever",
+        image: "/product-assets/dreamcloud/dreamcloud-rest-3.webp",
+        gallery: [
+          "/product-assets/dreamcloud/dreamcloud-rest-3.webp",
+          "/product-assets/dreamcloud/dreamcloud-rest-2.webp",
+          "/brand-assets/dreamcloud/comparison.png",
+        ],
+        availability: "Call or visit to confirm current showroom availability.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,549",
+          label: "Queen price",
+          sourceName: "DreamCloud",
+          sourceUrl: priceSources.dreamcloudPressureSmart,
+        }),
+        priceVariants: dreamcloudVariantPrices.pressureSmart,
       },
     ],
   }),
@@ -972,12 +1436,30 @@ export const brands: Brand[] = [
     id: "nectar",
     name: "Nectar",
     status: "primary",
-    tagline: "Memory foam comfort with a straightforward model ladder.",
+    tagline: "Memory foam and hybrid comfort in a simple ladder.",
     description:
-      "Nectar is easy to shop: Classic, Premier, and Premier Copper each step up cooling and pressure relief.",
+      "Nectar is easy to shop: choose Memory Foam or Hybrid, then step from Classic to Premier to Luxe.",
     showroomNote:
-      "Best for shoppers who want contouring foam, strong value, and a simple upgrade path.",
-    collectionHighlights: ["Memory foam", "Cooling upgrades", "Simple comparisons"],
+      "Best for shoppers who want contouring comfort, strong value, and a clear foam-versus-hybrid comparison.",
+    collectionHighlights: ["Memory foam and hybrid", "Classic, Premier, Luxe", "Simple comparisons"],
+    productGroups: [
+      {
+        id: "memory-foam",
+        name: "Memory Foam",
+        eyebrow: "Classic contouring feel",
+        description:
+          "Nectar Memory Foam is the classic contouring path: less bounce, strong pressure relief, and simple good-better-best steps.",
+        productIds: ["nectar-classic", "nectar-premier", "nectar-premier-copper"],
+      },
+      {
+        id: "hybrid",
+        name: "Hybrid",
+        eyebrow: "Foam comfort with coil lift",
+        description:
+          "Nectar Hybrid keeps the same Classic, Premier, and Luxe ladder but adds coils for airflow, edge support, and responsiveness.",
+        productIds: ["nectar-classic-hybrid", "nectar-premier-hybrid", "nectar-luxe-hybrid"],
+      },
+    ],
     products: [
       {
         id: "nectar-classic",
@@ -1000,11 +1482,38 @@ export const brands: Brand[] = [
         availability: "Call for current Nectar specials.",
         onlinePrice: officialOnlinePrice({
           amount: "$369",
-          label: "Price guide",
+          label: "Starting price",
           sourceName: "Nectar",
           sourceUrl: priceSources.nectarClassic,
         }),
         priceVariants: nectarVariantPrices.classic,
+      },
+      {
+        id: "nectar-classic-hybrid",
+        model: "Nectar Classic Hybrid",
+        category: "Mattress",
+        type: "Hybrid",
+        height: "12 in",
+        firmness: "Medium-firm",
+        feel: "Responsive contour",
+        badge: "Hybrid",
+        bestFor: ["Combination sleepers", "Edge support", "Hybrid value"],
+        keyFeatures: ["Memory foam comfort", "Individually wrapped coils", "Breathable support"],
+        trial: "365 nights",
+        warranty: "Forever",
+        image: "/product-assets/nectar-refresh/classic-hybrid.png",
+        gallery: [
+          "/product-assets/nectar-refresh/classic-hybrid.png",
+          "/product-assets/nectar-refresh/classic-hybrid-detail.png",
+        ],
+        availability: "Compare Classic foam and hybrid in the showroom.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$799",
+          label: "Official online queen price",
+          sourceName: "Nectar",
+          sourceUrl: priceSources.nectarClassicHybrid,
+        }),
+        priceVariants: nectarVariantPrices.classicHybrid,
       },
       {
         id: "nectar-premier",
@@ -1027,11 +1536,38 @@ export const brands: Brand[] = [
         availability: "A strong upgrade to compare against Classic.",
         onlinePrice: officialOnlinePrice({
           amount: "$549",
-          label: "Price guide",
+          label: "Starting price",
           sourceName: "Nectar",
           sourceUrl: priceSources.nectarPremier,
         }),
         priceVariants: nectarVariantPrices.premier,
+      },
+      {
+        id: "nectar-premier-hybrid",
+        model: "Nectar Premier Hybrid",
+        category: "Mattress",
+        type: "Hybrid",
+        height: "13 in",
+        firmness: "Medium",
+        feel: "Cooling contour with lift",
+        badge: "Best value hybrid",
+        bestFor: ["Side sleepers", "Combination sleepers", "Cooling hybrid shoppers"],
+        keyFeatures: ["Over 60% more cooling fibers", "Double pressure-relieving memory foam", "Innerspring coil support"],
+        trial: "365 nights",
+        warranty: "Forever",
+        image: "/product-assets/nectar-refresh/premier-hybrid.png",
+        gallery: [
+          "/product-assets/nectar-refresh/premier-hybrid.png",
+          "/product-assets/nectar-refresh/premier-hybrid-detail.png",
+        ],
+        availability: "A strong hybrid upgrade to compare against Classic Hybrid.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,099",
+          label: "Official online queen price",
+          sourceName: "Nectar",
+          sourceUrl: priceSources.nectarPremierHybrid,
+        }),
+        priceVariants: nectarVariantPrices.premierHybrid,
       },
       {
         id: "nectar-premier-copper",
@@ -1055,11 +1591,38 @@ export const brands: Brand[] = [
         availability: "Call for current Luxe model availability.",
         onlinePrice: officialOnlinePrice({
           amount: "$999",
-          label: "Price guide",
+          label: "Starting price",
           sourceName: "Nectar",
           sourceUrl: priceSources.nectarLuxe,
         }),
         priceVariants: nectarVariantPrices.luxe,
+      },
+      {
+        id: "nectar-luxe-hybrid",
+        model: "Nectar Luxe Hybrid",
+        category: "Mattress",
+        type: "Hybrid",
+        height: "14 in",
+        firmness: "Medium-soft",
+        feel: "Premium cooling hybrid",
+        badge: "Luxe Hybrid",
+        bestFor: ["Hot sleepers", "Side sleepers", "Premium hybrid shoppers"],
+        keyFeatures: ["More than double cooling fibers", "Triple pressure-relieving memory foam", "Individually wrapped coils"],
+        trial: "365 nights",
+        warranty: "Forever",
+        image: "/product-assets/nectar-refresh/luxe-hybrid.png",
+        gallery: [
+          "/product-assets/nectar-refresh/luxe-hybrid.png",
+          "/product-assets/nectar-refresh/luxe-hybrid-detail.png",
+        ],
+        availability: "Compare Luxe foam and Luxe Hybrid for contour versus lift.",
+        onlinePrice: officialOnlinePrice({
+          amount: "$1,549",
+          label: "Official online queen price",
+          sourceName: "Nectar",
+          sourceUrl: priceSources.nectarLuxeHybrid,
+        }),
+        priceVariants: nectarVariantPrices.luxeHybrid,
       },
     ],
   }),
@@ -1089,7 +1652,7 @@ export const brands: Brand[] = [
         availability: "Ask the showroom team about Bedgear mattress options.",
         onlinePrice: officialOnlinePrice({
           amount: "$2,999.99",
-          label: "Mattress price guide",
+          label: "Official online mattress price",
           sourceName: "BEDGEAR",
           sourceUrl: priceSources.bedgearM3,
         }),
@@ -1114,7 +1677,7 @@ export const brands: Brand[] = [
         availability: "Try pillow heights in store.",
         onlinePrice: officialOnlinePrice({
           amount: "$199.99",
-          label: "Pillow price guide",
+          label: "Official online pillow price",
           sourceName: "BEDGEAR",
           sourceUrl: priceSources.bedgearStorm,
         }),
@@ -1138,7 +1701,7 @@ export const brands: Brand[] = [
         availability: "Ask for pillow fitting help.",
         onlinePrice: officialOnlinePrice({
           amount: "$99.99",
-          label: "Pillow price guide",
+          label: "Official online pillow price",
           sourceName: "BEDGEAR",
           sourceUrl: priceSources.bedgearBalance,
         }),
@@ -1161,7 +1724,7 @@ export const brands: Brand[] = [
         availability: "Available with most mattress purchases.",
         onlinePrice: officialOnlinePrice({
           amount: "$159.99",
-          label: "Protector price guide",
+          label: "Official online queen protector price",
           sourceName: "BEDGEAR",
           sourceUrl: priceSources.bedgearDriTec,
         }),
@@ -1360,11 +1923,11 @@ export const brands: Brand[] = [
         bestFor: ["Head elevation", "Reading in bed", "Base upgrades"],
         keyFeatures: ["Wireless control", "Head and foot articulation", "Modern base profile"],
         warranty: "Ask in store",
-        image: "/brand-assets/bedtech/official-hero-bases.jpg",
+        image: "/brand-assets/bedtech/btx4-base.webp",
         gallery: [
+          "/brand-assets/bedtech/btx4-base.webp",
           "/brand-assets/bedtech/official-hero-bases.jpg",
           "/brand-assets/bedtech/bt3000.webp",
-          "/brand-assets/bedtech/btx4.webp",
         ],
         availability: "Call for current base sizes and stock.",
       },
@@ -1438,7 +2001,7 @@ export const brands: Brand[] = [
         firmness: "Medium",
         feel: "Cushioned support",
         bestFor: ["Couples", "Guest rooms", "Medium comfort"],
-        keyFeatures: ["Euro top feel", "Balanced support", "Approachable price tier"],
+        keyFeatures: ["Euro top feel", "Balanced support", "Approachable price"],
         warranty: "Ask in store",
         image: "/brand-assets/serenity-sleep/andes-euro-top.png",
         availability: "Ask about Serenity Sleep model selection.",
@@ -1464,7 +2027,7 @@ export const brands: Brand[] = [
     status: "secondary",
     tagline: "Hotel-inspired bedding heritage.",
     description:
-      "Jamison brings hospitality-style comfort and traditional mattress construction into the catalog.",
+      "Jamison brings hotel-style comfort and traditional mattress construction into the store.",
     showroomNote:
       "Best for shoppers who like a classic mattress feel with hotel-style familiarity.",
     collectionHighlights: ["Hotel feel", "Classic support", "Comfort heritage"],
@@ -1530,7 +2093,7 @@ export const brands: Brand[] = [
         availability: "Ask for current Serta and iComfort floor models.",
         onlinePrice: officialOnlinePrice({
           amount: "$1,199",
-          label: "Price guide",
+          label: "Official online selected price",
           sourceName: "Serta",
           sourceUrl: priceSources.sertaIcomfort,
         }),
@@ -1556,7 +2119,7 @@ export const brands: Brand[] = [
     status: "ask-in-store",
     tagline: "Value-focused mattress options.",
     description:
-      "Corsicana appears in the broader catalog history and should be treated as an ask-in-store line until the current floor set is confirmed.",
+      "Ask the store which Corsicana value options are currently available.",
     showroomNote:
       "Best as a value or special-order conversation if the store confirms availability.",
     collectionHighlights: ["Value line", "Traditional comfort", "Confirm availability"],
@@ -1569,7 +2132,7 @@ export const brands: Brand[] = [
         firmness: "Multiple options",
         feel: "Everyday support",
         bestFor: ["Budget shoppers", "Guest rooms", "Traditional comfort"],
-        keyFeatures: ["Hybrid support", "Accessible price tier", "Multiple comfort options"],
+        keyFeatures: ["Hybrid support", "Accessible price", "Multiple comfort options"],
         warranty: "Ask in store",
         image: "/brand-assets/corsicana/hero.png",
         availability: "Ask the store whether Corsicana is currently carried.",
@@ -1658,7 +2221,7 @@ export const brands: Brand[] = [
     status: "ask-in-store",
     tagline: "Older Serta collection candidate to confirm in store.",
     description:
-      "Sleep Retreat appears in the sourced asset set as a Serta-related collection and should be listed carefully until availability is confirmed.",
+      "Ask the store whether any Serta Sleep Retreat options are currently available.",
     showroomNote:
       "Best as an ask-in-store collection if a shopper is looking for specific older Serta models.",
     collectionHighlights: ["Serta collection", "Confirm availability", "Value options"],
@@ -1776,7 +2339,7 @@ export const faqItems = [
   {
     question: "How should I use the prices on this site?",
     answer:
-      "Use them as a helpful shopping guide. Prices and promotions can change, and Discount Mattress can confirm today's local offer by phone or in the showroom.",
+      "The site shows available prices by size for many models. Local Discount Mattress pricing, size availability, and promotions should still be confirmed by phone or in the showroom.",
   },
   {
     question: "Do you offer financing?",

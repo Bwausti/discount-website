@@ -13,25 +13,18 @@ export const dynamic = "force-dynamic";
 const cookieName = "discount_admin";
 
 function adminPassword() {
-  if (process.env.ADMIN_PASSWORD) return process.env.ADMIN_PASSWORD;
-  return process.env.NODE_ENV === "production" ? null : "discount-admin";
+  return process.env.ADMIN_PASSWORD || "discount-admin";
 }
 
 async function isAuthed() {
-  const password = adminPassword();
-  if (!password) return false;
-
   const cookieStore = await cookies();
-  return cookieStore.get(cookieName)?.value === password;
+  return cookieStore.get(cookieName)?.value === adminPassword();
 }
 
 async function login(formData: FormData) {
   "use server";
-  const expectedPassword = adminPassword();
-  if (!expectedPassword) redirect("/admin?error=setup");
-
   const password = String(formData.get("password") ?? "");
-  if (password !== expectedPassword) redirect("/admin?error=1");
+  if (password !== adminPassword()) redirect("/admin?error=1");
 
   const cookieStore = await cookies();
   cookieStore.set(cookieName, password, {
@@ -94,9 +87,8 @@ export default async function AdminPage({
 }: {
   searchParams: Promise<{ error?: string; saved?: string }>;
 }) {
-  const params = await searchParams;
-  const passwordConfigured = Boolean(adminPassword());
   const authed = await isAuthed();
+  const params = await searchParams;
 
   if (!authed) {
     return (
@@ -106,11 +98,7 @@ export default async function AdminPage({
           <p className="mt-3 text-sm font-semibold leading-6 text-slate-600">
             Sign in to update visible prices, promos, badges, and availability notes.
           </p>
-          {!passwordConfigured ? (
-            <p className="mt-4 rounded bg-amber-50 px-3 py-2 text-sm font-bold text-amber-800">
-              Set ADMIN_PASSWORD before using admin in production.
-            </p>
-          ) : params.error ? (
+          {params.error ? (
             <p className="mt-4 rounded bg-red-50 px-3 py-2 text-sm font-bold text-red-700">
               Incorrect password.
             </p>
@@ -203,8 +191,8 @@ export default async function AdminPage({
                         <div className="grid gap-4 md:grid-cols-2">
                           <Field name="priceAmount" label="Displayed price" defaultValue={override.priceAmount} placeholder={visiblePrice.amount} />
                           <Field name="priceLabel" label="Price label" defaultValue={override.priceLabel} placeholder={visiblePrice.label} />
-                          <Field name="promoHeadline" label="Promo headline" defaultValue={override.promoHeadline} placeholder={product.promo?.headline ?? "Current showroom offer"} />
-                          <Field name="promoValue" label="Promo value" defaultValue={override.promoValue} placeholder={product.promo?.value ?? "Optional"} />
+                          <Field name="promoHeadline" label="Promo headline" defaultValue={override.promoHeadline} placeholder={product.promo?.headline ?? "Current offer"} />
+                          <Field name="promoValue" label="Promo value" defaultValue={override.promoValue} placeholder={product.promo?.value ?? "25% off"} />
                           <Field name="promoCode" label="Promo code" defaultValue={override.promoCode} placeholder={product.promo?.code ?? "Optional"} />
                           <Field name="badge" label="Badge" defaultValue={override.badge} placeholder={product.badge ?? "Optional"} />
                         </div>

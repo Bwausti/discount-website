@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { LeadCta, PageShell, SectionIntro } from "@/components/site-shell";
+import { TrackedLink } from "@/components/tracked-link";
 import { storeInfo } from "@/lib/products";
 
 export const metadata = {
@@ -36,7 +36,7 @@ export default function FinancingPage() {
             align="left"
             eyebrow="Financing"
             title="Bring home better sleep without guessing online."
-            body="Financing details can change by partner, approval, promotion, and purchase amount. The site should guide shoppers to call or visit, then let the store confirm the right option."
+            body="Compare mattresses first, then talk with the store about available financing paths, current promotions, approval details, and delivery options."
           />
           <div className="rounded border border-slate-200 bg-[#f7f8fb] p-6 shadow-sm">
             <p className="text-sm font-black uppercase tracking-[0.18em] text-[#cf2333]">
@@ -44,22 +44,26 @@ export default function FinancingPage() {
             </p>
             <h2 className="mt-3 text-3xl font-black text-slate-950">Call before applying.</h2>
             <p className="mt-3 text-sm leading-6 text-slate-600">
-              The team can confirm current partners, promotion windows, and what information you
-              need before visiting the showroom.
+              The team can confirm current partners, promotion windows, and what information helps
+              make the showroom visit easier.
             </p>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <a
+              <TrackedLink
                 href={storeInfo.primaryPhoneHref}
+                eventName="phone_click"
+                eventLabel="financing_primary_phone"
                 className="rounded bg-[#cf2333] px-5 py-3 text-center text-sm font-black text-white transition hover:bg-[#a91c2a]"
               >
                 Call {storeInfo.primaryPhone}
-              </a>
-              <Link
+              </TrackedLink>
+              <TrackedLink
                 href="/locations"
+                eventName="directions_click"
+                eventLabel="financing_visit_showroom"
                 className="rounded border border-slate-300 bg-white px-5 py-3 text-center text-sm font-black text-slate-800 transition hover:border-[#cf2333] hover:text-[#cf2333]"
               >
                 Visit a showroom
-              </Link>
+              </TrackedLink>
             </div>
           </div>
         </div>
@@ -70,7 +74,7 @@ export default function FinancingPage() {
           <SectionIntro
             eyebrow="Options"
             title="Store-supported financing paths."
-            body="These are presented as guidance only. Terms, availability, approvals, and disclosures should be confirmed before launch and before purchase."
+            body="Availability, approvals, and terms can vary by partner, promotion, and purchase amount. The store can help you compare the active options."
           />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {financingOptions.map((option) => (

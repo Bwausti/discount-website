@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Discount Mattress Website
+
+Showroom-first website for Discount Mattress in Bowling Green, KY. The site presents brand-native mattress lineups, visible prices, local calls to action, financing guidance, and showroom locations. It is not a Shopify checkout launch.
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies and run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `.env.example` to `.env.local` for local development:
 
-## Learn More
+```bash
+cp .env.example .env.local
+```
 
-To learn more about Next.js, take a look at the following resources:
+Set:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `NEXT_PUBLIC_GTM_ID` or `NEXT_PUBLIC_GA_ID`
+- `ADMIN_PASSWORD`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+If both Google IDs are set, Google Tag Manager is used.
 
-## Deploy on Vercel
+## Admin
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Visit `/admin` to edit price, promo, badge, visibility, and availability overrides.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Current persistence is JSON-backed at `data/catalog-overrides.json`. With the current static page setup, production edits become visible after rebuild/redeploy. Move this to Supabase or another database before relying on instant live production updates.
+
+## Useful Commands
+
+```bash
+npm run dev
+npm run lint
+npm run build
+npm run catalog:export
+```
+
+## Key Docs
+
+- `PRD.md`
+- `docs/site-completion-todo.md`
+- `docs/catalog-business-rules.md`
+- `docs/catalog-audit.md`
+- `docs/google-tracking.md`
