@@ -18,7 +18,7 @@ export function SiteHeader() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-2 px-4 py-2 text-center text-xs font-black uppercase tracking-[0.14em] sm:px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
           <p className="hidden justify-self-start text-white/75 lg:block">Bowling Green, KY</p>
           <p className="justify-self-center text-white">
-            Nationwide price guarantee • Local help • Two Bowling Green stores
+            Prices shown • Local help • Two Bowling Green stores
           </p>
           <TrackedLink
             href={storeInfo.primaryPhoneHref}
@@ -95,8 +95,8 @@ export function SiteFooter() {
             className="h-10 w-auto brightness-0 invert"
           />
           <p className="mt-5 max-w-md text-sm leading-6 text-slate-300">
-            Local help choosing a mattress, strong brand selection, and a nationwide price
-            guarantee for Bowling Green shoppers.
+            Local help choosing a mattress, strong brand selection, and current prices for
+            Bowling Green shoppers.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <TrackedLink
@@ -160,7 +160,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-white/10 px-4 py-5 text-center text-xs text-slate-400">
-        © {new Date().getFullYear()} Discount Mattress. Call or visit for today&apos;s local offers,
+        © {new Date().getFullYear()} Discount Mattress. Call or visit for current offers,
         promotions, and policy details.
       </div>
     </footer>
@@ -284,18 +284,8 @@ export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
             href={`/collections/${brand.id}`}
             className="group flex min-h-[22rem] flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-[#cf2333]/40 hover:shadow-xl"
           >
-            <div className="relative flex h-36 items-center justify-center overflow-hidden border-b border-slate-200 bg-slate-950 px-8">
-              {brand.heroImage ? (
-                <Image
-                  src={brand.heroImage}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 33vw, 100vw"
-                  className="object-cover opacity-55 transition duration-500 group-hover:scale-[1.03]"
-                />
-              ) : null}
-              <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-slate-950/25 to-slate-950/55" />
-              <div className="relative flex h-20 w-full max-w-[15rem] items-center justify-center rounded-md bg-white/95 px-6 py-4 shadow-lg ring-1 ring-white/70 backdrop-blur">
+            <div className="flex h-32 items-center justify-center border-b border-slate-200 bg-[#f7f8fb] px-8">
+              <div className="flex h-20 w-full max-w-[15rem] items-center justify-center rounded-md bg-white px-6 py-4 shadow-sm ring-1 ring-slate-200">
                 {brand.logo ? (
                   <Image
                     src={brand.logo}
@@ -367,7 +357,7 @@ export function BrandLogoGrid({ brands }: { brands: Brand[] }) {
 
 export function LeadCta({
   title = "Ready to try a better mattress?",
-  body = "Start with the brands you like, then call or stop in to test comfort levels in person.",
+  body = "See prices before you visit, then call or stop in to test comfort levels in person.",
 }: {
   title?: string;
   body?: string;

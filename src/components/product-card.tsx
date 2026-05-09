@@ -1,16 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Product } from "@/lib/products";
+import { TrackedLink } from "@/components/tracked-link";
+import { publicPriceLabel, publicPromoSummary } from "@/lib/price-copy";
+import { Product, visibleProductPrice } from "@/lib/products";
 
 export function ProductCard({ product, priority = false }: { product: Product; priority?: boolean }) {
-  const startingPrice = product.priceVariants?.[0]?.amount ?? product.onlinePrice?.amount;
+  const visiblePrice = visibleProductPrice(product);
+  const pricePrefix =
+    visiblePrice.mode === "exact"
+      ? publicPriceLabel(visiblePrice.label)
+      : visiblePrice.mode === "starting_at"
+        ? "From"
+        : visiblePrice.mode === "sale_reference"
+          ? "Now from"
+          : visiblePrice.mode === "local_reference"
+            ? "Local from"
+            : "MSRP from";
   const imageClassName =
-    product.brandId === "puffy" || product.brandId === "nectar"
+    product.brandId === "puffy" || product.brandId === "nectar" || product.brandId === "bedgear"
       ? "object-cover object-center transition duration-500 group-hover:scale-[1.03]"
       : "object-contain p-6 transition duration-500 group-hover:scale-[1.04]";
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-[#dedbd2] bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+    <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
       <Link href={`/mattresses/${product.id}`} className="block">
         <div className="relative aspect-[5/4] overflow-hidden bg-[#f1f3f6]">
           <Image
@@ -26,16 +38,14 @@ export function ProductCard({ product, priority = false }: { product: Product; p
               {product.badge}
             </span>
           ) : null}
-          {startingPrice ? (
-            <div className="absolute bottom-4 left-4 rounded-2xl bg-white/95 px-4 py-3 shadow-lg backdrop-blur">
-              <p className="text-[0.62rem] font-black uppercase tracking-[0.16em] text-slate-500">
-                From
-              </p>
-              <p className="text-2xl font-black tracking-tight text-slate-950">
-                {startingPrice}
-              </p>
-            </div>
-          ) : null}
+          <div className="absolute bottom-4 left-4 rounded-md bg-white/95 px-4 py-3 shadow-lg backdrop-blur">
+            <p className="text-[0.62rem] font-black uppercase tracking-[0.16em] text-slate-500">
+              {pricePrefix}
+            </p>
+            <p className="text-2xl font-black tracking-tight text-slate-950">
+              {visiblePrice.amount}
+            </p>
+          </div>
         </div>
       </Link>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
@@ -70,48 +80,40 @@ export function ProductCard({ product, priority = false }: { product: Product; p
         </ul>
 
         <div className="mt-auto pt-5">
-          <div className="rounded-2xl border border-[#dedbd2] bg-[#fbfaf4] p-4">
-            {startingPrice ? (
-              <>
-                <p className="text-[0.65rem] font-black uppercase tracking-[0.16em] text-[#b78200]">
-                  Prices
-                </p>
-                <p className="mt-1 text-3xl font-black tracking-tight text-slate-950">
-                  From {startingPrice}
-                </p>
-                {product.promo?.value ? (
-                  <p className="mt-1 text-xs font-black uppercase tracking-[0.12em] text-[#cf2333]">
-                    {product.promo.value}
-                  </p>
-                ) : null}
-              </>
+          <div className="rounded-md border border-slate-200 bg-[#fbfaf4] p-4">
+            <p className="text-[0.65rem] font-black uppercase tracking-[0.16em] text-[#b78200]">
+              {publicPriceLabel(visiblePrice.label)}
+            </p>
+            <p className="mt-1 text-3xl font-black tracking-tight text-slate-950">
+              {visiblePrice.amount}
+            </p>
+            {product.promo?.value ? (
+              <p className="mt-1 text-xs font-black uppercase tracking-[0.12em] text-[#cf2333]">
+                {publicPromoSummary(product.promo)}
+              </p>
             ) : (
-              <>
-                <p className="text-[0.65rem] font-black uppercase tracking-[0.16em] text-[#b78200]">
-                  Local price
-                </p>
-                <p className="mt-1 text-2xl font-black tracking-tight text-slate-950">
-                  Call or visit
-                </p>
-                <p className="mt-1 text-xs font-semibold leading-5 text-slate-600">
-                  Current price depends on size, floor stock, and local offers.
-                </p>
-              </>
+              <p className="mt-1 text-xs font-semibold leading-5 text-slate-600">
+                Updated {visiblePrice.asOf}
+              </p>
             )}
           </div>
           <div className="mt-3 grid grid-cols-2 gap-2">
-            <Link
+            <TrackedLink
               href={`/mattresses/${product.id}`}
-              className="rounded-full border border-slate-300 px-3 py-3 text-center text-sm font-black text-slate-800 transition hover:border-[#cf2333] hover:text-[#cf2333]"
+              eventName="product_detail_click"
+              eventLabel={product.id}
+              className="rounded border border-slate-300 px-3 py-3 text-center text-sm font-black text-slate-800 transition hover:border-[#cf2333] hover:text-[#cf2333]"
             >
               Details
-            </Link>
-            <a
+            </TrackedLink>
+            <TrackedLink
               href="tel:2704951603"
-              className="rounded-full bg-[#f2b705] px-3 py-3 text-center text-sm font-black text-slate-950 shadow-sm transition hover:bg-[#ffd24d]"
+              eventName="phone_click"
+              eventLabel={`product_card_${product.id}`}
+              className="rounded bg-[#f2b705] px-3 py-3 text-center text-sm font-black text-slate-950 shadow-sm transition hover:bg-[#ffd24d]"
             >
               Call
-            </a>
+            </TrackedLink>
           </div>
         </div>
       </div>
@@ -121,7 +123,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
 
 function Spec({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl bg-slate-50 p-3">
+    <div className="rounded-md bg-slate-50 p-3">
       <dt className="text-[0.68rem] font-black uppercase tracking-[0.16em] text-slate-500">
         {label}
       </dt>

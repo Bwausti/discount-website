@@ -17,7 +17,7 @@ export default function LocationsPage() {
             align="left"
             eyebrow="Locations"
             title="Two Bowling Green showrooms."
-            body="Call ahead for model availability, delivery options, today's local offers, and which location is best for the brands you want to try."
+            body="Call ahead to confirm current offers, model availability, delivery options, and which location is best for the brands you want to try."
           />
           <div className="relative aspect-[16/10] overflow-hidden rounded border border-slate-200 bg-slate-100 shadow-sm">
             <Image
