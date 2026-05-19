@@ -148,19 +148,19 @@
 <div class="prod-highlights">
   <div class="prod-highlights__grid">
 
-    {# Brand / Type #}
+    {% comment %} Brand / Type {% endcomment %}
     <div class="prod-highlights__card">
       <p class="prod-highlights__label">Brand</p>
       <p class="prod-highlights__value">{{ vendor | default: p.vendor }}</p>
     </div>
 
-    {# Type / Category #}
+    {% comment %} Type / Category {% endcomment %}
     <div class="prod-highlights__card">
       <p class="prod-highlights__label">Category</p>
       <p class="prod-highlights__value">{{ type_badge }}</p>
     </div>
 
-    {# Firmness #}
+    {% comment %} Firmness {% endcomment %}
     <div class="prod-highlights__card">
       <p class="prod-highlights__label">Feel</p>
       <p class="prod-highlights__value">
@@ -186,13 +186,13 @@
       </p>
     </div>
 
-    {# Warranty #}
+    {% comment %} Warranty {% endcomment %}
     <div class="prod-highlights__card">
       <p class="prod-highlights__label">Warranty</p>
       <p class="prod-highlights__value">{{ warranty_text }}</p>
     </div>
 
-    {# Showroom Availability #}
+    {% comment %} Showroom Availability {% endcomment %}
     <div class="prod-highlights__card">
       <p class="prod-highlights__label">In Showroom</p>
       <p class="prod-highlights__value">

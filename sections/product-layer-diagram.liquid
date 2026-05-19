@@ -183,7 +183,7 @@
   </div>
 
   <div class="layer-diagram__columns">
-    {# Left: Visual Stack #}
+    {% comment %} Left: Visual Stack {% endcomment %}
     <div class="layer-stack">
       <div class="layer-stack__inner">
         {%- for layer in layers -%}
@@ -222,7 +222,7 @@
       </div>
     </div>
 
-    {# Right: Details Panel #}
+    {% comment %} Right: Details Panel {% endcomment %}
     <div class="layer-details">
       <h3>Layer breakdown</h3>
       <div class="layer-details__total">
