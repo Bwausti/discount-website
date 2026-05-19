@@ -93,6 +93,52 @@
     id: 'product-details',
     closest.product: closest.product
   %}
+
+  <!-- Trust Signals & Financing -->
+  <div class="pdp-trust-section">
+    <div class="pdp-trust-grid">
+      <div class="pdp-trust-item">
+        <span class="pdp-trust-icon">🔒</span>
+        <span class="pdp-trust-text">Secure checkout</span>
+      </div>
+      <div class="pdp-trust-item">
+        <span class="pdp-trust-icon">🚚</span>
+        <span class="pdp-trust-text">Free local delivery</span>
+      </div>
+      <div class="pdp-trust-item">
+        <span class="pdp-trust-icon">🛡️</span>
+        <span class="pdp-trust-text">Lifetime warranty</span>
+      </div>
+      <div class="pdp-trust-item">
+        <span class="pdp-trust-icon">✓</span>
+        <span class="pdp-trust-text">30-day guarantee</span>
+      </div>
+    </div>
+
+    <div class="pdp-financing">
+      <p class="pdp-financing-heading">Finance with confidence</p>
+      <div class="pdp-financing-logos">
+        <img src="{{ 'fin-sync.svg' | asset_url }}" alt="Synchrony" height="28" loading="lazy">
+        <img src="{{ 'fin-kafene.svg' | asset_url }}" alt="Kafene" height="28" loading="lazy">
+        <img src="{{ 'fin-snap.svg' | asset_url }}" alt="Snap Finance" height="28" loading="lazy">
+      </div>
+      <a href="/pages/financing" class="pdp-financing-link">Learn about financing →</a>
+    </div>
+  </div>
+
+  <style>
+    .pdp-trust-section { margin-top: 20px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
+    .pdp-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
+    .pdp-trust-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: #f8fafc; border-radius: 6px; font-size: 12px; font-weight: 600; color: #334155; }
+    .pdp-trust-icon { font-size: 16px; flex-shrink: 0; }
+    .pdp-trust-text { line-height: 1.3; }
+    .pdp-financing { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 14px 16px; text-align: center; }
+    .pdp-financing-heading { margin: 0 0 10px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #0369a1; }
+    .pdp-financing-logos { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 10px; flex-wrap: wrap; }
+    .pdp-financing-logos img { opacity: 0.8; max-height: 28px; width: auto; }
+    .pdp-financing-link { font-size: 12px; font-weight: 600; color: #162b49; text-decoration: underline; }
+    .pdp-financing-link:hover { color: #1e3a5f; }
+  </style>
 {% endcapture %}
 
 {% capture additional_blocks %}
