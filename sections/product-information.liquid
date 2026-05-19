@@ -93,75 +93,6 @@
     id: 'product-details',
     closest.product: closest.product
   %}
-
-  <!-- Trust Signals & Financing -->
-  <div class="pdp-trust-section">
-    <div class="pdp-trust-grid">
-      <div class="pdp-trust-item">
-        <span class="pdp-trust-icon">🔒</span>
-        <span class="pdp-trust-text">Secure checkout</span>
-      </div>
-      <div class="pdp-trust-item">
-        <span class="pdp-trust-icon">🚚</span>
-        <span class="pdp-trust-text">Free local delivery</span>
-      </div>
-      <div class="pdp-trust-item">
-        <span class="pdp-trust-icon">🛡️</span>
-        <span class="pdp-trust-text">Lifetime warranty</span>
-      </div>
-      <div class="pdp-trust-item">
-        <span class="pdp-trust-icon">🏷️</span>
-        <span class="pdp-trust-text">Nationwide low price guarantee</span>
-      </div>
-    </div>
-
-    <div class="pdp-financing">
-      <p class="pdp-financing-heading">FINANCE WITH CONFIDENCE</p>
-      <div class="pdp-financing-logos">
-        <div class="pdp-financing-tile">
-          <img src="{{ 'financing/synchrony-logo.svg' | asset_url }}" alt="Synchrony" loading="lazy">
-        </div>
-        <div class="pdp-financing-tile">
-          <img src="{{ 'financing/kafene-logo.svg' | asset_url }}" alt="Kafene" loading="lazy">
-        </div>
-        <div class="pdp-financing-tile">
-          <img src="{{ 'financing/snap-logo.svg' | asset_url }}" alt="Snap Finance" loading="lazy">
-        </div>
-      </div>
-      <a href="/pages/financing" class="pdp-financing-btn">Learn about financing →</a>
-    </div>
-  </div>
-
-  <style>
-    .pdp-trust-section { margin-top: 20px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
-    .pdp-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 16px; }
-    .pdp-trust-item { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: #f8fafc; border-radius: 8px; font-size: 12px; font-weight: 600; color: #334155; border: 1px solid #e2e8f0; }
-    .pdp-trust-icon { font-size: 16px; flex-shrink: 0; }
-    .pdp-financing { background: #eef6ff; border: none; border-radius: 10px; padding: 20px; text-align: center; position: relative; overflow: hidden; }
-    .pdp-financing::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(59,130,246,0.04) 30px, rgba(59,130,246,0.04) 31px); pointer-events: none; }
-    .pdp-financing-heading { margin: 0 0 14px; font-size: 11px; font-weight: 800; letter-spacing: 0.15em; color: #162b49; position: relative; }
-    .pdp-financing-logos { display: flex; gap: 10px; margin-bottom: 14px; position: relative; }
-    .pdp-financing-tile { flex: 1; background: white; border-radius: 8px; padding: 12px 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06); min-height: 56px; }
-    .pdp-financing-tile img { max-height: 28px; width: auto; max-width: 100%; }
-    @media (max-width: 480px) { .pdp-financing-logos { flex-direction: column; } }
-
-  /* Mobile responsive fixes */
-  @media (max-width: 749px) {
-    .pdp-trust-grid { gap: 6px; }
-    .pdp-trust-item { padding: 8px 10px; font-size: 11px; gap: 6px; }
-    .pdp-trust-section { margin-top: 12px; padding-top: 12px; }
-    .pdp-financing { padding: 16px 12px; }
-    .pdp-financing-logos { flex-direction: column; gap: 8px; }
-    .pdp-financing-tile { padding: 10px 8px; min-height: 48px; }
-    .pdp-financing-tile img { max-height: 24px; }
-    .pdp-financing-heading { font-size: 10px; }
-    .pdp-financing-btn { font-size: 12px; padding: 8px 20px; }
-    .variant-option--buttons .variant-option__button-label { min-width: 40px; padding: 8px 12px; font-size: 12px; }
-    .buy-buttons-block .add-to-cart-button { font-size: 13px; padding: 14px 16px; }
-  }
-    .pdp-financing-btn { display: inline-block; background: white; color: #162b49; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.08); transition: box-shadow 0.2s; position: relative; }
-    .pdp-financing-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
-  </style>
 {% endcapture %}
 
 {% capture additional_blocks %}
@@ -319,6 +250,44 @@
   product_details: product_details,
   additional_blocks: additional_blocks
 %}
+
+<!-- Trust Signals & Financing (rendered after product details) -->
+<div class="pdp-trust-section">
+  <div class="pdp-trust-grid">
+    <div class="pdp-trust-item">
+      <span class="pdp-trust-icon">🔒</span>
+      <span class="pdp-trust-text">Secure checkout</span>
+    </div>
+    <div class="pdp-trust-item">
+      <span class="pdp-trust-icon">🚚</span>
+      <span class="pdp-trust-text">Free local delivery</span>
+    </div>
+    <div class="pdp-trust-item">
+      <span class="pdp-trust-icon">🛡️</span>
+      <span class="pdp-trust-text">Lifetime warranty</span>
+    </div>
+    <div class="pdp-trust-item">
+      <span class="pdp-trust-icon">🏷️</span>
+      <span class="pdp-trust-text">Nationwide low price guarantee</span>
+    </div>
+  </div>
+
+  <div class="pdp-financing">
+    <p class="pdp-financing-heading">FINANCE WITH CONFIDENCE</p>
+    <div class="pdp-financing-logos">
+      <div class="pdp-financing-tile">
+        <img src="{{ 'financing/synchrony-logo.svg' | asset_url }}" alt="Synchrony" loading="lazy">
+      </div>
+      <div class="pdp-financing-tile">
+        <img src="{{ 'financing/kafene-logo.svg' | asset_url }}" alt="Kafene" loading="lazy">
+      </div>
+      <div class="pdp-financing-tile">
+        <img src="{{ 'financing/snap-logo.svg' | asset_url }}" alt="Snap Finance" loading="lazy">
+      </div>
+    </div>
+    <a href="/pages/financing" class="pdp-financing-btn">Learn about financing →</a>
+  </div>
+</div>
 
 {% stylesheet %}
   .sticky-add-to-cart__bar {
