@@ -12,9 +12,9 @@ jobs:
         run: npm install -g @shopify/cli @shopify/theme
 
       - name: Push theme to live
-        run: >
-          shopify theme push
-          --store=discount-mattress-4.myshopify.com
-          --password=${{ secrets.SHOPIFY_CLI_PASSWORD }}
-          --theme=${{ secrets.SHOPIFY_LIVE_THEME_ID }}
-          --allow-live
+        run: |
+          shopify theme push \
+            --store=discount-mattress-4.myshopify.com \
+            --password=${{ secrets.SHOPIFY_CLI_PASSWORD }} \
+            --theme=${{ secrets.SHOPIFY_LIVE_THEME_ID }} \
+            --allow-live
