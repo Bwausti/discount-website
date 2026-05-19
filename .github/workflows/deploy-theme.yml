@@ -8,10 +8,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy theme
-        uses: shopify/theme-tools/action@v1
-        with:
-          theme_root: .
-          shopify_access_token: ${{ secrets.SHOPIFY_CLI_PASSWORD }}
-          shopify_store: discount-mattress-4.myshopify.com
-          theme_id: ${{ secrets.SHOPIFY_LIVE_THEME_ID }}
+      - name: Push theme
+        run: |
+          npm install -g @shopify/cli
+          npx --yes shopify theme push \
+            --store discount-mattress-4.myshopify.com \
+            --theme ${{ secrets.SHOPIFY_LIVE_THEME_ID }} \
+            --password ${{ secrets.SHOPIFY_CLI_PASSWORD }} \
+            --allow-live
