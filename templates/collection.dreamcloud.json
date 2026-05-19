@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "dc-banner": {
+      "type": "dreamcloud-collection-banner",
+      "settings": {}
+    },
+    "dc-tiered-grid": {
+      "type": "dreamcloud-tiered-grid",
+      "settings": {}
+    }
+  },
+  "order": [
+    "dc-banner",
+    "dc-tiered-grid"
+  ]
+}

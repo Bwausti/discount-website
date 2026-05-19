@@ -1,0 +1,76 @@
+{% comment %}
+  helix-product-card.liquid
+  Renders a single Helix product card with firmness badge, image, title, price
+  Expects: product (the Shopify product object)
+{% endcomment %}
+
+{% assign p = product %}
+{% unless p %}{% break %}{% endunless %}
+
+{% comment %} ── Firmness detection from tags ── {% endcomment %}
+{% assign firmness_map = 'Soft,Soft|Medium-soft,Medium Soft|Plush,Plush|Medium,Medium|Medium-firm,Medium Firm|Cushion Firm,Cushion Firm|Firm,Firm|Extra Firm,Extra Firm|Plus support,Plus Support' | split: '|' %}
+{% assign firmness_color_map = 'Soft:#8b5cf6|Plush:#8b5cf6|Medium-soft:#3b82f6|Medium:#22c55e|Medium-firm:#eab308|Cushion Firm:#eab308|Firm:#ef4444|Extra Firm:#dc2626|Plus support:#f97316' | split: '|' %}
+{% assign found_firmness = '' %}
+{% assign found_color = '#64748b' %}
+
+{% for tag in p.tags %}
+  {% assign t = tag | downcase | strip %}
+  {% for entry in firmness_map %}
+    {% assign parts = entry | split: ',' %}
+    {% assign key = parts[0] | downcase | strip %}
+    {% assign label = parts[1] %}
+    {% if t == key %}
+      {% assign found_firmness = label %}
+      {% for c in firmness_color_map %}
+        {% assign cparts = c | split: ':' %}
+        {% assign ckey = cparts[0] | downcase | strip %}
+        {% if ckey == key %}
+          {% assign found_color = cparts[1] %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+{% comment %} ── Tier subtitle ── {% endcomment %}
+{% assign handle = p.handle | downcase %}
+{% assign tier_label = 'Core' %}
+{% if handle contains 'luxe' %}{% assign tier_label = 'Luxe' %}{% endif %}
+{% if handle contains 'elite' %}{% assign tier_label = 'Elite' %}{% endif %}
+
+{% comment %} ── Price ── {% endcomment %}
+{% assign min_price = p.price_min | money %}
+{% assign max_price = p.price_max | money %}
+
+<a href="{{ p.url }}" class="htg-card">
+  <div class="htg-card__image">
+    {% if p.featured_image %}
+      <img
+        src="{{ p.featured_image | image_url: width: 400 }}"
+        srcset="{{ p.featured_image | image_url: width: 400 }} 1x, {{ p.featured_image | image_url: width: 800 }} 2x"
+        alt="{{ p.title }}"
+        loading="lazy"
+      >
+    {% else %}
+      <div style="padding:40px;color:#94a3b8;font-size:12px;font-weight:600;text-align:center;">No image</div>
+    {% endif %}
+    
+    {% if found_firmness != '' %}
+      <span class="htg-card__badge" style="background: {{ found_color }};">{{ found_firmness }}</span>
+    {% endif %}
+  </div>
+  
+  <div class="htg-card__body">
+    <p class="htg-card__title">{{ p.title }}</p>
+    {% if tier_label %}
+      <p class="htg-card__subtitle">{{ tier_label }} Collection</p>
+    {% endif %}
+    <div class="htg-card__price">
+      {% if min_price == max_price %}
+        {{ min_price }}
+      {% else %}
+        {{ min_price }} <small>–</small> {{ max_price }}
+      {% endif %}
+    </div>
+  </div>
+</a>

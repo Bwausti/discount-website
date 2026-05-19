@@ -1,0 +1,326 @@
+{% if closest.collection.handle != 'nectar' %}{% break %}{% endif %}
+<!-- Section: nectar-collection-banner -->
+<!-- Brand: Nectar | Classic / Premier / Premier Copper -->
+<style>
+  .nectar-section { font-family: 'Inter', 'Segoe UI', sans-serif; }
+  .nectar-hero {
+    position: relative; overflow: hidden;
+    background: #0b1a2d; min-height: 560px; display: flex; align-items: center;
+  }
+  .nectar-hero__bg {
+    position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%;
+    opacity: 0.40;
+  }
+  .nectar-hero::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to right, rgba(11,26,45,0.88) 0%, rgba(11,26,45,0.55) 55%, rgba(11,26,45,0.2) 100%);
+  }
+  .nectar-hero__content {
+    position: relative; z-index: 2; width: 100%;
+    padding: 60px 24px; max-width: 1300px; margin: 0 auto;
+    display: grid; gap: 32px;
+    grid-template-columns: 1fr 1.15fr; align-items: center;
+  }
+  @media (max-width: 860px) {
+    .nectar-hero__content { grid-template-columns: 1fr !important; padding: 40px 20px; }
+    .nectar-hero__right { display: none !important; }
+  }
+  .nectar-hero__left { max-width: 600px; }
+  .nectar-eyebrow {
+    display: inline-block; background: rgba(11,26,45,0.7); backdrop-filter: blur(8px); border: 1px solid rgba(46,196,182,0.4);
+    color: #2ec4b6; font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.22em;
+    padding: 6px 14px; border-radius: 4px; margin-bottom: 20px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .nectar-hero h1 {
+    font-size: clamp(36px, 5vw, 56px); font-weight: 900;
+    color: white; line-height: 0.95; letter-spacing: -0.02em;
+    margin: 0 0 12px 0;
+    text-shadow: 0 3px 16px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .nectar-hero__tagline {
+    font-size: 17px; font-weight: 700; color: #2ec4b6;
+    line-height: 1.4; margin: 0 0 12px 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .nectar-hero__desc {
+    font-size: 15px; color: rgba(255,255,255,0.92); line-height: 1.65;
+    margin: 0 0 20px 0; max-width: 500px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .nectar-hero__badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .nectar-badge {
+    background: rgba(0,0,0,0.55); color: white;
+    padding: 5px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    border: 1px solid rgba(255,255,255,0.25);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+  .nectar-hero__buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+  .nectar-btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #2ec4b6; color: white; padding: 13px 28px;
+    border-radius: 6px; text-decoration: none; font-weight: 800; font-size: 14px;
+    transition: background 0.2s;
+  }
+  .nectar-btn-primary:hover { background: #3dd9cb; }
+  .nectar-btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px); color: white; padding: 13px 24px;
+    border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .nectar-btn-secondary:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.6); }
+  .nectar-hero__right {
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+    border-radius: 12px; padding: 24px; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .nectar-hero__showroom-note { font-size: 14px; font-weight: 700; color: #0b1a2d; line-height: 1.5; margin-bottom: 16px; }
+  .nectar-hero__models { display: flex; flex-direction: column; gap: 8px; }
+  .nectar-hero__model-row {
+    display: flex; align-items: center; gap: 10px;
+    background: #f4f2ea; border-radius: 8px; padding: 10px 14px;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .nectar-hero__model-row:hover { background: #eee9dc; }
+  .nectar-hero__model-img { flex-shrink: 0; }
+  .nectar-hero__model-info { flex: 1; min-width: 0; }
+  .nectar-hero__model-name { font-size: 11px; font-weight: 800; color: #2ec4b6; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+  .nectar-hero__model-detail { font-size: 13px; font-weight: 700; color: #0b1a2d; }
+  .nectar-hero__model-price { font-size: 14px; font-weight: 900; color: #0b1a2d; white-space: nowrap; }
+  
+  /* Trust bar */
+  .nectar-trust { background: white; border-bottom: 1px solid #e2e8f0; }
+  .nectar-trust__grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .nectar-trust__item { padding: 16px 20px; text-align: center; border-right: 1px solid #e2e8f0; }
+  .nectar-trust__item:last-child { border-right: none; }
+  .nectar-trust__label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: #64748b; margin-bottom: 4px; }
+  .nectar-trust__value { font-size: 20px; font-weight: 900; color: #0b1a2d; }
+  
+  /* Highlights */
+  .nectar-highlights { background: #f7f6f1; padding: 20px 24px; border-bottom: 1px solid #e2e8f0; }
+  .nectar-highlights__inner { max-width: 1300px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px; }
+  .nectar-highlight-pill { background: white; border: 1px solid #e2e8f0; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; color: #334155; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  
+  /* Tier section */
+  .nectar-tier-section { background: #f7f6f1; padding: 56px 24px; }
+  .nectar-tier-header { max-width: 1300px; margin: 0 auto 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: end; }
+  @media (max-width: 860px) { .nectar-tier-header { grid-template-columns: 1fr !important; } }
+  .nectar-tier-header__right { background: white; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; }
+  .nectar-tier-header__right p { font-size: 14px; font-weight: 600; color: #475569; line-height: 1.65; margin: 0; }
+  .section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; color: #2ec4b6; margin-bottom: 8px; }
+  .nectar-tier-header h2 { font-size: clamp(28px, 3.5vw, 42px); font-weight: 900; color: #0b1a2d; line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+  .nectar-tier-header p { font-size: 16px; color: #64748b; line-height: 1.6; margin-top: 12px; }
+  .nectar-tier-cards { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .nectar-tier-cards { grid-template-columns: 1fr !important; } }
+  .nectar-tier-card {
+    background: white; border: 2px solid #e2e8f0; border-radius: 12px;
+    overflow: hidden; text-align: left;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    display: block; text-decoration: none;
+  }
+  .nectar-tier-card:hover { border-color: #2ec4b6; transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
+  .nectar-tier-card.active { border-color: #2ec4b6; box-shadow: 0 0 0 4px rgba(46,196,182,0.15); }
+  .nectar-tier-card__img { position: relative; aspect-ratio: 16/10; background: #f1f3f6; overflow: hidden; }
+  .nectar-tier-card__img img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+  .nectar-tier-card__body { padding: 20px; }
+  .nectar-tier-card__name { font-size: 22px; font-weight: 900; color: #0b1a2d; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .nectar-tier-card__price { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #2ec4b6; margin-bottom: 10px; }
+  .nectar-tier-card__summary { font-size: 13px; color: #475569; line-height: 1.55; margin-bottom: 12px; }
+  .nectar-tier-card__best-for { background: #f7f6f1; padding: 8px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; color: #334155; line-height: 1.5; }
+  .nectar-tier-card__selector { display: inline-block; padding: 8px 16px; border-radius: 6px; font-size: 12px; font-weight: 800; margin-top: 12px; background: #0b1a2d; color: white; transition: background 0.2s; }
+  .nectar-tier-card:hover .nectar-tier-card__selector { background: #2ec4b6; }
+  
+  /* Brand story */
+  .nectar-story { background: white; padding: 64px 24px; border-top: 1px solid #e2e8f0; }
+  .nectar-story__inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; align-items: center; }
+  @media (max-width: 860px) { .nectar-story__inner { grid-template-columns: 1fr !important; } }
+  .nectar-story__img { aspect-ratio: 16/10; border-radius: 12px; overflow: hidden; background: #f1f3f6; }
+  .nectar-story__img img { width: 100%; height: 100%; object-fit: cover; }
+  .nectar-story__columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+  @media (max-width: 640px) { .nectar-story__columns { grid-template-columns: 1fr !important; } }
+  .nectar-story__col { background: #f7f6f1; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; }
+  .nectar-story__col h4 { font-size: 13px; font-weight: 800; color: #0b1a2d; margin: 0 0 6px 0; }
+  .nectar-story__col p { font-size: 12px; color: #64748b; line-height: 1.55; margin: 0; }
+  .nectar-story__content h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: #0b1a2d; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px 0; }
+  .nectar-story__content p { font-size: 15px; color: #475569; line-height: 1.7; margin-bottom: 12px; }
+</style>
+
+{% assign nectar_products = collections['nectar'].products %}
+
+<div class="nectar-section">
+
+  <!-- HERO -->
+  <section class="nectar-hero">
+    <img
+      src="{{ 'nectar-classic-card.jpg' | asset_url }}"
+      alt="Nectar"
+      class="nectar-hero__bg"
+      loading="eager"
+    >
+    <div class="nectar-hero__content">
+      <div class="nectar-hero__left">
+        <span class="nectar-eyebrow">Available in Bowling Green, KY</span>
+        <h1>Nectar</h1>
+        <p class="nectar-hero__tagline">America's most awarded mattress.</p>
+        <p class="nectar-hero__desc">
+          Multi-layer gel memory foam, pressure relief, motion isolation. Eight models across four tiers — Classic, Premier, Luxe, and Ultra — each available in memory foam or hybrid.
+        </p>
+        <div class="nectar-hero__badges">
+          <span class="nectar-badge">8 models</span>
+          <span class="nectar-badge">Forever warranty</span>
+          <span class="nectar-badge">Made in USA</span>
+        </div>
+        <div class="nectar-hero__buttons">
+          <a href="#nectar-models" class="nectar-btn-primary">Compare models →</a>
+        </div>
+      </div>
+      <div class="nectar-hero__right">
+        <p class="nectar-hero__showroom-note">Which Nectar fits you?</p>
+        <div class="nectar-hero__models">
+          {% assign nectar_handles = 'nectar-classic-hybrid,nectar-premier-hybrid,nectar-luxe-hybrid,nectar-ultra-hybrid' | split: ',' %}
+          {% assign nectar_labels = 'CLASSIC|PREMIER|LUXE|ULTRA' | split: '|' %}
+          {% assign nectar_details = '12" · Entry-level|13" · Best seller|14" · Extra cooling|15" · Premium' | split: '|' %}
+          {% for handle in nectar_handles %}
+            {% assign prod = nectar_products | where: 'handle', handle | first %}
+            <a href="/products/{{ handle }}" class="nectar-hero__model-row">
+              <div class="nectar-hero__model-img">
+                {% if prod.images.size > 0 %}
+                  {% assign main_img = prod.images[1] | default: prod.images[0] %}
+                  <img src="{{ main_img | image_url: width: 200 }}" alt="" style="width:100px;height:75px;object-fit:cover;border-radius:6px;display:block;">
+                {% endif %}
+              </div>
+              <div class="nectar-hero__model-info">
+                <div class="nectar-hero__model-name">{{ nectar_labels[forloop.index0] }}</div>
+              <div class="nectar-hero__model-detail">{{ nectar_details[forloop.index0] }}</div>
+              </div>
+              <span class="nectar-hero__model-price">{% if prod %}From {{ prod.price_min | money_without_trailing_zeros }}{% endif %}</span>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="nectar-trust">
+    <div class="nectar-trust__grid">
+      <div class="nectar-trust__item">
+        <p class="nectar-trust__label">Models</p>
+        <p class="nectar-trust__value">8</p>
+      </div>
+      <div class="nectar-trust__item">
+        <p class="nectar-trust__label">Warranty</p>
+        <p class="nectar-trust__value">Forever</p>
+      </div>
+      <div class="nectar-trust__item">
+        <p class="nectar-trust__label">Price match</p>
+        <p class="nectar-trust__value">Guaranteed</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIGHLIGHTS -->
+  <div class="nectar-highlights">
+    <div class="nectar-highlights__inner">
+      <span class="nectar-highlight-pill">🛏️ 8 models</span>
+      <span class="nectar-highlight-pill">📏 12" to 14" profiles</span>
+      <span class="nectar-highlight-pill">❄️ Gel memory foam</span>
+      <span class="nectar-highlight-pill">🔇 Motion isolation</span>
+      <span class="nectar-highlight-pill">🏠 Made in USA</span>
+    </div>
+  </div>
+
+  <!-- TIER CARDS -->
+  <section id="nectar-models" class="nectar-tier-section">
+    <div class="nectar-tier-header">
+      <div>
+        <p class="section-label">The Nectar lineup</p>
+        <h2>Same comfort story. Three price points.</h2>
+        <p>All three share the same medium-firm gel memory foam foundation. Your choice is about budget — Classic at 12", Premier at 13" with cooling cover, or Premier Copper at 14" with phase-change cooling for hot sleepers.</p>
+      </div>
+      <div class="nectar-tier-header__right">
+        <p><strong>Same medium-firm feel, three budgets.</strong> Every Nectar is built with multi-layer gel memory foam for pressure relief. Classic: 12" entry-level. Premier: 13" with cooling cover, best seller. Premier Copper: 14" with phase-change material for active cooling.</p>
+      </div>
+    </div>
+
+    <div class="nectar-tier-cards">
+      {% assign nectar_tiers = 'nectar-classic-hybrid,nectar-premier-hybrid,nectar-luxe-hybrid' | split: ',' %}
+      {% assign nectar_tier_names = 'Classic,Premier,Premier Copper' | split: ',' %}
+      {% assign nectar_tier_specs = '12" memory foam · Medium 5/10|13" memory foam · Medium 5/10|14" memory foam · Medium 5/10' | split: '|' %}
+      {% assign nectar_tier_blurbs = 'The classic Nectar at entry pricing. Gel memory foam, motion isolation, breathable cover.|Adds height and a cooling cover for a plusher, cooler sleep surface.|Premium phase-change material for active cooling. The coolest Nectar you can buy.' | split: '|' %}
+      {% assign nectar_best_for = '✅ Budget-conscious · First Nectar · Guest rooms|✅ Best balance of price & comfort · Most popular|✅ Hot sleepers · Premium cooling · Max comfort' | split: '|' %}
+      
+      {% for handle in nectar_tiers %}
+        {% assign prod = nectar_products | where: 'handle', handle | first %}
+
+        <a href="/products/{{ handle }}" class="nectar-tier-card{% if forloop.index0 == 1 %} active{% endif %}">
+          <div class="nectar-tier-card__img">
+            {% if prod.images.size > 0 %}
+              {% assign main_img = prod.images[1] | default: prod.images[0] %}
+              <img src="{{ main_img | image_url: width: 500 }}" alt="{{ nectar_tier_names[forloop.index0] }}" loading="lazy">
+            {% endif %}
+            {% if forloop.index0 == 1 %}<span style="position:absolute;top:12px;right:12px;background:#2ec4b6;color:white;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;padding:4px 10px;border-radius:4px;">Best seller</span>{% endif %}
+          </div>
+          <div class="nectar-tier-card__body">
+            <div class="nectar-tier-card__name">{{ nectar_tier_names[forloop.index0] }}</div>
+            <div class="nectar-tier-card__price">From {{ prod.price_min | money }}</div>
+            <p class="nectar-tier-card__summary">{{ nectar_tier_specs[forloop.index0] }} — {{ nectar_tier_blurbs[forloop.index0] }}</p>
+            <div class="nectar-tier-card__best-for">{{ nectar_best_for[forloop.index0] }}</div>
+            <span class="nectar-tier-card__selector">Shop {{ nectar_tier_names[forloop.index0] }} →</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- BRAND STORY -->
+  <section class="nectar-story">
+    <div class="nectar-story__inner">
+      <div class="nectar-story__img">
+        <img src="{{ 'nectar-classic-card.jpg' | asset_url }}" alt="Nectar" loading="lazy">
+      </div>
+      <div class="nectar-story__content">
+        <p class="section-label">Why Nectar</p>
+        <h2>The most awarded mattress in America.</h2>
+        <p>Nectar built its reputation on one thing — making memory foam beds that work. Multi-layer gel memory foam, motion-isolating support foam, and a breathable cover in every model.</p>
+        <p>In the showroom, the choice is straightforward: Classic for entry-level, Premier for the best-selling upgrade, Premier Copper for maximum cooling. All three share the same medium-firm feel, so your decision comes down to height and budget.</p>
+        <div class="nectar-story__columns">
+          <div class="nectar-story__col">
+            <h4>🛏️ Classic</h4>
+            <p>12" all-foam. Entry-level Nectar with full brand quality.</p>
+          </div>
+          <div class="nectar-story__col">
+            <h4>⭐ Premier</h4>
+            <p>13" with cooling cover. The most popular — best blend of price and comfort.</p>
+          </div>
+          <div class="nectar-story__col">
+            <h4>🔷 Premier Copper</h4>
+            <p>14" with phase-change cooling. Maximum temperature regulation for hot sleepers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Nectar Collection Banner",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "tier_cta",
+      "label": "Tier CTA text",
+      "default": "Shop all models"
+    }
+  ]
+}
+{% endschema %}

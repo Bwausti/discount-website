@@ -1,0 +1,6 @@
+# Shopify App Configuration
+client_id = "4110f9c3c35b8a476997fa36a3a1b624"
+name = "Lucy"
+application_url = "https://discount-mattress-4.myshopify.com"
+redirect_urls = ["https://discount-mattress-4.myshopify.com/admin"]
+access_scopes = ["write_products", "write_themes", "write_online_store_pages", "write_content", "write_files", "write_customers", "write_orders", "read_orders"]

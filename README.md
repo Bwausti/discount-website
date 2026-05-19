@@ -1,52 +1,56 @@
-# Discount Mattress Website
+# Discount Mattress — Shopify Theme
 
-Showroom-first website for Discount Mattress in Bowling Green, KY. The site presents brand-native mattress lineups, visible prices, local calls to action, financing guidance, and showroom locations. It is not a Shopify checkout launch.
+Horizon Fresh theme for **discount-mattress-4.myshopify.com** — a physical mattress showroom in Bowling Green, KY.
 
-## Getting Started
-
-Install dependencies and run the development server:
+## Quick Start
 
 ```bash
-npm install
-npm run dev
+# Install Shopify CLI (if not installed)
+npm install -g @shopify/cli
+
+# Preview locally (hot-reloads, connected to dev theme)
+shopify theme dev
+
+# Open in browser
+open http://localhost:9292
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development Workflow
 
-## Environment
+1. **Edit files** — Liquid in `sections/`, `snippets/`, `templates/`, `layout/`
+2. **Preview** — `shopify theme dev` serves on localhost:9292 against the Development theme
+3. **Push live** — `shopify theme push` deploys to the live Horizon Fresh theme
 
-Copy `.env.example` to `.env.local` for local development:
+Or just push to `master` — the GitHub Action auto-deploys.
+
+## Project Structure
+
+```
+├── assets/         # CSS, JS, images (CDN-backed)
+├── blocks/         # Reusable block components
+├── config/         # Theme settings (settings_data, settings_schema)
+├── layout/         # Theme layout (theme.liquid, password.liquid)
+├── locales/        # Translations (multi-language)
+├── sections/       # Liquid section files (brand banners, add-ons, etc.)
+├── snippets/       # Reusable Liquid snippets
+├── templates/      # Page, collection, product, blog templates
+├── data/           # Catalog reference data
+├── docs/           # Brand assets, business rules, checklists
+└── .github/        # CI/CD workflows
+```
+
+## Product Updates
+
+Product data is managed via GraphQL scripts:
 
 ```bash
-cp .env.example .env.local
+node ~/clawd/scripts/shopify-skill/sync-products.mjs --send
+node ~/clawd/scripts/shopify-skill/migrate-catalog.mjs --send --images
 ```
 
-Set:
+## Important Notes
 
-- `NEXT_PUBLIC_GTM_ID` or `NEXT_PUBLIC_GA_ID`
-- `ADMIN_PASSWORD`
-
-If both Google IDs are set, Google Tag Manager is used.
-
-## Admin
-
-Visit `/admin` to edit price, promo, badge, visibility, and availability overrides.
-
-Current persistence is JSON-backed at `data/catalog-overrides.json`. With the current static page setup, production edits become visible after rebuild/redeploy. Move this to Supabase or another database before relying on instant live production updates.
-
-## Useful Commands
-
-```bash
-npm run dev
-npm run lint
-npm run build
-npm run catalog:export
-```
-
-## Key Docs
-
-- `PRD.md`
-- `docs/site-completion-todo.md`
-- `docs/catalog-business-rules.md`
-- `docs/catalog-audit.md`
-- `docs/google-tracking.md`
+- **Asset CDN caching:** 1-year cache. Upload new filenames for CSS changes; never overwrite existing assets.
+- **No overwriting:** Do not use `custom-liquid` in template JSON for complex logic — create proper `.liquid` section files.
+- **No sleep trial language:** This is a physical showroom — no trial periods or comfort exchange mentions.
+- **Prices: The theme renders product prices from Shopify. No hardcoding.**

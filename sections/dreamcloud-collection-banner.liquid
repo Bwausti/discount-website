@@ -1,0 +1,302 @@
+{% if collection.handle != 'dreamcloud' %}{% break %}{% endif %}
+<!-- Section: dreamcloud-collection-banner -->
+<!-- Brand: DreamCloud | Classic / Premier / Luxe / Ultra -->
+<style>
+  .dreamcloud-section { font-family: 'Inter', 'Segoe UI', sans-serif; }
+  .dc-hero {
+    position: relative; overflow: hidden;
+    background: #0f1a2e; min-height: 520px; display: flex; align-items: center;
+  }
+  .dc-hero__bg {
+    position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%;
+    opacity: 0.35;
+  }
+  .dc-hero::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to right, rgba(15,26,46,0.88) 0%, rgba(15,26,46,0.55) 55%, rgba(15,26,46,0.2) 100%);
+  }
+  .dc-hero__content {
+    position: relative; z-index: 2; width: 100%;
+    padding: 60px 24px; max-width: 1300px; margin: 0 auto;
+    display: grid; gap: 32px;
+    grid-template-columns: 1fr 1.15fr; align-items: center;
+  }
+  @media (max-width: 860px) {
+    .dc-hero__content { grid-template-columns: 1fr !important; padding: 40px 20px; }
+    .dc-hero__right { display: none !important; }
+  }
+  .dc-hero__left { max-width: 600px; }
+  .dc-eyebrow {
+    display: inline-block; background: rgba(15,26,46,0.7); backdrop-filter: blur(8px); border: 1px solid rgba(212,175,55,0.4);
+    color: #d4af37; font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.22em;
+    padding: 6px 14px; border-radius: 4px; margin-bottom: 20px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .dc-hero h1 {
+    font-size: clamp(36px, 5vw, 56px); font-weight: 900;
+    color: white; line-height: 0.95; letter-spacing: -0.02em;
+    margin: 0 0 12px 0;
+    text-shadow: 0 3px 16px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .dc-hero__tagline {
+    font-size: 17px; font-weight: 700; color: #d4af37;
+    line-height: 1.4; margin: 0 0 12px 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .dc-hero__desc {
+    font-size: 15px; color: rgba(255,255,255,0.92); line-height: 1.65;
+    margin: 0 0 20px 0; max-width: 500px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .dc-hero__badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .dc-badge {
+    background: rgba(0,0,0,0.55); color: white;
+    padding: 5px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    border: 1px solid rgba(255,255,255,0.25);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+  .dc-hero__buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+  .dc-btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #d4af37; color: #0f1a2e; padding: 13px 28px;
+    border-radius: 6px; text-decoration: none; font-weight: 800; font-size: 14px;
+    transition: background 0.2s;
+  }
+  .dc-btn-primary:hover { background: #e0c25e; }
+  .dc-btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px); color: white; padding: 13px 24px;
+    border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .dc-btn-secondary:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.6); }
+  .dc-hero__right {
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+    border-radius: 12px; padding: 24px; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .dc-hero__showroom-note { font-size: 14px; font-weight: 700; color: #0f1a2e; line-height: 1.5; margin-bottom: 16px; }
+  .dc-hero__models { display: flex; flex-direction: column; gap: 8px; }
+  .dc-hero__model-row {
+    display: flex; align-items: center; gap: 10px;
+    background: #f4f2ea; border-radius: 8px; padding: 10px 14px;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .dc-hero__model-row:hover { background: #eee9dc; }
+  .dc-hero__model-img { flex-shrink: 0; }
+  .dc-hero__model-info { flex: 1; min-width: 0; }
+  .dc-hero__model-name { font-size: 11px; font-weight: 800; color: #d4af37; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+  .dc-hero__model-detail { font-size: 13px; font-weight: 700; color: #0f1a2e; }
+  .dc-hero__model-price { font-size: 14px; font-weight: 900; color: #0f1a2e; white-space: nowrap; }
+  
+  /* Trust bar */
+  .dc-trust { background: white; border-bottom: 1px solid #e2e8f0; }
+  .dc-trust__grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+  .dc-trust__item { padding: 16px 20px; text-align: center; border-right: 1px solid #e2e8f0; }
+  .dc-trust__item:last-child { border-right: none; }
+  .dc-trust__label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: #64748b; margin-bottom: 4px; }
+  .dc-trust__value { font-size: 18px; font-weight: 900; color: #0f1a2e; }
+  
+  /* Tier comparison */
+  .dc-tier-section { background: #f7f6f1; padding: 56px 24px; }
+  .dc-tier-header { max-width: 1300px; margin: 0 auto 32px; text-align: center; }
+  .dc-tier-header h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: #0f1a2e; letter-spacing: -0.02em; margin: 0 0 8px 0; }
+  .dc-tier-header p { font-size: 16px; color: #64748b; line-height: 1.6; margin: 0; max-width: 700px; margin-left: auto; margin-right: auto; }
+  
+  .dc-tier-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .dc-tier-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+  @media (max-width: 480px) { .dc-tier-grid { grid-template-columns: 1fr !important; } }
+  
+  .dc-tier-card {
+    background: white; border: 2px solid #e2e8f0; border-radius: 12px;
+    overflow: hidden; transition: border-color 0.2s, transform 0.2s;
+    display: block; text-decoration: none;
+  }
+  .dc-tier-card:hover { border-color: #d4af37; transform: translateY(-3px); }
+  .dc-tier-card.active { border-color: #d4af37; }
+  .dc-tier-card__img { position: relative; aspect-ratio: 4/3; background: #f1f3f6; overflow: hidden; }
+  .dc-tier-card__img img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+  .dc-tier-card__body { padding: 16px; }
+  .dc-tier-card__name { font-size: 18px; font-weight: 900; color: #0f1a2e; margin-bottom: 2px; }
+  .dc-tier-card__subtitle { font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .dc-tier-card__specs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
+  .dc-tier-card__spec { background: #f7f6f1; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; color: #475569; }
+  .dc-tier-card__price { font-size: 14px; font-weight: 800; color: #d4af37; margin-bottom: 4px; }
+  .dc-tier-card__desc { font-size: 12px; color: #475569; line-height: 1.5; margin-bottom: 8px; }
+  .dc-tier-card__cta { font-size: 12px; font-weight: 800; color: #0f1a2e; display: inline-block; transition: color 0.2s; }
+  .dc-tier-card:hover .dc-tier-card__cta { color: #d4af37; }
+  
+  /* Brand story - minimal */
+  .dc-story { background: white; padding: 48px 24px; border-top: 1px solid #e2e8f0; }
+  .dc-story__inner { max-width: 1300px; margin: 0 auto; display: grid; gap: 32px; grid-template-columns: 1fr 1fr; align-items: center; }
+  @media (max-width: 860px) { .dc-story__inner { grid-template-columns: 1fr !important; } }
+  .dc-story__img { aspect-ratio: 16/10; border-radius: 12px; overflow: hidden; }
+  .dc-story__img img { width: 100%; height: 100%; object-fit: cover; }
+  .dc-story__content h2 { font-size: clamp(24px, 2.5vw, 34px); font-weight: 900; color: #0f1a2e; letter-spacing: -0.02em; margin: 0 0 12px 0; }
+  .dc-story__content p { font-size: 15px; color: #475569; line-height: 1.7; margin-bottom: 12px; }
+  .dc-story__badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .dc-story__badge { background: #f7f6f1; border: 1px solid #e2e8f0; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; color: #334155; }
+</style>
+
+{% assign dc_products = collections['dreamcloud'].products %}
+
+<div class="dreamcloud-section">
+
+  <!-- HERO -->
+  <section class="dc-hero">
+    <img
+      src="{{ 'dm-dreamcloud-bg.webp' | asset_url }}"
+      alt="DreamCloud"
+      class="dc-hero__bg"
+      loading="eager"
+    >
+    <div class="dc-hero__content">
+      <div class="dc-hero__left">
+        <span class="dc-eyebrow">Available in Bowling Green, KY</span>
+        <h1>DreamCloud</h1>
+        <p class="dc-hero__tagline">Luxury hybrid. Uncompromised comfort.</p>
+        <p class="dc-hero__desc">
+          Quilted euro top over pocketed coils — that's the DreamCloud formula. Four tiers from Classic to Ultra, each built around pressure relief and lasting support.
+        </p>
+        <div class="dc-hero__badges">
+          <span class="dc-badge">Forever warranty</span>
+          <span class="dc-badge">Made in USA</span>
+        </div>
+        <div class="dc-hero__buttons">
+          <a href="#dc-models" class="dc-btn-primary">Compare models →</a>
+          <a href="/collections/dreamcloud" class="dc-btn-secondary">Show all</a>
+        </div>
+      </div>
+      <div class="dc-hero__right">
+        <p class="dc-hero__showroom-note">Four tiers. Which fits you?</p>
+        <div class="dc-hero__models">
+          {% assign dc_tiers = 'classic-hybrid,premier-hybrid,luxe-hybrid,ultra-hybrid' | split: ',' %}
+          {% assign dc_tier_labels = 'CLASSIC|PREMIER|LUXE|ULTRA' | split: '|' %}
+
+          {% assign dc_tier_details = '10" / Entry-level|13" / Best seller|14" / Extra cooling|16" / Premium' | split: '|' %}
+          {% for handle_suffix in dc_tiers %}
+            {% assign handle = 'dreamcloud-' | append: handle_suffix %}
+            {% assign prod = dc_products | where: 'handle', handle | first %}
+            <a href="/products/{{ handle }}" class="dc-hero__model-row">
+              <div class="dc-hero__model-img">
+                {% if prod and prod.featured_image %}
+                  <img src="{{ prod.featured_image | image_url: width: 200 }}" alt="{{ dc_tier_labels[forloop.index0] }}" loading="lazy" style="width:100px;height:75px;object-fit:cover;border-radius:6px;display:block;">
+                {% endif %}
+              </div>
+              <div class="dc-hero__model-info">
+                <div class="dc-hero__model-name">{{ dc_tier_labels[forloop.index0] }}</div>
+                <div class="dc-hero__model-detail">{{ dc_tier_details[forloop.index0] }}</div>
+              </div>
+              <span class="dc-hero__model-price">{% if prod %}From {{ prod.price_min | money_without_trailing_zeros }}{% endif %}</span>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR - DreamCloud style -->
+  <div class="dc-trust">
+    <div class="dc-trust__grid">
+      <div class="dc-trust__item">
+        <p class="dc-trust__label">Low price guarantee</p>
+        <p class="dc-trust__value">Nationwide</p>
+      </div>
+      <div class="dc-trust__item">
+        <p class="dc-trust__label">Try before you buy</p>
+        <p class="dc-trust__value">In store</p>
+      </div>
+      <div class="dc-trust__item">
+        <p class="dc-trust__label">Warranty</p>
+        <p class="dc-trust__value">Forever</p>
+      </div>
+      <div class="dc-trust__item">
+        <p class="dc-trust__label">Construction</p>
+        <p class="dc-trust__value">Hybrid</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIER COMPARISON -->
+  <section id="dc-models" class="dc-tier-section">
+    <div class="dc-tier-header">
+      <h2>From Classic to Ultra. Every tier, one standard.</h2>
+      <p>All four share the same hybrid DNA — quilted euro top, pocketed coils, gel memory foam. Your choice is about profile height, cooling, and budget.</p>
+    </div>
+
+    <div class="dc-tier-grid">
+      {% assign dc_tiers = 'dreamcloud-classic-hybrid,dreamcloud-premier-hybrid,dreamcloud-luxe-hybrid,dreamcloud-ultra-hybrid' | split: ',' %}
+      {% assign dc_names = 'Classic, Premier, Luxe, Ultra' | split: ',' %}
+
+      {% assign dc_specs = '12" hybrid,13" hybrid,14" hybrid,16" hybrid' | split: ',' %}
+      {% assign dc_spec2 = 'Entry-level,Best seller,Extra cooling,Premium luxury' | split: ',' %}
+      {% assign dc_best = '✅ Budget-friendly · Great starter bed,✅ Balanced support · Most popular,✅ Hot sleepers · Extra cooling layers,✅ Maximum luxury · Deep pressure relief' | split: ',' %}
+      
+      {% for handle in dc_tiers %}
+        {% assign prod = dc_products | where: 'handle', handle | first %}
+        <a href="/products/{{ handle }}" class="dc-tier-card{% if forloop.index0 == 1 %} active{% endif %}">
+          <div class="dc-tier-card__img">
+            {% if prod and prod.featured_image %}
+              <img src="{{ prod.featured_image | image_url: width: 500 }}" alt="{{ dc_names[forloop.index0] }}" loading="lazy">
+            {% endif %}
+            {% if forloop.index0 == 1 %}
+              <span style="position:absolute;top:10px;right:10px;background:#d4af37;color:#0f1a2e;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;padding:4px 10px;border-radius:4px;">Best seller</span>
+            {% endif %}
+          </div>
+          <div class="dc-tier-card__body">
+            <div class="dc-tier-card__name">{{ dc_names[forloop.index0] }}</div>
+            <div class="dc-tier-card__subtitle">{{ dc_spec2[forloop.index0] }}</div>
+            <div class="dc-tier-card__specs">
+              <span class="dc-tier-card__spec">{{ dc_specs[forloop.index0] }}</span>
+              <span class="dc-tier-card__spec">Hybrid coils</span>
+              <span class="dc-tier-card__spec">Quilted euro top</span>
+            </div>
+            <div class="dc-tier-card__price">From {{ prod.price_min | money }}</div>
+            <div class="dc-tier-card__desc">{{ dc_best[forloop.index0] }}</div>
+            <span class="dc-tier-card__cta">Shop {{ dc_names[forloop.index0] }} →</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- BRAND STORY -->
+  <section class="dc-story">
+    <div class="dc-story__inner">
+      <div class="dc-story__img">
+        <img src="{{ 'dm-dreamcloud-bg.webp' | asset_url }}" alt="DreamCloud" loading="lazy">
+      </div>
+      <div class="dc-story__content">
+        <p class="section-label" style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.22em;color:#d4af37;margin-bottom:8px;">Why DreamCloud</p>
+        <h2>America's #1 hybrid luxury mattress.</h2>
+        <p>DreamCloud's formula is simple — quilted euro top, pocketed coils, gel memory foam. Every model is built to the same standard: pressure relief that lasts, wrapped in luxury construction at an honest price.</p>
+        <p>In our Bowling Green showroom, you can compare all four tiers side by side. All-foam versions are also available at every tier if you prefer no coils.</p>
+        <div class="dc-story__badges">
+          <span class="dc-story__badge">Forever Warranty</span>
+          <span class="dc-story__badge">Made in USA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Dreamcloud Banner",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "tier_cta",
+      "label": "Tier CTA text",
+      "default": "Shop models"
+    }
+  ]
+}
+{% endschema %}

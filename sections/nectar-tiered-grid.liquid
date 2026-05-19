@@ -1,0 +1,201 @@
+{% comment %}
+  nectar-tiered-grid.liquid
+  Custom Nectar product grid — Memory Foam and Hybrid collections
+  Uses image index 1 (lifestyle shot) not image 0 (cutaway)
+{% endcomment %}
+
+<style>
+  .neg-section {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+  .neg-tier {
+    margin-bottom: 48px;
+  }
+  .neg-tier:last-child { margin-bottom: 0; }
+  
+  .neg-tier__header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .neg-tier__name {
+    font-size: 22px;
+    font-weight: 900;
+    color: #0b1a2d;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .neg-tier__count {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .neg-tier__price-from {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+  }
+  .neg-tier__price-from strong { color: #2ec4b6; font-size: 14px; }
+
+  .neg-grid-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+    padding-bottom: 8px;
+  }
+  .neg-grid-wrapper::-webkit-scrollbar { height: 6px; }
+  .neg-grid-wrapper::-webkit-scrollbar-track { background: transparent; }
+  .neg-grid-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  .neg-grid {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    padding: 4px 2px;
+  }
+  .neg-card {
+    width: 270px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .neg-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border-color: #2ec4b6;
+  }
+  .neg-card__image {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: #f8f9fb;
+    overflow: hidden;
+  }
+  .neg-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+  }
+  .neg-card__badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: white;
+  }
+  .neg-card__body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .neg-card__title { font-size: 15px; font-weight: 800; color: #0b1a2d; margin: 0; line-height: 1.3; }
+  .neg-card__subtitle { font-size: 11px; font-weight: 600; color: #64748b; margin: 0; }
+  .neg-card__price { font-size: 18px; font-weight: 900; color: #0b1a2d; margin-top: auto; padding-top: 8px; }
+  @media (max-width: 480px) { .neg-card { width: 240px; } }
+</style>
+
+{% assign all_products = collections['nectar'].products %}
+
+<div class="neg-section">
+
+  {% comment %} ── MEMORY FOAM TIER ── {% endcomment %}
+  {% assign foam_handles = 'nectar-classic-memory-foam,nectar-premier-memory-foam,nectar-luxe-memory-foam,nectar-ultra-memory-foam' | split: ',' %}
+  {% assign foam_names = 'Classic Memory Foam,Premier Memory Foam,Luxe Memory Foam,Ultra Memory Foam' | split: ',' %}
+  {% assign foam_specs = '12" · Entry-level|13" · Best seller|14" · Extra cooling|15" · Premium' | split: '|' %}
+  
+  <div class="neg-tier">
+    <div class="neg-tier__header">
+      <h2 class="neg-tier__name">Memory Foam</h2>
+      <span class="neg-tier__count">4 models</span>
+      <span class="neg-tier__price-from">From <strong>$900</strong></span>
+    </div>
+    <div class="neg-grid-wrapper"><div class="neg-grid">
+      {% for handle in foam_handles %}
+        {% assign prod = all_products | where: 'handle', handle | first %}
+        {% if prod %}
+          <a href="/products/{{ handle }}" class="neg-card">
+            <div class="neg-card__image">
+              {% assign images = prod.images %}
+              {% if images.size > 1 %}
+                <img src="{{ images[1] | image_url: width: 500 }}" alt="{{ foam_names[forloop.index0] }}" loading="lazy">
+              {% elsif images.size > 0 %}
+                <img src="{{ images[0] | image_url: width: 500 }}" alt="{{ foam_names[forloop.index0] }}" loading="lazy">
+              {% endif %}
+              <span class="neg-card__badge" style="background:#0b1a2d;color:white;">Foam</span>
+            </div>
+            <div class="neg-card__body">
+              <p class="neg-card__title">{{ foam_names[forloop.index0] }}</p>
+              <p class="neg-card__subtitle">{{ foam_specs[forloop.index0] }}</p>
+              <div class="neg-card__price">From {{ prod.price_min | money_without_trailing_zeros }}</div>
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div></div>
+  </div>
+
+  {% comment %} ── HYBRID TIER ── {% endcomment %}
+  {% assign hybrid_handles = 'nectar-classic-hybrid,nectar-premier-hybrid,nectar-luxe-hybrid,nectar-ultra-hybrid' | split: ',' %}
+  {% assign hybrid_names = 'Classic Hybrid,Premier Hybrid,Luxe Hybrid,Ultra Hybrid' | split: ',' %}
+  {% assign hybrid_specs = '12" · Entry-level|13" · Best seller|14" · Extra cooling|15" · Premium' | split: '|' %}
+  
+  <div class="neg-tier">
+    <div class="neg-tier__header">
+      <h2 class="neg-tier__name">Hybrid</h2>
+      <span class="neg-tier__count">4 models</span>
+      <span class="neg-tier__price-from">From <strong>$925</strong></span>
+    </div>
+    <div class="neg-grid-wrapper"><div class="neg-grid">
+      {% for handle in hybrid_handles %}
+        {% assign prod = all_products | where: 'handle', handle | first %}
+        {% if prod %}
+          <a href="/products/{{ handle }}" class="neg-card">
+            <div class="neg-card__image">
+              {% assign images = prod.images %}
+              {% if images.size > 1 %}
+                <img src="{{ images[1] | image_url: width: 500 }}" alt="{{ hybrid_names[forloop.index0] }}" loading="lazy">
+              {% elsif images.size > 0 %}
+                <img src="{{ images[0] | image_url: width: 500 }}" alt="{{ hybrid_names[forloop.index0] }}" loading="lazy">
+              {% endif %}
+              <span class="neg-card__badge" style="background:#2ec4b6;color:white;">Hybrid</span>
+            </div>
+            <div class="neg-card__body">
+              <p class="neg-card__title">{{ hybrid_names[forloop.index0] }}</p>
+              <p class="neg-card__subtitle">{{ hybrid_specs[forloop.index0] }}</p>
+              <div class="neg-card__price">From {{ prod.price_min | money_without_trailing_zeros }}</div>
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div></div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Nectar Tiered Grid",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": []
+}
+{% endschema %}

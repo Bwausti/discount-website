@@ -1,0 +1,158 @@
+<!-- Section: brand_logos -->
+<section id="brands" style="background: #f7f6f1; padding: 40px 20px; font-family: 'Inter', 'Segoe UI', sans-serif;">
+  <div style="max-width: 1100px; margin: 0 auto;">
+
+    <style data-shopify>
+      .brand-logos-featured { display: grid; gap: 14px; margin-top: 24px; }
+      @media (min-width: 768px) { .brand-logos-featured { grid-template-columns: repeat(3, 1fr); } }
+
+      .brand-feature-card {
+        display: flex; flex-direction: column; border-radius: 8px; border: 1px solid #e2e8f0;
+        background: white; overflow: hidden; text-decoration: none;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .brand-feature-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+      .brand-feature-image {
+        position: relative; height: 130px; overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .brand-feature-image img.bg {
+        position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+      }
+      .brand-feature-image .overlay {
+        position: absolute; inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.45), rgba(0,0,0,0.1));
+      }
+      .brand-feature-logo-wrap {
+        position: relative; z-index: 1;
+        display: flex; align-items: center; justify-content: center;
+        max-width: 160px; height: 48px;
+        background: white; border-radius: 6px; padding: 6px 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      }
+      .brand-feature-logo { max-height: 34px; max-width: 100%; width: auto; height: auto; object-fit: contain; }
+      .brand-feature-body { padding: 14px 18px; flex: 1; display: flex; flex-direction: column; }
+      .brand-feature-tag {
+        display: inline-block; background: #f1f5f9; padding: 3px 8px; border-radius: 4px;
+        font-size: 10px; font-weight: 700; color: #475569;
+      }
+      .brand-secondary-grid { display: grid; gap: 10px; margin-top: 14px; }
+      @media (min-width: 768px) { .brand-secondary-grid { grid-template-columns: repeat(3, 1fr); } }
+      @media (min-width: 1024px) { .brand-secondary-grid { grid-template-columns: repeat(4, 1fr); } }
+      @media (min-width: 1280px) { .brand-secondary-grid { grid-template-columns: repeat(4, 1fr); } }
+      .brand-secondary-card {
+        display: flex; align-items: center; justify-content: center;
+        height: 64px; border-radius: 8px; border: 1px solid #e2e8f0;
+        background: white; padding: 12px; text-decoration: none;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .brand-secondary-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+      .brand-secondary-logo { max-height: 32px; max-width: 100%; width: auto; height: auto; object-fit: contain; }
+    </style>
+
+    <div style="margin-bottom: 8px;">
+        <p style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; color: #cf2333; margin: 0 0 8px 0;">Brands</p>
+        <h2 style="font-size: clamp(26px, 4vw, 38px); font-weight: 800; color: #0f172a; line-height: 1.1; letter-spacing: -0.02em; margin: 0;">Names you know, local service you trust.</h2>
+      </div>
+
+    <p style="font-size: 14px; line-height: 1.6; color: #64748b; margin: 10px 0 0 0; max-width: 600px;">Browse top national brands in person at our Bowling Green showroom.</p>
+
+    <!-- Featured brand cards -->
+    <div class="brand-logos-featured">
+      <a href="/collections/helix" class="brand-feature-card">
+        <div class="brand-feature-image">
+          <img src="{{ 'dm-helix-midnight-luxe-bg.jpg' | asset_url }}" alt="" class="bg" style="object-position: center 55%;">
+          <div class="overlay"></div>
+          <div class="brand-feature-logo-wrap">
+            <img src="{{ 'logo-helix.png' | asset_url }}" alt="Helix" class="brand-feature-logo">
+          </div>
+        </div>
+        <div class="brand-feature-body">
+          <h3 style="font-size: 17px; font-weight: 800; color: #0f172a; margin: 0; font-family: 'Inter', 'Segoe UI', sans-serif;">Helix</h3>
+          <p style="font-size: 12px; font-weight: 600; color: #475569; line-height: 1.5; margin: 4px 0 0 0; flex: 1;">Personalized hybrids for every sleep style.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;">
+            <span class="brand-feature-tag">Core, Luxe, and Elite</span>
+            <span class="brand-feature-tag">ErgoAlign support</span>
+          </div>
+          <p style="font-size: 12px; font-weight: 800; color: #cf2333; margin-top: 10px;">Browse Helix →</p>
+        </div>
+      </a>
+
+      <a href="/collections/puffy" class="brand-feature-card">
+        <div class="brand-feature-image">
+          <img src="{{ 'hero-couple.jpg' | asset_url }}" alt="" class="bg" style="object-position: center 55%;">
+          <div class="overlay"></div>
+          <div class="brand-feature-logo-wrap">
+            <img src="{{ 'logo-puffy.png' | asset_url }}" alt="Puffy" class="brand-feature-logo">
+          </div>
+        </div>
+        <div class="brand-feature-body">
+          <h3 style="font-size: 17px; font-weight: 800; color: #0f172a; margin: 0; font-family: 'Inter', 'Segoe UI', sans-serif;">Puffy</h3>
+          <p style="font-size: 12px; font-weight: 600; color: #475569; line-height: 1.5; margin: 4px 0 0 0; flex: 1;">Cloud-like comfort with premium cooling upgrades.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;">
+            <span class="brand-feature-tag">Foam and hybrid choices</span>
+            <span class="brand-feature-tag">Cooling comfort</span>
+          </div>
+          <p style="font-size: 12px; font-weight: 800; color: #cf2333; margin-top: 10px;">Browse Puffy →</p>
+        </div>
+      </a>
+
+      <a href="/collections/dreamcloud" class="brand-feature-card">
+        <div class="brand-feature-image">
+          <img src="{{ 'dm-dreamcloud-bg.webp' | asset_url }}" alt="" class="bg" style="object-position: center 50%; transform: scale(2.8);">
+          <div class="overlay"></div>
+          <div class="brand-feature-logo-wrap">
+            <img src="{{ 'logo-dreamcloud.png' | asset_url }}" alt="DreamCloud" class="brand-feature-logo">
+          </div>
+        </div>
+        <div class="brand-feature-body">
+          <h3 style="font-size: 17px; font-weight: 800; color: #0f172a; margin: 0; font-family: 'Inter', 'Segoe UI', sans-serif;">DreamCloud</h3>
+          <p style="font-size: 12px; font-weight: 600; color: #475569; line-height: 1.5; margin: 4px 0 0 0; flex: 1;">Classic, Premier, Luxe, and Ultra comfort.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;">
+            <span class="brand-feature-tag">Hybrid and memory foam</span>
+            <span class="brand-feature-tag">Classic to Ultra</span>
+          </div>
+          <p style="font-size: 12px; font-weight: 800; color: #cf2333; margin-top: 10px;">Browse DreamCloud →</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- Secondary brand logos -->
+    <div class="brand-secondary-grid">
+      <a href="/collections/nectar" class="brand-secondary-card">
+        <img src="{{ 'logo-nectar.png' | asset_url }}" alt="Nectar" class="brand-secondary-logo" style="max-height: 48px;">
+      </a>
+      <a href="/collections/bedtech" class="brand-secondary-card">
+        <img src="{{ 'logo-bedtech.png' | asset_url }}" alt="BedTech" class="brand-secondary-logo">
+      </a>
+      <a href="/collections/bedgear" class="brand-secondary-card">
+        <img src="{{ 'logo-bedgear.png' | asset_url }}" alt="Bedgear" class="brand-secondary-logo">
+      </a>
+      <a href="/collections/pranasleep" class="brand-secondary-card">
+        <img src="{{ 'logo-pranasleep.png' | asset_url }}" alt="PranaSleep" class="brand-secondary-logo" style="max-height: 48px;">
+      </a>
+      <a href="/collections/serta" class="brand-secondary-card">
+        <img src="{{ 'logo-serta.svg' | asset_url }}" alt="Serta" class="brand-secondary-logo" style="max-height: 48px;">
+      </a>
+      <a href="/collections/jamison" class="brand-secondary-card">
+        <img src="{{ 'logo-jamison.png' | asset_url }}" alt="Jamison" class="brand-secondary-logo" style="max-height: 48px;">
+      </a>
+      <a href="/collections/naturepedic" class="brand-secondary-card" style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-size: 15px; font-weight: 800; color: #2d6a4f; letter-spacing: -0.01em;">Naturepedic</span>
+        <span style="font-size: 10px; font-weight: 600; color: #6b7280; letter-spacing: 0.05em;">ORGANIC</span>
+      </a>
+      <a href="/collections/posh-and-lavish" class="brand-secondary-card" style="display: flex; flex-direction: column; gap: 2px;">
+        <span style="font-size: 14px; font-weight: 800; color: #7c3a50; letter-spacing: -0.01em;">Posh & Lavish</span>
+        <span style="font-size: 10px; font-weight: 600; color: #6b7280; letter-spacing: 0.05em;">LUXURY</span>
+      </a>
+    </div>
+
+    <!-- View all link -->
+    <div style="text-align: center; margin-top: 20px;">
+      <a href="/collections" style="display: inline-block; background: #162b49; color: white; padding: 14px 40px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 15px;">All Brands</a>
+    </div>
+
+  </div>
+</section>

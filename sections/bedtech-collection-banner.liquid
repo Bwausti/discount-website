@@ -1,0 +1,475 @@
+<!-- Section: bedtech-collection-banner -->
+<!-- Brand: BedTech | Adjustable bases, platforms & foundations | 11 products -->
+{% if collection.handle != 'bedtech' %}{% break %}{% endif %}
+
+<style>
+  .bedtech-section { font-family: 'Inter', 'Segoe UI', sans-serif; }
+  .bedtech-hero {
+    position: relative; overflow: hidden;
+    background: #0f172a; min-height: 560px; display: flex; align-items: center;
+  }
+  .bedtech-hero__bg {
+    position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%;
+    opacity: 0.4;
+  }
+  .bedtech-hero::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to right, rgba(15,23,42,0.88) 0%, rgba(15,23,42,0.6) 50%, rgba(15,23,42,0.25) 100%);
+  }
+  .bedtech-hero__content {
+    position: relative; z-index: 2; width: 100%;
+    padding: 60px 24px; max-width: 1300px; margin: 0 auto;
+    display: grid; gap: 32px;
+    grid-template-columns: 1fr 1.15fr; align-items: center;
+  }
+  @media (max-width: 860px) {
+    .bedtech-hero__content { grid-template-columns: 1fr !important; padding: 40px 20px; }
+    .bedtech-hero__right { display: none !important; }
+  }
+  .bedtech-hero__left { max-width: 600px; }
+  .bedtech-eyebrow {
+    display: inline-block; background: rgba(15,23,42,0.7); backdrop-filter: blur(8px); border: 1px solid rgba(13,148,136,0.5);
+    color: #0d9488; font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.22em;
+    padding: 6px 14px; border-radius: 4px; margin-bottom: 20px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .bedtech-hero h1 {
+    font-size: clamp(36px, 5vw, 60px); font-weight: 900;
+    color: white; line-height: 0.95; letter-spacing: -0.02em;
+    margin: 0 0 16px 0;
+    text-shadow: 0 3px 16px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .bedtech-hero__tagline {
+    font-size: 18px; font-weight: 700; color: white;
+    line-height: 1.5; margin: 0 0 12px 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .bedtech-hero__desc {
+    font-size: 15px; color: rgba(255,255,255,0.92); line-height: 1.65;
+    margin: 0 0 24px 0; max-width: 520px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .bedtech-hero__badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .bedtech-badge {
+    background: rgba(0,0,0,0.55); color: white;
+    padding: 5px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    border: 1px solid rgba(255,255,255,0.25);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+  .bedtech-hero__buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+  .bedtech-btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #0d9488; color: white; padding: 13px 28px;
+    border-radius: 6px; text-decoration: none; font-weight: 800; font-size: 14px;
+    transition: background 0.2s;
+  }
+  .bedtech-btn-primary:hover { background: #14b8a6; }
+  .bedtech-btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px); color: white; padding: 13px 24px;
+    border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .bedtech-btn-secondary:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.6); }
+  .bedtech-hero__right {
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+    border-radius: 12px; padding: 24px; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .bedtech-hero__showroom-note { font-size: 15px; font-weight: 700; color: #0f172a; line-height: 1.5; }
+  .bedtech-hero__products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+  .bedtech-hero__product-card {
+    background: #eef2ff; border-radius: 8px; overflow: hidden;
+    text-decoration: none; transition: transform 0.2s, background 0.2s;
+    display: block;
+  }
+  .bedtech-hero__product-card:hover { transform: translateY(-3px); background: #e0e7ff; }
+  .bedtech-hero__product-img { position: relative; aspect-ratio: 5/4; overflow: hidden; }
+  .bedtech-hero__product-img img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+  .bedtech-hero__product-name { padding: 10px 10px 12px; font-size: 12px; font-weight: 800; color: #0f172a; line-height: 1.3; }
+  /* Trust bar */
+  .bedtech-trust { background: white; border-bottom: 1px solid #e2e8f0; }
+  .bedtech-trust__grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .bedtech-trust__item { padding: 16px 20px; text-align: center; border-right: 1px solid #e2e8f0; }
+  .bedtech-trust__item:last-child { border-right: none; }
+  .bedtech-trust__label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: #64748b; margin-bottom: 4px; }
+  .bedtech-trust__value { font-size: 20px; font-weight: 900; color: #0f172a; }
+  /* Highlight pills */
+  .bedtech-highlights { background: #f0fdfa; padding: 20px 24px; border-bottom: 1px solid #e2e8f0; }
+  .bedtech-highlights__inner { max-width: 1300px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px; }
+  .bedtech-highlight-pill { background: white; border: 1px solid #0d9488; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; color: #0f172a; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  /* Category section */
+  .bedtech-category-section { background: #f8fafc; padding: 56px 24px; }
+  .bedtech-category-header { max-width: 1300px; margin: 0 auto 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: end; }
+  @media (max-width: 860px) { .bedtech-category-header { grid-template-columns: 1fr !important; } }
+  .bedtech-category-header__right { background: white; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; }
+  .bedtech-category-header__right p { font-size: 14px; font-weight: 600; color: #475569; line-height: 1.65; margin: 0; }
+  .section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; color: #0d9488; margin-bottom: 8px; }
+  .bedtech-category-header h2 { font-size: clamp(28px, 3.5vw, 42px); font-weight: 900; color: #0f172a; line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+  .bedtech-category-header p { font-size: 16px; color: #64748b; line-height: 1.6; margin-top: 12px; }
+  .bedtech-category-subhead {
+    max-width: 1300px; margin: 40px auto 16px;
+    font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: #0d9488;
+  }
+  .bedtech-category-cards { max-width: 1300px; margin: 0 auto; display: grid; gap: 16px; }
+  .bedtech-category-cards--bases { grid-template-columns: repeat(4, 1fr); }
+  .bedtech-category-cards--platforms { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 1024px) {
+    .bedtech-category-cards--bases { grid-template-columns: repeat(2, 1fr) !important; }
+    .bedtech-category-cards--platforms { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+  @media (max-width: 640px) {
+    .bedtech-category-cards--bases { grid-template-columns: 1fr !important; }
+    .bedtech-category-cards--platforms { grid-template-columns: 1fr !important; }
+  }
+  .bedtech-category-card {
+    background: white; border: 2px solid #e2e8f0; border-radius: 12px;
+    overflow: hidden; text-align: left; cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    display: block; text-decoration: none;
+  }
+  .bedtech-category-card:hover {
+    border-color: #0d9488; transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  }
+  .bedtech-category-card__img { position: relative; aspect-ratio: 16/10; background: #f1f3f6; overflow: hidden; }
+  .bedtech-category-card__img img { width: 100%; height: 100%; object-fit: contain; padding: 20px; transition: transform 0.4s; }
+  .bedtech-category-card:hover .bedtech-category-card__img img { transform: scale(1.04); }
+  .bedtech-category-card__body { padding: 20px; }
+  .bedtech-category-card__name { font-size: 20px; font-weight: 900; color: #0f172a; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .bedtech-category-card__desc { font-size: 12px; color: #475569; line-height: 1.5; margin-bottom: 10px; }
+  .bedtech-category-card__price { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #0d9488; margin-bottom: 8px; }
+  .bedtech-category-card__features {
+    background: #f0fdfa; padding: 8px 12px; border-radius: 6px;
+    font-size: 11px; font-weight: 600; color: #0f172a; line-height: 1.5;
+  }
+  .bedtech-category-card__cta {
+    display: inline-block; padding: 8px 16px; border-radius: 6px;
+    font-size: 12px; font-weight: 800; margin-top: 12px; background: #0f172a; color: white;
+    transition: background 0.2s;
+  }
+  .bedtech-category-card:hover .bedtech-category-card__cta { background: #0d9488; }
+  /* Brand story */
+  .bedtech-story { background: white; padding: 64px 24px; border-top: 1px solid #e2e8f0; }
+  .bedtech-story__inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; align-items: center; }
+  @media (max-width: 860px) { .bedtech-story__inner { grid-template-columns: 1fr !important; } }
+  .bedtech-story__img { position: relative; aspect-ratio: 16/10; border-radius: 12px; overflow: hidden; background: #f1f3f6; }
+  .bedtech-story__img img { width: 100%; height: 100%; object-fit: cover; }
+  .bedtech-story__columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+  @media (max-width: 640px) { .bedtech-story__columns { grid-template-columns: 1fr !important; } }
+  .bedtech-story__col { background: #f0fdfa; border: 1px solid #ccfbf1; border-radius: 8px; padding: 16px; }
+  .bedtech-story__col h4 { font-size: 13px; font-weight: 800; color: #0f172a; margin: 0 0 6px 0; }
+  .bedtech-story__col p { font-size: 12px; color: #64748b; line-height: 1.55; margin: 0; }
+  .bedtech-story__content h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: #0f172a; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px 0; }
+  .bedtech-story__content p { font-size: 15px; color: #475569; line-height: 1.7; margin-bottom: 16px; }
+</style>
+
+<div class="bedtech-section">
+
+  <!-- HERO -->
+  <section class="bedtech-hero">
+    <img
+      src="{{ 'bedtech-base.jpg' | asset_url }}"
+      alt="BedTech adjustable bases and platforms collection"
+      class="bedtech-hero__bg"
+      loading="eager"
+    >
+    <div class="bedtech-hero__content">
+      <div class="bedtech-hero__left">
+        <span class="bedtech-eyebrow">Available in Bowling Green, KY</span>
+        <h1>BedTech Adjustable Bases &amp; Platforms</h1>
+        <p class="bedtech-hero__tagline">Adjustable bases, platforms, and foundations for every setup.</p>
+        <p class="bedtech-hero__desc">
+          From entry-level head/tilt adjustment to full-body massage and wall-hugging technology, there's a base for every need. Plus a full lineup of platforms and foundations to match any mattress.
+        </p>
+        <div class="bedtech-hero__badges">
+          <span class="bedtech-badge">11 products</span>
+          <span class="bedtech-badge">20-year warranty</span>
+          <span class="bedtech-badge">Adjustable · Platform · Foundation</span>
+        </div>
+        <div class="bedtech-hero__buttons">
+          <a href="#bedtech-products" class="bedtech-btn-primary">Shop all BedTech →</a>
+          <a href="#bedtech-story" class="bedtech-btn-secondary">Learn more</a>
+        </div>
+      </div>
+      <div class="bedtech-hero__right">
+        <p class="bedtech-hero__showroom-note">
+          BedTech is one of our top-selling base brands — we keep adjustable and platform models on the showroom floor so you can test the difference between wireless remotes, massage motors, and wall-hugging motion before you decide.
+        </p>
+        <div class="bedtech-hero__products">
+          <a href="/products/bedtech-bt2000" class="bedtech-hero__product-card">
+            <div class="bedtech-hero__product-img">
+              <img src="{{ 'bedtech-base.jpg' | asset_url }}" alt="BT2000 Adjustable Bed" loading="lazy">
+            </div>
+            <p class="bedtech-hero__product-name">BT2000<br><span style="font-weight:400;color:#64748b;font-size:11px;">Entry-level adjustability</span></p>
+          </a>
+          <a href="/products/bedtech-bt3000" class="bedtech-hero__product-card">
+            <div class="bedtech-hero__product-img">
+              <img src="{{ 'bedtech-base-v2.jpg' | asset_url }}" alt="BT3000 Adjustable Bed" loading="lazy">
+            </div>
+            <p class="bedtech-hero__product-name">BT3000<br><span style="font-weight:400;color:#64748b;font-size:11px;">Wall-hugging · Massage</span></p>
+          </a>
+          <a href="/products/bedtech-bt6500" class="bedtech-hero__product-card">
+            <div class="bedtech-hero__product-img">
+              <img src="{{ 'bedtech-base.jpg' | asset_url }}" alt="BT6500 Adjustable Bed" loading="lazy">
+            </div>
+            <p class="bedtech-hero__product-name">BT6500<br><span style="font-weight:400;color:#64748b;font-size:11px;">Full massage · Presets</span></p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="bedtech-trust">
+    <div class="bedtech-trust__grid">
+      <div class="bedtech-trust__item">
+        <p class="bedtech-trust__label">Products</p>
+        <p class="bedtech-trust__value">11</p>
+      </div>
+      <div class="bedtech-trust__item">
+        <p class="bedtech-trust__label">Warranty</p>
+        <p class="bedtech-trust__value">20-year</p>
+      </div>
+      <div class="bedtech-trust__item">
+        <p class="bedtech-trust__label">Price match</p>
+        <p class="bedtech-trust__value">Lowest guaranteed</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIGHLIGHT PILLS -->
+  <div class="bedtech-highlights">
+    <div class="bedtech-highlights__inner">
+      <span class="bedtech-highlight-pill">🛏️ Adjustable Bases</span>
+      <span class="bedtech-highlight-pill">↔️ Wall-Hugging Tech</span>
+      <span class="bedtech-highlight-pill">📡 Wireless Remote</span>
+      <span class="bedtech-highlight-pill">💆 Massage</span>
+      <span class="bedtech-highlight-pill">🛌 Split King</span>
+      <span class="bedtech-highlight-pill">📦 Platform Beds</span>
+    </div>
+  </div>
+
+  <!-- PRODUCT CATEGORIES -->
+  <section id="bedtech-products" class="bedtech-category-section">
+    <div class="bedtech-category-header">
+      <div class="bedtech-category-header__left">
+        <p class="section-label">Product lineup</p>
+        <h2>Every base, every platform.</h2>
+        <p>BedTech covers the full range — from entry-level adjustable bases to premium wall-hugging models with massage, plus a complete selection of platforms and foundations.</p>
+      </div>
+      <div class="bedtech-category-header__right">
+        <p><strong>Start with the type of base you need.</strong> Adjustable beds add head/tilt positioning, massage, and presets. Platforms and foundations are the perfect stationary complement — built for storage or a low-profile look.</p>
+      </div>
+    </div>
+
+    <!-- Adjustable Bases -->
+    <p class="bedtech-category-subhead">Adjustable Bases</p>
+    <div class="bedtech-category-cards bedtech-category-cards--bases">
+      <a href="/products/bedtech-bt2000" class="bedtech-category-card">
+        <div class="bedtech-category-card__img">
+          <img src="{{ 'bedtech-base-v2.jpg' | asset_url }}" alt="BT2000 Adjustable Bed" loading="lazy">
+        </div>
+        <div class="bedtech-category-card__body">
+          <div class="bedtech-category-card__name">BT2000</div>
+          <div class="bedtech-category-card__price">Entry-level</div>
+          <p class="bedtech-category-card__desc">Head and foot articulation with wired remote. Simple, reliable adjustability at an accessible price.</p>
+          <div class="bedtech-category-card__features">✅ Head/tilt · Wired remote · Tool-free assembly</div>
+          <span class="bedtech-category-card__cta">Shop BT2000 →</span>
+        </div>
+      </a>
+
+      <a href="/products/bedtech-bt2500" class="bedtech-category-card">
+        <div class="bedtech-category-card__img">
+          <img src="{{ 'bedtech-base.jpg' | asset_url }}" alt="BT2500 Adjustable Bed" loading="lazy">
+        </div>
+        <div class="bedtech-category-card__body">
+          <div class="bedtech-category-card__name">BT2500</div>
+          <div class="bedtech-category-card__price">Mid-range</div>
+          <p class="bedtech-category-card__desc">Wireless remote control adds convenience. Includes head and foot articulation with programable flat and TV positions.</p>
+          <div class="bedtech-category-card__features">✅ Wireless remote · Head/tilt · Flat &amp; TV presets</div>
+          <span class="bedtech-category-card__cta">Shop BT2500 →</span>
+        </div>
+      </a>
+
+      <a href="/products/bedtech-bt3000" class="bedtech-category-card">
+        <div class="bedtech-category-card__img">
+          <img src="{{ 'bedtech-base.jpg' | asset_url }}" alt="BT3000 Adjustable Bed" loading="lazy">
+        </div>
+        <div class="bedtech-category-card__body">
+          <div class="bedtech-category-card__name">BT3000</div>
+          <div class="bedtech-category-card__price">Premium wall-hugging</div>
+          <p class="bedtech-category-card__desc">Wall-hugging technology keeps you close to the nightstand. Dual massage motors relieve pressure points throughout the night.</p>
+          <div class="bedtech-category-card__features">✅ Wall-hugging · Dual massage · Wireless remote · Zero-gravity</div>
+          <span class="bedtech-category-card__cta">Shop BT3000 →</span>
+        </div>
+      </a>
+
+      <a href="/products/bedtech-bt6500" class="bedtech-category-card">
+        <div class="bedtech-category-card__img">
+          <img src="{{ 'bedtech-base.jpg' | asset_url }}" alt="BT6500 Adjustable Bed" loading="lazy">
+        </div>
+        <div class="bedtech-category-card__body">
+          <div class="bedtech-category-card__name">BT6500</div>
+          <div class="bedtech-category-card__price">Top-tier</div>
+          <p class="bedtech-category-card__desc">Full-body massage system with programmable presets. Wall-hugging motion and wireless remote included. The most advanced BedTech base.</p>
+          <div class="bedtech-category-card__features">✅ Full massage · Programmable presets · Wall-hugging · Wireless</div>
+          <span class="bedtech-category-card__cta">Shop BT6500 →</span>
+        </div>
+      </a>
+
+      {% assign bthu_prod = collections['bedtech'].products | where: 'handle', 'bedtech-bthu' | first %}
+      <a href="/products/bedtech-bthu" class="bedtech-category-card">
+        <div class="bedtech-category-card__img">
+          <img src="{% if bthu_prod and bthu_prod.featured_image %}{{ bthu_prod.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="BTHU Adjustable Bed" loading="lazy">
+        </div>
+        <div class="bedtech-category-card__body">
+          <div class="bedtech-category-card__name">BTHU</div>
+          <div class="bedtech-category-card__price">Heavy duty</div>
+          <p class="bedtech-category-card__desc">Higher weight capacity with the same articulation and wireless convenience. Built for heavier sleepers who need adjustability.</p>
+          <div class="bedtech-category-card__features">✅ Heavy-duty frame · Higher capacity · Wireless remote · Head/tilt</div>
+          <span class="bedtech-category-card__cta">Shop BTHU →</span>
+        </div>
+      </a>
+
+      {% assign btx4_prod = collections['bedtech'].products | where: 'handle', 'bedtech-btx4' | first %}
+      <a href="/products/bedtech-btx4" class="bedtech-category-card">
+        <div class="bedtech-category-card__img">
+          <img src="{% if btx4_prod and btx4_prod.featured_image %}{{ btx4_prod.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="BTX4 Adjustable Bed" loading="lazy">
+        </div>
+        <div class="bedtech-category-card__body">
+          <div class="bedtech-category-card__name">BTX4</div>
+          <div class="bedtech-category-card__price">Split king compatible</div>
+          <p class="bedtech-category-card__desc">Twin XL configuration for split king setups. Each side adjusts independently — perfect for couples with different needs.</p>
+          <div class="bedtech-category-card__features">✅ Split king · Independent sides · Wireless remote · Wall-hugging</div>
+          <span class="bedtech-category-card__cta">Shop BTX4 →</span>
+        </div>
+      </a>
+
+      {% assign btx5_prod = collections['bedtech'].products | where: 'handle', 'bedtech-btx5' | first %}
+      <a href="/products/bedtech-btx5" class="bedtech-category-card">
+        <div class="bedtech-category-card__img">
+          <img src="{% if btx5_prod and btx5_prod.featured_image %}{{ btx5_prod.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="BTX5 Adjustable Bed" loading="lazy">
+        </div>
+        <div class="bedtech-category-card__body">
+          <div class="bedtech-category-card__name">BTX5</div>
+          <div class="bedtech-category-card__price">Premium split king</div>
+          <p class="bedtech-category-card__desc">Premium split king with full massage, wall-hugging, and programmable presets per side. The ultimate dual-adjustable setup.</p>
+          <div class="bedtech-category-card__features">✅ Premium split king · Full massage · Presets per side · Wall-hugging</div>
+          <span class="bedtech-category-card__cta">Shop BTX5 →</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Platforms & Foundations -->
+    <p class="bedtech-category-subhead" style="margin-top:48px;">Platforms &amp; Foundations</p>
+    <div class="bedtech-category-cards bedtech-category-cards--platforms">
+      {% assign bt_hrise = collections['bedtech'].products | where: 'handle', 'bedtech-high-rise-platform' | first %}
+      <a href="/products/bedtech-high-rise-platform" class="bedtech-category-card">
+        <div class="bedtech-category-card__img">
+          <img src="{% if bt_hrise and bt_hrise.featured_image %}{{ bt_hrise.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="High Rise Platform" loading="lazy">
+        </div>
+        <div class="bedtech-category-card__body">
+          <div class="bedtech-category-card__name">High Rise Platform</div>
+          <div class="bedtech-category-card__price">Platform</div>
+          <p class="bedtech-category-card__desc">Raised platform with built-in under-bed storage space. Strong, quiet, and easy to assemble.</p>
+          <div class="bedtech-category-card__features">✅ Storage space · Sturdy frame · No box spring needed</div>
+          <span class="bedtech-category-card__cta">Shop High Rise →</span>
+        </div>
+      </a>
+
+      {% assign bt_modern = collections['bedtech'].products | where: 'handle', 'bedtech-modern-platform' | first %}
+      <a href="/products/bedtech-modern-platform" class="bedtech-category-card">
+        <div class="bedtech-category-card__img">
+          <img src="{% if bt_modern and bt_modern.featured_image %}{{ bt_modern.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="Modern Platform" loading="lazy">
+        </div>
+        <div class="bedtech-category-card__body">
+          <div class="bedtech-category-card__name">Modern Platform</div>
+          <div class="bedtech-category-card__price">Low profile</div>
+          <p class="bedtech-category-card__desc">Sleek low-profile platform bed. Minimalist design with solid slat support — works with any mattress.</p>
+          <div class="bedtech-category-card__features">✅ Low profile · Minimalist design · Solid slats · Easy setup</div>
+          <span class="bedtech-category-card__cta">Shop Modern Platform →</span>
+        </div>
+      </a>
+
+      {% assign bt_found = collections['bedtech'].products | where: 'handle', 'bedtech-standard-foundation' | first %}
+      <a href="/products/bedtech-standard-foundation" class="bedtech-category-card">
+        <div class="bedtech-category-card__img">
+          <img src="{% if bt_found and bt_found.featured_image %}{{ bt_found.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="Standard Foundation" loading="lazy">
+        </div>
+        <div class="bedtech-category-card__body">
+          <div class="bedtech-category-card__name">Standard Foundation</div>
+          <div class="bedtech-category-card__price">Box spring replacement</div>
+          <p class="bedtech-category-card__desc">Durable box spring replacement foundation. Provides the support your mattress needs without the bulk.</p>
+          <div class="bedtech-category-card__features">✅ Box spring replacement · Durable · Universal fit</div>
+          <span class="bedtech-category-card__cta">Shop Foundation →</span>
+        </div>
+      </a>
+
+      {% assign bt_uphol = collections['bedtech'].products | where: 'handle', 'bedtech-upholstered-platform' | first %}
+      <a href="/products/bedtech-upholstered-platform" class="bedtech-category-card">
+        <div class="bedtech-category-card__img">
+          <img src="{% if bt_uphol and bt_uphol.featured_image %}{{ bt_uphol.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="Upholstered Platform" loading="lazy">
+        </div>
+        <div class="bedtech-category-card__body">
+          <div class="bedtech-category-card__name">Upholstered Platform</div>
+          <div class="bedtech-category-card__price">Padded platform</div>
+          <p class="bedtech-category-card__desc">Padded platform bed with upholstered headboard. Combines style, comfort, and solid mattress support in one piece.</p>
+          <div class="bedtech-category-card__features">✅ Padded · Upholstered headboard · Solid slats · No box spring</div>
+          <span class="bedtech-category-card__cta">Shop Upholstered →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- BRAND STORY -->
+  <section id="bedtech-story" class="bedtech-story">
+    <div class="bedtech-story__inner">
+      {% assign bt_story_prod = collections['bedtech'].products | where: 'handle', 'bedtech-bt2000' | first %}
+      <div class="bedtech-story__img">
+        <img src="{% if bt_story_prod and bt_story_prod.featured_image %}{{ bt_story_prod.featured_image | image_url: width: 800 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="BedTech lifestyle" loading="lazy">
+      </div>
+      <div class="bedtech-story__content">
+        <p class="section-label">Why BedTech</p>
+        <h2>Adjustable bases and platforms designed to complement any mattress.</h2>
+        <p>BedTech builds adjustable bed bases and platform foundations designed to complement any mattress. From entry-level head/tilt adjustment to full-body massage and wall-hugging technology, there's a base for every need.</p>
+        <p>In the showroom, BedTech is the base and platform comparison brand — test the difference between a low-profile platform, a storage-friendly high rise, and a fully adjustable base with massage and zero-gravity presets.</p>
+        <div class="bedtech-story__columns">
+          <div class="bedtech-story__col">
+            <h4>↔️ Wall-hugging tech</h4>
+            <p>Keeps you close to the nightstand as the base articulates — no more reaching for your phone or glasses in the middle of the night.</p>
+          </div>
+          <div class="bedtech-story__col">
+            <h4>📡 Wireless remotes</h4>
+            <p>Programmable presets and intuitive controls. Store your favorite head/tilt positions and recall them with one button.</p>
+          </div>
+          <div class="bedtech-story__col">
+            <h4>💆 Massage motors</h4>
+            <p>Built-in massage systems target pressure points and help you relax before sleep. Available on BT3000, BT6500, and BTX5 models.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "BedTech Collection Banner",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "category_cta",
+      "label": "Category CTA text",
+      "default": "Shop all BedTech"
+    }
+  ]
+}
+{% endschema %}

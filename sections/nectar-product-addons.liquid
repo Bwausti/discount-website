@@ -1,0 +1,375 @@
+{% comment %}
+  nectar-product-addons.liquid
+  Shows Nectar tier comparison + compatible accessories on product pages
+  Only renders on Nectar products
+{% endcomment %}
+
+{% assign is_nectar_product = false %}
+{% assign is_classic = false %}
+{% assign is_premier = false %}
+{% assign is_luxe = false %}
+{% assign is_ultra = false %}
+{% assign is_kids = false %}
+{% if closest.product.vendor == "Nectar" %}
+  {% assign is_nectar_product = true %}
+  {% assign title_lower = closest.product.title | downcase %}
+  {% if title_lower contains "premier" %}
+    {% assign is_premier = true %}
+  {% elsif title_lower contains "luxe" %}
+    {% assign is_luxe = true %}
+  {% elsif title_lower contains "ultra" %}
+    {% assign is_ultra = true %}
+  {% elsif title_lower contains "kids" %}
+    {% assign is_kids = true %}
+  {% else %}
+    {% assign is_classic = true %}
+  {% endif %}
+{% endif %}
+
+{% if is_nectar_product %}
+
+<style>
+  .nectar-addons {
+    background: #f0edee;
+    border-top: 1px solid #e2e8f0;
+    padding: 48px 24px;
+    margin-top: 0;
+  }
+  .nectar-addons__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .nectar-addons__header {
+    margin-bottom: 32px;
+  }
+  .nectar-addons__label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #7c3aed;
+    margin-bottom: 8px;
+  }
+  .nectar-addons__title {
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 900;
+    color: #1e1b2e;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px 0;
+  }
+  .nectar-addons__sub {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+
+  /* Compare models section */
+  .nectar-compare {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .nectar-compare-card {
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 20px 16px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative;
+  }
+  .nectar-compare-card:hover {
+    border-color: #7c3aed;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .nectar-compare-card.active {
+    border-color: #7c3aed;
+    background: #f5f0ff;
+  }
+  .nectar-compare-card.active::after {
+    content: 'Current';
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    background: #7c3aed;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 10px;
+    border-radius: 4px;
+  }
+  .nectar-compare-card__tier {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #7c3aed;
+  }
+  .nectar-compare-card__name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1e1b2e;
+    margin: 0;
+  }
+  .nectar-compare-card__tag {
+    font-size: 10px;
+    font-weight: 600;
+    color: #64748b;
+    margin: 0;
+  }
+  .nectar-compare-card__types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 4px 0;
+  }
+  .nectar-compare-card__type {
+    font-size: 9px;
+    font-weight: 700;
+    background: #f0edee;
+    color: #4a4458;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .nectar-compare-card__cta {
+    font-size: 11px;
+    font-weight: 800;
+    color: #7c3aed;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .nectar-compare-card:hover .nectar-compare-card__cta { gap: 8px; }
+
+  /* Accessories */
+  .nectar-accessories__heading {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #7c3aed;
+    margin: 0 0 16px 0;
+  }
+  .nectar-accessories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .nectar-accessory-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .nectar-accessory-card:hover {
+    border-color: #7c3aed;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .nectar-accessory-card__icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .nectar-accessory-card__name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1e1b2e;
+    margin: 0;
+  }
+  .nectar-accessory-card__desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .nectar-accessory-card__price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e1b2e;
+    margin: 0;
+  }
+  .nectar-accessory-card__cta {
+    font-size: 12px;
+    font-weight: 800;
+    color: #7c3aed;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .nectar-accessory-card:hover .nectar-accessory-card__cta { gap: 8px; }
+</style>
+
+<div class="nectar-addons">
+  <div class="nectar-addons__inner">
+
+    <!-- Header -->
+    <div class="nectar-addons__header">
+      <p class="nectar-addons__label">Compare Nectar Models</p>
+      <h2 class="nectar-addons__title">Which Nectar is right for you?</h2>
+      <p class="nectar-addons__sub">See how your current pick stacks up against the full Nectar lineup</p>
+    </div>
+
+    <!-- Compare models -->
+    <div class="nectar-compare">
+      {% if is_classic %}
+        <div class="nectar-compare-card active">
+          <p class="nectar-compare-card__tier">Entry</p>
+          <h3 class="nectar-compare-card__name">Nectar Classic</h3>
+          <p class="nectar-compare-card__tag">Award-winning comfort</p>
+          <div class="nectar-compare-card__types">
+            <span class="nectar-compare-card__type">Memory Foam</span>
+            <span class="nectar-compare-card__type">Hybrid</span>
+          </div>
+          <p class="nectar-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/collections/nectar" class="nectar-compare-card">
+          <p class="nectar-compare-card__tier">Entry</p>
+          <h3 class="nectar-compare-card__name">Nectar Classic</h3>
+          <p class="nectar-compare-card__tag">Award-winning comfort</p>
+          <div class="nectar-compare-card__types">
+            <span class="nectar-compare-card__type">Memory Foam</span>
+            <span class="nectar-compare-card__type">Hybrid</span>
+          </div>
+          <p class="nectar-compare-card__cta">Shop Classic →</p>
+        </a>
+      {% endif %}
+
+      {% if is_premier %}
+        <div class="nectar-compare-card active">
+          <p class="nectar-compare-card__tier">Mid</p>
+          <h3 class="nectar-compare-card__name">Nectar Premier</h3>
+          <p class="nectar-compare-card__tag">Enhanced cooling</p>
+          <div class="nectar-compare-card__types">
+            <span class="nectar-compare-card__type">Memory Foam</span>
+            <span class="nectar-compare-card__type">Hybrid</span>
+          </div>
+          <p class="nectar-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/collections/nectar" class="nectar-compare-card">
+          <p class="nectar-compare-card__tier">Mid</p>
+          <h3 class="nectar-compare-card__name">Nectar Premier</h3>
+          <p class="nectar-compare-card__tag">Enhanced cooling</p>
+          <div class="nectar-compare-card__types">
+            <span class="nectar-compare-card__type">Memory Foam</span>
+            <span class="nectar-compare-card__type">Hybrid</span>
+          </div>
+          <p class="nectar-compare-card__cta">Shop Premier →</p>
+        </a>
+      {% endif %}
+
+      {% if is_luxe %}
+        <div class="nectar-compare-card active">
+          <p class="nectar-compare-card__tier">Premium</p>
+          <h3 class="nectar-compare-card__name">Nectar Luxe</h3>
+          <p class="nectar-compare-card__tag">Ultimate comfort</p>
+          <div class="nectar-compare-card__types">
+            <span class="nectar-compare-card__type">Memory Foam</span>
+            <span class="nectar-compare-card__type">Hybrid</span>
+          </div>
+          <p class="nectar-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/collections/nectar" class="nectar-compare-card">
+          <p class="nectar-compare-card__tier">Premium</p>
+          <h3 class="nectar-compare-card__name">Nectar Luxe</h3>
+          <p class="nectar-compare-card__tag">Ultimate comfort</p>
+          <div class="nectar-compare-card__types">
+            <span class="nectar-compare-card__type">Memory Foam</span>
+            <span class="nectar-compare-card__type">Hybrid</span>
+          </div>
+          <p class="nectar-compare-card__cta">Shop Luxe →</p>
+        </a>
+      {% endif %}
+
+      {% if is_ultra %}
+        <div class="nectar-compare-card active">
+          <p class="nectar-compare-card__tier">Top</p>
+          <h3 class="nectar-compare-card__name">Nectar Ultra</h3>
+          <p class="nectar-compare-card__tag">Best-in-class</p>
+          <div class="nectar-compare-card__types">
+            <span class="nectar-compare-card__type">Memory Foam</span>
+            <span class="nectar-compare-card__type">Hybrid</span>
+          </div>
+          <p class="nectar-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/collections/nectar" class="nectar-compare-card">
+          <p class="nectar-compare-card__tier">Top</p>
+          <h3 class="nectar-compare-card__name">Nectar Ultra</h3>
+          <p class="nectar-compare-card__tag">Best-in-class</p>
+          <div class="nectar-compare-card__types">
+            <span class="nectar-compare-card__type">Memory Foam</span>
+            <span class="nectar-compare-card__type">Hybrid</span>
+          </div>
+          <p class="nectar-compare-card__cta">Shop Ultra →</p>
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- Accessories heading -->
+    <p class="nectar-accessories__heading">Complete your Nectar setup</p>
+    <div class="nectar-accessories">
+
+      <!-- Adjustable Base -->
+      <a href="/collections/bedtech" class="nectar-accessory-card">
+        <p class="nectar-accessory-card__icon">⚡</p>
+        <h3 class="nectar-accessory-card__name">Adjustable Bed Base</h3>
+        <p class="nectar-accessory-card__desc">Elevate your head or feet with a BedTech adjustable base. Zero-gravity positioning, massage, and under-bed lighting available.</p>
+        <p class="nectar-accessory-card__price">From $399</p>
+        <p class="nectar-accessory-card__cta">Browse bases →</p>
+      </a>
+
+      <!-- Mattress Protector -->
+      <a href="/products/bedgear-dri-tec" class="nectar-accessory-card">
+        <p class="nectar-accessory-card__icon">🛡️</p>
+        <h3 class="nectar-accessory-card__name">Mattress Protector</h3>
+        <p class="nectar-accessory-card__desc">Keep your Nectar in pristine condition. The Dri-Tec protector is waterproof, breathable, and machine washable.</p>
+        <p class="nectar-accessory-card__price">$119.99</p>
+        <p class="nectar-accessory-card__cta">Add protection →</p>
+      </a>
+
+      <!-- Pillows -->
+      <a href="/collections/bedgear" class="nectar-accessory-card">
+        <p class="nectar-accessory-card__icon">🛏️</p>
+        <h3 class="nectar-accessory-card__name">Performance Pillows</h3>
+        <p class="nectar-accessory-card__desc">Pair your Nectar with a BedGear performance pillow. Available in Storm (cooling) and Balance (adjustable loft) models.</p>
+        <p class="nectar-accessory-card__price">From $79.99</p>
+        <p class="nectar-accessory-card__cta">Shop pillows →</p>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Nectar Product Add-ons",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}

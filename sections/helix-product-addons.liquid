@@ -1,0 +1,209 @@
+{% comment %}
+  helix-product-addons.liquid
+  Shows tier-specific Helix add-ons on product pages
+  Only renders on Helix products
+{% endcomment %}
+
+{% assign product_title = closest.product.title | downcase %}
+{% assign is_helix_product = false %}
+{% assign is_core = false %}
+{% assign is_luxe = false %}
+{% assign is_elite = false %}
+{% if closest.product.vendor == "Helix" %}
+  {% assign is_helix_product = true %}
+  {% if product_title contains "luxe" %}
+    {% assign is_luxe = true %}
+  {% elsif product_title contains "elite" %}
+    {% assign is_elite = true %}
+  {% else %}
+    {% assign is_core = true %}
+  {% endif %}
+{% endif %}
+
+{% if is_helix_product %}
+
+<style>
+  .helix-addons {
+    background: #f7f6f1;
+    border-top: 1px solid #e2e8f0;
+    padding: 48px 24px;
+    margin-top: 0;
+  }
+  .helix-addons__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .helix-addons__header {
+    margin-bottom: 32px;
+  }
+  .helix-addons__label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #cf2333;
+    margin-bottom: 8px;
+  }
+  .helix-addons__title {
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px 0;
+  }
+  .helix-addons__sub {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+  .helix-addons__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .helix-addon-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .helix-addon-card:hover {
+    border-color: #f2b705;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .helix-addon-card__tier-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: #f7f6f1;
+    color: #334155;
+    width: fit-content;
+  }
+  .helix-addon-card__tier-badge.luxe { background: #fef9e7; color: #92400e; }
+  .helix-addon-card__tier-badge.elite { background: #eff6ff; color: #1e40af; }
+  .helix-addon-card__name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+  }
+  .helix-addon-card__desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .helix-addon-card__price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+  .helix-addon-card__cta {
+    font-size: 12px;
+    font-weight: 800;
+    color: #cf2333;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .helix-addon-card:hover .helix-addon-card__cta { gap: 8px; }
+</style>
+
+<div class="helix-addons">
+  <div class="helix-addons__inner">
+
+    <!-- Header -->
+    <div class="helix-addons__header">
+      <p class="helix-addons__label">Complete your Helix</p>
+      {% if is_core %}
+        <h2 class="helix-addons__title">Core Layer Options</h2>
+        <p class="helix-addons__sub">Upgrade your Core mattress with cooling and support layers</p>
+      {% elsif is_luxe %}
+        <h2 class="helix-addons__title">Luxe Upgrade Options</h2>
+        <p class="helix-addons__sub">Add an ErgoAlign layer or swap your cover for maximum cooling</p>
+      {% else %}
+        <h2 class="helix-addons__title">Elite Enhancement Options</h2>
+        <p class="helix-addons__sub">Max out your Elite with the CoolForce layered system</p>
+      {% endif %}
+    </div>
+
+    <!-- Add-on cards -->
+    <div class="helix-addons__grid">
+
+      {% if is_core %}
+        <!-- Core: GlacioTex Cooling Cover -->
+        <a href="/products/helix-glaciotex-cooling-cover-luxe" class="helix-addon-card">
+          <span class="helix-addon-card__tier-badge">Core Compatible</span>
+          <h3 class="helix-addon-card__name">GlacioTex™ Cooling Cover</h3>
+          <p class="helix-addon-card__desc">Add instant cooling to your Core mattress. GlacioTex fabric pulls heat away from your body for a cooler night's sleep.</p>
+          <p class="helix-addon-card__price">From $187</p>
+          <p class="helix-addon-card__cta">Add to order →</p>
+        </a>
+
+      {% elsif is_luxe %}
+        <!-- Luxe: GlacioTex Cooling Pillow Top + ErgoAlign Layer -->
+        <a href="/products/helix-midnight-luxe" class="helix-addon-card">
+          <span class="helix-addon-card__tier-badge luxe">Luxe Built-in</span>
+          <h3 class="helix-addon-card__name">GlacioTex™ Cooling Pillow Top</h3>
+          <p class="helix-addon-card__desc">Upgrade your Luxe's already-premium cover. Adds an extra layer of cooling directly to the mattress surface.</p>
+          <p class="helix-addon-card__price">From $280</p>
+          <p class="helix-addon-card__cta">Add to order →</p>
+        </a>
+
+        <a href="/products/helix-ergoalign-layer" class="helix-addon-card">
+          <span class="helix-addon-card__tier-badge luxe">Luxe Compatible</span>
+          <h3 class="helix-addon-card__name">ErgoAlign™ Contour Layer</h3>
+          <p class="helix-addon-card__desc">A zoned foam layer that targets pressure points under your hips and spine. Twin XL through CA King available.</p>
+          <p class="helix-addon-card__price">From $187 (built-in) / $325+ (standalone)</p>
+          <p class="helix-addon-card__cta">Add to order →</p>
+        </a>
+
+      {% else %}
+        <!-- Elite: GlacioTex Cooling Cover + CoolForce -->
+        <a href="/products/helix-midnight-elite" class="helix-addon-card">
+          <span class="helix-addon-card__tier-badge elite">Elite Built-in</span>
+          <h3 class="helix-addon-card__name">GlacioTex™ + CoolForce™ System</h3>
+          <p class="helix-addon-card__desc">The Elite's standard cooling system — a GlacioTex cover combined with a CoolForce layer beneath it for active temperature regulation.</p>
+          <p class="helix-addon-card__price">Included with Elite</p>
+          <p class="helix-addon-card__cta">Included →</p>
+        </a>
+
+        <a href="/products/helix-ergoalign-layer" class="helix-addon-card">
+          <span class="helix-addon-card__tier-badge elite">Elite Compatible</span>
+          <h3 class="helix-addon-card__name">ErgoAlign™ Contour Layer</h3>
+          <p class="helix-addon-card__desc">Max out your Elite's pressure relief. The ErgoAlign layer pairs with the microcoil stack for enhanced lumbar support.</p>
+          <p class="helix-addon-card__price">From $187 (built-in) / $325+ (standalone)</p>
+          <p class="helix-addon-card__cta">Add to order →</p>
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Helix Product Add-ons",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}

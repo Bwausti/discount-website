@@ -1,0 +1,372 @@
+{% comment %}
+  dreamcloud-product-addons.liquid
+  Shows DreamCloud tier comparison + compatible accessories on product pages
+  Only renders on DreamCloud products
+{% endcomment %}
+
+{% assign is_dc_product = false %}
+{% assign is_classic = false %}
+{% assign is_premier = false %}
+{% assign is_luxe = false %}
+{% assign is_ultra = false %}
+{% if closest.product.vendor == "DreamCloud" %}
+  {% assign is_dc_product = true %}
+  {% assign title_lower = closest.product.title | downcase %}
+  {% if title_lower contains "premier" %}
+    {% assign is_premier = true %}
+  {% elsif title_lower contains "luxe" %}
+    {% assign is_luxe = true %}
+  {% elsif title_lower contains "ultra" %}
+    {% assign is_ultra = true %}
+  {% else %}
+    {% assign is_classic = true %}
+  {% endif %}
+{% endif %}
+
+{% if is_dc_product %}
+
+<style>
+  .dc-addons {
+    background: #f4f0eb;
+    border-top: 1px solid #e2e8f0;
+    padding: 48px 24px;
+    margin-top: 0;
+  }
+  .dc-addons__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .dc-addons__header {
+    margin-bottom: 32px;
+  }
+  .dc-addons__label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #b8860b;
+    margin-bottom: 8px;
+  }
+  .dc-addons__title {
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 900;
+    color: #2d1b0e;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px 0;
+  }
+  .dc-addons__sub {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+
+  /* Compare models section */
+  .dc-compare {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .dc-compare-card {
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 20px 16px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative;
+  }
+  .dc-compare-card:hover {
+    border-color: #b8860b;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .dc-compare-card.active {
+    border-color: #b8860b;
+    background: #faf6ef;
+  }
+  .dc-compare-card.active::after {
+    content: 'Current';
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    background: #b8860b;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 10px;
+    border-radius: 4px;
+  }
+  .dc-compare-card__tier {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #b8860b;
+  }
+  .dc-compare-card__name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #2d1b0e;
+    margin: 0;
+  }
+  .dc-compare-card__tag {
+    font-size: 10px;
+    font-weight: 600;
+    color: #64748b;
+    margin: 0;
+  }
+  .dc-compare-card__types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 4px 0;
+  }
+  .dc-compare-card__type {
+    font-size: 9px;
+    font-weight: 700;
+    background: #f4f0eb;
+    color: #5a4a3a;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .dc-compare-card__cta {
+    font-size: 11px;
+    font-weight: 800;
+    color: #b8860b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .dc-compare-card:hover .dc-compare-card__cta { gap: 8px; }
+
+  /* Accessories */
+  .dc-accessories__heading {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #b8860b;
+    margin: 0 0 16px 0;
+  }
+  .dc-accessories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .dc-accessory-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .dc-accessory-card:hover {
+    border-color: #b8860b;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .dc-accessory-card__icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .dc-accessory-card__name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #2d1b0e;
+    margin: 0;
+  }
+  .dc-accessory-card__desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .dc-accessory-card__price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2d1b0e;
+    margin: 0;
+  }
+  .dc-accessory-card__cta {
+    font-size: 12px;
+    font-weight: 800;
+    color: #b8860b;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .dc-accessory-card:hover .dc-accessory-card__cta { gap: 8px; }
+</style>
+
+<div class="dc-addons">
+  <div class="dc-addons__inner">
+
+    <!-- Header -->
+    <div class="dc-addons__header">
+      <p class="dc-addons__label">Compare DreamCloud Models</p>
+      <h2 class="dc-addons__title">Find your perfect DreamCloud</h2>
+      <p class="dc-addons__sub">See how your current pick stacks up against the full DreamCloud lineup</p>
+    </div>
+
+    <!-- Compare models -->
+    <div class="dc-compare">
+      {% if is_classic %}
+        <div class="dc-compare-card active">
+          <p class="dc-compare-card__tier">Entry</p>
+          <h3 class="dc-compare-card__name">DreamCloud Classic</h3>
+          <p class="dc-compare-card__tag">Premium value</p>
+          <div class="dc-compare-card__types">
+            <span class="dc-compare-card__type">Hybrid</span>
+            <span class="dc-compare-card__type">Memory Foam</span>
+          </div>
+          <p class="dc-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/collections/dreamcloud" class="dc-compare-card">
+          <p class="dc-compare-card__tier">Entry</p>
+          <h3 class="dc-compare-card__name">DreamCloud Classic</h3>
+          <p class="dc-compare-card__tag">Premium value</p>
+          <div class="dc-compare-card__types">
+            <span class="dc-compare-card__type">Hybrid</span>
+            <span class="dc-compare-card__type">Memory Foam</span>
+          </div>
+          <p class="dc-compare-card__cta">Shop Classic →</p>
+        </a>
+      {% endif %}
+
+      {% if is_premier %}
+        <div class="dc-compare-card active">
+          <p class="dc-compare-card__tier">Mid</p>
+          <h3 class="dc-compare-card__name">DreamCloud Premier</h3>
+          <p class="dc-compare-card__tag">Enhanced comfort</p>
+          <div class="dc-compare-card__types">
+            <span class="dc-compare-card__type">Hybrid</span>
+            <span class="dc-compare-card__type">Memory Foam</span>
+          </div>
+          <p class="dc-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/collections/dreamcloud" class="dc-compare-card">
+          <p class="dc-compare-card__tier">Mid</p>
+          <h3 class="dc-compare-card__name">DreamCloud Premier</h3>
+          <p class="dc-compare-card__tag">Enhanced comfort</p>
+          <div class="dc-compare-card__types">
+            <span class="dc-compare-card__type">Hybrid</span>
+            <span class="dc-compare-card__type">Memory Foam</span>
+          </div>
+          <p class="dc-compare-card__cta">Shop Premier →</p>
+        </a>
+      {% endif %}
+
+      {% if is_luxe %}
+        <div class="dc-compare-card active">
+          <p class="dc-compare-card__tier">Premium</p>
+          <h3 class="dc-compare-card__name">DreamCloud Luxe</h3>
+          <p class="dc-compare-card__tag">Ultimate luxury</p>
+          <div class="dc-compare-card__types">
+            <span class="dc-compare-card__type">Hybrid</span>
+            <span class="dc-compare-card__type">Memory Foam</span>
+          </div>
+          <p class="dc-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/collections/dreamcloud" class="dc-compare-card">
+          <p class="dc-compare-card__tier">Premium</p>
+          <h3 class="dc-compare-card__name">DreamCloud Luxe</h3>
+          <p class="dc-compare-card__tag">Ultimate luxury</p>
+          <div class="dc-compare-card__types">
+            <span class="dc-compare-card__type">Hybrid</span>
+            <span class="dc-compare-card__type">Memory Foam</span>
+          </div>
+          <p class="dc-compare-card__cta">Shop Luxe →</p>
+        </a>
+      {% endif %}
+
+      {% if is_ultra %}
+        <div class="dc-compare-card active">
+          <p class="dc-compare-card__tier">Top</p>
+          <h3 class="dc-compare-card__name">DreamCloud Ultra</h3>
+          <p class="dc-compare-card__tag">Best-in-class</p>
+          <div class="dc-compare-card__types">
+            <span class="dc-compare-card__type">Hybrid</span>
+            <span class="dc-compare-card__type">Memory Foam</span>
+          </div>
+          <p class="dc-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/collections/dreamcloud" class="dc-compare-card">
+          <p class="dc-compare-card__tier">Top</p>
+          <h3 class="dc-compare-card__name">DreamCloud Ultra</h3>
+          <p class="dc-compare-card__tag">Best-in-class</p>
+          <div class="dc-compare-card__types">
+            <span class="dc-compare-card__type">Hybrid</span>
+            <span class="dc-compare-card__type">Memory Foam</span>
+          </div>
+          <p class="dc-compare-card__cta">Shop Ultra →</p>
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- Accessories heading -->
+    <p class="dc-accessories__heading">Complete your DreamCloud setup</p>
+    <div class="dc-accessories">
+
+      <!-- Adjustable Base -->
+      <a href="/collections/bedtech" class="dc-accessory-card">
+        <p class="dc-accessory-card__icon">⚡</p>
+        <h3 class="dc-accessory-card__name">Adjustable Bed Base</h3>
+        <p class="dc-accessory-card__desc">Elevate your head or feet with a BedTech adjustable base. Zero-gravity positioning, massage, and under-bed lighting available across 7 models.</p>
+        <p class="dc-accessory-card__price">From $399</p>
+        <p class="dc-accessory-card__cta">Browse bases →</p>
+      </a>
+
+      <!-- Mattress Protector -->
+      <a href="/products/bedgear-dri-tec" class="dc-accessory-card">
+        <p class="dc-accessory-card__icon">🛡️</p>
+        <h3 class="dc-accessory-card__name">Mattress Protector</h3>
+        <p class="dc-accessory-card__desc">Keep your DreamCloud in pristine condition. The Dri-Tec protector is waterproof, breathable, and machine washable.</p>
+        <p class="dc-accessory-card__price">$119.99</p>
+        <p class="dc-accessory-card__cta">Add protection →</p>
+      </a>
+
+      <!-- Pillows -->
+      <a href="/collections/bedgear" class="dc-accessory-card">
+        <p class="dc-accessory-card__icon">🛏️</p>
+        <h3 class="dc-accessory-card__name">Performance Pillows</h3>
+        <p class="dc-accessory-card__desc">Pair your DreamCloud with a BedGear performance pillow. Available in Storm (cooling) and Balance (adjustable loft) models.</p>
+        <p class="dc-accessory-card__price">From $79.99</p>
+        <p class="dc-accessory-card__cta">Shop pillows →</p>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "DreamCloud Add-ons",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,264 @@
+{% comment %}
+  product-layer-diagram.liquid
+  Displays mattress construction layers as a visual stacked diagram on PDPs.
+  Layer data is defined per product handle.
+  Format: LayerName|Thickness|Description|ColorLabel
+  Layers separated by ||
+{% endcomment %}
+
+{%- assign product_handle = closest.product.handle -%}
+<!-- DEBUG: product_handle={{ product_handle }} -->
+
+{%- comment %}━━━ LAYER DATA ━━━{% endcomment %}
+{%- assign layer_data_raw = "" -%}
+
+{%- case product_handle -%}
+
+  {%- comment %}══════ PUFFY ══════{% endcomment %}
+  {%- when "puffy-cloud" -%}
+    {%- capture layer_data_raw -%}Stretch Cover|0.25|Breathable, waffle-textured cover with stretch for a soft top-of-bed feel.|Cover||Plush Comfort Foam|1.5|Soft body-cushioning foam layer for initial pressure relief and cloud-like comfort.|Foam||Cooling Gel Memory Foam|2.0|Proprietary cooling gel foam pulls heat away from the body while contouring to pressure points.|Cooling Gel||High-Density Support Foam|4.0|High-density support foam base provides stability and durability for the mattress core.|Support{%- endcapture -%}
+
+  {%- when "puffy-lux" -%}
+    {%- capture layer_data_raw -%}Stretch Cover|0.25|Breathable, waffle-textured cover.|Cover||Plush Comfort Foam|1.5|Extra layer of soft cushioning for enhanced pressure relief at the surface.|Foam||Body-Contouring Memory Foam|1.5|Denser memory foam layer for deeper contour and pressure point relief.|Memory||Cooling Gel Memory Foam|2.0|Primary cooling layer with gel infusion for temperature regulation.|Cooling Gel||High-Density Support Foam|4.0|High-density support foam base.|Support{%- endcapture -%}
+
+  {%- when "puffy-royal-hybrid" -%}
+    {%- capture layer_data_raw -%}Stretch Cover|0.25|Breathable, waffle-textured cover.|Cover||Plush Comfort Foam|1.0|Soft surface layer for immediate cushioning and comfort.|Foam||Cooling Gel Memory Foam|2.0|Cooling gel foam delivers pressure relief and temperature regulation.|Cooling Gel||Transition Foam|0.5|Thin transition layer between coils and comfort foams for a smooth feel transition.|Transition||5-Zone Coil Support Core|6.0|Individually wrapped coils with 5 ergonomic zones for targeted support and reduced motion transfer.|Coils||Grip Base Cover|1.0|Reinforced base cover with non-slip backing.|Support{%- endcapture -%}
+
+  {%- when "puffy-monarch" -%}
+    {%- capture layer_data_raw -%}Stretch Cover|0.25|Breathable, waffle-textured cover.|Cover||Plush Comfort Foam|1.5|Extra layer of soft cushioning for enhanced pressure relief.|Foam||Cooling Gel Memory Foam|2.0|Cooling gel foam for pressure relief and temperature regulation.|Cooling Gel||Diamond-Infused Cooling Foam|1.5|Premium cooling foam infused with diamond dust for maximum heat dissipation.|Cooling||5-Zone Coil Support Core|6.0|Individually wrapped coils with 5 ergonomic zones for targeted support.|Coils||High-Density Support Foam|2.0|Extra-thick support core for durability and spinal alignment.|Support||Grip Base Cover|1.0|Reinforced base cover with non-slip backing.|Support{%- endcapture -%}
+
+  {%- comment %}══════ HELIX ══════{% endcomment %}
+  {%- when "helix-midnight" -%}
+    {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable, quilted top panel with plush feel.|Cover||Memory Foam Plus|1.5|Premium memory foam with cooling properties for deep contour.|Memory||Helix Dynamic Foam|2.0|Responsive transition foam that adapts to body shape for pressure relief.|Transition||7-Zone Coil Support Core|6.0|Individually wrapped coils with 7 ergonomic zones for zoned support and spinal alignment.|Coils||Base Support Foam|4.0|High-density foam foundation provides core stability and edge support.|Support{%- endcapture -%}
+
+  {%- when "helix-twilight" -%}
+    {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable, quilted top panel.|Cover||Plush Pillow Top|1.5|Extra plush pillow-top layer for enhanced cushioning.|PillowTop||Cooling Gel Layer|1.0|Active cooling gel layer that draws heat away from the body.|Cooling Gel||Helix Dynamic Foam|2.0|Responsive transition foam for pressure relief.|Transition||7-Zone Coil Support Core|6.0|Individually wrapped coils with 7 ergonomic zones.|Coils||Base Support Foam|4.0|High-density foam foundation.|Support{%- endcapture -%}
+
+  {%- when "helix-sunrise" -%}
+    {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable, quilted top panel.|Cover||Plush Pillow Top|1.5|Extra plush pillow-top layer for enhanced cushioning.|PillowTop||Memory Foam Plus|1.5|Premium memory foam for deep contour.|Memory||Helix Dynamic Foam|2.0|Responsive transition foam.|Transition||7-Zone Coil Support Core|6.0|Individually wrapped coils with 7 ergonomic zones.|Coils||Base Support Foam|4.0|High-density foam foundation.|Support{%- endcapture -%}
+
+  {%- when "helix-elite" -%}
+    {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable, quilted top panel.|Cover||Quilted Euro Top|1.5|Luxurious euro-top for a plush, hotel-like feel.|PillowTop||Cooling Memory Foam|1.5|Gel-infused memory foam for cool contouring.|Cooling Gel||Helix Dynamic Foam|2.0|Responsive transition foam.|Transition||7-Zone Coil Support Core|6.0|Individually wrapped coils with 7 ergonomic zones.|Coils||Base Support Foam|4.0|High-density foam foundation.|Support{%- endcapture -%}
+
+  {%- when "helix-dusk" -%}
+    {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable, quilted top panel.|Cover||Plush Pillow Top|1.5|Extra plush pillow-top layer.|PillowTop||Memory Foam Plus|1.5|Dual-gel memory foam for contour and coolness.|Memory||Helix Dynamic Foam|2.0|Responsive transition foam.|Transition||7-Zone Coil Support Core|6.0|Individually wrapped coils with 7 ergonomic zones.|Coils||Base Support Foam|4.0|High-density foam foundation.|Support{%- endcapture -%}
+
+  {%- comment %}══════ DREAMCLOUD ══════{% endcomment %}
+  {%- when "dreamcloud-premier" or "dreamcloud-premier-hybrid" -%}
+    {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable, cashmere-blend quilted cover.|Cover||Plush Euro Top|1.5|Luxurious pillow-top layer with soft fiber fill for cloud-like feel.|PillowTop||Transition Polyfoam|1.0|Supportive transition foam bridges coils and comfort layers.|Transition||DreamCloud Memory Foam|2.0|Premium memory foam infused with gel for cooling pressure relief.|Memory||5-Zone Coil Support Core|6.0|Individually wrapped coils with 5 ergonomic zones for targeted support.|Coils||High-Density Support Foam|4.0|Sturdy foam base provides core support and minimizes sagging.|Support{%- endcapture -%}
+
+  {%- comment %}══════ NECTAR ══════{% endcomment %}
+  {%- when "nectar-classic-memory-foam" -%}
+    {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable, soft-touch cover with phase-change material.|Cover||Cooling Gel Memory Foam|1.0|Proprietary gel-infused foam draws heat away from the body.|Cooling Gel||Dynamic Response Memory Foam|2.0|Quilted memory foam that adapts to body shape and temperature for pressure relief.|Memory||Airflow Transfer Foam|1.0|Breathable transition foam promotes airflow through the mattress.|Transition||High-Density Support Foam|5.0|Thick support core for stability and alignment.|Support{%- endcapture -%}
+
+  {%- when "nectar-premier-memory-foam" -%}
+    {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable cover with phase-change material.|Cover||Extra Plush Comfort Foam|1.0|Additional layer for enhanced pressure relief.|Foam||Cooling Gel Memory Foam|1.0|Gel-infused cooling foam.|Cooling Gel||Dynamic Response Memory Foam|2.0|Quilted memory foam for adaptive contour.|Memory||Airflow Transfer Foam|1.0|Breathable transition foam.|Transition||High-Density Support Foam|5.0|Thick support core for stability.|Support{%- endcapture -%}
+
+  {%- comment %}══════ BEDGEAR ══════{% endcomment %}
+  {%- when "bedgear-m1-mattress" -%}
+    {%- capture layer_data_raw -%}REACTO™ Performance Knit Cover|0.25|Breathable, stretch-knit cover with VERSA-TEX™ cooling technology.|Cover||VERSA-TEX™ Cooling Fabric|0.25|Moisture-wicking, temperature-regulating fabric layer.|Fabric||Renu™ Responsive Foam|2.0|BEDGEAR's proprietary responsive foam for pressure relief with bounce-back.|Memory||High-Density Support Foam|5.0|Stable base support core.|Support{%- endcapture -%}
+
+  {%- comment %}══════ NATUREPEDIC ══════{% endcomment %}
+  {%- when "naturepedic-eos-classic" -%}
+    {%- capture layer_data_raw -%}Organic Cotton Quilted Cover|0.5|Certified organic cotton cover, free from chemical treatments.|Cotton||Organic Cotton Comfort Pad|1.0|GOTS-certified organic cotton for softness and breathability.|Cotton||Organic Wool Comfort Layer|1.0|Naturally flame-resistant organic wool for temperature regulation.|Wool||Individually Wrapped Coils|6.0|Individually encased coils for zoned support and breathability.|Coils||Organic Cotton Base|2.0|GOTS-certified organic cotton support layer.|Cotton{%- endcapture -%}
+
+  {%- comment %}══════ BEDTECH ══════{% endcomment %}
+  {%- when "bedtech-bt3000" -%}
+    {%- capture layer_data_raw -%}Quilted Cooling Cover|0.5|Breathable cover with cooling properties.|Cover||Cooling Gel Memory Foam|2.0|Gel-infused memory foam for pressure relief and cooling.|Cooling Gel||Individually Wrapped Coils|6.0|Pocket coil system for support and reduced motion transfer.|Coils||High-Density Support Foam|4.0|Durable support foam base.|Support{%- endcapture -%}
+
+  {%- comment %}══════ SERTA ══════{% endcomment %}
+  {%- when "serta-icomfort-mattress" -%}
+    {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable, soft-to-the-touch cover.|Cover||Cool Twist® Gel Foam|1.0|Extra layer of cooling gel foam for enhanced temperature regulation.|Cooling Gel||EverCool® Gel Memory Foam|2.0|Serta's signature gel-infused memory foam for cooling comfort.|Memory||Individually Wrapped Coils|6.0|Custom Support™ coil system for responsive support.|Coils||High-Density Support Foam|4.0|Durable support core.|Support{%- endcapture -%}
+
+  {%- comment %}══════ JAMISON ══════{% endcomment %}
+  {%- when "jamison-silk-mattress" -%}
+    {%- capture layer_data_raw -%}Quilted Damask Cover|0.5|Elegant damask cover with plush fiber padding.|Cover||Gel-Infused Memory Foam|2.0|Cooling memory foam for pressure relief.|Memory||Individually Wrapped Coils|6.0|Pocket coil system for responsive support.|Coils||High-Density Support Foam|4.0|Sturdy support core.|Support{%- endcapture -%}
+
+  {%- comment %}══════ PRANASLEEP ══════{% endcomment %}
+  {%- when "pranasleep-mattress" -%}
+    {%- capture layer_data_raw -%}Organic Cotton Cover|0.25|Breathable organic cotton cover.|Cotton||Cooling Gel Memory Foam|2.0|Gel-infused memory foam for pressure relief.|Cooling Gel||Individually Wrapped Coils|6.0|Pocket coil system for support and airflow.|Coils||High-Density Support Foam|4.0|Stable support foam foundation.|Support{%- endcapture -%}
+
+  {%- comment %}══════ POSH & LAVISH ══════{% endcomment %}
+  {%- when "posh-and-lavish-mattress" -%}
+    {%- capture layer_data_raw -%}Quilted Euro Top Cover|0.5|Plush euro-top cover with fiber padding.|PillowTop||Gel-Infused Memory Foam|2.0|Cooling gel memory foam for pressure relief.|Memory||Individually Wrapped Coils|6.0|Pocket coil system for support.|Coils||High-Density Support Foam|4.0|Durable support core.|Support{%- endcapture -%}
+
+{%- endcase -%}
+
+{%- if layer_data_raw == "" -%}
+  <!-- No layer data for product: {{ product_handle }} -->
+{%- else -%}
+  <!-- Layer data found for: {{ product_handle }} -->
+
+{%- comment %}━━━ RENDER ━━━{% endcomment %}
+{%- assign layers = layer_data_raw | strip | split: "||" -%}
+{%- assign total_height = 0 -%}
+{%- for layer in layers -%}
+  {%- assign parts = layer | split: "|" -%}
+  {%- assign thickness = parts[1] | plus: 0 -%}
+  {%- assign total_height = total_height | plus: thickness -%}
+{%- endfor -%}
+
+<style>
+  .layer-diagram { font-family: 'Inter', 'Segoe UI', sans-serif; max-width: 1300px; margin: 0 auto; padding: 40px 24px; }
+  .layer-diagram__header { margin-bottom: 32px; }
+  .layer-diagram__header .section-label {
+    display: inline-block; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--color-accent, #2563eb); margin-bottom: 8px;
+  }
+  .layer-diagram__header h2 {
+    font-size: clamp(24px, 2.8vw, 36px); font-weight: 900; color: #111; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 8px 0;
+  }
+  .layer-diagram__header p { font-size: 15px; color: #64748b; line-height: 1.6; margin: 0; max-width: 600px; }
+  .layer-diagram__columns { display: grid; grid-template-columns: 1fr 1.3fr; gap: 40px; align-items: start; }
+  @media (max-width: 860px) { .layer-diagram__columns { grid-template-columns: 1fr !important; } }
+  .layer-stack { position: relative; padding: 20px 0; }
+  .layer-stack__inner {
+    display: flex; flex-direction: column-reverse; gap: 3px;
+    border-radius: 10px; overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  .layer-stack__layer {
+    padding: 14px 18px; display: flex; align-items: center; gap: 14px;
+    position: relative; overflow: hidden; min-height: 52px;
+    transition: transform 0.2s;
+  }
+  .layer-stack__layer:hover { transform: scale(1.01); z-index: 2; }
+  .layer-stack__layer--base { background: #1e293b; }
+  .layer-stack__layer--coils { background: #94a3b8; }
+  .layer-stack__layer--support { background: #4a5a6e; }
+  .layer-stack__layer--transition { background: #6b7c90; }
+  .layer-stack__layer--foam { background: #7c8b9e; }
+  .layer-stack__layer--memory { background: #b4a7d6; }
+  .layer-stack__layer--cooling-gel { background: #67b5d6; }
+  .layer-stack__layer--cooling { background: #89cff0; }
+  .layer-stack__layer--wool { background: #c4a882; }
+  .layer-stack__layer--cotton { background: #d4c5a9; }
+  .layer-stack__layer--pillowtop { background: #e8d8c8; }
+  .layer-stack__layer--cover { background: #f0ece6; }
+  .layer-stack__layer--fabric { background: #d0d4d8; }
+  .layer-stack__layer--default { background: #b0b8c4; }
+  .layer-stack__info { flex: 1; min-width: 0; }
+  .layer-stack__name {
+    font-size: 14px; font-weight: 800; color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .layer-stack__thickness {
+    font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.8);
+    background: rgba(0,0,0,0.25); padding: 2px 8px; border-radius: 4px;
+    margin-left: 8px; white-space: nowrap;
+  }
+  .layer-stack__desc {
+    font-size: 11px; color: rgba(255,255,255,0.75); line-height: 1.4; margin-top: 2px;
+    max-width: 400px;
+  }
+  .layer-details { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; }
+  .layer-details h3 {
+    font-size: 18px; font-weight: 800; color: #111; margin: 0 0 16px 0;
+    letter-spacing: -0.01em;
+  }
+  .layer-details__total {
+    display: flex; align-items: center; gap: 12px; padding: 14px; background: white;
+    border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 16px;
+  }
+  .layer-details__total-value { font-size: 28px; font-weight: 900; color: #111; }
+  .layer-details__total-label { font-size: 12px; color: #64748b; font-weight: 600; }
+  .layer-details__features { display: flex; flex-wrap: wrap; gap: 8px; }
+  .layer-details__feature {
+    background: white; border: 1px solid #e2e8f0; border-radius: 20px;
+    padding: 5px 14px; font-size: 12px; font-weight: 600; color: #334155;
+  }
+  .layer-cta {
+    margin-top: 24px; padding: 16px 20px; background: white;
+    border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; color: #475569; line-height: 1.6;
+  }
+  .layer-cta strong { color: #111; }
+  .layer-diagram__note { margin-top: 16px; font-size: 12px; color: #94a3b8; text-align: center; font-style: italic; }
+</style>
+
+<div class="layer-diagram">
+  <div class="layer-diagram__header">
+    <span class="section-label">Construction</span>
+    <h2>What's inside this mattress</h2>
+    <p>See exactly how each layer works together for your comfort and support.</p>
+  </div>
+
+  <div class="layer-diagram__columns">
+    {# Left: Visual Stack #}
+    <div class="layer-stack">
+      <div class="layer-stack__inner">
+        {%- for layer in layers -%}
+          {%- assign parts = layer | split: "|" -%}
+          {%- assign layer_name = parts[0] | strip -%}
+          {%- assign layer_thickness = parts[1] | strip -%}
+          {%- assign layer_desc = parts[2] | strip -%}
+          {%- assign layer_label = parts[3] | strip -%}
+
+          {%- assign layer_class = "layer-stack__layer--default" -%}
+          {%- assign lc = layer_label | downcase -%}
+          {%- if lc contains "base" or lc contains "grip" -%}{%- assign layer_class = "layer-stack__layer--base" -%}
+          {%- elsif lc contains "coil" or lc contains "spring" -%}{%- assign layer_class = "layer-stack__layer--coils" -%}
+          {%- elsif lc contains "support" -%}{%- assign layer_class = "layer-stack__layer--support" -%}
+          {%- elsif lc contains "transition" -%}{%- assign layer_class = "layer-stack__layer--transition" -%}
+          {%- elsif lc contains "memory" -%}{%- assign layer_class = "layer-stack__layer--memory" -%}
+          {%- elsif lc == "cooling gel" -%}{%- assign layer_class = "layer-stack__layer--cooling-gel" -%}
+          {%- elsif lc contains "cooling" or lc contains "cool" -%}{%- assign layer_class = "layer-stack__layer--cooling" -%}
+          {%- elsif lc contains "wool" -%}{%- assign layer_class = "layer-stack__layer--wool" -%}
+          {%- elsif lc contains "cotton" -%}{%- assign layer_class = "layer-stack__layer--cotton" -%}
+          {%- elsif lc contains "pillow" or lc contains "euro" or lc contains "top" -%}{%- assign layer_class = "layer-stack__layer--pillowtop" -%}
+          {%- elsif lc contains "cover" or lc contains "quilted" -%}{%- assign layer_class = "layer-stack__layer--cover" -%}
+          {%- elsif lc contains "fabric" or lc contains "knit" -%}{%- assign layer_class = "layer-stack__layer--fabric" -%}
+          {%- elsif lc contains "foam" -%}{%- assign layer_class = "layer-stack__layer--foam" -%}
+          {%- endif -%}
+
+          <div class="layer-stack__layer {{ layer_class }}">
+            <div class="layer-stack__info">
+              <span class="layer-stack__name">{{ layer_name }}
+                <span class="layer-stack__thickness">{{ layer_thickness }}"</span>
+              </span>
+              <p class="layer-stack__desc">{{ layer_desc }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {# Right: Details Panel #}
+    <div class="layer-details">
+      <h3>Layer breakdown</h3>
+      <div class="layer-details__total">
+        <div class="layer-details__total-value">{{ total_height }}"</div>
+        <div class="layer-details__total-label">Total mattress height</div>
+      </div>
+      <div class="layer-details__features">
+        <span class="layer-details__feature">🏗️ {{ layers.size }} layers</span>
+        {%- assign has_coils = false -%}{%- assign has_memory = false -%}{%- assign has_cooling = false -%}{%- assign has_cotton = false -%}
+        {%- for layer in layers -%}
+          {%- assign p = layer | split: "|" -%}{%- assign lb = p[3] | default: "" | downcase -%}
+          {%- if lb contains "coil" -%}{%- assign has_coils = true -%}{%- endif -%}
+          {%- if lb contains "memory" -%}{%- assign has_memory = true -%}{%- endif -%}
+          {%- if lb contains "cooling" or lb contains "gel" -%}{%- assign has_cooling = true -%}{%- endif -%}
+          {%- if lb contains "cotton" or lb contains "wool" -%}{%- assign has_cotton = true -%}{%- endif -%}
+        {%- endfor -%}
+        {%- if has_coils -%}<span class="layer-details__feature">🔩 Pocket coils</span>{%- endif -%}
+        {%- if has_memory -%}<span class="layer-details__feature">🧊 Memory foam layer</span>{%- endif -%}
+        {%- if has_cooling -%}<span class="layer-details__feature">❄️ Cooling technology</span>{%- endif -%}
+        {%- if has_cotton -%}<span class="layer-details__feature">🌱 Natural materials</span>{%- endif -%}
+      </div>
+      <div class="layer-cta">
+        <strong>Come feel the difference.</strong> Stop by our showroom to try each model. Your body knows best — lie down on the actual layers and compare.
+      </div>
+    </div>
+  </div>
+  <p class="layer-diagram__note">Layers shown from top (surface) to bottom (base). Heights are approximate.</p>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Mattress Layer Diagram",
+  "settings": [],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

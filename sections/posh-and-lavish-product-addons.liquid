@@ -1,0 +1,198 @@
+{% comment %}
+  posh-product-addons.liquid
+  Shows Posh and Lavish Providence comparison on product pages
+  Only renders on Posh and Lavish products
+{% endcomment %}
+
+{% assign is_posh_product = false %}
+{% if closest.product.vendor == "Posh and Lavish" %}
+  {% assign is_posh_product = true %}
+  {% assign title_lower = closest.product.title | downcase %}
+{% endif %}
+
+{% if is_posh_product %}
+
+<style>
+  .posh-addons {
+    background: #f0ece6;
+    border-top: 1px solid #e2e8f0;
+    padding: 48px 24px;
+    margin-top: 0;
+  }
+  .posh-addons__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .posh-addons__header {
+    margin-bottom: 32px;
+  }
+  .posh-addons__label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #8e659e;
+    margin-bottom: 8px;
+  }
+  .posh-addons__title {
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 900;
+    color: #2d2130;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px 0;
+  }
+  .posh-addons__sub {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+  .posh-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .posh-card {
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative;
+  }
+  .posh-card:hover {
+    border-color: #8e659e;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .posh-card.active {
+    border-color: #8e659e;
+    background: #f8f4fa;
+  }
+  .posh-card.active::after {
+    content: 'Current';
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    background: #8e659e;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 10px;
+    border-radius: 4px;
+  }
+  .posh-card__name {
+    font-size: 18px;
+    font-weight: 800;
+    color: #2d2130;
+    margin: 0;
+  }
+  .posh-card__tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: #ede6f0;
+    color: #8e659e;
+    width: fit-content;
+  }
+  .posh-card__desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .posh-card__price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2d2130;
+    margin: 0;
+  }
+  .posh-card__cta {
+    font-size: 12px;
+    font-weight: 800;
+    color: #8e659e;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .posh-card:hover .posh-card__cta { gap: 8px; }
+</style>
+
+<div class="posh-addons">
+  <div class="posh-addons__inner">
+    <div class="posh-addons__header">
+      <p class="posh-addons__label">Posh and Lavish</p>
+      <h2 class="posh-addons__title">Providence Collection</h2>
+      <p class="posh-addons__sub">Premium latex hybrid mattresses — choose your comfort depth</p>
+    </div>
+
+    <div class="posh-grid">
+
+      {% if title_lower contains "providence" %}
+        {% if title_lower contains "3" or title_lower contains "pillow top" %}
+          {% comment %}Providence 3 inch Pillow Top handled below{% endcomment %}
+        {% else %}
+        <div class="posh-card active">
+          <h3 class="posh-card__name">Providence</h3>
+          <span class="posh-card__tag">Standard</span>
+          <p class="posh-card__desc">A premium latex hybrid mattress with zoned coil support and natural latex comfort layers. Medium-plush feel with excellent pressure relief and cooling performance.</p>
+          <p class="posh-card__price">$1,474</p>
+          <p class="posh-card__cta">You're viewing →</p>
+        </div>
+        {% endif %}
+      {% else %}
+        <a href="/products/providence" class="posh-card">
+          <h3 class="posh-card__name">Providence</h3>
+          <span class="posh-card__tag">Standard</span>
+          <p class="posh-card__desc">Premium latex hybrid with zoned coil support and natural latex comfort layers. Medium-plush feel.</p>
+          <p class="posh-card__price">$1,474</p>
+          <p class="posh-card__cta">View Providence →</p>
+        </a>
+      {% endif %}
+
+      {% if title_lower contains "3" or title_lower contains "pillow top" %}
+        <div class="posh-card active">
+          <h3 class="posh-card__name">Providence 3" Pillow Top</h3>
+          <span class="posh-card__tag">True Pillow Top</span>
+          <p class="posh-card__desc">The Providence with an additional 3" of plush latex comfort. Extra cushioning for those who want a softer, more luxurious sleep surface without sacrificing coil support.</p>
+          <p class="posh-card__price">$2,249</p>
+          <p class="posh-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/providence-3-true-pillow-top" class="posh-card">
+          <h3 class="posh-card__name">Providence 3" Pillow Top</h3>
+          <span class="posh-card__tag">True Pillow Top</span>
+          <p class="posh-card__desc">Extra 3" of plush latex comfort for a softer, more luxurious sleep surface.</p>
+          <p class="posh-card__price">$2,249</p>
+          <p class="posh-card__cta">View Pillow Top →</p>
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Posh & Lavish Add-ons",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}

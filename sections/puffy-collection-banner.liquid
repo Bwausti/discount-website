@@ -1,0 +1,401 @@
+{% if closest.collection.handle != 'puffy' %}{% break %}{% endif %}
+<!-- Section: puffy-collection-banner -->
+<!-- Brand: Puffy Sleep | Models: Cloud / Lux / Lux Hybrid / Royal / Monarch -->
+<style>
+  .puffy-section { font-family: 'Inter', 'Segoe UI', sans-serif; }
+  .puffy-hero {
+    position: relative; overflow: hidden;
+    background: #1a2940; min-height: 560px; display: flex; align-items: center;
+  }
+  .puffy-hero__bg {
+    position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%;
+    opacity: 0.40;
+  }
+  .puffy-hero::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to right, rgba(26,41,64,0.88) 0%, rgba(26,41,64,0.55) 55%, rgba(26,41,64,0.15) 100%);
+  }
+  .puffy-hero__content {
+    position: relative; z-index: 2; width: 100%;
+    padding: 60px 24px; max-width: 1300px; margin: 0 auto;
+    display: grid; gap: 32px;
+    grid-template-columns: 1fr 1.15fr; align-items: center;
+  }
+  @media (max-width: 860px) {
+    .puffy-hero__content { grid-template-columns: 1fr !important; padding: 40px 20px; }
+    .puffy-hero__right { display: none !important; }
+  }
+  .puffy-hero__left { max-width: 600px; }
+  .puffy-eyebrow {
+    display: inline-block; background: rgba(26,41,64,0.7); backdrop-filter: blur(8px); border: 1px solid rgba(91,155,213,0.4);
+    color: #5b9bd5; font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.22em;
+    padding: 6px 14px; border-radius: 4px; margin-bottom: 20px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .puffy-hero h1 {
+    font-size: clamp(36px, 5vw, 60px); font-weight: 900;
+    color: white; line-height: 0.95; letter-spacing: -0.02em;
+    margin: 0 0 16px 0;
+    text-shadow: 0 3px 16px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .puffy-hero__tagline {
+    font-size: 18px; font-weight: 700; color: white;
+    line-height: 1.5; margin: 0 0 12px 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .puffy-hero__desc {
+    font-size: 15px; color: rgba(255,255,255,0.92); line-height: 1.65;
+    margin: 0 0 24px 0; max-width: 520px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .puffy-hero__badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .puffy-badge {
+    background: rgba(0,0,0,0.55); color: white;
+    padding: 5px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    border: 1px solid rgba(255,255,255,0.25);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+  .puffy-hero__buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+  .puffy-btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #5b9bd5; color: white; padding: 13px 28px;
+    border-radius: 6px; text-decoration: none; font-weight: 800; font-size: 14px;
+    transition: background 0.2s;
+  }
+  .puffy-btn-primary:hover { background: #7bb8e8; }
+  .puffy-btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px); color: white; padding: 13px 24px;
+    border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .puffy-btn-secondary:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.6); }
+  .puffy-hero__right {
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+    border-radius: 12px; padding: 24px; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .puffy-hero__showroom-note { font-size: 15px; font-weight: 700; color: #1a2940; line-height: 1.5; }
+  .puffy-hero__products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+  .puffy-hero__product-card {
+    background: #f4f2ea; border-radius: 8px; overflow: hidden;
+    text-decoration: none; transition: transform 0.2s, background 0.2s;
+    display: block;
+  }
+  .puffy-hero__product-card:hover { transform: translateY(-3px); background: #eee9dc; }
+  .puffy-hero__product-img { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: 6px 6px 0 0; }
+  .puffy-hero__product-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; transform: scale(1.15); }
+  .puffy-hero__product-name { padding: 10px 10px 12px; font-size: 12px; font-weight: 800; color: #1a2940; line-height: 1.3; }
+  /* Trust bar */
+  .puffy-trust { background: white; border-bottom: 1px solid #e2e8f0; }
+  .puffy-trust__grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .puffy-trust__item { padding: 16px 20px; text-align: center; border-right: 1px solid #e2e8f0; }
+  .puffy-trust__item:last-child { border-right: none; }
+  .puffy-trust__label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: #64748b; margin-bottom: 4px; }
+  .puffy-trust__value { font-size: 20px; font-weight: 900; color: #1a2940; }
+  /* Highlight pills */
+  .puffy-highlights { background: #f0f4fa; padding: 20px 24px; border-bottom: 1px solid #e2e8f0; }
+  .puffy-highlights__inner { max-width: 1300px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px; }
+  .puffy-highlight-pill { background: white; border: 1px solid #cbd5e1; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; color: #334155; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  /* Tier section */
+  .puffy-tier-section { background: #f0f4fa; padding: 56px 24px; }
+  .puffy-tier-header { max-width: 1300px; margin: 0 auto 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: end; }
+  @media (max-width: 860px) { .puffy-tier-header { grid-template-columns: 1fr !important; } }
+  .puffy-tier-header__right { background: white; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; }
+  .puffy-tier-header__right p { font-size: 14px; font-weight: 600; color: #475569; line-height: 1.65; margin: 0; }
+  .section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; color: #5b9bd5; margin-bottom: 8px; }
+  .puffy-tier-header h2 { font-size: clamp(28px, 3.5vw, 42px); font-weight: 900; color: #1a2940; line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+  .puffy-tier-header p { font-size: 16px; color: #64748b; line-height: 1.6; margin-top: 12px; }
+  .puffy-tier-cards { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  @media (max-width: 860px) { .puffy-tier-cards { grid-template-columns: 1fr !important; } }
+  .puffy-tier-card {
+    background: white; border: 2px solid #e2e8f0; border-radius: 12px;
+    overflow: hidden; text-align: left; cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    display: block; text-decoration: none;
+  }
+  .puffy-tier-card:hover {
+    border-color: #5b9bd5; transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  }
+  .puffy-tier-card.active {
+    border-color: #5b9bd5; box-shadow: 0 0 0 4px rgba(91,155,213,0.15);
+  }
+  .puffy-tier-card__img { position: relative; aspect-ratio: 16/10; background: #f1f3f6; overflow: hidden; }
+  .puffy-tier-card__img img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; padding: 0; transition: transform 0.4s; }
+  .puffy-tier-card:hover .puffy-tier-card__img img { transform: scale(1.04); }
+  .puffy-tier-card__body { padding: 18px; }
+  .puffy-tier-card__name { font-size: 22px; font-weight: 900; color: #1a2940; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .puffy-tier-card__price { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #5b9bd5; margin-bottom: 8px; }
+  .puffy-tier-card__summary { font-size: 12px; color: #475569; line-height: 1.55; margin-bottom: 10px; }
+  .puffy-tier-card__best-for {
+    background: #f0f4fa; padding: 8px 12px; border-radius: 6px;
+    font-size: 11px; font-weight: 700; color: #334155; line-height: 1.5;
+  }
+  .puffy-tier-card__selector {
+    display: inline-block; padding: 8px 16px; border-radius: 6px;
+    font-size: 12px; font-weight: 800; margin-top: 12px; background: #1a2940; color: white;
+    transition: background 0.2s;
+  }
+  .puffy-tier-card:hover .puffy-tier-card__selector { background: #5b9bd5; }
+  /* Brand story */
+  .puffy-story { background: white; padding: 64px 24px; border-top: 1px solid #e2e8f0; }
+  .puffy-story__inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; align-items: center; }
+  @media (max-width: 860px) { .puffy-story__inner { grid-template-columns: 1fr !important; } }
+  .puffy-story__img { position: relative; aspect-ratio: 16/10; border-radius: 12px; overflow: hidden; background: #f1f3f6; }
+  .puffy-story__img img { width: 100%; height: 100%; object-fit: cover; }
+  .puffy-story__columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+  @media (max-width: 640px) { .puffy-story__columns { grid-template-columns: 1fr !important; } }
+  .puffy-story__col { background: #f0f4fa; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; }
+  .puffy-story__col h4 { font-size: 13px; font-weight: 800; color: #1a2940; margin: 0 0 6px 0; }
+  .puffy-story__col p { font-size: 12px; color: #64748b; line-height: 1.55; margin: 0; }
+  .puffy-story__content h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: #1a2940; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px 0; }
+  .puffy-story__content p { font-size: 15px; color: #475569; line-height: 1.7; margin-bottom: 16px; }
+  .puffy-story__checklist { list-style: none; padding: 0; margin: 0 0 20px 0; }
+  .puffy-story__checklist li { font-size: 14px; font-weight: 600; color: #1a2940; padding: 6px 0; display: flex; align-items: center; gap: 10px; }
+  .puffy-story__checklist li::before { content: '✓'; color: #5b9bd5; font-weight: 900; font-size: 16px; }
+</style>
+
+<div class="puffy-section">
+
+  <!-- HERO -->
+  <section class="puffy-hero">
+    <img
+      src="{{ 'puffy-royal-card.jpg' | asset_url }}"
+      alt="Puffy mattress collection"
+      class="puffy-hero__bg"
+      loading="eager"
+    >
+    <div class="puffy-hero__content">
+      <div class="puffy-hero__left">
+        <span class="puffy-eyebrow">Available in Bowling Green, KY</span>
+        <h1>Puffy</h1>
+        <p class="puffy-hero__tagline">Memory foam and hybrid comfort, built for every body.</p>
+        <p class="puffy-hero__desc">
+          Puffy makes memory foam and hybrid mattresses with a focus on pressure relief and cooling. From the 10-inch Cloud to the 16-inch Monarch, each model adds more comfort layers, cooling tech, and support features.
+        </p>
+        <div class="puffy-hero__badges">
+          <span class="puffy-badge">5 models</span>
+          <span class="puffy-badge">Memory foam + Hybrid</span>
+          <span class="puffy-badge">Lifetime warranty</span>
+        </div>
+        <div class="puffy-hero__buttons">
+          <a href="#puffy-tier-products" class="puffy-btn-primary">Shop by model</a>
+        </div>
+      </div>
+      <div class="puffy-hero__right">
+        <p class="puffy-hero__showroom-note">
+          Puffy is a top-seller in our showroom — customers love the pressure-relieving memory foam and cooling gel layers that set them apart from other foam brands.
+        </p>
+        <div class="puffy-hero__products">
+          {% assign puffy_products = collections['puffy'].products %}
+          
+          <a href="/products/puffy-cloud" class="puffy-hero__product-card">
+            <div class="puffy-hero__product-img">
+              {% assign prod = puffy_products | where: 'handle', 'puffy-cloud' | first %}
+              {% if prod and prod.featured_image %}
+                <img src="{{ prod.featured_image | image_url: width: 400 }}" alt="Puffy Cloud" loading="lazy">
+              {% endif %}
+            </div>
+            <p class="puffy-hero__product-name">Puffy Cloud<br><span style="font-weight:400;color:#64748b;font-size:11px;">Original · 10"</span></p>
+          </a>
+          <a href="/products/puffy-lux" class="puffy-hero__product-card">
+            <div class="puffy-hero__product-img">
+              {% assign prod = puffy_products | where: 'handle', 'puffy-lux' | first %}
+              {% if prod and prod.featured_image %}
+                <img src="{{ prod.featured_image | image_url: width: 400 }}" alt="Puffy Lux" loading="lazy">
+              {% endif %}
+            </div>
+            <p class="puffy-hero__product-name">Puffy Lux<br><span style="font-weight:400;color:#64748b;font-size:11px;">Cooling gel · 12"</span></p>
+          </a>
+          <a href="/products/puffy-royal-hybrid" class="puffy-hero__product-card">
+            <div class="puffy-hero__product-img">
+              {% assign prod = puffy_products | where: 'handle', 'puffy-royal-hybrid' | first %}
+              {% if prod and prod.featured_image %}
+                <img src="{{ prod.featured_image | image_url: width: 400 }}" alt="Puffy Royal Hybrid" loading="lazy">
+              {% endif %}
+            </div>
+            <p class="puffy-hero__product-name">Puffy Royal Hybrid<br><span style="font-weight:400;color:#64748b;font-size:11px;">Premium · 14"</span></p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="puffy-trust">
+    <div class="puffy-trust__grid">
+      <div class="puffy-trust__item">
+        <p class="puffy-trust__label">Models</p>
+        <p class="puffy-trust__value">5</p>
+      </div>
+      <div class="puffy-trust__item">
+        <p class="puffy-trust__label">In showroom</p>
+        <p class="puffy-trust__value">Yes</p>
+      </div>
+      <div class="puffy-trust__item">
+        <p class="puffy-trust__label">Price match</p>
+        <p class="puffy-trust__value">Lowest guaranteed</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIGHLIGHT PILLS -->
+  <div class="puffy-highlights">
+    <div class="puffy-highlights__inner">
+      <span class="puffy-highlight-pill">🛏️ Memory foam + Hybrid options</span>
+      <span class="puffy-highlight-pill">📏 10" to 16" profiles</span>
+      <span class="puffy-highlight-pill">❄️ Cooling gel memory foam</span>
+      <span class="puffy-highlight-pill">🔒 Lifetime warranty</span>
+      <span class="puffy-highlight-pill">🏠 Made in USA</span>
+      <span class="puffy-highlight-pill">🚚 Free shipping</span>
+    </div>
+  </div>
+
+  <!-- MODEL SELECTOR -->
+  <section id="puffy-tier-products" class="puffy-tier-section">
+    <div class="puffy-tier-header">
+      <div class="puffy-tier-header__left">
+        <p class="section-label">Which Puffy is right for you?</p>
+        <h2>5 models. One fits your sleep style.</h2>
+        <p>Puffy goes from 10" to 16" as you move up the lineup — more layers, more cooling, and coil support starting with the Lux Hybrid. All models have a medium-firm feel, so your choice is really about profile height and budget.</p>
+      </div>
+      <div class="puffy-tier-header__right">
+        <p><strong>All-foam or hybrid?</strong></p>
+        <p>Cloud and Lux are all-foam — quiet, contouring, affordable.</p>
+        <p>Lux Hybrid, Royal Hybrid, and Monarch add pocketed coils — more bounce, better edge support, cooler sleep.</p>
+      </div>
+    </div>
+
+    <div class="puffy-tier-cards">
+      {% assign puffy_products = collections['puffy'].products %}
+      
+      <!-- Cloud -->
+      <a href="/products/puffy-cloud" class="puffy-tier-card">
+        <div class="puffy-tier-card__img">
+          {% assign prod = puffy_products | where: 'handle', 'puffy-cloud' | first %}
+          {% if prod and prod.featured_image %}
+            <img src="{{ prod.featured_image | image_url: width: 500 }}" alt="Puffy Cloud" loading="lazy">
+          {% endif %}
+        </div>
+        <div class="puffy-tier-card__body">
+          <div class="puffy-tier-card__name">Cloud</div>
+          <div class="puffy-tier-card__price">from $449</div>
+          <p class="puffy-tier-card__summary">All-foam entry point with cooling gel memory foam. 10" profile.</p>
+          <div class="puffy-tier-card__best-for">✅ Budget buyers · First memory foam · Guest rooms</div>
+          <span class="puffy-tier-card__selector">Shop Cloud →</span>
+        </div>
+      </a>
+
+      <!-- Lux -->
+      <a href="/products/puffy-lux" class="puffy-tier-card">
+        <div class="puffy-tier-card__img">
+          {% assign prod = puffy_products | where: 'handle', 'puffy-lux' | first %}
+          {% if prod and prod.featured_image %}
+            <img src="{{ prod.featured_image | image_url: width: 500 }}" alt="Puffy Lux" loading="lazy">
+          {% endif %}
+        </div>
+        <div class="puffy-tier-card__body">
+          <div class="puffy-tier-card__name">Lux</div>
+          <div class="puffy-tier-card__price">from $749</div>
+          <p class="puffy-tier-card__summary">All-foam with an extra cooling gel layer and body-contouring foam. 12" profile.</p>
+          <div class="puffy-tier-card__best-for">✅ Deeper contour · Cooling upgrade · Side sleepers</div>
+          <span class="puffy-tier-card__selector">Shop Lux →</span>
+        </div>
+      </a>
+
+      <!-- Lux Hybrid -->
+      <a href="/products/puffy-lux-hybrid" class="puffy-tier-card">
+        <div class="puffy-tier-card__img">
+          {% assign prod = puffy_products | where: 'handle', 'puffy-lux-hybrid' | first %}
+          {% if prod and prod.featured_image %}
+            <img src="{{ prod.featured_image | image_url: width: 500 }}" alt="Puffy Lux Hybrid" loading="lazy">
+          {% endif %}
+        </div>
+        <div class="puffy-tier-card__body">
+          <div class="puffy-tier-card__name">Lux Hybrid</div>
+          <div class="puffy-tier-card__price">from $899</div>
+          <p class="puffy-tier-card__summary">First step into coils — pocketed coils with cooling gel foam. 12" profile.</p>
+          <div class="puffy-tier-card__best-for">✅ Hybrid entry point · Cooler sleep · Bounce</div>
+          <span class="puffy-tier-card__selector">Shop Lux Hybrid →</span>
+        </div>
+      </a>
+
+      <!-- Royal Hybrid (Best Seller) -->
+      <a href="/products/puffy-royal-hybrid" class="puffy-tier-card active">
+        <div class="puffy-tier-card__img">
+          {% assign prod = puffy_products | where: 'handle', 'puffy-royal-hybrid' | first %}
+          {% if prod and prod.featured_image %}
+            <img src="{{ prod.featured_image | image_url: width: 500 }}" alt="Puffy Royal Hybrid" loading="lazy">
+          {% endif %}
+          <span style="position:absolute;top:12px;right:12px;background:#5b9bd5;color:white;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;padding:4px 10px;border-radius:4px;">Best seller</span>
+        </div>
+        <div class="puffy-tier-card__body">
+          <div class="puffy-tier-card__name">Royal Hybrid</div>
+          <div class="puffy-tier-card__price">from $1,089</div>
+          <p class="puffy-tier-card__summary">5-zone coil support core with cooling gel foam and contouring layers. 14" profile.</p>
+          <div class="puffy-tier-card__best-for">✅ Hybrid feel · Couples · Best value mid-tier</div>
+          <span class="puffy-tier-card__selector">Shop Royal Hybrid →</span>
+        </div>
+      </a>
+
+      <!-- Monarch -->
+      <a href="/products/puffy-monarch" class="puffy-tier-card">
+        <div class="puffy-tier-card__img">
+          {% assign prod = puffy_products | where: 'handle', 'puffy-monarch' | first %}
+          {% if prod and prod.featured_image %}
+            <img src="{{ prod.featured_image | image_url: width: 500 }}" alt="Puffy Monarch" loading="lazy">
+          {% endif %}
+        </div>
+        <div class="puffy-tier-card__body">
+          <div class="puffy-tier-card__name">Monarch</div>
+          <div class="puffy-tier-card__price">from $1,799</div>
+          <p class="puffy-tier-card__summary">Puffy's thickest build with diamond-infused cooling foam and premium coil support. 16" profile.</p>
+          <div class="puffy-tier-card__best-for">✅ Luxury · Maximum cooling · Premium edge support</div>
+          <span class="puffy-tier-card__selector">Shop Monarch →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- BRAND STORY -->
+  <section class="puffy-story">
+    <div class="puffy-story__inner">
+      <div class="puffy-story__img">
+        <img src="{{ 'puffy-royal-card.jpg' | asset_url }}" alt="Puffy lifestyle" loading="lazy">
+      </div>
+      <div class="puffy-story__content">
+        <p class="section-label">Why Puffy</p>
+        <h2>Puffy made its name on comfort that keeps cool.</h2>
+        <p>Puffy started with a simple idea — make memory foam beds that don't sleep hot. Their cooling gel foam layers became the foundation of every model, and they back every purchase with a lifetime warranty.</p>
+        <p>In our showroom, Puffy is the go-to comparison for shoppers who want pressure-relieving foam comfort without overheating at night.</p>
+        <ul class="puffy-story__checklist">
+          <li>Lifetime warranty — Puffy stands behind every bed</li>
+          <li>Cooling gel memory foam across all models</li>
+          <li>Made in the USA with globally sourced materials</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Puffy Collection Banner",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "tier_cta",
+      "label": "CTA text",
+      "default": "Shop Puffy models"
+    }
+  ]
+}
+{% endschema %}

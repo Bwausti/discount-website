@@ -1,0 +1,214 @@
+{% comment %}
+  product-highlights.liquid
+  Universal PDP spec/firmness/warranty highlight bar
+  Renders on every product page — adapts to tags + vendor
+{% endcomment %}
+
+{% assign p = closest.product %}
+
+{% comment %} Build firmness from tags {% endcomment %}
+{% assign firmness_label = '' %}
+{% assign firmness_value = 0 %}
+{% assign firmness_tags = 'soft::1|medium-soft::2|plush::2|pillow top::2|medium::3|medium-firm::4|firm::5|cushion-firm::5|extra-firm::6' | split: '|' %}
+{% for tag in p.tags %}
+  {% assign t = tag | downcase | strip %}
+  {% for ft in firmness_tags %}
+    {% assign parts = ft | split: '::' %}
+    {% assign key = parts[0] | strip %}
+    {% assign val = parts[1] | plus: 0 %}
+    {% if t contains key and val > firmness_value %}
+      {% assign firmness_value = val %}
+      {% assign firmness_label = key | capitalize %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+{% comment %} Special overrides for non-firmness-tagged products {% endcomment %}
+{% assign is_mattress = true %}
+{% assign handle = p.handle | downcase %}
+{% if handle contains 'adjustable' or handle contains 'foundation' or handle contains 'platform' or handle contains 'base-' %}
+  {% assign is_mattress = false %}
+{% endif %}
+{% if firmness_label == '' and is_mattress %}
+  {% assign firmness_label = 'Medium' %}
+  {% assign firmness_value = 3 %}
+{% elsif firmness_label == '' and is_mattress == false %}
+  {% assign firmness_label = 'N/A' %}
+  {% assign firmness_value = 0 %}
+{% endif %}
+
+{% comment %} Brand info map {% endcomment %}
+{% assign warranty_map = 'Helix+15 Year|Puffy+Lifetime|DreamCloud+Lifetime|Nectar+Forever|BedGear+20 Year|BedTech+Lifetime|Naturepedic+25 Year|Serta+10 Year|Jamison+10 Year|PranaSleep+20 Year|Posh and Lavish+Lifetime' | split: '|' %}
+
+{% assign vendor = p.vendor | strip %}
+{% assign vendor_lower = vendor | downcase %}
+{% assign warranty_text = 'Limited warranty included' %}
+{% for entry in warranty_map %}
+  {% assign parts = entry | split: '+' %}
+  {% assign brand = parts[0] | strip | downcase %}
+  {% assign wty = parts[1] | strip %}
+  {% if vendor_lower contains brand %}
+    {% assign warranty_text = wty | append: ' Limited Warranty' %}
+  {% endif %}
+{% endfor %}
+
+{% comment %} Category badge {% endcomment %}
+{% assign type_badge = p.product_type | default: '' %}
+{% if type_badge == '' %}
+  {% if firmness_label != 'N/A' %}
+    {% assign type_badge = 'Mattress' %}
+  {% else %}
+    {% assign type_badge = 'Accessory' %}
+  {% endif %}
+{% endif %}
+
+<style>
+  .prod-highlights {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 20px 24px 0;
+  }
+  .prod-highlights__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+  .prod-highlights__card {
+    background: var(--color-bg, #fff);
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .prod-highlights__label {
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #64748b;
+    margin: 0 0 6px 0;
+  }
+  .prod-highlights__value {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.4;
+  }
+  .prod-highlights__value small {
+    font-weight: 600;
+    font-size: 12px;
+    color: #64748b;
+  }
+  /* Firmness bar */
+  .firmness-bar {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    align-items: center;
+  }
+  .firmness-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #e2e8f0;
+    transition: background 0.2s;
+  }
+  .firmness-dot.filled {
+    border-color: #334155;
+  }
+  .firmness-dot.filled-1 { background: #e2f0d9; border-color: #6b9e4a; }
+  .firmness-dot.filled-2 { background: #d4edda; border-color: #5a8a3e; }
+  .firmness-dot.filled-3 { background: #fff3cd; border-color: #c4a83b; }
+  .firmness-dot.filled-4 { background: #fde8b3; border-color: #c4922a; }
+  .firmness-dot.filled-5 { background: #f5c6cb; border-color: #b54a4a; }
+  .firmness-dot.filled-6 { background: #e68484; border-color: #943333; }
+  .firmness-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    font-weight: 700;
+    color: #94a3b8;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0 2px;
+  }
+  .firmness-labels span.active-label {
+    color: #0f172a;
+    font-weight: 900;
+  }
+
+  @media (max-width: 640px) {
+    .prod-highlights__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
+<div class="prod-highlights">
+  <div class="prod-highlights__grid">
+
+    {# Brand / Type #}
+    <div class="prod-highlights__card">
+      <p class="prod-highlights__label">Brand</p>
+      <p class="prod-highlights__value">{{ vendor | default: p.vendor }}</p>
+    </div>
+
+    {# Type / Category #}
+    <div class="prod-highlights__card">
+      <p class="prod-highlights__label">Category</p>
+      <p class="prod-highlights__value">{{ type_badge }}</p>
+    </div>
+
+    {# Firmness #}
+    <div class="prod-highlights__card">
+      <p class="prod-highlights__label">Feel</p>
+      <p class="prod-highlights__value">
+        {% if firmness_label != 'N/A' %}
+          {{ firmness_label }}
+          <div class="firmness-bar">
+            {% for i in (1..6) %}
+              {% if i <= firmness_value %}
+                <span class="firmness-dot filled filled-{{ firmness_value }}"></span>
+              {% else %}
+                <span class="firmness-dot"></span>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="firmness-labels">
+            <span{% if firmness_value <= 2 %} class="active-label"{% endif %}>Soft</span>
+            <span{% if firmness_value == 3 or firmness_value == 4 %} class="active-label"{% endif %}>Medium</span>
+            <span{% if firmness_value >= 5 %} class="active-label"{% endif %}>Firm</span>
+          </div>
+        {% else %}
+          <small>Not applicable</small>
+        {% endif %}
+      </p>
+    </div>
+
+    {# Warranty #}
+    <div class="prod-highlights__card">
+      <p class="prod-highlights__label">Warranty</p>
+      <p class="prod-highlights__value">{{ warranty_text }}</p>
+    </div>
+
+    {# Showroom Availability #}
+    <div class="prod-highlights__card">
+      <p class="prod-highlights__label">In Showroom</p>
+      <p class="prod-highlights__value">
+        ✓ Try it at our<br>
+        <small>Bowling Green store</small>
+      </p>
+    </div>
+
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Product Highlights",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}

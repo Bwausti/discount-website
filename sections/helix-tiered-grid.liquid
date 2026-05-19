@@ -1,0 +1,279 @@
+{% comment %}
+  helix-tiered-grid.liquid
+  Custom Helix product grid — grouped by Core / Luxe / Elite tiers
+  Shows product card with image, title, price, and firmness badge
+{% endcomment %}
+
+<style>
+  .htg-section {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+  .htg-tier {
+    margin-bottom: 48px;
+  }
+  .htg-tier:last-child { margin-bottom: 0; }
+  
+  .htg-tier__header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .htg-tier__name {
+    font-size: 22px;
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .htg-tier__count {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .htg-tier__price-from {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+  }
+  .htg-tier__price-from strong {
+    color: #cf2333;
+    font-size: 14px;
+  }
+  
+  .htg-grid-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+    padding-bottom: 8px;
+  }
+  .htg-grid-wrapper::-webkit-scrollbar { height: 6px; }
+  .htg-grid-wrapper::-webkit-scrollbar-track { background: transparent; }
+  .htg-grid-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  .htg-grid {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    padding: 4px 2px;
+  }
+  .htg-card {
+    width: 250px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+  @media (max-width: 480px) {
+    .htg-card { width: 220px; }
+  }
+  
+  .htg-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .htg-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border-color: #cf2333;
+  }
+  
+  .htg-card__image {
+    position: relative;
+    aspect-ratio: 1;
+    background: #f8f9fb;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .htg-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12px;
+    transition: transform 0.3s;
+  }
+  .htg-card:hover .htg-card__image img {
+    transform: scale(1.05);
+  }
+  
+  .htg-card__badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: white;
+  }
+  
+  .htg-card__body {
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+  .htg-card__title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    line-height: 1.3;
+  }
+  .htg-card__subtitle {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .htg-card__price {
+    font-size: 18px;
+    font-weight: 900;
+    color: #0f172a;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .htg-card__price small {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+  }
+</style>
+
+<div class="htg-section">
+
+  {% assign all_products = collection.products %}
+
+  {% comment %} ── Core Tier ── {% endcomment %}
+  {% assign core_count = 0 %}
+  {% for p in all_products %}
+    {% assign h = p.handle | downcase %}
+    {% if h contains 'cooling-cover' or h contains 'ergoalign' %}{% continue %}{% endif %}
+    {% unless h contains 'luxe' or h contains 'elite' %}{% assign core_count = core_count | plus: 1 %}{% endunless %}
+  {% endfor %}
+  
+  {% if core_count > 0 %}
+  <div class="htg-tier">
+    <div class="htg-tier__header">
+      <h2 class="htg-tier__name">Core Collection</h2>
+      <span class="htg-tier__count">{{ core_count }} models</span>
+      <span class="htg-tier__price-from">From <strong>$799</strong></span>
+    </div>
+    <div class="htg-grid-wrapper"><div class="htg-grid">
+      {% comment %} Midnight first (best seller) {% endcomment %}
+      {% for p in all_products %}
+        {% assign h = p.handle | downcase %}
+        {% if h == 'helix-midnight' %}{% render 'helix-product-card', product: p %}{% endif %}
+      {% endfor %}
+      {% comment %} Rest of Core {% endcomment %}
+      {% for p in all_products %}
+        {% assign h = p.handle | downcase %}
+        {% if h contains 'cooling-cover' or h contains 'ergoalign' %}{% continue %}{% endif %}
+        {% if h == 'helix-midnight' %}{% continue %}{% endif %}
+        {% unless h contains 'luxe' or h contains 'elite' %}
+          {% render 'helix-product-card', product: p %}
+        {% endunless %}
+      {% endfor %}
+    </div></div>
+  </div>
+  {% endif %}
+
+  {% comment %} ── Luxe Tier ── {% endcomment %}
+  {% assign luxe_count = 0 %}
+  {% for p in all_products %}
+    {% assign h = p.handle | downcase %}
+    {% if h contains 'cooling-cover' or h contains 'ergoalign' %}{% continue %}{% endif %}
+    {% if h contains 'luxe' %}{% unless h contains 'elite' %}{% assign luxe_count = luxe_count | plus: 1 %}{% endunless %}{% endif %}
+  {% endfor %}
+  
+  {% if luxe_count > 0 %}
+  <div class="htg-tier">
+    <div class="htg-tier__header">
+      <h2 class="htg-tier__name">Luxe Collection</h2>
+      <span class="htg-tier__count">{{ luxe_count }} models</span>
+      <span class="htg-tier__price-from">From <strong>$1,149</strong></span>
+    </div>
+    <div class="htg-grid-wrapper"><div class="htg-grid">
+      {% comment %} Midnight Luxe first (best seller) {% endcomment %}
+      {% for p in all_products %}
+        {% assign h = p.handle | downcase %}
+        {% if h == 'helix-midnight-luxe' %}{% render 'helix-product-card', product: p %}{% endif %}
+      {% endfor %}
+      {% comment %} Rest of Luxe {% endcomment %}
+      {% for p in all_products %}
+        {% assign h = p.handle | downcase %}
+        {% if h == 'helix-midnight-luxe' %}{% continue %}{% endif %}
+        {% if h contains 'cooling-cover' or h contains 'ergoalign' %}{% continue %}{% endif %}
+        {% if h contains 'luxe' %}{% unless h contains 'elite' %}
+          {% render 'helix-product-card', product: p %}
+        {% endunless %}{% endif %}
+      {% endfor %}
+    </div></div>
+  </div>
+  {% endif %}
+
+  {% comment %} ── Elite Tier ── {% endcomment %}
+  {% assign elite_count = 0 %}
+  {% for p in all_products %}
+    {% assign h = p.handle | downcase %}
+    {% if h contains 'cooling-cover' or h contains 'ergoalign' %}{% continue %}{% endif %}
+    {% if h contains 'elite' %}{% assign elite_count = elite_count | plus: 1 %}{% endif %}
+  {% endfor %}
+  
+  {% if elite_count > 0 %}
+  <div class="htg-tier">
+    <div class="htg-tier__header">
+      <h2 class="htg-tier__name">Elite Collection</h2>
+      <span class="htg-tier__count">{{ elite_count }} models</span>
+      <span class="htg-tier__price-from">From <strong>$1,874</strong></span>
+    </div>
+    <div class="htg-grid-wrapper"><div class="htg-grid">
+      {% comment %} Midnight Elite first (best seller) {% endcomment %}
+      {% for p in all_products %}
+        {% assign h = p.handle | downcase %}
+        {% if h == 'helix-midnight-elite' %}{% render 'helix-product-card', product: p %}{% endif %}
+      {% endfor %}
+      {% comment %} Rest of Elite {% endcomment %}
+      {% for p in all_products %}
+        {% assign h = p.handle | downcase %}
+        {% if h == 'helix-midnight-elite' %}{% continue %}{% endif %}
+        {% if h contains 'cooling-cover' or h contains 'ergoalign' %}{% continue %}{% endif %}
+        {% if h contains 'elite' %}
+          {% render 'helix-product-card', product: p %}
+        {% endif %}
+      {% endfor %}
+    </div></div>
+  </div>
+  {% endif %}
+
+</div>
+
+{% schema %}
+{
+  "name": "Helix Tiered Grid",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": []
+}
+{% endschema %}

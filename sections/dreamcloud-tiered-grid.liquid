@@ -1,0 +1,235 @@
+{% comment %}
+  dreamcloud-tiered-grid.liquid
+  Custom DreamCloud product grid — grouped by Hybrid and All-Foam
+  Shows product card with image, title, price, and spec tags
+{% endcomment %}
+
+<style>
+  .dcg-section {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+  }
+  .dcg-tier {
+    margin-bottom: 48px;
+  }
+  .dcg-tier:last-child { margin-bottom: 0; }
+  
+  .dcg-tier__header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  .dcg-tier__name {
+    font-size: 22px;
+    font-weight: 900;
+    color: #0f1a2e;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .dcg-tier__count {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .dcg-tier__price-from {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+  }
+  .dcg-tier__price-from strong {
+    color: #d4af37;
+    font-size: 14px;
+  }
+
+  .dcg-grid-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+    padding-bottom: 8px;
+  }
+  .dcg-grid-wrapper::-webkit-scrollbar { height: 6px; }
+  .dcg-grid-wrapper::-webkit-scrollbar-track { background: transparent; }
+  .dcg-grid-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+  .dcg-grid {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    padding: 4px 2px;
+  }
+  .dcg-card {
+    width: 250px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .dcg-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border-color: #d4af37;
+  }
+  .dcg-card__image {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: #f8f9fb;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .dcg-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+  }
+  .dcg-card__badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: white;
+  }
+  .dcg-card__body {
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+  .dcg-card__title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0f1a2e;
+    margin: 0;
+    line-height: 1.3;
+  }
+  .dcg-card__subtitle {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .dcg-card__price {
+    font-size: 18px;
+    font-weight: 900;
+    color: #0f1a2e;
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  .dcg-card__price small {
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+  }
+  @media (max-width: 480px) {
+    .dcg-card { width: 220px; }
+  }
+</style>
+
+{% assign dc_products = collections['dreamcloud'].products %}
+
+<div class="dcg-section">
+
+  {% comment %} ── HYBRID TIER ── {% endcomment %}
+  {% assign hybrid_handles = 'dreamcloud-classic-hybrid,dreamcloud-premier-hybrid,dreamcloud-luxe-hybrid,dreamcloud-ultra-hybrid' | split: ',' %}
+  {% assign hybrid_names = 'Classic Hybrid,Premier Hybrid,Luxe Hybrid,Ultra Hybrid' | split: ',' %}
+  {% assign hybrid_specs = '6 layers|7 layers|8 layers|9 layers' | split: '|' %}
+
+  
+  <div class="dcg-tier">
+    <div class="dcg-tier__header">
+      <h2 class="dcg-tier__name">Hybrid Collection</h2>
+      <span class="dcg-tier__count">4 models</span>
+      <span class="dcg-tier__price-from">From <strong>$1,050</strong></span>
+    </div>
+    <div class="dcg-grid-wrapper"><div class="dcg-grid">
+      {% for handle in hybrid_handles %}
+        {% assign prod = dc_products | where: 'handle', handle | first %}
+        {% if prod %}
+          <a href="/products/{{ handle }}" class="dcg-card">
+            <div class="dcg-card__image">
+              {% if prod.featured_image %}
+                <img src="{{ prod.featured_image | image_url: width: 400 }}" alt="{{ hybrid_names[forloop.index0] }}" loading="lazy">
+              {% endif %}
+              <span class="dcg-card__badge" style="background:#d4af37;color:#0f1a2e;">Hybrid</span>
+            </div>
+            <div class="dcg-card__body">
+              <p class="dcg-card__title">{{ hybrid_names[forloop.index0] }}</p>
+              <p class="dcg-card__subtitle">{{ hybrid_specs[forloop.index0] }} · Pocketed coils</p>
+              <div class="dcg-card__price">From {{ prod.price_min | money }}</div>
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div></div>
+  </div>
+
+  {% comment %} ── ALL-FOAM TIER ── {% endcomment %}
+  {% assign foam_handles = 'dreamcloud-classic-memory-foam,dreamcloud-premier-memory-foam,dreamcloud-luxe-memory-foam,dreamcloud-ultra-memory-foam' | split: ',' %}
+  {% assign foam_names = 'Classic Memory Foam,Premier Memory Foam,Luxe Memory Foam,Ultra Memory Foam' | split: ',' %}
+  {% assign foam_specs = '10" profile|12" profile|14" profile|16" profile' | split: '|' %}
+
+  
+  <div class="dcg-tier">
+    <div class="dcg-tier__header">
+      <h2 class="dcg-tier__name">All-Foam Collection</h2>
+      <span class="dcg-tier__count">4 models</span>
+      <span class="dcg-tier__price-from">From <strong>$925</strong></span>
+    </div>
+    <div class="dcg-grid-wrapper"><div class="dcg-grid">
+      {% for handle in foam_handles %}
+        {% assign prod = dc_products | where: 'handle', handle | first %}
+        {% if prod %}
+          <a href="/products/{{ handle }}" class="dcg-card">
+            <div class="dcg-card__image">
+              {% if prod.featured_image %}
+                <img src="{{ prod.featured_image | image_url: width: 400 }}" alt="{{ foam_names[forloop.index0] }}" loading="lazy">
+              {% endif %}
+              <span class="dcg-card__badge" style="background:#0f1a2e;color:white;">All-Foam</span>
+            </div>
+            <div class="dcg-card__body">
+              <p class="dcg-card__title">{{ foam_names[forloop.index0] }}</p>
+              <p class="dcg-card__subtitle">{{ foam_specs[forloop.index0] }} · Gel memory foam</p>
+              <div class="dcg-card__price">From {{ prod.price_min | money }}</div>
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div></div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "DreamCloud Tiered Grid",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": []
+}
+{% endschema %}

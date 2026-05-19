@@ -1,0 +1,219 @@
+{% comment %}
+  pranasleep-product-addons.liquid
+  Shows PranaSleep Karma Elite 2 firmness comparison on product pages
+  Only renders on PranaSleep products
+{% endcomment %}
+
+{% assign is_prana_product = false %}
+{% if closest.product.vendor == "PranaSleep" %}
+  {% assign is_prana_product = true %}
+  {% assign title_lower = closest.product.title | downcase %}
+{% endif %}
+
+{% if is_prana_product %}
+
+<style>
+  .prana-addons {
+    background: #edeae5;
+    border-top: 1px solid #e2e8f0;
+    padding: 48px 24px;
+    margin-top: 0;
+  }
+  .prana-addons__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .prana-addons__header {
+    margin-bottom: 32px;
+  }
+  .prana-addons__label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #9c6b3e;
+    margin-bottom: 8px;
+  }
+  .prana-addons__title {
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 900;
+    color: #2c241e;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px 0;
+  }
+  .prana-addons__sub {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+  .prana-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .prana-card {
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative;
+  }
+  .prana-card:hover {
+    border-color: #9c6b3e;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .prana-card.active {
+    border-color: #9c6b3e;
+    background: #faf5ef;
+  }
+  .prana-card.active::after {
+    content: 'Current';
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    background: #9c6b3e;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 10px;
+    border-radius: 4px;
+  }
+  .prana-card__name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #2c241e;
+    margin: 0;
+  }
+  .prana-card__firmness {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: #edeae5;
+    color: #9c6b3e;
+    width: fit-content;
+  }
+  .prana-card__firmness.firm { background: #e8ddd0; }
+  .prana-card__firmness.plush { background: #f0e8dc; }
+  .prana-card__firmness.supercush { background: #f5ede0; }
+  .prana-card__desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .prana-card__price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2c241e;
+    margin: 0;
+  }
+  .prana-card__cta {
+    font-size: 12px;
+    font-weight: 800;
+    color: #9c6b3e;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .prana-card:hover .prana-card__cta { gap: 8px; }
+</style>
+
+<div class="prana-addons">
+  <div class="prana-addons__inner">
+    <div class="prana-addons__header">
+      <p class="prana-addons__label">PranaSleep</p>
+      <h2 class="prana-addons__title">Karma Elite 2 — three firmness levels</h2>
+      <p class="prana-addons__sub">The same premium hybrid construction. Choose your comfort: Firm, Plush, or Super Cush</p>
+    </div>
+
+    <div class="prana-grid">
+
+      {% if title_lower contains "firm" %}
+        <div class="prana-card active">
+          <h3 class="prana-card__name">Karma Elite 2 Hybrid</h3>
+          <span class="prana-card__firmness firm">Firm</span>
+          <p class="prana-card__desc">Maximum support for back and stomach sleepers. Zoned coil system provides targeted spinal alignment without sacrificing pressure relief.</p>
+          <p class="prana-card__price">$1,924</p>
+          <p class="prana-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/karma-elite-2-hybrid-firm" class="prana-card">
+          <h3 class="prana-card__name">Karma Elite 2 Hybrid</h3>
+          <span class="prana-card__firmness firm">Firm</span>
+          <p class="prana-card__desc">Maximum support for back and stomach sleepers. Zoned coil support with pressure relief.</p>
+          <p class="prana-card__price">$1,924</p>
+          <p class="prana-card__cta">View Firm →</p>
+        </a>
+      {% endif %}
+
+      {% if title_lower contains "plush" %}
+        {% if title_lower contains "super" or title_lower contains "cush" %}
+          {% comment %}Super Cush variant handled below{% endcomment %}
+        {% else %}
+          <div class="prana-card active">
+            <h3 class="prana-card__name">Karma Elite 2 Hybrid</h3>
+            <span class="prana-card__firmness plush">Plush</span>
+            <p class="prana-card__desc">Balanced comfort for side and combination sleepers. Medium-plush feel with the same premium coil support for excellent spinal alignment.</p>
+            <p class="prana-card__price">$1,924</p>
+            <p class="prana-card__cta">You're viewing →</p>
+          </div>
+        {% endif %}
+      {% else %}
+        <a href="/products/karma-elite-2-hybrid-plush" class="prana-card">
+          <h3 class="prana-card__name">Karma Elite 2 Hybrid</h3>
+          <span class="prana-card__firmness plush">Plush</span>
+          <p class="prana-card__desc">Balanced comfort for side and combination sleepers. Medium-plush feel with premium coil support.</p>
+          <p class="prana-card__price">$1,924</p>
+          <p class="prana-card__cta">View Plush →</p>
+        </a>
+      {% endif %}
+
+      {% if title_lower contains "super" or title_lower contains "cush" %}
+        <div class="prana-card active">
+          <h3 class="prana-card__name">Karma Elite 2 Hybrid</h3>
+          <span class="prana-card__firmness supercush">Super Cush</span>
+          <p class="prana-card__desc">Ultimate pressure relief for dedicated side sleepers. Extra plush comfort layers cradle your body while the coil core maintains support.</p>
+          <p class="prana-card__price">$1,924</p>
+          <p class="prana-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/karma-elite-2-hybrid-super-cush" class="prana-card">
+          <h3 class="prana-card__name">Karma Elite 2 Hybrid</h3>
+          <span class="prana-card__firmness supercush">Super Cush</span>
+          <p class="prana-card__desc">Ultimate pressure relief for dedicated side sleepers. Extra plush comfort layers with coil support.</p>
+          <p class="prana-card__price">$1,924</p>
+          <p class="prana-card__cta">View Super Cush →</p>
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "PranaSleep Add-ons",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}

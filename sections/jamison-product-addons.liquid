@@ -1,0 +1,178 @@
+{% comment %}
+  jamison-product-addons.liquid
+  Shows Jamison model comparison on product pages
+  Only renders on Jamison products
+{% endcomment %}
+
+{% assign is_jamison_product = false %}
+{% if closest.product.vendor == "Jamison" %}
+  {% assign is_jamison_product = true %}
+  {% assign title_lower = closest.product.title | downcase %}
+{% endif %}
+
+{% if is_jamison_product %}
+
+<style>
+  .jamison-addons {
+    background: #f5f2ec;
+    border-top: 1px solid #e2e8f0;
+    padding: 48px 24px;
+    margin-top: 0;
+  }
+  .jamison-addons__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .jamison-addons__header {
+    margin-bottom: 32px;
+  }
+  .jamison-addons__label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #8b6914;
+    margin-bottom: 8px;
+  }
+  .jamison-addons__title {
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 900;
+    color: #2b2416;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px 0;
+  }
+  .jamison-addons__sub {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+  .jamison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .jamison-card {
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative;
+  }
+  .jamison-card:hover {
+    border-color: #8b6914;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .jamison-card.active {
+    border-color: #8b6914;
+    background: #fcf8ef;
+  }
+  .jamison-card.active::after {
+    content: 'Current';
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    background: #8b6914;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 10px;
+    border-radius: 4px;
+  }
+  .jamison-card__name {
+    font-size: 18px;
+    font-weight: 800;
+    color: #2b2416;
+    margin: 0;
+  }
+  .jamison-card__desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .jamison-card__price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2b2416;
+    margin: 0;
+  }
+  .jamison-card__cta {
+    font-size: 12px;
+    font-weight: 800;
+    color: #8b6914;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .jamison-card:hover .jamison-card__cta { gap: 8px; }
+</style>
+
+<div class="jamison-addons">
+  <div class="jamison-addons__inner">
+    <div class="jamison-addons__header">
+      <p class="jamison-addons__label">Jamison</p>
+      <h2 class="jamison-addons__title">Quality craftsmanship since 1883</h2>
+      <p class="jamison-addons__sub">Explore Jamison's premium mattress collections — built to last</p>
+    </div>
+
+    <div class="jamison-grid">
+
+      {% if title_lower contains "autograph" %}
+        <div class="jamison-card active">
+          <h3 class="jamison-card__name">Autograph Collection</h3>
+          <p class="jamison-card__desc">Jamison's flagship collection — premium coil support with luxurious comfort layers. Handcrafted quality at an accessible price point. Perfect for guest rooms or primary bedrooms.</p>
+          <p class="jamison-card__price">$324</p>
+          <p class="jamison-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/jamison-autograph-collection" class="jamison-card">
+          <h3 class="jamison-card__name">Autograph Collection</h3>
+          <p class="jamison-card__desc">Jamison's flagship collection — premium coil support with luxurious comfort layers. Handcrafted quality at an accessible price.</p>
+          <p class="jamison-card__price">$324</p>
+          <p class="jamison-card__cta">View Autograph →</p>
+        </a>
+      {% endif %}
+
+      {% if title_lower contains "resort" %}
+        <div class="jamison-card active">
+          <h3 class="jamison-card__name">Resort Foam Collection</h3>
+          <p class="jamison-card__desc">An all-foam mattress designed for resort-quality comfort. Pressure-relieving memory foam layers with supportive base foam. Ideal for side sleepers and those seeking contouring comfort.</p>
+          <p class="jamison-card__price">$499</p>
+          <p class="jamison-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/jamison-resort-foam-collection" class="jamison-card">
+          <h3 class="jamison-card__name">Resort Foam Collection</h3>
+          <p class="jamison-card__desc">An all-foam mattress designed for resort-quality comfort. Pressure-relieving memory foam layers with supportive base foam.</p>
+          <p class="jamison-card__price">$499</p>
+          <p class="jamison-card__cta">View Resort Foam →</p>
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Jamison Product Add-ons",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}

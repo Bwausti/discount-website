@@ -1,0 +1,371 @@
+<!-- Section: naturepedic-collection-banner -->
+<!-- Brand: Naturepedic | Organic mattresses | EOS line + Chorus -->
+{% if closest.collection.handle != 'naturepedic' %}{% break %}{% endif %}
+
+<style>
+  .naturepedic-section { font-family: 'Inter', 'Segoe UI', sans-serif; }
+  .naturepedic-hero {
+    position: relative; overflow: hidden;
+    background: #2d3d2a; min-height: 560px; display: flex; align-items: center;
+  }
+  .naturepedic-hero__bg {
+    position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%;
+    opacity: 0.35;
+  }
+  .naturepedic-hero::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to right, rgba(45,61,42,0.88) 0%, rgba(45,61,42,0.55) 55%, rgba(45,61,42,0.2) 100%);
+  }
+  .naturepedic-hero__content {
+    position: relative; z-index: 2; width: 100%;
+    padding: 60px 24px; max-width: 1300px; margin: 0 auto;
+    display: grid; gap: 32px;
+    grid-template-columns: 1fr 1.15fr; align-items: center;
+  }
+  @media (max-width: 860px) {
+    .naturepedic-hero__content { grid-template-columns: 1fr !important; padding: 40px 20px; }
+    .naturepedic-hero__right { display: none !important; }
+  }
+  .naturepedic-hero__left { max-width: 600px; }
+  .naturepedic-eyebrow {
+    display: inline-block; background: rgba(45,61,42,0.7); backdrop-filter: blur(8px); border: 1px solid rgba(122,154,109,0.4);
+    color: #b8d4a8; font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.22em;
+    padding: 6px 14px; border-radius: 4px; margin-bottom: 20px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .naturepedic-hero h1 {
+    font-size: clamp(36px, 5vw, 60px); font-weight: 900;
+    color: white; line-height: 0.95; letter-spacing: -0.02em;
+    margin: 0 0 16px 0;
+    text-shadow: 0 3px 16px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .naturepedic-hero__tagline {
+    font-size: 18px; font-weight: 700; color: white;
+    line-height: 1.5; margin: 0 0 12px 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .naturepedic-hero__desc {
+    font-size: 15px; color: rgba(255,255,255,0.92); line-height: 1.65;
+    margin: 0 0 24px 0; max-width: 520px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .naturepedic-hero__badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .naturepedic-badge {
+    background: rgba(0,0,0,0.55); color: white;
+    padding: 5px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    border: 1px solid rgba(255,255,255,0.25);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+  .naturepedic-hero__buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+  .naturepedic-btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #7a9a6d; color: white; padding: 13px 28px;
+    border-radius: 6px; text-decoration: none; font-weight: 800; font-size: 14px;
+    transition: background 0.2s;
+  }
+  .naturepedic-btn-primary:hover { background: #90b082; }
+  .naturepedic-btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px); color: white; padding: 13px 24px;
+    border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .naturepedic-btn-secondary:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.6); }
+  .naturepedic-hero__right {
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+    border-radius: 12px; padding: 24px; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .naturepedic-hero__showroom-note { font-size: 15px; font-weight: 700; color: #1a2a18; line-height: 1.5; }
+  .naturepedic-hero__products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 16px; }
+  @media (max-width: 860px) { .naturepedic-hero__products { grid-template-columns: repeat(2, 1fr) !important; } }
+  .naturepedic-hero__product-card {
+    background: #f5f0eb; border-radius: 8px; overflow: hidden;
+    text-decoration: none; transition: transform 0.2s, background 0.2s;
+    display: block;
+  }
+  .naturepedic-hero__product-card:hover { transform: translateY(-3px); background: #ede5db; }
+  .naturepedic-hero__product-img { position: relative; aspect-ratio: 5/4; overflow: hidden; }
+  .naturepedic-hero__product-img img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+  .naturepedic-hero__product-name { padding: 10px 10px 12px; font-size: 12px; font-weight: 800; color: #1a2a18; line-height: 1.3; }
+  /* Trust bar */
+  .naturepedic-trust { background: #f5f0eb; border-bottom: 1px solid #d4cdc2; }
+  .naturepedic-trust__grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .naturepedic-trust__item { padding: 16px 20px; text-align: center; border-right: 1px solid #d4cdc2; }
+  .naturepedic-trust__item:last-child { border-right: none; }
+  .naturepedic-trust__label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: #7a9a6d; margin-bottom: 4px; }
+  .naturepedic-trust__value { font-size: 20px; font-weight: 900; color: #1a2a18; }
+  /* Highlight pills */
+  .naturepedic-highlights { background: #efeae3; padding: 20px 24px; border-bottom: 1px solid #d4cdc2; }
+  .naturepedic-highlights__inner { max-width: 1300px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px; }
+  .naturepedic-highlight-pill { background: #f5f0eb; border: 1px solid #d4cdc2; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; color: #1a2a18; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  /* Product cards section */
+  .naturepedic-product-section { background: #efeae3; padding: 56px 24px; }
+  .naturepedic-product-header { max-width: 1300px; margin: 0 auto 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: end; }
+  @media (max-width: 860px) { .naturepedic-product-header { grid-template-columns: 1fr !important; } }
+  .naturepedic-product-header__right { background: #f5f0eb; border: 1px solid #d4cdc2; border-radius: 10px; padding: 20px; }
+  .naturepedic-product-header__right p { font-size: 14px; font-weight: 600; color: #3a4f37; line-height: 1.65; margin: 0; }
+  .section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; color: #7a9a6d; margin-bottom: 8px; }
+  .naturepedic-product-header h2 { font-size: clamp(28px, 3.5vw, 42px); font-weight: 900; color: #1a2a18; line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+  .naturepedic-product-header p { font-size: 16px; color: #3a4f37; line-height: 1.6; margin-top: 12px; }
+  .naturepedic-product-cards { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .naturepedic-product-cards { grid-template-columns: repeat(2, 1fr) !important; } }
+  @media (max-width: 520px) { .naturepedic-product-cards { grid-template-columns: 1fr !important; } }
+  .naturepedic-product-card {
+    background: #f5f0eb; border: 2px solid #d4cdc2; border-radius: 12px;
+    overflow: hidden; text-align: left; cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    display: block; text-decoration: none;
+  }
+  .naturepedic-product-card:hover {
+    border-color: #7a9a6d; transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  }
+  .naturepedic-product-card__img { position: relative; aspect-ratio: 16/10; background: #f5f0eb; overflow: hidden; }
+  .naturepedic-product-card__img img { width: 100%; height: 100%; object-fit: contain; padding: 20px; transition: transform 0.4s; }
+  .naturepedic-product-card:hover .naturepedic-product-card__img img { transform: scale(1.04); }
+  .naturepedic-product-card__body { padding: 20px; }
+  .naturepedic-product-card__name { font-size: 24px; font-weight: 900; color: #1a2a18; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .naturepedic-product-card__price { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #7a9a6d; margin-bottom: 10px; }
+  .naturepedic-product-card__summary { font-size: 13px; color: #3a4f37; line-height: 1.55; margin-bottom: 12px; }
+  .naturepedic-product-card__best-for {
+    background: #efeae3; padding: 8px 12px; border-radius: 6px;
+    font-size: 11px; font-weight: 700; color: #1a2a18; line-height: 1.5;
+  }
+  .naturepedic-product-card__selector {
+    display: inline-block; padding: 8px 16px; border-radius: 6px;
+    font-size: 12px; font-weight: 800; margin-top: 12px; background: #7a9a6d; color: white;
+    transition: background 0.2s;
+  }
+  .naturepedic-product-card:hover .naturepedic-product-card__selector { background: #90b082; }
+  /* Brand story */
+  .naturepedic-story { background: white; padding: 64px 24px; border-top: 1px solid #d4cdc2; }
+  .naturepedic-story__inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; align-items: center; }
+  @media (max-width: 860px) { .naturepedic-story__inner { grid-template-columns: 1fr !important; } }
+  .naturepedic-story__img { position: relative; aspect-ratio: 16/10; border-radius: 12px; overflow: hidden; background: #f5f0eb; }
+  .naturepedic-story__img img { width: 100%; height: 100%; object-fit: cover; }
+  .naturepedic-story__feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+  @media (max-width: 640px) { .naturepedic-story__feature-grid { grid-template-columns: 1fr !important; } }
+  .naturepedic-story__feature { background: #f5f0eb; border: 1px solid #d4cdc2; border-radius: 8px; padding: 16px; }
+  .naturepedic-story__feature h4 { font-size: 13px; font-weight: 800; color: #1a2a18; margin: 0 0 6px 0; }
+  .naturepedic-story__feature p { font-size: 12px; color: #3a4f37; line-height: 1.55; margin: 0; }
+  .naturepedic-story__content h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: #1a2a18; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px 0; }
+  .naturepedic-story__content p { font-size: 15px; color: #3a4f37; line-height: 1.7; margin-bottom: 16px; }
+</style>
+
+<div class="naturepedic-section">
+
+  <!-- HERO -->
+  <section class="naturepedic-hero">
+    <img
+      src="{{ 'naturepedic-eos-card.jpg' | asset_url }}"
+      alt="Naturepedic organic mattress collection"
+      class="naturepedic-hero__bg"
+      loading="eager"
+    >
+    <div class="naturepedic-hero__content">
+      <div class="naturepedic-hero__left">
+        <span class="naturepedic-eyebrow">Available in Bowling Green, KY</span>
+        <h1>Naturepedic</h1>
+        <p class="naturepedic-hero__tagline">Certified organic. GOTS certified. Safer sleep from the ground up.</p>
+        <p class="naturepedic-hero__desc">
+          Naturepedic is the most trusted name in organic mattresses. Every mattress is GOTS-certified and made without polyurethane foam, chemical flame retardants, or synthetic materials — from the EOS modular series to the Chorus all-foam organic build.
+        </p>
+        <div class="naturepedic-hero__badges">
+          <span class="naturepedic-badge">GOTS Certified</span>
+          <span class="naturepedic-badge">GOLS Latex</span>
+          <span class="naturepedic-badge">No Fire Retardants</span>
+        </div>
+        <div class="naturepedic-hero__buttons">
+          <a href="#naturepedic-products" class="naturepedic-btn-primary">Shop EOS &amp; Chorus →</a>
+          <a href="/pages/naturepedic-story" class="naturepedic-btn-secondary">Why organic?</a>
+        </div>
+      </div>
+      <div class="naturepedic-hero__right">
+        <p class="naturepedic-hero__showroom-note">
+          Naturepedic is our top-tier organic brand — we carry the full EOS line and the Chorus in our showroom so you can feel the difference between latex, microcoil, and organic foam constructions.
+        </p>
+        <div class="naturepedic-hero__products">
+          <a href="/products/naturepedic-eos-classic" class="naturepedic-hero__product-card">
+            <div class="naturepedic-hero__product-img">
+              <img src="{{ 'naturepedic-eos-card.jpg' | asset_url }}" alt="Naturepedic EOS Classic" loading="lazy">
+            </div>
+            <p class="naturepedic-hero__product-name">EOS Classic<br><span style="font-weight:400;color:#3a4f37;font-size:11px;">Entry-level organic</span></p>
+          </a>
+          <a href="/products/naturepedic-eos-pillow-top" class="naturepedic-hero__product-card">
+            <div class="naturepedic-hero__product-img">
+              <img src="{{ 'naturepedic-chorus-card.jpg' | asset_url }}" alt="Naturepedic EOS Trilux" loading="lazy">
+            </div>
+            <p class="naturepedic-hero__product-name">EOS Trilux<br><span style="font-weight:400;color:#3a4f37;font-size:11px;">Customizable latex</span></p>
+          </a>
+          <a href="/products/naturepedic-concerto-pillow-top" class="naturepedic-hero__product-card">
+            <div class="naturepedic-hero__product-img">
+              <img src="{{ 'naturepedic-eos-card.jpg' | asset_url }}" alt="Naturepedic EOS Hybrid" loading="lazy">
+            </div>
+            <p class="naturepedic-hero__product-name">EOS Hybrid<br><span style="font-weight:400;color:#3a4f37;font-size:11px;">Microcoil + latex</span></p>
+          </a>
+          <a href="/products/naturepedic-serenade" class="naturepedic-hero__product-card">
+            <div class="naturepedic-hero__product-img">
+              <img src="{{ 'naturepedic-eos-card.jpg' | asset_url }}" alt="Naturepedic Chorus" loading="lazy">
+            </div>
+            <p class="naturepedic-hero__product-name">Chorus<br><span style="font-weight:400;color:#3a4f37;font-size:11px;">All-foam organic</span></p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="naturepedic-trust">
+    <div class="naturepedic-trust__grid">
+      <div class="naturepedic-trust__item">
+        <p class="naturepedic-trust__label">Models</p>
+        <p class="naturepedic-trust__value">4</p>
+      </div>
+      <div class="naturepedic-trust__item">
+        <p class="naturepedic-trust__label">Warranty</p>
+        <p class="naturepedic-trust__value">25-year</p>
+      </div>
+      <div class="naturepedic-trust__item">
+        <p class="naturepedic-trust__label">Warranty</p>
+        <p class="naturepedic-trust__value">20-year</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIGHLIGHT PILLS -->
+  <div class="naturepedic-highlights">
+    <div class="naturepedic-highlights__inner">
+      <span class="naturepedic-highlight-pill">🌿 GOTS Certified</span>
+      <span class="naturepedic-highlight-pill">🧪 GOLS Latex</span>
+      <span class="naturepedic-highlight-pill">🚫 No Fire Retardants</span>
+      <span class="naturepedic-highlight-pill">🧵 Organic Cotton</span>
+      <span class="naturepedic-highlight-pill">⚙️ Customizable</span>
+      <span class="naturepedic-highlight-pill">🇺🇸 Made in USA</span>
+    </div>
+  </div>
+
+  <!-- PRODUCT CARDS -->
+  <section id="naturepedic-products" class="naturepedic-product-section">
+    <div class="naturepedic-product-header">
+      <div class="naturepedic-product-header__left">
+        <p class="section-label">The EOS Series &amp; Chorus</p>
+        <h2>Organic construction, your choice of feel.</h2>
+        <p>Naturepedic's EOS series gives you interchangeable layers so you can dial in the exact firmness you want. The Chorus offers the same organic purity in a no-compromise all-foam build.</p>
+      </div>
+      <div class="naturepedic-product-header__right">
+        <p><strong>Only the EOS Pillow Top is in our live catalog,</strong> but we carry and display the full EOS line (Classic, Trilux, Hybrid, Pillow Top) plus the Chorus in our showroom. Come feel all five constructions side by side.</p>
+      </div>
+    </div>
+
+    <div class="naturepedic-product-cards">
+      <!-- EOS Classic -->
+      <a href="/products/naturepedic-eos-classic" class="naturepedic-product-card">
+        <div class="naturepedic-product-card__img">
+          <img src="{{ 'naturepedic-chorus-card.jpg' | asset_url }}" alt="Naturepedic EOS Classic" loading="lazy">
+        </div>
+        <div class="naturepedic-product-card__body">
+          <div class="naturepedic-product-card__name">EOS Classic</div>
+          <div class="naturepedic-product-card__price">Entry-level organic</div>
+          <p class="naturepedic-product-card__summary">Latex and coil construction — the most affordable entry point into GOTS-certified organic sleep. Durable, breathable, and non-toxic.</p>
+          <div class="naturepedic-product-card__best-for">✅ First organic upgrade · Latex + coil support · Best value entry</div>
+          <span class="naturepedic-product-card__selector">View model →</span>
+        </div>
+      </a>
+
+      <!-- EOS Trilux -->
+      <a href="/products/naturepedic-eos-pillow-top" class="naturepedic-product-card">
+        <div class="naturepedic-product-card__img">
+          <img src="{{ 'naturepedic-eos-card.jpg' | asset_url }}" alt="Naturepedic EOS Trilux" loading="lazy">
+        </div>
+        <div class="naturepedic-product-card__body">
+          <div class="naturepedic-product-card__name">EOS Trilux</div>
+          <div class="naturepedic-product-card__price">Fully customizable</div>
+          <p class="naturepedic-product-card__summary">Three interchangeable 3" GOLS-certified latex layers let you build your ideal firmness — swap, flip, or rearrange to customize left and right sides independently.</p>
+          <div class="naturepedic-product-card__best-for">✅ Couples with different preferences · Side-by-side customization · Latex lovers</div>
+          <span class="naturepedic-product-card__selector">View model →</span>
+        </div>
+      </a>
+
+      <!-- EOS Hybrid -->
+      <a href="/products/naturepedic-concerto-pillow-top" class="naturepedic-product-card">
+        <div class="naturepedic-product-card__img">
+          <img src="{{ 'naturepedic-eos-card.jpg' | asset_url }}" alt="Naturepedic EOS Hybrid" loading="lazy">
+        </div>
+        <div class="naturepedic-product-card__body">
+          <div class="naturepedic-product-card__name">EOS Hybrid</div>
+          <div class="naturepedic-product-card__price">Microcoil + latex</div>
+          <p class="naturepedic-product-card__summary">Zoned microcoils paired with organic latex — combines the contouring and pressure relief of coils with the bounce and durability of latex. Great for support.</p>
+          <div class="naturepedic-product-card__best-for">✅ Zoned support seekers · Microcoil responsiveness · Pressure relief</div>
+          <span class="naturepedic-product-card__selector">View model →</span>
+        </div>
+      </a>
+
+      {% assign nat_chorus_prod = collections['naturepedic'].products | where: 'handle', 'naturepedic-serenade' | first %}
+      <!-- Chorus -->
+      <a href="/products/naturepedic-serenade" class="naturepedic-product-card">
+        <div class="naturepedic-product-card__img">
+          <img src="{% if nat_chorus_prod and nat_chorus_prod.featured_image %}{{ nat_chorus_prod.featured_image | image_url: width: 500 }}{% else %}{{ 'dm-hero-clean.png' | asset_url }}{% endif %}" alt="Naturepedic Chorus" loading="lazy">
+        </div>
+        <div class="naturepedic-product-card__body">
+          <div class="naturepedic-product-card__name">Chorus</div>
+          <div class="naturepedic-product-card__price">All-foam organic</div>
+          <p class="naturepedic-product-card__summary">Naturepedic's first all-foam organic mattress — no latex, no coils. Organic cotton and wool with a supportive foam core. Clean, simple, GOTS-certified.</p>
+          <div class="naturepedic-product-card__best-for">✅ Foam-only preference · Latex-free organic · Plush contour feel</div>
+          <span class="naturepedic-product-card__selector">View model →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- BRAND STORY -->
+  <section class="naturepedic-story">
+    <div class="naturepedic-story__inner">
+      {% assign nat_story_prod = collections['naturepedic'].products | where: 'handle', 'naturepedic-eos-classic' | first %}
+    <div class="naturepedic-story__img">
+        <img src="{% if nat_story_prod and nat_story_prod.featured_image %}{{ nat_story_prod.featured_image | image_url: width: 800 }}{% else %}{{ 'dm-hero-clean.png' | asset_url }}{% endif %}" alt="Naturepedic organic lifestyle" loading="lazy">
+      </div>
+      <div class="naturepedic-story__content">
+        <p class="section-label">Why Naturepedic</p>
+        <h2>Certified organic. GOTS certified. Safer sleep from the ground up.</h2>
+        <p>Naturepedic is the most trusted name in organic mattresses. Every mattress is GOTS-certified and made without polyurethane foam, chemical flame retardants, or synthetic materials.</p>
+        <p>Founded by an environmental engineer, Naturepedic started with a simple mission: eliminate the chemical load in the place you spend a third of your life. Today, they lead the organic mattress category with certified materials from seed to finished bed — no compromises, no greenwashing.</p>
+        <div class="naturepedic-story__feature-grid">
+          <div class="naturepedic-story__feature">
+            <h4>🌱 GOTS Certified Organic</h4>
+            <p>GOTS is the gold standard for organic textiles — every Naturepedic mattress carries the certification from cotton through finishing.</p>
+          </div>
+          <div class="naturepedic-story__feature">
+            <h4>🧪 GOLS Latex &amp; No Retardants</h4>
+            <p>GOLS-certified latex with zero chemical fire retardants. Naturally fire-resistant wool does the job instead.</p>
+          </div>
+          <div class="naturepedic-story__feature">
+            <h4>⚙️ Customizable Firmness</h4>
+            <p>EOS models let you swap layers to change the feel. One mattress can shift from plush to firm — or be set differently on each side.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Naturepedic Banner",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_cta",
+      "label": "Hero CTA text",
+      "default": "Shop EOS & Chorus →"
+    }
+  ]
+}
+{% endschema %}

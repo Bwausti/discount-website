@@ -1,0 +1,325 @@
+{% if closest.collection.handle != 'pranasleep' %}
+  {% break %}
+{% endif %}
+
+<!-- Section: pranasleep-collection-banner -->
+<!-- Brand: PranaSleep | Natural Talalay Latex Hybrids -->
+<style>
+  .prana-section { font-family: 'Inter', 'Segoe UI', sans-serif; }
+  /* Hero */
+  .prana-hero {
+    position: relative; overflow: hidden;
+    background: #0a1f12; min-height: 560px; display: flex; align-items: center;
+  }
+  .prana-hero__bg {
+    position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%;
+    opacity: 0.45;
+  }
+  .prana-hero::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to right, rgba(10,31,18,0.85) 0%, rgba(10,31,18,0.55) 55%, rgba(10,31,18,0.2) 100%);
+  }
+  .prana-hero__content {
+    position: relative; z-index: 2; width: 100%;
+    padding: 60px 24px; max-width: 1300px; margin: 0 auto;
+    display: grid; gap: 32px;
+    grid-template-columns: 1fr 1.15fr; align-items: center;
+  }
+  @media (max-width: 860px) {
+    .prana-hero__content { grid-template-columns: 1fr !important; padding: 40px 20px; }
+    .prana-hero__right { display: none !important; }
+  }
+  .prana-hero__left { max-width: 600px; }
+  .prana-eyebrow {
+    display: inline-block; background: rgba(10,31,18,0.7); backdrop-filter: blur(8px); border: 1px solid rgba(45,138,78,0.4);
+    color: #2d8a4e; font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.22em;
+    padding: 6px 14px; border-radius: 4px; margin-bottom: 20px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .prana-hero h1 {
+    font-size: clamp(36px, 5vw, 60px); font-weight: 900;
+    color: white; line-height: 0.95; letter-spacing: -0.02em;
+    margin: 0 0 16px 0;
+    text-shadow: 0 3px 16px rgba(0,0,0,0.7), 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .prana-hero__tagline {
+    font-size: 18px; font-weight: 700; color: white;
+    line-height: 1.5; margin: 0 0 12px 0;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .prana-hero__desc {
+    font-size: 15px; color: rgba(255,255,255,0.92); line-height: 1.65;
+    margin: 0 0 24px 0; max-width: 520px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  }
+  .prana-hero__badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .prana-badge {
+    background: rgba(0,0,0,0.55); color: white;
+    padding: 5px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    border: 1px solid rgba(255,255,255,0.25);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  }
+  .prana-hero__buttons { display: flex; gap: 12px; flex-wrap: wrap; }
+  .prana-btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #2d8a4e; color: white; padding: 13px 28px;
+    border-radius: 6px; text-decoration: none; font-weight: 800; font-size: 14px;
+    transition: background 0.2s;
+  }
+  .prana-btn-primary:hover { background: #3aa85e; }
+  .prana-btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px); color: white; padding: 13px 24px;
+    border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 14px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .prana-btn-secondary:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.6); }
+  .prana-hero__right {
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
+    border-radius: 12px; padding: 24px; border: 1px solid rgba(255,255,255,0.2);
+  }
+  .prana-hero__showroom-note { font-size: 15px; font-weight: 700; color: #0a1f12; line-height: 1.5; }
+  .prana-hero__products { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 16px; }
+  .prana-hero__product-card {
+    background: #f4f2ea; border-radius: 8px; overflow: hidden;
+    text-decoration: none; transition: transform 0.2s, background 0.2s;
+    display: block;
+  }
+  .prana-hero__product-card:hover { transform: translateY(-3px); background: #eee9dc; }
+  .prana-hero__product-img { position: relative; aspect-ratio: 5/4; overflow: hidden; }
+  .prana-hero__product-img img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+  .prana-hero__product-name { padding: 10px 10px 12px; font-size: 12px; font-weight: 800; color: #0a1f12; line-height: 1.3; }
+  /* Trust bar */
+  .prana-trust { background: white; border-bottom: 1px solid #e2e8f0; }
+  .prana-trust__grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
+  .prana-trust__item { padding: 16px 20px; text-align: center; border-right: 1px solid #e2e8f0; }
+  .prana-trust__item:last-child { border-right: none; }
+  .prana-trust__label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: #64748b; margin-bottom: 4px; }
+  .prana-trust__value { font-size: 20px; font-weight: 900; color: #0a1f12; }
+  /* Highlight pills */
+  .prana-highlights { background: #f7f6f1; padding: 20px 24px; border-bottom: 1px solid #e2e8f0; }
+  .prana-highlights__inner { max-width: 1300px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px; }
+  .prana-highlight-pill { background: white; border: 1px solid #e2e8f0; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; color: #334155; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  /* Product showcase */
+  .prana-products-section { background: #f7f6f1; padding: 56px 24px; }
+  .prana-products-header { max-width: 1300px; margin: 0 auto 32px; }
+  .prana-products-header h2 { font-size: clamp(28px, 3.5vw, 42px); font-weight: 900; color: #0a1f12; line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
+  .prana-products-header p { font-size: 16px; color: #64748b; line-height: 1.6; margin-top: 12px; max-width: 700px; }
+  .prana-products-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .prana-products-grid { grid-template-columns: 1fr !important; } }
+  .prana-product-card {
+    background: white; border: 2px solid #e2e8f0; border-radius: 12px;
+    overflow: hidden; text-align: left; cursor: pointer;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    display: block; text-decoration: none;
+  }
+  .prana-product-card:hover {
+    border-color: #2d8a4e; transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  }
+  .prana-product-card__img { position: relative; aspect-ratio: 16/10; background: #f1f3f6; overflow: hidden; }
+  .prana-product-card__img img { width: 100%; height: 100%; object-fit: contain; padding: 20px; transition: transform 0.4s; }
+  .prana-product-card:hover .prana-product-card__img img { transform: scale(1.04); }
+  .prana-product-card__body { padding: 20px; }
+  .prana-product-card__name { font-size: 24px; font-weight: 900; color: #0a1f12; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .prana-product-card__summary { font-size: 13px; color: #475569; line-height: 1.55; margin-bottom: 12px; }
+  .prana-product-card__features { margin-bottom: 12px; }
+  .prana-product-card__feature { font-size: 11px; color: #334155; padding: 4px 0; }
+  .prana-product-card__feature::before { content: "✓ "; color: #2d8a4e; font-weight: 800; }
+  .prana-product-card__selector {
+    display: inline-block; padding: 8px 16px; border-radius: 6px;
+    font-size: 12px; font-weight: 800; background: #0a1f12; color: white;
+    transition: background 0.2s;
+  }
+  .prana-product-card:hover .prana-product-card__selector { background: #2d8a4e; }
+  /* Brand story */
+  .prana-story { background: white; padding: 64px 24px; border-top: 1px solid #e2e8f0; }
+  .prana-story__inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr; gap: 48px; align-items: center; }
+  @media (max-width: 860px) { .prana-story__inner { grid-template-columns: 1fr !important; } }
+  .prana-story__img { position: relative; aspect-ratio: 16/10; border-radius: 12px; overflow: hidden; background: #f1f3f6; }
+  .prana-story__img img { width: 100%; height: 100%; object-fit: cover; }
+  .prana-story__features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+  @media (max-width: 640px) { .prana-story__features { grid-template-columns: 1fr !important; } }
+  .prana-story__feature { background: #f7f6f1; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; }
+  .prana-story__feature h4 { font-size: 13px; font-weight: 800; color: #0a1f12; margin: 0 0 6px 0; }
+  .prana-story__feature p { font-size: 12px; color: #64748b; line-height: 1.55; margin: 0; }
+  .prana-story__content h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: #0a1f12; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px 0; }
+  .prana-story__content p { font-size: 15px; color: #475569; line-height: 1.7; margin-bottom: 16px; }
+  .section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; color: #2d8a4e; margin-bottom: 8px; }
+</style>
+
+<div class="prana-section">
+
+  <!-- HERO -->
+  <section class="prana-hero">
+    <img
+      src="{{ 'prana-hero-bg.jpg' | asset_url }}"
+      alt="PranaSleep mattress collection"
+      class="prana-hero__bg"
+      loading="eager"
+    >
+    <div class="prana-hero__content">
+      <div class="prana-hero__left">
+        <span class="prana-eyebrow">Available in Bowling Green, KY</span>
+        <h1>PranaSleep</h1>
+        <p class="prana-hero__tagline">Natural Talalay latex. Superior comfort. Sustainable sleep.</p>
+        <p class="prana-hero__desc">
+          PranaSleep is built around natural Talalay latex — a sustainable, durable, and naturally hypoallergenic material. Their hybrid designs combine latex comfort layers with pocketed coils for responsive support with pressure relief.
+        </p>
+        <div class="prana-hero__badges">
+          <span class="prana-badge">3 models</span>
+          <span class="prana-badge">Natural Talalay Latex</span>
+          <span class="prana-badge">Hybrid Construction</span>
+        </div>
+        <div class="prana-hero__buttons">
+          <a href="#prana-products" class="prana-btn-primary">Explore the lineup</a>
+        </div>
+      </div>
+      <div class="prana-hero__right">
+        <p class="prana-hero__showroom-note">
+          PranaSleep is one of the most slept-on brands in the category — we carry both Karma Elite 2 models in our showroom so you can compare plush and super cush side by side.
+        </p>
+        <div class="prana-hero__products">
+          <a href="/products/karma-elite-2-hybrid-plush" class="prana-hero__product-card">
+            <div class="prana-hero__product-img">
+              <img src="{{ 'prana-karma-plush-card.jpg' | asset_url }}" alt="Karma Elite 2 Plush" loading="lazy">
+            </div>
+            <p class="prana-hero__product-name">Karma Elite 2 Plush<br><span style="font-weight:400;color:#64748b;font-size:11px;">Plush Talalay latex feel</span></p>
+          </a>
+          <a href="/products/karma-elite-2-hybrid-super-cush" class="prana-hero__product-card">
+            <div class="prana-hero__product-img">
+              <img src="{{ 'prana-karma-cush-card.jpg' | asset_url }}" alt="Karma Elite 2 Super Cush" loading="lazy">
+            </div>
+            <p class="prana-hero__product-name">Karma Elite 2 Super Cush<br><span style="font-weight:400;color:#64748b;font-size:11px;">Super cush Talalay latex feel</span></p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="prana-trust">
+    <div class="prana-trust__grid">
+      <div class="prana-trust__item">
+        <p class="prana-trust__label">Comfort levels</p>
+        <p class="prana-trust__value">3</p>
+      </div>
+      <div class="prana-trust__item">
+        <p class="prana-trust__label">Warranty</p>
+        <p class="prana-trust__value">20-year</p>
+      </div>
+      <div class="prana-trust__item">
+        <p class="prana-trust__label">Warranty</p>
+        <p class="prana-trust__value">20-year</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIGHLIGHT PILLS -->
+  <div class="prana-highlights">
+    <div class="prana-highlights__inner">
+      <span class="prana-highlight-pill">🧬 Natural Talalay Latex</span>
+      <span class="prana-highlight-pill">🔩 Hybrid Construction</span>
+      <span class="prana-highlight-pill">❄️ pranaCOOL Cover</span>
+      <span class="prana-highlight-pill">🧪 Copper-Infused</span>
+      <span class="prana-highlight-pill">🏠 Made in USA</span>
+      <span class="prana-highlight-pill">🌱 Sustainable</span>
+    </div>
+  </div>
+
+  <!-- PRODUCT SHOWCASE -->
+  <section id="prana-products" class="prana-products-section">
+    <div class="prana-products-header">
+      <p class="section-label">The Karma Elite 2 lineup</p>
+      <h2>Two comfort feels. One hybrid platform.</h2>
+      <p>Both Karma Elite 2 models share the same Talalay latex hybrid construction — choose Plush for a softer cradle or Super Cush for a more responsive, buoyant feel.</p>
+    </div>
+
+    <div class="prana-products-grid">
+      <!-- Karma Elite 2 Hybrid Plush -->
+      <a href="/products/karma-elite-2-hybrid-plush" class="prana-product-card">
+        <div class="prana-product-card__img">
+          <img src="{{ 'prana-karma-plush-card.jpg' | asset_url }}" alt="Karma Elite 2 Plush" loading="lazy">
+        </div>
+        <div class="prana-product-card__body">
+          <div class="prana-product-card__name">Karma Elite 2 Plush</div>
+          <p class="prana-product-card__summary">Talalay latex hybrid with a plush, pressure-relieving feel. Ideal for side sleepers who want gentle contouring with responsive support.</p>
+          <div class="prana-product-card__features">
+            <div class="prana-product-card__feature">Natural Talalay latex comfort layer</div>
+            <div class="prana-product-card__feature">Pocketed coil support core</div>
+            <div class="prana-product-card__feature">pranaCOOL cooling cover</div>
+          </div>
+          <span class="prana-product-card__selector">Shop Karma Elite 2 Plush →</span>
+        </div>
+      </a>
+
+      <!-- Karma Elite 2 Hybrid Super Cush -->
+      <a href="/products/karma-elite-2-hybrid-super-cush" class="prana-product-card">
+        <div class="prana-product-card__img">
+          <img src="{{ 'prana-karma-cush-card.jpg' | asset_url }}" alt="Karma Elite 2 Super Cush" loading="lazy">
+        </div>
+        <div class="prana-product-card__body">
+          <div class="prana-product-card__name">Karma Elite 2 Super Cush</div>
+          <p class="prana-product-card__summary">Talalay latex hybrid with a super cush, buoyant feel. Delivers deeper pressure relief while maintaining the responsive lift of latex.</p>
+          <div class="prana-product-card__features">
+            <div class="prana-product-card__feature">Natural Talalay latex comfort layer</div>
+            <div class="prana-product-card__feature">Copper-infused memory foam transition</div>
+            <div class="prana-product-card__feature">pranaCOOL cooling cover</div>
+          </div>
+          <span class="prana-product-card__selector">Shop Karma Elite 2 Super Cush →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- BRAND STORY -->
+  <section class="prana-story">
+    <div class="prana-story__inner">
+      <div class="prana-story__img">
+        <img src="{{ 'prana-story-bg.jpg' | asset_url }}" alt="PranaSleep lifestyle" loading="lazy">
+      </div>
+      <div class="prana-story__content">
+        <p class="section-label">Why PranaSleep</p>
+        <h2>Sustainable latex. Superior comfort. Thoughtfully built.</h2>
+        <p>PranaSleep is built around natural Talalay latex — a sustainable, durable, and naturally hypoallergenic material. Their hybrid designs combine latex comfort layers with pocketed coils for responsive support with pressure relief.</p>
+        <p>Every PranaSleep mattress is crafted with responsibly sourced materials and finished in the USA. The result is a sleep surface that sleeps cooler, lasts longer, and feels better than conventional foam alternatives.</p>
+        <div class="prana-story__features">
+          <div class="prana-story__feature">
+            <h4>🧬 Natural Latex</h4>
+            <p>Hypoallergenic, dust mite resistant, and naturally breathable. Talalay processing delivers consistent comfort across every inch.</p>
+          </div>
+          <div class="prana-story__feature">
+            <h4>❄️ pranaCOOL Cover</h4>
+            <p>Phase-change material woven into the cover actively pulls heat away from your body for a cooler night's sleep.</p>
+          </div>
+          <div class="prana-story__feature">
+            <h4>🌱 Sustainable Materials</h4>
+            <p>Responsibly sourced latex and recycled steel coils reduce environmental impact without sacrificing durability or comfort.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "PranaSleep Banner",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "Explore the lineup"
+    }
+  ]
+}
+{% endschema %}

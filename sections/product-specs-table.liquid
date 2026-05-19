@@ -1,0 +1,254 @@
+{% comment %}
+  product-specs-table.liquid
+  Universal PDP specs table — shows brand, firmness, position, features, sizes
+  Renders on every product page via tags + vendor
+{% endcomment %}
+
+{% assign p = closest.product %}
+{% unless p %}
+  {% break %}
+{% endunless %}
+
+{% comment %} ── Firmness detection ── {% endcomment %}
+{% assign firmness_label = '' %}
+{% for tag in p.tags %}
+  {% assign t = tag | downcase | strip %}
+  {% if t == 'extra-firm' %}{% assign firmness_label = 'Extra Firm' %}
+  {% elsif t == 'firm' and firmness_label == '' %}{% assign firmness_label = 'Firm' %}
+  {% elsif t == 'cushion-firm' and firmness_label == '' %}{% assign firmness_label = 'Cushion Firm' %}
+  {% elsif t == 'medium-firm' and firmness_label == '' %}{% assign firmness_label = 'Medium-Firm' %}
+  {% elsif t == 'medium' and firmness_label == '' %}{% assign firmness_label = 'Medium' %}
+  {% elsif t == 'medium-soft' and firmness_label == '' %}{% assign firmness_label = 'Medium-Soft' %}
+  {% elsif t == 'plush' and firmness_label == '' %}{% assign firmness_label = 'Plush' %}
+  {% elsif t == 'pillow top' and firmness_label == '' %}{% assign firmness_label = 'Plush' %}
+  {% elsif t == 'soft' and firmness_label == '' %}{% assign firmness_label = 'Soft' %}{% endif %}
+{% endfor %}
+
+{% comment %} ── Sleep position ── {% endcomment %}
+{% assign position_label = '' %}
+{% for tag in p.tags %}
+  {% assign t = tag | downcase %}
+  {% if t contains 'side sleeper' %}{% assign position_label = 'Side Sleepers' %}
+  {% elsif t contains 'back sleeper' %}{% assign position_label = 'Back Sleepers' %}
+  {% elsif t contains 'stomach sleeper' %}{% assign position_label = 'Stomach Sleepers' %}
+  {% elsif t contains 'all position' %}{% assign position_label = 'All Sleepers' %}{% endif %}
+{% endfor %}
+
+{% comment %} ── Key features from tags ── {% endcomment %}
+{% assign found_cooling = false %}
+{% assign found_hybrid = false %}
+{% assign found_memory = false %}
+{% assign found_adj = false %}
+{% assign found_premium = false %}
+{% assign found_bestseller = false %}
+{% for tag in p.tags %}
+  {% assign t = tag | downcase %}
+  {% if t contains 'cooling' %}{% assign found_cooling = true %}{% endif %}
+  {% if t contains 'hybrid' and t != 'hybrid-firm' and t != 'hybrid-plush' and t != 'hybrid-super-cush' %}{% assign found_hybrid = true %}{% endif %}
+  {% if t contains 'memory foam' %}{% assign found_memory = true %}{% endif %}
+  {% if t contains 'adjustable' %}{% assign found_adj = true %}{% endif %}
+  {% if t contains 'premium' %}{% assign found_premium = true %}{% endif %}
+  {% if t contains 'best seller' %}{% assign found_bestseller = true %}{% endif %}
+{% endfor %}
+{% assign features = '' %}
+{% if found_cooling %}{% assign features = 'Cooling' %}{% endif %}
+{% if found_hybrid %}{% if features != '' %}{% assign features = features | append: ' · ' %}{% endif %}{% assign features = features | append: 'Hybrid' %}{% endif %}
+{% if found_memory %}{% if features != '' %}{% assign features = features | append: ' · ' %}{% endif %}{% assign features = features | append: 'Memory Foam' %}{% endif %}
+{% if found_adj %}{% if features != '' %}{% assign features = features | append: ' · ' %}{% endif %}{% assign features = features | append: 'Adjustable Base Compatible' %}{% endif %}
+{% if found_premium %}{% if features != '' %}{% assign features = features | append: ' · ' %}{% endif %}{% assign features = features | append: 'Premium' %}{% endif %}
+{% if found_bestseller %}{% if features != '' %}{% assign features = features | append: ' · ' %}{% endif %}{% assign features = features | append: 'Best Seller' %}{% endif %}
+
+{% assign category = p.product_type | default: '' %}
+{% assign sizes = 'Twin, Twin XL, Full, Queen, King, CA King' %}
+{% if category contains 'Adjustable' or category contains 'Foundation' or category contains 'Platform' %}
+  {% assign sizes = 'Twin, Twin XL, Full, Queen, King' %}
+{% endif %}
+
+{% comment %} ── Mattress thickness by brand (defaults — override per product with height-X tag) ── {% endcomment %}
+{% assign height_text = '' %}
+
+{% comment %} Check for product-level tag override first {% endcomment %}
+{% for tag in p.tags %}
+  {% assign t = tag | downcase | strip %}
+  {% if t contains 'height-' %}
+    {% assign h = t | remove: 'height-' %}
+    {% assign height_text = h | append: '" Profile' %}
+  {% endif %}
+{% endfor %}
+
+{% comment %} Fallback: brand-based defaults {% endcomment %}
+{% if height_text == '' %}
+  {% assign v = p.vendor | downcase | strip %}
+  {% if v == 'helix' %}{% assign height_text = '11.5–13" Profile' %}
+  {% elsif v == 'puffy' %}{% assign height_text = '10–14" Profile' %}
+  {% elsif v == 'dreamcloud' %}{% assign height_text = '13–14" Profile' %}
+  {% elsif v == 'nectar' %}{% assign height_text = '12" Profile' %}
+  {% elsif v == 'bedgear' %}{% assign height_text = '10–13" Profile' %}
+  {% elsif v == 'bedtech' %}{% assign height_text = '8–12" Profile' %}
+  {% elsif v == 'naturepedic' %}{% assign height_text = '8–11" Profile' %}
+  {% elsif v == 'serta' %}{% assign height_text = '10–14" Profile' %}
+  {% elsif v == 'jamison' %}{% assign height_text = '8–12" Profile' %}
+  {% elsif v == 'pranasleep' %}{% assign height_text = '10–13" Profile' %}
+  {% elsif v contains 'posh' or v contains 'lavish' %}{% assign height_text = '10–14" Profile' %}
+  {% endif %}
+{% endif %}
+
+{% assign row_count = 0 %}
+{% assign spec_labels = '' %}
+{% assign spec_values = '' %}
+{% assign spacer = '❚' %}
+
+{% comment %} Row 1: Brand {% endcomment %}
+{% assign spec_labels = spec_labels | append: 'Brand' | append: spacer %}
+{% assign spec_values = spec_values | append: p.vendor | append: spacer %}
+{% assign row_count = row_count | plus: 1 %}
+
+{% comment %} Row 2: Category {% endcomment %}
+{% if category != '' %}
+  {% assign spec_labels = spec_labels | append: 'Category' | append: spacer %}
+  {% if category == 'Mattress' %}
+    {% assign spec_values = spec_values | append: 'Mattress' | append: spacer %}
+  {% else %}
+    {% assign spec_values = spec_values | append: category | append: spacer %}
+  {% endif %}
+  {% assign row_count = row_count | plus: 1 %}
+{% endif %}
+
+{% comment %} Row 3: Firmness {% endcomment %}
+{% if firmness_label != '' %}
+  {% assign spec_labels = spec_labels | append: 'Firmness' | append: spacer %}
+  {% assign spec_values = spec_values | append: firmness_label | append: spacer %}
+  {% assign row_count = row_count | plus: 1 %}
+{% endif %}
+
+{% comment %} Row 4: Best For {% endcomment %}
+{% if position_label != '' %}
+  {% assign spec_labels = spec_labels | append: 'Best For' | append: spacer %}
+  {% assign spec_values = spec_values | append: position_label | append: spacer %}
+  {% assign row_count = row_count | plus: 1 %}
+{% endif %}
+
+{% comment %} Row 5: Available Sizes {% endcomment %}
+{% assign spec_labels = spec_labels | append: 'Available Sizes' | append: spacer %}
+{% assign spec_values = spec_values | append: sizes | append: spacer %}
+{% assign row_count = row_count | plus: 1 %}
+
+{% comment %} Row 6: Height / Thickness {% endcomment %}
+{% if height_text != '' %}
+  {% assign spec_labels = spec_labels | append: 'Height / Thickness' | append: spacer %}
+  {% assign spec_values = spec_values | append: height_text | append: spacer %}
+  {% assign row_count = row_count | plus: 1 %}
+{% endif %}
+
+{% comment %} Row 7: Key Features {% endcomment %}
+{% if features != '' %}
+  {% assign spec_labels = spec_labels | append: 'Key Features' | append: spacer %}
+  {% assign spec_values = spec_values | append: features | append: spacer %}
+  {% assign row_count = row_count | plus: 1 %}
+{% endif %}
+
+{% assign labels_arr = spec_labels | split: spacer %}
+{% assign values_arr = spec_values | split: spacer %}
+
+<style>
+  .pspecs {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 24px 24px 8px;
+  }
+  .pspecs__title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.01em;
+  }
+  .pspecs__table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+  }
+  .pspecs__table tr {
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .pspecs__table tr:last-child {
+    border-bottom: none;
+  }
+  .pspecs__table tr:nth-child(even) {
+    background: #f8fafc;
+  }
+  .pspecs__label {
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #475569;
+    background: #f1f5f9;
+    width: 35%;
+    border-right: 1px solid #e2e8f0;
+  }
+  .pspecs__value {
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #0f172a;
+  }
+  .pspecs__availability td {
+    color: #166534;
+    font-weight: 600;
+  }
+  .pspecs__availability th {
+    color: #166534;
+  }
+  .pspecs__pill {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1e40af;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin: 2px 4px 2px 0;
+  }
+  @media (max-width: 640px) {
+    .pspecs__label,
+    .pspecs__value {
+      padding: 10px 12px;
+      font-size: 12px;
+    }
+    .pspecs__label {
+      width: 40%;
+    }
+  }
+</style>
+
+<div class="pspecs">
+  <h2 class="pspecs__title">Product Specifications</h2>
+  <table class="pspecs__table">
+    {% for i in (0..20) %}
+      {% if i >= row_count %}{% break %}{% endif %}
+      <tr>
+        <th class="pspecs__label">{{ labels_arr[i] }}</th>
+        <td class="pspecs__value">{{ values_arr[i] }}</td>
+      </tr>
+    {% endfor %}
+    <tr class="pspecs__availability">
+      <th class="pspecs__label">Availability</th>
+      <td class="pspecs__value">{% if p.available %}In Stock — {% endif %}Visit our showroom to try before you buy</td>
+    </tr>
+  </table>
+</div>
+
+{% schema %}
+{
+  "name": "Product Specs Table",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}

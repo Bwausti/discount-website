@@ -1,0 +1,177 @@
+<!-- Section: bedgear-collection-banner -->
+<!-- Brand: Bedgear | Performance pillows & protectors -->
+{% if collection.handle != 'bedgear' %}{% break %}{% endif %}
+
+<style>
+  .bg-section { font-family: 'Inter', 'Segoe UI', sans-serif; }
+  .bg-hero {
+    position: relative; overflow: hidden;
+    background: #1a1a1a; min-height: 440px; display: flex; align-items: center;
+  }
+  .bg-hero__bg { position: absolute; inset: 0; object-fit: cover; width: 100%; height: 100%; opacity: 0.30; }
+  .bg-hero::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(to right, rgba(26,26,26,0.9) 0%, rgba(26,26,26,0.5) 60%, rgba(26,26,26,0.15) 100%); }
+  .bg-hero__content { position: relative; z-index: 2; width: 100%; padding: 60px 24px; max-width: 1300px; margin: 0 auto; display: grid; gap: 40px; grid-template-columns: 1fr 1fr; align-items: center; }
+  @media (max-width: 860px) { .bg-hero__content { grid-template-columns: 1fr !important; padding: 40px 20px; } .bg-hero__right { display: none !important; } }
+  .bg-hero__left { max-width: 540px; }
+  .bg-eyebrow { display: inline-block; background: rgba(26,26,26,0.7); backdrop-filter: blur(8px); border: 1px solid rgba(59,130,246,0.4); color: #3b82f6; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; padding: 6px 14px; border-radius: 4px; margin-bottom: 20px; }
+  .bg-hero h1 { font-size: clamp(36px, 5vw, 56px); font-weight: 900; color: white; line-height: 0.95; letter-spacing: -0.02em; margin: 0 0 12px 0; text-shadow: 0 3px 16px rgba(0,0,0,0.7); }
+  .bg-hero__tagline { font-size: 20px; font-weight: 700; color: #3b82f6; line-height: 1.3; margin: 0 0 12px 0; }
+  .bg-hero__desc { font-size: 15px; color: rgba(255,255,255,0.9); line-height: 1.65; margin: 0 0 20px 0; }
+  .bg-hero__badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .bg-badge { background: rgba(0,0,0,0.55); color: white; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; border: 1px solid rgba(255,255,255,0.2); }
+  .bg-btn { display: inline-flex; align-items: center; gap: 8px; background: #3b82f6; color: white; padding: 13px 28px; border-radius: 6px; text-decoration: none; font-weight: 800; font-size: 14px; transition: background 0.2s; }
+  .bg-btn:hover { background: #60a5fa; }
+
+  .bg-hero__right { background: rgba(255,255,255,0.95); backdrop-filter: blur(12px); border-radius: 12px; padding: 24px; }
+  .bg-hero__sub { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 14px; }
+  .bg-hero__pillow-row { display: flex; gap: 12px; }
+  .bg-hero__pillow-card { flex: 1; background: #f4f2ea; border-radius: 8px; padding: 12px; text-decoration: none; transition: background 0.2s; display: block; }
+  .bg-hero__pillow-card:hover { background: #eee9dc; }
+  .bg-hero__pillow-img { aspect-ratio: 1; margin-bottom: 8px; overflow: hidden; border-radius: 6px; }
+  .bg-hero__pillow-img img { width: 100%; height: 100%; object-fit: cover; }
+  .bg-hero__pillow-name { font-size: 13px; font-weight: 800; color: #1a1a1a; }
+  .bg-hero__pillow-type { font-size: 10px; color: #64748b; }
+  .bg-hero__pillow-price { font-size: 14px; font-weight: 900; color: #3b82f6; margin-top: 4px; }
+
+  /* Products grid */
+  .bg-products { background: white; padding: 48px 24px; }
+  .bg-products__inner { max-width: 1300px; margin: 0 auto; }
+  .bg-products__head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0; }
+  .bg-products__head h2 { font-size: 20px; font-weight: 900; color: #1a1a1a; margin: 0; }
+  .bg-products__head span { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; }
+  .bg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .bg-grid { grid-template-columns: 1fr !important; } }
+  
+  .bg-card { background: white; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; display: block; text-decoration: none; transition: transform 0.2s, border-color 0.2s; }
+  .bg-card:hover { transform: translateY(-3px); border-color: #3b82f6; }
+  .bg-card__img { aspect-ratio: 4/3; background: #f8f9fb; overflow: hidden; }
+  .bg-card__img img { width: 100%; height: 100%; object-fit: contain; padding: 16px; }
+  .bg-card__body { padding: 14px; }
+  .bg-card__name { font-size: 15px; font-weight: 800; color: #1a1a1a; margin-bottom: 2px; }
+  .bg-card__sub { font-size: 11px; color: #64748b; margin-bottom: 6px; }
+  .bg-card__price { font-size: 16px; font-weight: 900; color: #3b82f6; }
+
+  /* Story */
+  .bg-story { background: #f7f6f1; padding: 56px 24px; border-top: 1px solid #e2e8f0; }
+  .bg-story__inner { max-width: 1300px; margin: 0 auto; display: grid; gap: 48px; grid-template-columns: 1fr 1.3fr; align-items: center; }
+  @media (max-width: 860px) { .bg-story__inner { grid-template-columns: 1fr !important; } }
+  .bg-story__img { aspect-ratio: 16/10; border-radius: 12px; overflow: hidden; }
+  .bg-story__img img { width: 100%; height: 100%; object-fit: cover; }
+  .bg-story__label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; color: #3b82f6; margin-bottom: 8px; }
+  .bg-story h2 { font-size: clamp(24px, 2.5vw, 34px); font-weight: 900; color: #1a1a1a; letter-spacing: -0.02em; margin: 0 0 12px 0; }
+  .bg-story p { font-size: 15px; color: #475569; line-height: 1.7; margin-bottom: 12px; }
+</style>
+
+{% assign bg_prods = collections['bedgear'].products %}
+
+<div class="bg-section">
+
+  <!-- HERO -->
+  <section class="bg-hero">
+    <img src="{{ 'bedgear-storm-card.jpg' | asset_url }}" alt="Bedgear" class="bg-hero__bg" loading="eager">
+    <div class="bg-hero__content">
+      <div class="bg-hero__left">
+        <span class="bg-eyebrow">Available in Bowling Green, KY</span>
+        <h1>Bedgear</h1>
+        <p class="bg-hero__tagline">Stay Cool. Sleep Deep. Wake Ready.</p>
+        <p class="bg-hero__desc">
+          Performance pillows and mattress protectors engineered with advanced airflow technology, react foam, and cooling materials — designed for athletes and hot sleepers.
+        </p>
+        <div class="bg-hero__badges">
+          <span class="bg-badge">Pillows &amp; protectors</span>
+          <span class="bg-badge">Performance sleep gear</span>
+          <span class="bg-badge">Made in USA</span>
+        </div>
+        <a href="#bg-products" class="bg-btn">Shop all →</a>
+      </div>
+      <div class="bg-hero__right">
+        <p class="bg-hero__sub">Featured — Performance Pillows</p>
+        <div class="bg-hero__pillow-row">
+          {% assign storm_prod = bg_prods | where: 'handle', 'bedgear-storm' | first %}
+          <a href="/products/bedgear-storm" class="bg-hero__pillow-card">
+            <div class="bg-hero__pillow-img">
+              {% if storm_prod and storm_prod.images.size > 0 %}
+                <img src="{{ storm_prod.images[1] | default: storm_prod.images[0] | image_url: width: 300 }}" alt="Storm" loading="lazy">
+              {% endif %}
+            </div>
+            <div class="bg-hero__pillow-name">Storm Performance</div>
+            <div class="bg-hero__pillow-type">Hybrid pillow · React foam</div>
+            <div class="bg-hero__pillow-price">{% if storm_prod %}From {{ storm_prod.price_min | money_without_trailing_zeros }}{% endif %}</div>
+          </a>
+          {% assign bal_prod = bg_prods | where: 'handle', 'bedgear-balance' | first %}
+          <a href="/products/bedgear-balance" class="bg-hero__pillow-card">
+            <div class="bg-hero__pillow-img">
+              {% if bal_prod and bal_prod.images.size > 0 %}
+                <img src="{{ bal_prod.images[1] | default: bal_prod.images[0] | image_url: width: 300 }}" alt="Balance" loading="lazy">
+              {% endif %}
+            </div>
+            <div class="bg-hero__pillow-name">Balance Performance</div>
+            <div class="bg-hero__pillow-type">Foam pillow · Moisture-wicking</div>
+            <div class="bg-hero__pillow-price">{% if bal_prod %}From {{ bal_prod.price_min | money_without_trailing_zeros }}{% endif %}</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="bg-products" class="bg-products">
+    <div class="bg-products__inner">
+      <div class="bg-products__head">
+        <h2>Performance Sleep Gear</h2>
+        <span>3 products</span>
+      </div>
+      <div class="bg-grid">
+        {% assign bg_handles = 'bedgear-storm,bedgear-balance,bedgear-dri-tec' | split: ',' %}
+        {% for handle in bg_handles %}
+          {% assign prod = bg_prods | where: 'handle', handle | first %}
+          {% if prod %}
+          <a href="/products/{{ handle }}" class="bg-card">
+            <div class="bg-card__img">
+              {% assign img = prod.images[1] | default: prod.images[0] %}
+              <img src="{{ img | image_url: width: 500 }}" alt="{{ prod.title }}" loading="lazy">
+            </div>
+            <div class="bg-card__body">
+              <div class="bg-card__name">{{ prod.title }}</div>
+              <div class="bg-card__sub">
+                {% if handle contains 'storm' %}Hybrid pillow — React foam, dual-sided
+                {% elsif handle contains 'balance' %}Foam pillow — Moisture-wicking, hypoallergenic
+                {% else %}Mattress protector — Waterproof, breathable{% endif %}
+              </div>
+              <div class="bg-card__price">From {{ prod.price_min | money_without_trailing_zeros }}</div>
+            </div>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="bg-story">
+    <div class="bg-story__inner">
+      <div class="bg-story__img">
+        {% assign story_prod = bg_prods | where: 'handle', 'bedgear-storm' | first %}
+        {% if story_prod and story_prod.images.size > 0 %}
+          {% assign story_img = story_prod.images[2] | default: story_prod.images[0] %}
+          <img src="{{ story_img | image_url: width: 800 }}" alt="Bedgear" loading="lazy">
+        {% endif %}
+      </div>
+      <div>
+        <p class="bg-story__label">Why Bedgear</p>
+        <h2>One size does not fit all.</h2>
+        <p>Bedgear believes sleep should be personalized — to your body type, sleep position, and temperature. Every product is engineered with advanced airflow technology using react foam, cooling gels, and moisture-wicking fabrics.</p>
+        <p>In the showroom, Bedgear is the natural add-on to any mattress purchase. Grab a cooling pillow or protective layer and complete your sleep setup.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Bedgear Collection Banner",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": []
+}
+{% endschema %}

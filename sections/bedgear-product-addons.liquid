@@ -1,0 +1,300 @@
+{% comment %}
+  bedgear-product-addons.liquid
+  Shows BedGear mattress tiers + accessory family on product pages
+  Only renders on BedGear products
+{% endcomment %}
+
+{% assign is_bedgear_product = false %}
+{% assign is_mattress = false %}
+{% assign is_pillow = false %}
+{% assign is_protector = false %}
+{% if closest.product.vendor == "BedGear" %}
+  {% assign is_bedgear_product = true %}
+  {% assign title_lower = closest.product.title | downcase %}
+  {% if title_lower contains "mattress" %}
+    {% assign is_mattress = true %}
+  {% elsif title_lower contains "pillow" %}
+    {% assign is_pillow = true %}
+  {% elsif title_lower contains "protector" %}
+    {% assign is_protector = true %}
+  {% endif %}
+{% endif %}
+
+{% if is_bedgear_product %}
+
+<style>
+  .bg-addons {
+    background: #1a1f2e;
+    border-top: 1px solid #2a3045;
+    padding: 48px 24px;
+    margin-top: 0;
+  }
+  .bg-addons__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .bg-addons__header {
+    margin-bottom: 32px;
+  }
+  .bg-addons__label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #e63946;
+    margin-bottom: 8px;
+  }
+  .bg-addons__title {
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px 0;
+  }
+  .bg-addons__sub {
+    font-size: 14px;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  /* Product cards */
+  .bg-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .bg-card {
+    background: #252b3d;
+    border: 1px solid #3a4158;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .bg-card:hover {
+    border-color: #e63946;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+    transform: translateY(-2px);
+  }
+  .bg-card__icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .bg-card__badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: #e63946;
+    color: white;
+    width: fit-content;
+  }
+  .bg-card__badge.neutral {
+    background: #3a4158;
+    color: #cbd5e1;
+  }
+  .bg-card__name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0;
+  }
+  .bg-card__desc {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .bg-card__price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+  }
+  .bg-card__cta {
+    font-size: 12px;
+    font-weight: 800;
+    color: #e63946;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .bg-card:hover .bg-card__cta { gap: 8px; }
+</style>
+
+<div class="bg-addons">
+  <div class="bg-addons__inner">
+
+    <!-- Header -->
+    <div class="bg-addons__header">
+      <p class="bg-addons__label">{% if is_mattress %}The BedGear System{% elsif is_pillow %}Complete Your Sleep Setup{% else %}BedGear Protection + Care{% endif %}</p>
+      <h2 class="bg-addons__title">
+        {% if is_mattress %}Build your BedGear sleep system{% elsif is_pillow %}Pair your pillow with the right mattress{% else %}Protect your mattress investment{% endif %}
+      </h2>
+      <p class="bg-addons__sub">
+        {% if is_mattress %}BedGear mattresses are designed to work with our performance pillows and protectors{% elsif is_pillow %}Your pillow is only as good as the mattress beneath it — and the protector that keeps it clean{% else %}Complete the BedGear system with a performance mattress and pillow{% endif %}
+      </p>
+    </div>
+
+    <!-- Products grid -->
+    <div class="bg-grid">
+
+      {% if is_mattress and is_pillow != true and is_protector != true %}
+        <!-- On a mattress: show the other mattress tier + pillows + protector -->
+        {% if closest.product.title contains "M3" %}
+          <a href="/products/bedgear-m5" class="bg-card">
+            <p class="bg-card__icon">🌙</p>
+            <span class="bg-card__badge neutral">Performance</span>
+            <h3 class="bg-card__name">BedGear M5 Performance Mattress</h3>
+            <p class="bg-card__desc">Step up to the M5 with premium cooling technology, zoned support layers, and a breathable performance cover.</p>
+            <p class="bg-card__price">$2,200</p>
+            <p class="bg-card__cta">View M5 →</p>
+          </a>
+        {% else %}
+          <a href="/products/bedgear-m3" class="bg-card">
+            <p class="bg-card__icon">🌙</p>
+            <span class="bg-card__badge neutral">Performance</span>
+            <h3 class="bg-card__name">BedGear M3 Performance Mattress</h3>
+            <p class="bg-card__desc">The M3 delivers 3-zone support, cooling gel memory foam, and a breathable cover at a more accessible price point.</p>
+            <p class="bg-card__price">$1,650</p>
+            <p class="bg-card__cta">View M3 →</p>
+          </a>
+        {% endif %}
+
+        <a href="/collections/bedgear" class="bg-card">
+          <p class="bg-card__icon">🛏️</p>
+          <span class="bg-card__badge neutral">Accessory</span>
+          <h3 class="bg-card__name">Performance Pillows</h3>
+          <p class="bg-card__desc">Storm cooling or Balance adjustable loft — designed to work with BedGear's airflow mattress technology.</p>
+          <p class="bg-card__price">From $79.99</p>
+          <p class="bg-card__cta">Shop pillows →</p>
+        </a>
+
+        <a href="/products/bedgear-dri-tec" class="bg-card">
+          <p class="bg-card__icon">🛡️</p>
+          <span class="bg-card__badge neutral">Protection</span>
+          <h3 class="bg-card__name">Dri-Tec Mattress Protector</h3>
+          <p class="bg-card__desc">Waterproof, breathable, and machine-washable. Keeps your BedGear mattress in pristine condition.</p>
+          <p class="bg-card__price">$119.99</p>
+          <p class="bg-card__cta">Add protection →</p>
+        </a>
+
+      {% elsif is_pillow %}
+        <!-- On a pillow page: show both mattresses + protector -->
+        <a href="/products/bedgear-m3" class="bg-card">
+          <p class="bg-card__icon">🌙</p>
+          <span class="bg-card__badge neutral">Mattress</span>
+          <h3 class="bg-card__name">BedGear M3 Performance Mattress</h3>
+          <p class="bg-card__desc">3-zone support with cooling gel memory foam. Pairs perfectly with your BedGear pillow for a complete sleep system.</p>
+          <p class="bg-card__price">$1,650</p>
+          <p class="bg-card__cta">View M3 →</p>
+        </a>
+
+        <a href="/products/bedgear-m5" class="bg-card">
+          <p class="bg-card__icon">🌙</p>
+          <span class="bg-card__badge neutral">Mattress</span>
+          <h3 class="bg-card__name">BedGear M5 Performance Mattress</h3>
+          <p class="bg-card__desc">Premium cooling and zoned support. The ultimate partner for your BedGear pillow.</p>
+          <p class="bg-card__price">$2,200</p>
+          <p class="bg-card__cta">View M5 →</p>
+        </a>
+
+        <a href="/products/bedgear-dri-tec" class="bg-card">
+          <p class="bg-card__icon">🛡️</p>
+          <span class="bg-card__badge neutral">Protection</span>
+          <h3 class="bg-card__name">Dri-Tec Mattress Protector</h3>
+          <p class="bg-card__desc">Protect your mattress. Waterproof, breathable, machine-washable.</p>
+          <p class="bg-card__price">$119.99</p>
+          <p class="bg-card__cta">Add protection →</p>
+        </a>
+
+      {% elsif is_protector %}
+        <!-- On the protector page: show both mattresses + pillows -->
+        <a href="/products/bedgear-m3" class="bg-card">
+          <p class="bg-card__icon">🌙</p>
+          <span class="bg-card__badge neutral">Mattress</span>
+          <h3 class="bg-card__name">BedGear M3 Performance Mattress</h3>
+          <p class="bg-card__desc">3-zone support, cooling gel memory foam — the protector fits perfectly.</p>
+          <p class="bg-card__price">$1,650</p>
+          <p class="bg-card__cta">View M3 →</p>
+        </a>
+
+        <a href="/products/bedgear-m5" class="bg-card">
+          <p class="bg-card__icon">🌙</p>
+          <span class="bg-card__badge neutral">Mattress</span>
+          <h3 class="bg-card__name">BedGear M5 Performance Mattress</h3>
+          <p class="bg-card__desc">Premium cooling, zoned support — protected by Dri-Tec.</p>
+          <p class="bg-card__price">$2,200</p>
+          <p class="bg-card__cta">View M5 →</p>
+        </a>
+
+        <a href="/collections/bedgear" class="bg-card">
+          <p class="bg-card__icon">🛏️</p>
+          <span class="bg-card__badge neutral">Pillow</span>
+          <h3 class="bg-card__name">Performance Pillows</h3>
+          <p class="bg-card__desc">Storm cooling or Balance adjustable loft — complete your BedGear system.</p>
+          <p class="bg-card__price">From $79.99</p>
+          <p class="bg-card__cta">Shop pillows →</p>
+        </a>
+
+      {% else %}
+        <!-- Fallback: show everything -->
+        <a href="/products/bedgear-m3" class="bg-card">
+          <p class="bg-card__icon">🌙</p>
+          <span class="bg-card__badge neutral">Mattress</span>
+          <h3 class="bg-card__name">BedGear M3 Performance Mattress</h3>
+          <p class="bg-card__desc">3-zone support, cooling gel memory foam.</p>
+          <p class="bg-card__price">$1,650</p>
+          <p class="bg-card__cta">View M3 →</p>
+        </a>
+        <a href="/products/bedgear-m5" class="bg-card">
+          <p class="bg-card__icon">🌙</p>
+          <span class="bg-card__badge neutral">Mattress</span>
+          <h3 class="bg-card__name">BedGear M5 Performance Mattress</h3>
+          <p class="bg-card__desc">Premium cooling, zoned support.</p>
+          <p class="bg-card__price">$2,200</p>
+          <p class="bg-card__cta">View M5 →</p>
+        </a>
+        <a href="/collections/bedgear" class="bg-card">
+          <p class="bg-card__icon">🛏️</p>
+          <span class="bg-card__badge neutral">Pillow</span>
+          <h3 class="bg-card__name">Performance Pillows</h3>
+          <p class="bg-card__desc">Storm cooling or Balance adjustable loft.</p>
+          <p class="bg-card__price">From $79.99</p>
+          <p class="bg-card__cta">Shop pillows →</p>
+        </a>
+        <a href="/products/bedgear-dri-tec" class="bg-card">
+          <p class="bg-card__icon">🛡️</p>
+          <span class="bg-card__badge neutral">Protection</span>
+          <h3 class="bg-card__name">Dri-Tec Mattress Protector</h3>
+          <p class="bg-card__desc">Waterproof, breathable protection.</p>
+          <p class="bg-card__price">$119.99</p>
+          <p class="bg-card__cta">Add protection →</p>
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "BedGear Product Add-ons",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}

@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Error><Code>AccessDenied</Code><Message>User: arn:aws:iam::419089712888:user/media@fastly is not authorized to perform: s3:ListBucket on resource: "arn:aws:s3:::nectarsleep-media" because no identity-based policy allows the s3:ListBucket action</Message><RequestId>XVPW7GPDF12MFMM2</RequestId><HostId>0euXO1n04tStVcemHbDOvwc8CR7qpgEcA7HojfgeRT/q6R+HqLMGbK23h0yE3VKrbyg5NDVkPr29zbrToz9T8A132UEqI44o</HostId></Error>

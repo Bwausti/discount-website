@@ -1,0 +1,233 @@
+{% comment %}
+  naturepedic-product-addons.liquid
+  Shows Naturepedic model comparison on product pages
+  Only renders on Naturepedic products
+{% endcomment %}
+
+{% assign is_naturepedic_product = false %}
+{% if closest.product.vendor == "Naturepedic" %}
+  {% assign is_naturepedic_product = true %}
+  {% assign title_lower = closest.product.title | downcase %}
+{% endif %}
+
+{% if is_naturepedic_product %}
+
+<style>
+  .np-addons {
+    background: #f3f0e8;
+    border-top: 1px solid #e2e8f0;
+    padding: 48px 24px;
+    margin-top: 0;
+  }
+  .np-addons__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .np-addons__header {
+    margin-bottom: 32px;
+  }
+  .np-addons__label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #4a7c59;
+    margin-bottom: 8px;
+  }
+  .np-addons__title {
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 900;
+    color: #2d3a2d;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px 0;
+  }
+  .np-addons__sub {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+  .np-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .np-card {
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative;
+  }
+  .np-card:hover {
+    border-color: #4a7c59;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .np-card.active {
+    border-color: #4a7c59;
+    background: #f0f7ed;
+  }
+  .np-card.active::after {
+    content: 'Current';
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    background: #4a7c59;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 10px;
+    border-radius: 4px;
+  }
+  .np-card__badge {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: #e8e8d8;
+    color: #4a7c59;
+    width: fit-content;
+  }
+  .np-card__name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #2d3a2d;
+    margin: 0;
+  }
+  .np-card__desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.5;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .np-card__price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2d3a2d;
+    margin: 0;
+  }
+  .np-card__cta {
+    font-size: 12px;
+    font-weight: 800;
+    color: #4a7c59;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .np-card:hover .np-card__cta { gap: 8px; }
+</style>
+
+<div class="np-addons">
+  <div class="np-addons__inner">
+    <div class="np-addons__header">
+      <p class="np-addons__label">Naturepedic Collection</p>
+      <h2 class="np-addons__title">Organic mattresses, every comfort level</h2>
+      <p class="np-addons__sub">Naturepedic builds certified organic mattresses — find the right support for your sleep style</p>
+    </div>
+
+    <div class="np-grid">
+
+      {% assign is_serenade = false %}{% assign is_concerto = false %}{% assign is_eos_classic = false %}{% assign is_eos_pt = false %}
+      {% if title_lower contains "serenade" %}{% assign is_serenade = true %}{% elsif title_lower contains "concerto" %}{% assign is_concerto = true %}{% elsif title_lower contains "eos" and title_lower contains "classic" %}{% assign is_eos_classic = true %}{% elsif title_lower contains "eos" and title_lower contains "pillow" %}{% assign is_eos_pt = true %}{% endif %}
+
+      {% if is_serenade %}
+        <div class="np-card active">
+          <span class="np-card__badge">Entry</span>
+          <h3 class="np-card__name">Serenade</h3>
+          <p class="np-card__desc">A certified organic mattress with medium-firm comfort. GOTS certified, made with organic cotton and wool.</p>
+          <p class="np-card__price">From $1,119</p>
+          <p class="np-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/naturepedic-serenade" class="np-card">
+          <span class="np-card__badge">Entry</span>
+          <h3 class="np-card__name">Serenade</h3>
+          <p class="np-card__desc">A certified organic mattress with medium-firm comfort. GOTS certified, made with organic cotton and wool.</p>
+          <p class="np-card__price">From $1,119</p>
+          <p class="np-card__cta">View Serenade →</p>
+        </a>
+      {% endif %}
+
+      {% if is_concerto %}
+        <div class="np-card active">
+          <span class="np-card__badge">Mid</span>
+          <h3 class="np-card__name">Concerto Pillow Top</h3>
+          <p class="np-card__desc">A plush organic mattress with an added pillow top layer for cloud-like comfort. Still fully certified organic.</p>
+          <p class="np-card__price">From $1,439</p>
+          <p class="np-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/naturepedic-concerto-pillow-top" class="np-card">
+          <span class="np-card__badge">Mid</span>
+          <h3 class="np-card__name">Concerto Pillow Top</h3>
+          <p class="np-card__desc">A plush organic mattress with an added pillow top layer for cloud-like comfort. Still fully certified organic.</p>
+          <p class="np-card__price">From $1,439</p>
+          <p class="np-card__cta">View Concerto →</p>
+        </a>
+      {% endif %}
+
+      {% if is_eos_classic %}
+        <div class="np-card active">
+          <span class="np-card__badge">Premium</span>
+          <h3 class="np-card__name">EOS Classic</h3>
+          <p class="np-card__desc">Independently encased coils with organic wool and cotton layers. Zoned support for pressure relief and spinal alignment.</p>
+          <p class="np-card__price">From $2,399</p>
+          <p class="np-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/naturepedic-eos-classic" class="np-card">
+          <span class="np-card__badge">Premium</span>
+          <h3 class="np-card__name">EOS Classic</h3>
+          <p class="np-card__desc">Independently encased coils with organic wool and cotton layers. Zoned support for pressure relief and spinal alignment.</p>
+          <p class="np-card__price">From $2,399</p>
+          <p class="np-card__cta">View EOS →</p>
+        </a>
+      {% endif %}
+
+      {% if is_eos_pt %}
+        <div class="np-card active">
+          <span class="np-card__badge">Top</span>
+          <h3 class="np-card__name">EOS Pillow Top</h3>
+          <p class="np-card__desc">The ultimate organic luxury — EOS coil support with a plush pillow top layer. GOTS certified and handcrafted.</p>
+          <p class="np-card__price">From $3,299</p>
+          <p class="np-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/naturepedic-eos-pillow-top" class="np-card">
+          <span class="np-card__badge">Top</span>
+          <h3 class="np-card__name">EOS Pillow Top</h3>
+          <p class="np-card__desc">The ultimate organic luxury — EOS coil support with a plush pillow top layer. GOTS certified and handcrafted.</p>
+          <p class="np-card__price">From $3,299</p>
+          <p class="np-card__cta">View EOS Pillow Top →</p>
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Naturepedic Add-ons",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}

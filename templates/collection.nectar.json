@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "nectar-banner": {
+      "type": "nectar-collection-banner",
+      "settings": {}
+    },
+    "nectar-tiered-grid": {
+      "type": "nectar-tiered-grid",
+      "settings": {}
+    }
+  },
+  "order": [
+    "nectar-banner",
+    "nectar-tiered-grid"
+  ]
+}

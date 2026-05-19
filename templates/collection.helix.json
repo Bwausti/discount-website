@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "helix-banner": {
+      "type": "helix-collection-banner",
+      "settings": {}
+    },
+    "helix-tiered-grid": {
+      "type": "helix-tiered-grid",
+      "settings": {}
+    }
+  },
+  "order": [
+    "helix-banner",
+    "helix-tiered-grid"
+  ]
+}

@@ -1,0 +1,54 @@
+{{ 'brand-nav.css' | asset_url | stylesheet_tag }}
+
+<nav class="brand-nav" role="navigation" aria-label="Brand navigation">
+  <div class="brand-nav__container">
+    <div class="brand-nav__wrapper">
+      <button class="brand-nav__toggle" aria-expanded="false" aria-label="Toggle brand navigation">
+        <span class="brand-nav__toggle-text">Browse Brands</span>
+        <svg class="brand-nav__chevron" width="12" height="8" viewBox="0 0 12 8" fill="none">
+          <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <ul class="brand-nav__list">
+        {%- assign brands = "Helix|Puffy|DreamCloud|Nectar|BedGear|BedTech|Naturepedic|Serta|Jamison|PranaSleep|Posh and Lavish" | split: "|" -%}
+        {%- assign handles = "helix|puffy|dreamcloud|nectar|bedgear|bedtech|naturepedic|serta|jamison|pranasleep|posh-and-lavish" | split: "|" -%}
+        {%- for brand in brands -%}
+          {%- assign i = forloop.index0 -%}
+          {%- assign handle = handles[i] -%}
+          {%- assign collection_url = collections[handle].url -%}
+          <li class="brand-nav__item">
+            <a href="{% if collection_url != blank %}{{ collection_url }}{% else %}/collections/{{ handle }}{% endif %}" class="brand-nav__link">
+              {{ brand }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.querySelector('.brand-nav__toggle');
+    const list = document.querySelector('.brand-nav__list');
+    if (toggle && list) {
+      toggle.addEventListener('click', function() {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !expanded);
+        list.classList.toggle('brand-nav__list--open');
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Brand Navigation",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Brand Navigation"
+    }
+  ]
+}
+{% endschema %}

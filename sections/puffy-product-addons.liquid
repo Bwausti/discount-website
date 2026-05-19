@@ -1,0 +1,340 @@
+{% comment %}
+  puffy-product-addons.liquid
+  Shows Puffy mattress tiers + compatible accessories on product pages
+  Only renders on Puffy products
+{% endcomment %}
+
+{% assign is_puffy_product = false %}
+{% if closest.product.vendor == "Puffy" %}
+  {% assign is_puffy_product = true %}
+  {% assign title_lower = closest.product.title | downcase %}
+  {% assign is_cloud = false %}
+  {% assign is_lux = false %}
+  {% assign is_royal = false %}
+  {% assign is_monarch = false %}
+  {% if title_lower contains "monarch" %}
+    {% assign is_monarch = true %}
+  {% elsif title_lower contains "royal" %}
+    {% assign is_royal = true %}
+  {% elsif title_lower contains "lux" %}
+    {% assign is_lux = true %}
+  {% elsif title_lower contains "cloud" %}
+    {% assign is_cloud = true %}
+  {% endif %}
+{% endif %}
+
+{% if is_puffy_product %}
+
+<style>
+  .puffy-addons {
+    background: #f4f2ea;
+    border-top: 1px solid #e2e8f0;
+    padding: 48px 24px;
+    margin-top: 0;
+  }
+  .puffy-addons__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .puffy-addons__header {
+    margin-bottom: 32px;
+  }
+  .puffy-addons__label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #5b9bd5;
+    margin-bottom: 8px;
+  }
+  .puffy-addons__title {
+    font-size: clamp(22px, 2.5vw, 32px);
+    font-weight: 900;
+    color: #1a2940;
+    letter-spacing: -0.02em;
+    margin: 0 0 8px 0;
+  }
+  .puffy-addons__sub {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+
+  /* Compare models section */
+  .puffy-compare {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .puffy-compare-card {
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 20px 16px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative;
+  }
+  .puffy-compare-card:hover {
+    border-color: #5b9bd5;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .puffy-compare-card.active {
+    border-color: #5b9bd5;
+    background: #f0f6fc;
+  }
+  .puffy-compare-card.active::after {
+    content: 'Current';
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    background: #5b9bd5;
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 10px;
+    border-radius: 4px;
+  }
+  .puffy-compare-card__model {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #5b9bd5;
+  }
+  .puffy-compare-card__name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1a2940;
+    margin: 0;
+  }
+  .puffy-compare-card__price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2940;
+    margin: 0;
+  }
+  .puffy-compare-card__tag {
+    font-size: 10px;
+    color: #64748b;
+    margin: 0;
+  }
+  .puffy-compare-card__cta {
+    font-size: 11px;
+    font-weight: 800;
+    color: #5b9bd5;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .puffy-compare-card:hover .puffy-compare-card__cta { gap: 8px; }
+
+  /* Accessories grid */
+  .puffy-accessories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .puffy-accessory-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  }
+  .puffy-accessory-card:hover {
+    border-color: #5b9bd5;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+  }
+  .puffy-accessory-card__icon {
+    font-size: 28px;
+    line-height: 1;
+  }
+  .puffy-accessory-card__name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1a2940;
+    margin: 0;
+  }
+  .puffy-accessory-card__desc {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    flex-grow: 1;
+  }
+  .puffy-accessory-card__price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a2940;
+    margin: 0;
+  }
+  .puffy-accessory-card__cta {
+    font-size: 12px;
+    font-weight: 800;
+    color: #5b9bd5;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+  }
+  .puffy-accessory-card:hover .puffy-accessory-card__cta { gap: 8px; }
+
+  .puffy-accessories__heading {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #5b9bd5;
+    margin: 0 0 16px 0;
+  }
+</style>
+
+<div class="puffy-addons">
+  <div class="puffy-addons__inner">
+
+    <!-- Header -->
+    <div class="puffy-addons__header">
+      <p class="puffy-addons__label">Compare Puffy Models</p>
+      <h2 class="puffy-addons__title">Which Puffy is right for you?</h2>
+      <p class="puffy-addons__sub">See how your current pick stacks up against the full Puffy lineup</p>
+    </div>
+
+    <!-- Compare models grid -->
+    <div class="puffy-compare">
+      {% if is_cloud %}
+        <div class="puffy-compare-card active">
+          <p class="puffy-compare-card__model">Entry</p>
+          <h3 class="puffy-compare-card__name">Puffy Cloud</h3>
+          <p class="puffy-compare-card__price">From $899</p>
+          <p class="puffy-compare-card__tag">3-layer memory foam</p>
+          <p class="puffy-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/puffy-cloud" class="puffy-compare-card">
+          <p class="puffy-compare-card__model">Entry</p>
+          <h3 class="puffy-compare-card__name">Puffy Cloud</h3>
+          <p class="puffy-compare-card__price">From $899</p>
+          <p class="puffy-compare-card__tag">3-layer memory foam</p>
+          <p class="puffy-compare-card__cta">View model →</p>
+        </a>
+      {% endif %}
+
+      {% if is_lux %}
+        <div class="puffy-compare-card active">
+          <p class="puffy-compare-card__model">Premium</p>
+          <h3 class="puffy-compare-card__name">Puffy Lux</h3>
+          <p class="puffy-compare-card__price">From $1,049</p>
+          <p class="puffy-compare-card__tag">Cooling gel + foam</p>
+          <p class="puffy-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/puffy-lux" class="puffy-compare-card">
+          <p class="puffy-compare-card__model">Premium</p>
+          <h3 class="puffy-compare-card__name">Puffy Lux</h3>
+          <p class="puffy-compare-card__price">From $1,049</p>
+          <p class="puffy-compare-card__tag">Cooling gel + foam</p>
+          <p class="puffy-compare-card__cta">View model →</p>
+        </a>
+      {% endif %}
+
+      {% if is_royal or title_lower contains "royal" or title_lower contains "lux hybrid" %}
+        <div class="puffy-compare-card active">
+          <p class="puffy-compare-card__model">Premium+</p>
+          <h3 class="puffy-compare-card__name">Puffy Royal Hybrid</h3>
+          <p class="puffy-compare-card__price">From $1,399</p>
+          <p class="puffy-compare-card__tag">Hybrid coils + foam</p>
+          <p class="puffy-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/puffy-royal-hybrid" class="puffy-compare-card">
+          <p class="puffy-compare-card__model">Premium+</p>
+          <h3 class="puffy-compare-card__name">Puffy Royal Hybrid</h3>
+          <p class="puffy-compare-card__price">From $1,399</p>
+          <p class="puffy-compare-card__tag">Hybrid coils + foam</p>
+          <p class="puffy-compare-card__cta">View model →</p>
+        </a>
+      {% endif %}
+
+      {% if is_monarch %}
+        <div class="puffy-compare-card active">
+          <p class="puffy-compare-card__model">Luxury</p>
+          <h3 class="puffy-compare-card__name">Puffy Monarch</h3>
+          <p class="puffy-compare-card__price">From $1,899</p>
+          <p class="puffy-compare-card__tag">Premium hybrid luxury</p>
+          <p class="puffy-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/puffy-monarch" class="puffy-compare-card">
+          <p class="puffy-compare-card__model">Luxury</p>
+          <h3 class="puffy-compare-card__name">Puffy Monarch</h3>
+          <p class="puffy-compare-card__price">From $1,899</p>
+          <p class="puffy-compare-card__tag">Premium hybrid luxury</p>
+          <p class="puffy-compare-card__cta">View model →</p>
+        </a>
+      {% endif %}
+    </div>
+
+    <!-- Accessories heading -->
+    <p class="puffy-accessories__heading">Complete your sleep setup</p>
+    <div class="puffy-accessories">
+
+      <!-- Adjustable Base -->
+      <a href="/collections/bedtech" class="puffy-accessory-card">
+        <p class="puffy-accessory-card__icon">⚡</p>
+        <h3 class="puffy-accessory-card__name">Adjustable Bed Base</h3>
+        <p class="puffy-accessory-card__desc">Elevate your head or feet with a BedTech adjustable base. Zero-gravity positioning, massage, and under-bed lighting available across 7 models.</p>
+        <p class="puffy-accessory-card__price">From $499</p>
+        <p class="puffy-accessory-card__cta">Browse bases →</p>
+      </a>
+
+      <!-- Mattress Protector -->
+      <a href="/products/bedgear-dri-tec" class="puffy-accessory-card">
+        <p class="puffy-accessory-card__icon">🛡️</p>
+        <h3 class="puffy-accessory-card__name">Mattress Protector</h3>
+        <p class="puffy-accessory-card__desc">Keep your Puffy mattress in pristine condition. The Dri-Tec protector is waterproof, breathable, and machine washable.</p>
+        <p class="puffy-accessory-card__price">From $79</p>
+        <p class="puffy-accessory-card__cta">Add protection →</p>
+      </a>
+
+      <!-- Pillows -->
+      <a href="/collections/bedgear" class="puffy-accessory-card">
+        <p class="puffy-accessory-card__icon">🛏️</p>
+        <h3 class="puffy-accessory-card__name">Performance Pillows</h3>
+        <p class="puffy-accessory-card__desc">Pair your Puffy with a BedGear performance pillow. Available in Storm (cooling) and Balance (adjustable loft) models.</p>
+        <p class="puffy-accessory-card__price">From $69</p>
+        <p class="puffy-accessory-card__cta">Shop pillows →</p>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Puffy Product Add-ons",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}
