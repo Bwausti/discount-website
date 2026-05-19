@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "posh-banner": {
+      "type": "posh-and-lavish-collection-banner",
+      "settings": {}
+    }
+  },
+  "order": [
+    "posh-banner"
+  ]
+}
