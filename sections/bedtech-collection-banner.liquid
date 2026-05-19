@@ -167,10 +167,10 @@
   .bedtech-story__content p { font-size: 15px; color: #475569; line-height: 1.7; margin-bottom: 16px; }
 </style>
 
-{% assign bt2000_prod = collections['bedtech'].products | where: 'handle', 'bedtech-bt2000' | first %}
-{% assign bt2500_prod = collections['bedtech'].products | where: 'handle', 'bedtech-bt2500' | first %}
-{% assign bt3000_prod = collections['bedtech'].products | where: 'handle', 'bedtech-bt3000' | first %}
-{% assign bt6500_prod = collections['bedtech'].products | where: 'handle', 'bedtech-bt6500' | first %}
+{% assign bt2000_prod = all_products['bedtech-bt2000'] %}
+{% assign bt2500_prod = all_products['bedtech-bt2500'] %}
+{% assign bt3000_prod = all_products['bedtech-bt3000'] %}
+{% assign bt6500_prod = all_products['bedtech-bt6500'] %}
 
 <div class="bedtech-section">
 
@@ -326,7 +326,7 @@
         </div>
       </a>
 
-      {% assign bthu_prod = collections['bedtech'].products | where: 'handle', 'bedtech-bthu' | first %}
+      {% assign bthu_prod = all_products['bedtech-bthu'] %}
       <a href="/products/bedtech-bthu" class="bedtech-category-card">
         <div class="bedtech-category-card__img">
           <img src="{% if bthu_prod and bthu_prod.featured_image %}{{ bthu_prod.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="BTHU Adjustable Bed" loading="lazy">
@@ -340,7 +340,7 @@
         </div>
       </a>
 
-      {% assign btx4_prod = collections['bedtech'].products | where: 'handle', 'bedtech-btx4' | first %}
+      {% assign btx4_prod = all_products['bedtech-btx4'] %}
       <a href="/products/bedtech-btx4" class="bedtech-category-card">
         <div class="bedtech-category-card__img">
           <img src="{% if btx4_prod and btx4_prod.featured_image %}{{ btx4_prod.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="BTX4 Adjustable Bed" loading="lazy">
@@ -354,7 +354,7 @@
         </div>
       </a>
 
-      {% assign btx5_prod = collections['bedtech'].products | where: 'handle', 'bedtech-btx5' | first %}
+      {% assign btx5_prod = all_products['bedtech-btx5'] %}
       <a href="/products/bedtech-btx5" class="bedtech-category-card">
         <div class="bedtech-category-card__img">
           <img src="{% if btx5_prod and btx5_prod.featured_image %}{{ btx5_prod.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="BTX5 Adjustable Bed" loading="lazy">
@@ -372,7 +372,7 @@
     <!-- Flat -->
     <p class="bedtech-category-subhead" style="margin-top:48px;">Flat</p>
     <div class="bedtech-category-cards bedtech-category-cards--platforms">
-      {% assign bt_hrise = collections['bedtech'].products | where: 'handle', 'bedtech-high-rise-platform' | first %}
+      {% assign bt_hrise = all_products['bedtech-high-rise-platform'] %}
       <a href="/products/bedtech-high-rise-platform" class="bedtech-category-card">
         <div class="bedtech-category-card__img">
           <img src="{% if bt_hrise and bt_hrise.featured_image %}{{ bt_hrise.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="High Rise Platform" loading="lazy">
@@ -386,7 +386,7 @@
         </div>
       </a>
 
-      {% assign bt_modern = collections['bedtech'].products | where: 'handle', 'bedtech-modern-platform' | first %}
+      {% assign bt_modern = all_products['bedtech-modern-platform'] %}
       <a href="/products/bedtech-modern-platform" class="bedtech-category-card">
         <div class="bedtech-category-card__img">
           <img src="{% if bt_modern and bt_modern.featured_image %}{{ bt_modern.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="Modern Platform" loading="lazy">
@@ -400,7 +400,7 @@
         </div>
       </a>
 
-      {% assign bt_found = collections['bedtech'].products | where: 'handle', 'bedtech-standard-foundation' | first %}
+      {% assign bt_found = all_products['bedtech-standard-foundation'] %}
       <a href="/products/bedtech-standard-foundation" class="bedtech-category-card">
         <div class="bedtech-category-card__img">
           <img src="{% if bt_found and bt_found.featured_image %}{{ bt_found.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="Standard Foundation" loading="lazy">
@@ -414,7 +414,7 @@
         </div>
       </a>
 
-      {% assign bt_uphol = collections['bedtech'].products | where: 'handle', 'bedtech-upholstered-platform' | first %}
+      {% assign bt_uphol = all_products['bedtech-upholstered-platform'] %}
       <a href="/products/bedtech-upholstered-platform" class="bedtech-category-card">
         <div class="bedtech-category-card__img">
           <img src="{% if bt_uphol and bt_uphol.featured_image %}{{ bt_uphol.featured_image | image_url: width: 500 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="Upholstered Platform" loading="lazy">
@@ -433,7 +433,7 @@
   <!-- BRAND STORY -->
   <section id="bedtech-story" class="bedtech-story">
     <div class="bedtech-story__inner">
-      {% assign bt_story_prod = collections['bedtech'].products | where: 'handle', 'bedtech-bt2000' | first %}
+      {% assign bt_story_prod = all_products['bedtech-bt2000'] %}
       <div class="bedtech-story__img">
         <img src="{% if bt_story_prod and bt_story_prod.featured_image %}{{ bt_story_prod.featured_image | image_url: width: 800 }}{% else %}{{ 'bedtech-base.jpg' | asset_url }}{% endif %}" alt="BedTech lifestyle" loading="lazy">
       </div>

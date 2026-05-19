@@ -152,10 +152,10 @@
   .section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; color: #c8102e; margin-bottom: 8px; }
 </style>
 
-{% assign serta_icomfort = collections['serta'].products | where: 'handle', 'serta-icomfort-mattress' | first %}
-{% assign serta_icomfortpro = collections['serta'].products | where: 'handle', 'serta-icomfortpro-mattress' | first %}
-{% assign serta_ridge = collections['serta'].products | where: 'handle', 'serta-cascade-ridge-plush' | first %}
-{% assign serta_cany_firm = collections['serta'].products | where: 'handle', 'serta-cascade-canyon-firm' | first %}
+{% assign serta_icomfort = all_products['serta-icomfort-mattress'] %}
+{% assign serta_icomfortpro = all_products['serta-icomfortpro-mattress'] %}
+{% assign serta_ridge = all_products['serta-cascade-ridge-plush'] %}
+{% assign serta_cany_firm = all_products['serta-cascade-canyon-firm'] %}
 
 <div class="serta-section">
 
@@ -321,7 +321,7 @@
         </div>
       </a>
 
-      {% assign serta_canyon_med = collections['serta'].products | where: 'handle', 'serta-cascade-canyon-medium' | first %}
+      {% assign serta_canyon_med = all_products['serta-cascade-canyon-medium'] %}
       <!-- Cascade Canyon Medium -->
       <a href="/products/serta-cascade-canyon-medium" class="serta-collection-card">
         <div class="serta-collection-card__img">
@@ -336,7 +336,7 @@
         </div>
       </a>
 
-      {% assign serta_range_plush = collections['serta'].products | where: 'handle', 'serta-cascade-range-plush-pillow-top' | first %}
+      {% assign serta_range_plush = all_products['serta-cascade-range-plush-pillow-top'] %}
       <!-- Cascade Range Plush Pillow Top -->
       <a href="/products/serta-cascade-range-plush-pillow-top" class="serta-collection-card">
         <div class="serta-collection-card__img">

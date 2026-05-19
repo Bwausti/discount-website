@@ -156,10 +156,10 @@
   .naturepedic-story__content p { font-size: 15px; color: #3a4f37; line-height: 1.7; margin-bottom: 16px; }
 </style>
 
-{% assign nat_eos_classic = collections['naturepedic'].products | where: 'handle', 'naturepedic-eos-classic' | first %}
-{% assign nat_eos_pt = collections['naturepedic'].products | where: 'handle', 'naturepedic-eos-pillow-top' | first %}
-{% assign nat_concerto = collections['naturepedic'].products | where: 'handle', 'naturepedic-concerto-pillow-top' | first %}
-{% assign nat_serenade = collections['naturepedic'].products | where: 'handle', 'naturepedic-serenade' | first %}
+{% assign nat_eos_classic = all_products['naturepedic-eos-classic'] %}
+{% assign nat_eos_pt = all_products['naturepedic-eos-pillow-top'] %}
+{% assign nat_concerto = all_products['naturepedic-concerto-pillow-top'] %}
+{% assign nat_serenade = all_products['naturepedic-serenade'] %}
 
 <div class="naturepedic-section">
 
