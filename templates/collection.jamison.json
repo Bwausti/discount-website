@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "jamison-banner": {
+      "type": "jamison-collection-banner",
+      "settings": {}
+    }
+  },
+  "order": [
+    "jamison-banner"
+  ]
+}
