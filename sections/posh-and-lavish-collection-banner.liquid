@@ -5,7 +5,7 @@
   .posh-section { font-family: 'Inter', 'Segoe UI', sans-serif; }
   .posh-hero {
     position: relative; overflow: hidden;
-    background: linear-gradient(135deg, #2c1810 0%, #4a3020 50%, #2c1810 100%);
+    background: linear-gradient(135deg, #2d1b2e 0%, #4a2840 50%, #2d1b2e 100%);
     min-height: 520px; display: flex; align-items: center;
   }
   .posh-hero__bg {
@@ -30,7 +30,7 @@
   .posh-hero__left { max-width: 600px; }
   .posh-eyebrow {
     display: inline-block; background: rgba(44,24,16,0.7); backdrop-filter: blur(8px); border: 1px solid rgba(184,134,92,0.4);
-    color: #b8865c; font-size: 10px; font-weight: 800;
+    color: #d4a59a; font-size: 10px; font-weight: 800;
     text-transform: uppercase; letter-spacing: 0.22em;
     padding: 6px 14px; border-radius: 4px; margin-bottom: 20px;
     text-shadow: 0 1px 3px rgba(0,0,0,0.5);
@@ -62,11 +62,11 @@
   .posh-hero__buttons { display: flex; gap: 12px; flex-wrap: wrap; }
   .posh-btn-primary {
     display: inline-flex; align-items: center; gap: 8px;
-    background: #b8865c; color: white; padding: 13px 28px;
+    background: #d4a59a; color: #2d1b2e; padding: 13px 28px;
     border-radius: 6px; text-decoration: none; font-weight: 800; font-size: 14px;
     transition: background 0.2s;
   }
-  .posh-btn-primary:hover { background: #d4a574; }
+  .posh-btn-primary:hover { background: #e0b8ae; }
   .posh-btn-secondary {
     display: inline-flex; align-items: center; gap: 8px;
     border: 1px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.1);
@@ -79,7 +79,7 @@
     background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
     border-radius: 12px; padding: 24px; border: 1px solid rgba(255,255,255,0.2);
   }
-  .posh-hero__showroom-note { font-size: 15px; font-weight: 700; color: #2c1810; line-height: 1.5; }
+  .posh-hero__showroom-note { font-size: 15px; font-weight: 700; color: #2d1b2e; line-height: 1.5; }
   .posh-hero__products { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 16px; }
   .posh-hero__product-card {
     background: #faf6f0; border-radius: 8px; overflow: hidden;
@@ -89,28 +89,28 @@
   .posh-hero__product-card:hover { transform: translateY(-3px); background: #f0e8dc; }
   .posh-hero__product-img { position: relative; aspect-ratio: 5/4; overflow: hidden; }
   .posh-hero__product-img img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
-  .posh-hero__product-name { padding: 10px 10px 12px; font-size: 12px; font-weight: 800; color: #2c1810; line-height: 1.3; }
+  .posh-hero__product-name { padding: 10px 10px 12px; font-size: 12px; font-weight: 800; color: #2d1b2e; line-height: 1.3; }
 
   /* Trust bar */
   .posh-trust { background: white; border-bottom: 1px solid #e2e8f0; }
   .posh-trust__grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
   .posh-trust__item { padding: 16px 20px; text-align: center; border-right: 1px solid #e2e8f0; }
   .posh-trust__item:last-child { border-right: none; }
-  .posh-trust__label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: #b8865c; margin-bottom: 4px; }
-  .posh-trust__value { font-size: 20px; font-weight: 900; color: #2c1810; }
-  .posh-trust__note { font-size: 11px; color: #8a7a6a; margin-top: 4px; }
+  .posh-trust__label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.18em; color: #d4a59a; margin-bottom: 4px; }
+  .posh-trust__value { font-size: 20px; font-weight: 900; color: #2d1b2e; }
+  .posh-trust__note { font-size: 11px; color: #9a8a8a; margin-top: 4px; }
 
   /* Highlight pills */
   .posh-highlights { background: #faf8f4; padding: 20px 24px; border-bottom: 1px solid #e8e0d4; }
   .posh-highlights__inner { max-width: 1300px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 8px; }
-  .posh-highlight-pill { background: white; border: 1px solid #e8e0d4; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; color: #4a3020; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+  .posh-highlight-pill { background: white; border: 1px solid #e8e0d4; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; color: #4a2840; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 
   /* Product section */
   .posh-product-section { background: #faf8f4; padding: 56px 24px; }
   .posh-product-header { max-width: 1300px; margin: 0 auto 32px; }
-  .posh-section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; color: #b8865c; margin-bottom: 8px; }
-  .posh-product-header h2 { font-size: clamp(28px, 3.5vw, 42px); font-weight: 900; color: #2c1810; line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 12px 0; }
-  .posh-product-header p { font-size: 16px; color: #7a6a5a; line-height: 1.6; max-width: 600px; margin: 0; }
+  .posh-section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; color: #d4a59a; margin-bottom: 8px; }
+  .posh-product-header h2 { font-size: clamp(28px, 3.5vw, 42px); font-weight: 900; color: #2d1b2e; line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 12px 0; }
+  .posh-product-header p { font-size: 16px; color: #8a7a7a; line-height: 1.6; max-width: 600px; margin: 0; }
   .posh-product-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
   @media (max-width: 860px) { .posh-product-grid { grid-template-columns: 1fr !important; } }
   .posh-product-card {
@@ -120,27 +120,27 @@
     display: block; text-decoration: none;
   }
   .posh-product-card:hover {
-    border-color: #b8865c; transform: translateY(-4px);
+    border-color: #d4a59a; transform: translateY(-4px);
     box-shadow: 0 12px 32px rgba(184,134,92,0.12);
   }
   .posh-product-card__img { position: relative; aspect-ratio: 16/10; background: #f8f4ee; overflow: hidden; }
   .posh-product-card__img img { width: 100%; height: 100%; object-fit: contain; padding: 20px; transition: transform 0.4s; }
   .posh-product-card:hover .posh-product-card__img img { transform: scale(1.04); }
   .posh-product-card__body { padding: 24px 20px; }
-  .posh-product-card__line { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #b8865c; margin-bottom: 4px; }
-  .posh-product-card__name { font-size: 24px; font-weight: 900; color: #2c1810; letter-spacing: -0.01em; margin-bottom: 6px; }
-  .posh-product-card__summary { font-size: 13px; color: #7a6a5a; line-height: 1.55; margin-bottom: 12px; }
+  .posh-product-card__line { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #d4a59a; margin-bottom: 4px; }
+  .posh-product-card__name { font-size: 24px; font-weight: 900; color: #2d1b2e; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .posh-product-card__summary { font-size: 13px; color: #8a7a7a; line-height: 1.55; margin-bottom: 12px; }
   .posh-product-card__specs { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
   .posh-product-card__spec {
     background: #faf8f4; padding: 3px 8px; border-radius: 4px;
-    font-size: 11px; font-weight: 600; color: #6a5a4a;
+    font-size: 11px; font-weight: 600; color: #7a6a6a;
   }
   .posh-product-card__cta {
     display: inline-block; padding: 8px 20px; border-radius: 6px;
-    font-size: 12px; font-weight: 800; margin-top: 8px; background: #2c1810; color: white;
+    font-size: 12px; font-weight: 800; margin-top: 8px; background: #2d1b2e; color: white;
     transition: background 0.2s;
   }
-  .posh-product-card:hover .posh-product-card__cta { background: #b8865c; }
+  .posh-product-card:hover .posh-product-card__cta { background: #d4a59a; }
 
   /* Brand story */
   .posh-story { background: white; padding: 64px 24px; border-top: 1px solid #e8e0d4; }
@@ -151,10 +151,10 @@
   .posh-story__columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
   @media (max-width: 640px) { .posh-story__columns { grid-template-columns: 1fr !important; } }
   .posh-story__col { background: #faf8f4; border: 1px solid #e8e0d4; border-radius: 8px; padding: 16px; }
-  .posh-story__col h4 { font-size: 13px; font-weight: 800; color: #2c1810; margin: 0 0 6px 0; }
-  .posh-story__col p { font-size: 12px; color: #7a6a5a; line-height: 1.55; margin: 0; }
-  .posh-story__content h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: #2c1810; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px 0; }
-  .posh-story__content p { font-size: 15px; color: #7a6a5a; line-height: 1.7; margin-bottom: 16px; }
+  .posh-story__col h4 { font-size: 13px; font-weight: 800; color: #2d1b2e; margin: 0 0 6px 0; }
+  .posh-story__col p { font-size: 12px; color: #8a7a7a; line-height: 1.55; margin: 0; }
+  .posh-story__content h2 { font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: #2d1b2e; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px 0; }
+  .posh-story__content p { font-size: 15px; color: #8a7a7a; line-height: 1.7; margin-bottom: 16px; }
   .posh-story__content .posh-btn-primary { display: inline-flex; }
 </style>
 
@@ -162,7 +162,7 @@
 
   <!-- HERO -->
   <section class="posh-hero">
-    <div class="posh-hero__bg" style="background: radial-gradient(ellipse at 70% 50%, rgba(184,134,92,0.15) 0%, transparent 70%), linear-gradient(135deg, rgba(255,248,240,0.06) 0%, transparent 50%);"></div>
+    <div class="posh-hero__bg" style="background: radial-gradient(ellipse at 70% 50%, rgba(212,165,154,0.15) 0%, transparent 70%), linear-gradient(135deg, rgba(255,248,240,0.06) 0%, transparent 50%);"></div>
     <div class="posh-hero__content">
       <div class="posh-hero__left">
         <span class="posh-eyebrow">Available in Bowling Green, KY</span>
@@ -186,7 +186,7 @@
           Posh &amp; Lavish is our premier luxury mattress line — hand-built with premium materials you can see, touch, and feel in our Bowling Green showroom. Come experience the difference that true craftsmanship makes.
         </p>
         <div style="text-align:center;margin-top:20px;">
-          <a href="https://maps.google.com/?q=1555+Campbell+Ln+Bowling+Green+KY+42104" style="display:inline-block;background:#2c1810;color:#b8865c;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:800;font-size:13px;letter-spacing:0.04em;">📍 Visit our showroom</a>
+          <a href="https://maps.google.com/?q=1555+Campbell+Ln+Bowling+Green+KY+42104" style="display:inline-block;background:#2d1b2e;color:#d4a59a;padding:14px 28px;border-radius:6px;text-decoration:none;font-weight:800;font-size:13px;letter-spacing:0.04em;">📍 Visit our showroom</a>
         </div>
       </div>
     </div>
@@ -226,12 +226,12 @@
   </section>
 
   <!-- ELEGANT CTA -->
-  <section style="background: linear-gradient(135deg, #2c1810 0%, #4a3020 50%, #2c1810 100%);padding:64px 24px;text-align:center;">
+  <section style="background: linear-gradient(135deg, #2d1b2e 0%, #4a2840 50%, #2d1b2e 100%);padding:64px 24px;text-align:center;">
     <div style="max-width:700px;margin:0 auto;">
-      <p style="color:#b8865c;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.22em;margin:0 0 12px;">Experience the difference</p>
+      <p style="color:#d4a59a;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.22em;margin:0 0 12px;">Experience the difference</p>
       <h2 style="color:white;font-size:clamp(28px,3vw,38px);font-weight:900;margin:0 0 12px;letter-spacing:-0.02em;">Come feel true luxury in person.</h2>
       <p style="color:rgba(255,255,255,0.85);font-size:16px;line-height:1.6;margin:0 0 28px;">Premium materials and handcrafted construction can't be appreciated through a screen. Visit our showroom and experience the quality of Posh &amp; Lavish for yourself.</p>
-      <a href="https://maps.google.com/?q=1555+Campbell+Ln+Bowling+Green+KY+42104" style="display:inline-block;background:#b8865c;color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:800;font-size:14px;margin-right:12px;">📍 Get directions</a>
+      <a href="https://maps.google.com/?q=1555+Campbell+Ln+Bowling+Green+KY+42104" style="display:inline-block;background:#d4a59a;color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:800;font-size:14px;margin-right:12px;">📍 Get directions</a>
       <a href="tel:+12704951603" style="display:inline-block;border:2px solid rgba(255,255,255,0.3);color:white;padding:14px 32px;border-radius:6px;text-decoration:none;font-weight:800;font-size:14px;">📞 (270) 495-1603</a>
     </div>
   </section>
@@ -251,7 +251,7 @@
         <p>
           From the tailored quilted covers to the precisely layered foam cores, every detail is considered. This is furniture-grade bedding — built for the discerning sleeper who values quality, longevity, and the simple luxury of a truly restful night.
         </p>
-        <p style="font-weight:700;color:#2c1810;">
+        <p style="font-weight:700;color:#2d1b2e;">
           Experience Posh &amp; Lavish at our Bowling Green showroom. See the craftsmanship. Feel the difference.
         </p>
         <div class="posh-story__columns">
