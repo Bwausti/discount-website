@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "bedtech-banner": {
+      "type": "bedtech-collection-banner",
+      "settings": {}
+    }
+  },
+  "order": [
+    "bedtech-banner"
+  ]
+}
