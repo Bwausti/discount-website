@@ -90,8 +90,8 @@
     display: block;
   }
   .prana-hero__product-card:hover { transform: translateY(-3px); background: #eee9dc; }
-  .prana-hero__product-img { position: relative; aspect-ratio: 5/4; overflow: hidden; }
-  .prana-hero__product-img img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+  .prana-hero__product-img img { width: 100%; height: 100%; object-fit: cover; }
+  .prana-hero__product-img { position: relative; aspect-ratio: 5/4; background: #f4f2ea; overflow: hidden; }
   .prana-hero__product-name { padding: 10px 10px 12px; font-size: 12px; font-weight: 800; color: #0a1f12; line-height: 1.3; }
   /* Trust bar */
   .prana-trust { background: white; border-bottom: 1px solid #e2e8f0; }
@@ -109,7 +109,7 @@
   .prana-products-header { max-width: 1300px; margin: 0 auto 32px; }
   .prana-products-header h2 { font-size: clamp(28px, 3.5vw, 42px); font-weight: 900; color: #0a1f12; line-height: 1.05; letter-spacing: -0.02em; margin: 0; }
   .prana-products-header p { font-size: 16px; color: #64748b; line-height: 1.6; margin-top: 12px; max-width: 700px; }
-  .prana-products-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .prana-products-grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   @media (max-width: 860px) { .prana-products-grid { grid-template-columns: 1fr !important; } }
   .prana-product-card {
     background: white; border: 2px solid #e2e8f0; border-radius: 12px;
@@ -121,8 +121,8 @@
     border-color: #2d8a4e; transform: translateY(-4px);
     box-shadow: 0 12px 32px rgba(0,0,0,0.12);
   }
-  .prana-product-card__img { position: relative; aspect-ratio: 16/10; background: #f1f3f6; overflow: hidden; }
-  .prana-product-card__img img { width: 100%; height: 100%; object-fit: contain; padding: 20px; transition: transform 0.4s; }
+  .prana-product-card__img { position: relative; aspect-ratio: 4/3; background: #f4f2ea; overflow: hidden; }
+  .prana-product-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
   .prana-product-card:hover .prana-product-card__img img { transform: scale(1.04); }
   .prana-product-card__body { padding: 20px; }
   .prana-product-card__name { font-size: 24px; font-weight: 900; color: #0a1f12; letter-spacing: -0.01em; margin-bottom: 4px; }
@@ -151,6 +151,10 @@
   .prana-story__content p { font-size: 15px; color: #475569; line-height: 1.7; margin-bottom: 16px; }
   .section-label { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.22em; color: #2d8a4e; margin-bottom: 8px; }
 </style>
+
+{% assign prana_plush = all_products['karma-elite-2-hybrid-plush'] %}
+{% assign prana_cush = all_products['karma-elite-2-hybrid-super-cush'] %}
+{% assign prana_firm = all_products['karma-elite-2-hybrid-firm'] %}
 
 <div class="prana-section">
 
@@ -183,16 +187,22 @@
         <p class="prana-hero__showroom-note">
           PranaSleep is one of the most slept-on brands in the category — we carry all three Karma Elite 2 models in our showroom so you can compare Firm, Plush, and Super Cush side by side.
         </p>
-        <div class="prana-hero__products">
+        <div class="prana-hero__products" style="grid-template-columns:repeat(3,1fr)">
+          <a href="/products/karma-elite-2-hybrid-firm" class="prana-hero__product-card">
+            <div class="prana-hero__product-img">
+              <img src="{% if prana_firm and prana_firm.featured_image %}{{ prana_firm.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Firm" loading="lazy">
+            </div>
+            <p class="prana-hero__product-name">Karma Elite 2 Firm<br><span style="font-weight:400;color:#64748b;font-size:11px;">Firm Talalay latex feel</span></p>
+          </a>
           <a href="/products/karma-elite-2-hybrid-plush" class="prana-hero__product-card">
             <div class="prana-hero__product-img">
-              <img src="{{ 'prana-karma-plush-card.jpg' | asset_url }}" alt="Karma Elite 2 Plush" loading="lazy">
+              <img src="{% if prana_plush and prana_plush.featured_image %}{{ prana_plush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Plush" loading="lazy">
             </div>
             <p class="prana-hero__product-name">Karma Elite 2 Plush<br><span style="font-weight:400;color:#64748b;font-size:11px;">Plush Talalay latex feel</span></p>
           </a>
           <a href="/products/karma-elite-2-hybrid-super-cush" class="prana-hero__product-card">
             <div class="prana-hero__product-img">
-              <img src="{{ 'prana-karma-cush-card.jpg' | asset_url }}" alt="Karma Elite 2 Super Cush" loading="lazy">
+              <img src="{% if prana_cush and prana_cush.featured_image %}{{ prana_cush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-cush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Super Cush" loading="lazy">
             </div>
             <p class="prana-hero__product-name">Karma Elite 2 Super Cush<br><span style="font-weight:400;color:#64748b;font-size:11px;">Super cush Talalay latex feel</span></p>
           </a>
@@ -235,15 +245,32 @@
   <section id="prana-products" class="prana-products-section">
     <div class="prana-products-header">
       <p class="section-label">The Karma Elite 2 lineup</p>
-      <h2>Two comfort feels. One hybrid platform.</h2>
-      <p>Both Karma Elite 2 models share the same Talalay latex hybrid construction — choose Plush for a softer cradle or Super Cush for a more responsive, buoyant feel.</p>
+      <h2>Three comfort feels. One hybrid platform.</h2>
+      <p>All three Karma Elite 2 models share the same Talalay latex hybrid construction — choose Firm for responsive support, Plush for a gentle cradle, or Super Cush for deeper pressure relief.</p>
     </div>
 
     <div class="prana-products-grid">
+      <!-- Karma Elite 2 Hybrid Firm -->
+      <a href="/products/karma-elite-2-hybrid-firm" class="prana-product-card">
+        <div class="prana-product-card__img">
+          <img src="{% if prana_firm and prana_firm.featured_image %}{{ prana_firm.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Firm" loading="lazy">
+        </div>
+        <div class="prana-product-card__body">
+          <div class="prana-product-card__name">Karma Elite 2 Firm</div>
+          <p class="prana-product-card__summary">Talalay latex hybrid with a firm, responsive feel. Ideal for back and stomach sleepers who want solid support with the natural bounce of latex.</p>
+          <div class="prana-product-card__features">
+            <div class="prana-product-card__feature">Natural Talalay latex comfort layer</div>
+            <div class="prana-product-card__feature">Zoned pocketed coil support core</div>
+            <div class="prana-product-card__feature">pranaCOOL cooling cover</div>
+          </div>
+          <span class="prana-product-card__selector">Shop Karma Elite 2 Firm →</span>
+        </div>
+      </a>
+
       <!-- Karma Elite 2 Hybrid Plush -->
       <a href="/products/karma-elite-2-hybrid-plush" class="prana-product-card">
         <div class="prana-product-card__img">
-          <img src="{{ 'prana-karma-plush-card.jpg' | asset_url }}" alt="Karma Elite 2 Plush" loading="lazy">
+          <img src="{% if prana_plush and prana_plush.featured_image %}{{ prana_plush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Plush" loading="lazy">
         </div>
         <div class="prana-product-card__body">
           <div class="prana-product-card__name">Karma Elite 2 Plush</div>
@@ -260,7 +287,7 @@
       <!-- Karma Elite 2 Hybrid Super Cush -->
       <a href="/products/karma-elite-2-hybrid-super-cush" class="prana-product-card">
         <div class="prana-product-card__img">
-          <img src="{{ 'prana-karma-cush-card.jpg' | asset_url }}" alt="Karma Elite 2 Super Cush" loading="lazy">
+          <img src="{% if prana_cush and prana_cush.featured_image %}{{ prana_cush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-cush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Super Cush" loading="lazy">
         </div>
         <div class="prana-product-card__body">
           <div class="prana-product-card__name">Karma Elite 2 Super Cush</div>
