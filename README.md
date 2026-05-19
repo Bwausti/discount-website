@@ -54,3 +54,4 @@ node ~/clawd/scripts/shopify-skill/migrate-catalog.mjs --send --images
 - **No overwriting:** Do not use `custom-liquid` in template JSON for complex logic — create proper `.liquid` section files.
 - **No sleep trial language:** This is a physical showroom — no trial periods or comfort exchange mentions.
 - **Prices: The theme renders product prices from Shopify. No hardcoding.**
+# Test comment - workflow check Tue May 19 10:32:34 CDT 2026
