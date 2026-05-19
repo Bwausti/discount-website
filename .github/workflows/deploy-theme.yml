@@ -6,16 +6,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - uses: actions/checkout@v4
 
-      - name: Install and push
+      - name: Install and push theme
         env:
           SHOPIFY_CLI_PASSWORD: ${{ secrets.SHOPIFY_CLI_PASSWORD }}
         run: |
           npm install -g @shopify/cli
-          which shopify
-          shopify --version
-          echo "Env: SHOPIFY_CLI_PASSWORD is set to [${SHOPIFY_CLI_PASSWORD:0:8}]..."
           shopify theme push \
             --store discount-mattress-4.myshopify.com \
             --theme ${{ secrets.SHOPIFY_LIVE_THEME_ID }} \
