@@ -1,7 +1,7 @@
 /* Brand Navigation Bar */
 .brand-nav {
-  background: #0f172a;
-  border-bottom: 1px solid #1e293b;
+  background: #162b49;
+  border-bottom: 1px solid #1e3a5f;
   position: relative;
   z-index: 50;
 }
@@ -23,8 +23,8 @@
   align-items: center;
   gap: 8px;
   background: none;
-  border: 1px solid #334155;
-  color: #f1f5f9;
+  border: 1px solid #2d4a6f;
+  color: #ffffff;
   font-size: 13px;
   font-weight: 600;
   font-family: 'Inter', 'Segoe UI', sans-serif;
@@ -37,7 +37,7 @@
 }
 
 .brand-nav__toggle:hover {
-  background: #1e293b;
+  background: #1e3a5f;
 }
 
 .brand-nav__chevron {
@@ -68,7 +68,7 @@
   align-items: center;
   height: 48px;
   padding: 0 8px;
-  color: #cbd5e1;
+  color: #94a3b8;
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;
@@ -82,7 +82,7 @@
 .brand-nav__link:hover,
 .brand-nav__link:focus {
   color: #ffffff;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.08);
   border-bottom-color: #f2b705;
 }
 
@@ -99,8 +99,9 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: #0f172a;
-    border-top: 1px solid #1e293b;
+    background: #162b49;
+    border-top: 1px solid #1e3a5f;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     padding: 4px 0;
     gap: 0;
@@ -118,8 +119,8 @@
   }
 
   .brand-nav__link:hover {
-    border-bottom-color: #1e293b;
-    background: #1e293b;
+    border-bottom-color: #1e3a5f;
+    background: #1e3a5f;
   }
 
   .brand-nav__item:last-child .brand-nav__link {
