@@ -63,6 +63,20 @@
     letter-spacing: 0.02em !important;
     text-transform: uppercase !important;
   }
+
+  /* Discount Mattress brand colors - override primary button from black to navy */
+  .button.add-to-cart-button,
+  .shopify-payment-button__button--unbranded,
+  .btn-primary,
+  [data-type="add-to-cart"] .button {
+    background-color: #162b49 !important;
+    border-color: #162b49 !important;
+  }
+  .button.add-to-cart-button:hover,
+  .shopify-payment-button__button--unbranded:hover {
+    background-color: #1e3a5f !important;
+    border-color: #1e3a5f !important;
+  }
 </style>
 
 {% capture media_gallery %}
