@@ -320,7 +320,7 @@
       <!-- Cascade Canyon Medium -->
       <a href="/products/serta-cascade-canyon-medium" class="serta-collection-card">
         <div class="serta-collection-card__img">
-          <img src="{% if serta_canyon_med and serta_canyon_med.featured_image %}{{ serta_canyon_med.featured_image | image_url: width: 500 }}{% else %}{{ 'dm-hero-clean.png' | asset_url }}{% endif %}" alt="Serta Cascade Canyon Medium" loading="lazy">
+          <img src="{% if serta_canyon_med and serta_canyon_med.featured_image %}{{ serta_canyon_med.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-hero-bg.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Canyon Medium" loading="lazy">
         </div>
         <div class="serta-collection-card__body">
           <div class="serta-collection-card__name">Cascade Canyon Medium</div>
@@ -335,7 +335,7 @@
       <!-- Cascade Range Plush Pillow Top -->
       <a href="/products/serta-cascade-range-plush-pillow-top" class="serta-collection-card">
         <div class="serta-collection-card__img">
-          <img src="{% if serta_range_plush and serta_range_plush.featured_image %}{{ serta_range_plush.featured_image | image_url: width: 500 }}{% else %}{{ 'dm-hero-clean.png' | asset_url }}{% endif %}" alt="Serta Cascade Range Plush Pillow Top" loading="lazy">
+          <img src="{% if serta_range_plush and serta_range_plush.featured_image %}{{ serta_range_plush.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-hero-bg.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Range Plush Pillow Top" loading="lazy">
         </div>
         <div class="serta-collection-card__body">
           <div class="serta-collection-card__name">Cascade Range Plush Pillow Top</div>
@@ -353,7 +353,7 @@
     <div class="serta-story__inner">
       {% assign serta_story_prod = collections['serta'].products | where: 'handle', 'serta-icomfort-mattress' | first %}
     <div class="serta-story__img">
-        <img src="{% if serta_story_prod and serta_story_prod.featured_image %}{{ serta_story_prod.featured_image | image_url: width: 800 }}{% else %}{{ 'dm-hero-clean.png' | asset_url }}{% endif %}" alt="Serta heritage" loading="lazy">
+        <img src="{% if serta_story_prod and serta_story_prod.featured_image %}{{ serta_story_prod.featured_image | image_url: width: 800 }}{% else %}{{ 'serta-hero-bg.jpg' | asset_url }}{% endif %}" alt="Serta heritage" loading="lazy">
       </div>
       <div class="serta-story__content">
         <p class="section-label">Why Serta</p>
