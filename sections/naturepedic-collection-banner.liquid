@@ -156,12 +156,17 @@
   .naturepedic-story__content p { font-size: 15px; color: #3a4f37; line-height: 1.7; margin-bottom: 16px; }
 </style>
 
+{% assign nat_eos_classic = collections['naturepedic'].products | where: 'handle', 'naturepedic-eos-classic' | first %}
+{% assign nat_eos_pt = collections['naturepedic'].products | where: 'handle', 'naturepedic-eos-pillow-top' | first %}
+{% assign nat_concerto = collections['naturepedic'].products | where: 'handle', 'naturepedic-concerto-pillow-top' | first %}
+{% assign nat_serenade = collections['naturepedic'].products | where: 'handle', 'naturepedic-serenade' | first %}
+
 <div class="naturepedic-section">
 
   <!-- HERO -->
   <section class="naturepedic-hero">
     <img
-      src="{{ 'naturepedic-eos-card.jpg' | asset_url }}"
+      src="{{ 'naturepedic-hero-bg.jpg' | asset_url }}"
       alt="Naturepedic organic mattress collection"
       class="naturepedic-hero__bg"
       loading="eager"
@@ -191,27 +196,27 @@
         <div class="naturepedic-hero__products">
           <a href="/products/naturepedic-eos-classic" class="naturepedic-hero__product-card">
             <div class="naturepedic-hero__product-img">
-              <img src="{{ 'naturepedic-eos-card.jpg' | asset_url }}" alt="Naturepedic EOS Classic" loading="lazy">
+              <img src="{% if nat_eos_classic and nat_eos_classic.featured_image %}{{ nat_eos_classic.featured_image | image_url: width: 500 }}{% else %}{{ 'naturepedic-eos-card.jpg' | asset_url }}{% endif %}" alt="Naturepedic EOS Classic" loading="lazy">
             </div>
             <p class="naturepedic-hero__product-name">EOS Classic<br><span style="font-weight:400;color:#3a4f37;font-size:11px;">Entry-level organic</span></p>
           </a>
           <a href="/products/naturepedic-eos-pillow-top" class="naturepedic-hero__product-card">
             <div class="naturepedic-hero__product-img">
-              <img src="{{ 'naturepedic-chorus-card.jpg' | asset_url }}" alt="Naturepedic EOS Trilux" loading="lazy">
+              <img src="{% if nat_eos_pt and nat_eos_pt.featured_image %}{{ nat_eos_pt.featured_image | image_url: width: 500 }}{% else %}{{ 'naturepedic-chorus-card.jpg' | asset_url }}{% endif %}" alt="Naturepedic EOS Pillow Top" loading="lazy">
             </div>
-            <p class="naturepedic-hero__product-name">EOS Trilux<br><span style="font-weight:400;color:#3a4f37;font-size:11px;">Customizable latex</span></p>
+            <p class="naturepedic-hero__product-name">EOS Pillow Top<br><span style="font-weight:400;color:#3a4f37;font-size:11px;">Customizable pillow top</span></p>
           </a>
           <a href="/products/naturepedic-concerto-pillow-top" class="naturepedic-hero__product-card">
             <div class="naturepedic-hero__product-img">
-              <img src="{{ 'naturepedic-eos-card.jpg' | asset_url }}" alt="Naturepedic EOS Hybrid" loading="lazy">
+              <img src="{% if nat_concerto and nat_concerto.featured_image %}{{ nat_concerto.featured_image | image_url: width: 500 }}{% else %}{{ 'naturepedic-eos-card.jpg' | asset_url }}{% endif %}" alt="Naturepedic Concerto Pillow Top" loading="lazy">
             </div>
-            <p class="naturepedic-hero__product-name">EOS Hybrid<br><span style="font-weight:400;color:#3a4f37;font-size:11px;">Microcoil + latex</span></p>
+            <p class="naturepedic-hero__product-name">Concerto Pillow Top<br><span style="font-weight:400;color:#3a4f37;font-size:11px;">Microcoil + latex</span></p>
           </a>
           <a href="/products/naturepedic-serenade" class="naturepedic-hero__product-card">
             <div class="naturepedic-hero__product-img">
-              <img src="{{ 'naturepedic-eos-card.jpg' | asset_url }}" alt="Naturepedic Chorus" loading="lazy">
+              <img src="{% if nat_serenade and nat_serenade.featured_image %}{{ nat_serenade.featured_image | image_url: width: 500 }}{% else %}{{ 'naturepedic-eos-card.jpg' | asset_url }}{% endif %}" alt="Naturepedic Serenade" loading="lazy">
             </div>
-            <p class="naturepedic-hero__product-name">Chorus<br><span style="font-weight:400;color:#3a4f37;font-size:11px;">All-foam organic</span></p>
+            <p class="naturepedic-hero__product-name">Serenade<br><span style="font-weight:400;color:#3a4f37;font-size:11px;">All-organic foam</span></p>
           </a>
         </div>
       </div>
@@ -265,7 +270,7 @@
       <!-- EOS Classic -->
       <a href="/products/naturepedic-eos-classic" class="naturepedic-product-card">
         <div class="naturepedic-product-card__img">
-          <img src="{{ 'naturepedic-chorus-card.jpg' | asset_url }}" alt="Naturepedic EOS Classic" loading="lazy">
+          <img src="{% if nat_eos_classic and nat_eos_classic.featured_image %}{{ nat_eos_classic.featured_image | image_url: width: 500 }}{% else %}{{ 'naturepedic-chorus-card.jpg' | asset_url }}{% endif %}" alt="Naturepedic EOS Classic" loading="lazy">
         </div>
         <div class="naturepedic-product-card__body">
           <div class="naturepedic-product-card__name">EOS Classic</div>
@@ -276,27 +281,27 @@
         </div>
       </a>
 
-      <!-- EOS Trilux -->
+      <!-- EOS Pillow Top -->
       <a href="/products/naturepedic-eos-pillow-top" class="naturepedic-product-card">
         <div class="naturepedic-product-card__img">
-          <img src="{{ 'naturepedic-eos-card.jpg' | asset_url }}" alt="Naturepedic EOS Trilux" loading="lazy">
+          <img src="{% if nat_eos_pt and nat_eos_pt.featured_image %}{{ nat_eos_pt.featured_image | image_url: width: 500 }}{% else %}{{ 'naturepedic-eos-card.jpg' | asset_url }}{% endif %}" alt="Naturepedic EOS Pillow Top" loading="lazy">
         </div>
         <div class="naturepedic-product-card__body">
-          <div class="naturepedic-product-card__name">EOS Trilux</div>
+          <div class="naturepedic-product-card__name">EOS Pillow Top</div>
           <div class="naturepedic-product-card__price">Fully customizable</div>
-          <p class="naturepedic-product-card__summary">Three interchangeable 3" GOLS-certified latex layers let you build your ideal firmness — swap, flip, or rearrange to customize left and right sides independently.</p>
+          <p class="naturepedic-product-card__summary">Three interchangeable comfort layers let you build your ideal firmness — swap, flip, or rearrange to customize left and right sides independently.</p>
           <div class="naturepedic-product-card__best-for">✅ Couples with different preferences · Side-by-side customization · Latex lovers</div>
           <span class="naturepedic-product-card__selector">View model →</span>
         </div>
       </a>
 
-      <!-- EOS Hybrid -->
+      <!-- Concerto Pillow Top -->
       <a href="/products/naturepedic-concerto-pillow-top" class="naturepedic-product-card">
         <div class="naturepedic-product-card__img">
-          <img src="{{ 'naturepedic-eos-card.jpg' | asset_url }}" alt="Naturepedic EOS Hybrid" loading="lazy">
+          <img src="{% if nat_concerto and nat_concerto.featured_image %}{{ nat_concerto.featured_image | image_url: width: 500 }}{% else %}{{ 'naturepedic-eos-card.jpg' | asset_url }}{% endif %}" alt="Naturepedic Concerto Pillow Top" loading="lazy">
         </div>
         <div class="naturepedic-product-card__body">
-          <div class="naturepedic-product-card__name">EOS Hybrid</div>
+          <div class="naturepedic-product-card__name">Concerto Pillow Top</div>
           <div class="naturepedic-product-card__price">Microcoil + latex</div>
           <p class="naturepedic-product-card__summary">Zoned microcoils paired with organic latex — combines the contouring and pressure relief of coils with the bounce and durability of latex. Great for support.</p>
           <div class="naturepedic-product-card__best-for">✅ Zoned support seekers · Microcoil responsiveness · Pressure relief</div>
@@ -304,11 +309,10 @@
         </div>
       </a>
 
-      {% assign nat_chorus_prod = collections['naturepedic'].products | where: 'handle', 'naturepedic-serenade' | first %}
-      <!-- Chorus -->
+      <!-- Serenade -->
       <a href="/products/naturepedic-serenade" class="naturepedic-product-card">
         <div class="naturepedic-product-card__img">
-          <img src="{% if nat_chorus_prod and nat_chorus_prod.featured_image %}{{ nat_chorus_prod.featured_image | image_url: width: 500 }}{% else %}{{ 'dm-hero-clean.png' | asset_url }}{% endif %}" alt="Naturepedic Chorus" loading="lazy">
+          <img src="{% if nat_serenade and nat_serenade.featured_image %}{{ nat_serenade.featured_image | image_url: width: 500 }}{% else %}{{ 'dm-hero-clean.png' | asset_url }}{% endif %}" alt="Naturepedic Serenade" loading="lazy">
         </div>
         <div class="naturepedic-product-card__body">
           <div class="naturepedic-product-card__name">Chorus</div>
@@ -324,7 +328,6 @@
   <!-- BRAND STORY -->
   <section class="naturepedic-story">
     <div class="naturepedic-story__inner">
-      {% assign nat_story_prod = collections['naturepedic'].products | where: 'handle', 'naturepedic-eos-classic' | first %}
     <div class="naturepedic-story__img">
         <img src="{% if nat_story_prod and nat_story_prod.featured_image %}{{ nat_story_prod.featured_image | image_url: width: 800 }}{% else %}{{ 'dm-hero-clean.png' | asset_url }}{% endif %}" alt="Naturepedic organic lifestyle" loading="lazy">
       </div>
