@@ -8,5 +8,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy
-        run: npm install -g @shopify/cli@3.90.0 && SHOPIFY_CLI_PASSWORD="${{ secrets.SHOPIFY_CLI_PASSWORD }}" shopify theme push --store discount-mattress-4.myshopify.com --theme ${{ secrets.SHOPIFY_LIVE_THEME_ID }} --allow-live
+      - name: Get fresh Shopify token
+        id: auth
+        env:
+          CLIENT_ID: ${{ secrets.SHOPIFY_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.SHOPIFY_CLIENT_SECRET }}
+        run: |
+          RESPONSE=$(curl -s -X POST "https://discount-mattress-4.myshopify.com/admin/oauth/access_token" \
+            -H "Content-Type: application/json" \
+            -d "$(cat <<-EOF
+          {
+            "grant_type": "client_credentials",
+            "client_id": "${CLIENT_ID}",
+            "client_secret": "${CLIENT_SECRET}",
+            "scopes": ["write_themes","write_products","write_files"]
+          }
+          EOF
+          )")
+          TOKEN=$(echo "$RESPONSE" | python3 -c "import json,sys; print(json.load(sys.stdin)['access_token'])")
+          echo "$TOKEN" > /tmp/shopify-token
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli
+
+      - name: Push theme to live
+        run: |
+          shopify theme push \
+            --store discount-mattress-4.myshopify.com \
+            --theme ${{ secrets.SHOPIFY_LIVE_THEME_ID }} \
+            --password "$(cat /tmp/shopify-token)" \
+            --allow-live
