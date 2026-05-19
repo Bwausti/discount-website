@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -16,14 +7,10 @@
           "type": "_product-media-gallery",
           "static": true,
           "settings": {
-            "media_presentation": "grid",
-            "media_columns": "two",
-            "image_gap": 4,
-            "large_first_image": false,
-            "icons_style": "none",
-            "slideshow_controls_style": "counter",
-            "slideshow_mobile_controls_style": "dots",
-            "thumbnail_position": "right",
+            "media_presentation": "carousel",
+            "slideshow_controls_style": "thumbnails",
+            "slideshow_mobile_controls_style": "thumbnails",
+            "thumbnail_position": "bottom",
             "thumbnail_width": 44,
             "aspect_ratio": "adapt",
             "constrain_to_viewport": true,
@@ -243,14 +230,59 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "vendor_title": {
+              "type": "text",
+              "settings": {
+                "text": "{{ closest.product.vendor }}",
+                "width": "100%",
+                "alignment": "left",
+                "type_preset": "caption",
+                "font": "var(--font-body--family)",
+                "case": "uppercase",
+                "letter_spacing": "0.12em",
+                "padding-block-start": 0
+              }
+            },
+            "description_block": {
+              "type": "text",
+              "settings": {
+                "text": "{{ closest.product.description }}",
+                "width": "100%",
+                "alignment": "left",
+                "type_preset": "body"
+              }
+            },
+            "specs_accordion": {
+              "type": "accordion",
+              "settings": {
+                "title": "Details & Shipping",
+                "collapsible": true,
+                "collapsed": true,
+                "width": "100%"
+              },
+              "blocks": {
+                "shipping_info": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p><strong>Shipping:</strong> Free local delivery in Bowling Green. Nationwide shipping available.</p><p><strong>Warranty:</strong> Varies by model \u2014 see product for details.</p><p><strong>Returns:</strong> 30-day satisfaction guarantee.</p>",
+                    "width": "100%"
+                  }
+                }
+              },
+              "block_order": [
+                "shipping_info"
+              ]
             }
           },
           "block_order": [
+            "vendor_title",
             "group_icgrde",
+            "description_block",
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
-            "text_aEtTtq"
+            "specs_accordion"
           ]
         }
       },
