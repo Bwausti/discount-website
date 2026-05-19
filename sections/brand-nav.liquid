@@ -10,14 +10,14 @@
         </svg>
       </button>
       <ul class="brand-nav__list">
-        {%- assign brands = "Helix|Puffy|DreamCloud|Nectar|BedGear|BedTech|Naturepedic|Serta|Jamison|PranaSleep|Posh and Lavish" | split: "|" -%}
-        {%- assign handles = "helix|puffy|dreamcloud|nectar|bedgear|bedtech|naturepedic|serta|jamison|pranasleep|posh-and-lavish" | split: "|" -%}
+        {%- assign brands = "Home|Helix|Puffy|DreamCloud|Nectar|BedGear|BedTech|Naturepedic|Serta|Jamison|PranaSleep|Posh and Lavish" | split: "|" -%}
+        {%- assign handles = "/|helix|puffy|dreamcloud|nectar|bedgear|bedtech|naturepedic|serta|jamison|pranasleep|posh-and-lavish" | split: "|" -%}
         {%- for brand in brands -%}
           {%- assign i = forloop.index0 -%}
           {%- assign handle = handles[i] -%}
           {%- assign collection_url = collections[handle].url -%}
           <li class="brand-nav__item">
-            <a href="{% if collection_url != blank %}{{ collection_url }}{% else %}/collections/{{ handle }}{% endif %}" class="brand-nav__link">
+            <a href="{% if handle == '/' %}/{% elsif collection_url != blank %}{{ collection_url }}{% else %}/collections/{{ handle }}{% endif %}" class="brand-nav__link">
               {{ brand }}
             </a>
           </li>
