@@ -116,13 +116,19 @@
     </div>
 
     <div class="pdp-financing">
-      <p class="pdp-financing-heading">Finance with confidence</p>
+      <p class="pdp-financing-heading">FINANCE WITH CONFIDENCE</p>
       <div class="pdp-financing-logos">
-        <img src="{{ 'financing/synchrony-logo.svg' | asset_url }}" alt="Synchrony" height="32" loading="lazy" style="max-height:32px;">
-        <img src="{{ 'financing/kafene-logo.svg' | asset_url }}" alt="Kafene" height="28" loading="lazy" style="max-height:28px;">
-        <img src="{{ 'financing/snap-logo.svg' | asset_url }}" alt="Snap Finance" height="28" loading="lazy" style="max-height:28px;">
+        <div class="pdp-financing-tile">
+          <img src="{{ 'financing/synchrony-logo.svg' | asset_url }}" alt="Synchrony" loading="lazy">
+        </div>
+        <div class="pdp-financing-tile">
+          <img src="{{ 'financing/kafene-logo.svg' | asset_url }}" alt="Kafene" loading="lazy">
+        </div>
+        <div class="pdp-financing-tile">
+          <img src="{{ 'financing/snap-logo.svg' | asset_url }}" alt="Snap Finance" loading="lazy">
+        </div>
       </div>
-      <a href="/pages/financing" class="pdp-financing-link">Learn about financing →</a>
+      <a href="/pages/financing" class="pdp-financing-btn">Learn about financing →</a>
     </div>
   </div>
 
@@ -132,12 +138,15 @@
     .pdp-trust-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: #f8fafc; border-radius: 6px; font-size: 12px; font-weight: 600; color: #334155; }
     .pdp-trust-icon { font-size: 16px; flex-shrink: 0; }
     .pdp-trust-text { line-height: 1.3; }
-    .pdp-financing { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 8px; padding: 16px; text-align: center; }
-    .pdp-financing-heading { margin: 0 0 12px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #0369a1; }
-    .pdp-financing-logos { display: flex; justify-content: center; align-items: center; gap: 24px; margin-bottom: 10px; flex-wrap: wrap; }
-    .pdp-financing-logos img { opacity: 0.85; width: auto; }
-    .pdp-financing-link { font-size: 12px; font-weight: 600; color: #162b49; text-decoration: underline; }
-    .pdp-financing-link:hover { color: #1e3a5f; }
+    .pdp-financing { background: #eef6ff; border: none; border-radius: 10px; padding: 20px; text-align: center; position: relative; overflow: hidden; }
+    .pdp-financing::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(45deg, transparent, transparent 30px, rgba(59,130,246,0.04) 30px, rgba(59,130,246,0.04) 31px); pointer-events: none; }
+    .pdp-financing-heading { margin: 0 0 14px; font-size: 11px; font-weight: 800; letter-spacing: 0.15em; color: #162b49; position: relative; }
+    .pdp-financing-logos { display: flex; gap: 10px; margin-bottom: 14px; position: relative; }
+    .pdp-financing-tile { flex: 1; background: white; border-radius: 8px; padding: 12px 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(0,0,0,0.06); min-height: 56px; }
+    .pdp-financing-tile img { max-height: 28px; width: auto; max-width: 100%; }
+    @media (max-width: 480px) { .pdp-financing-logos { flex-direction: column; } }
+    .pdp-financing-btn { display: inline-block; background: white; color: #162b49; padding: 10px 24px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.08); transition: box-shadow 0.2s; position: relative; }
+    .pdp-financing-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
   </style>
 {% endcapture %}
 
