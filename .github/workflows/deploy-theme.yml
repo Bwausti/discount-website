@@ -8,13 +8,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install shopify CLI
-        run: npm install -g @shopify/cli@3.90.0
-
-      - name: Push theme
-        run: |
-          shopify theme push \
-            --store discount-mattress-4.myshopify.com \
-            --theme ${{ secrets.SHOPIFY_LIVE_THEME_ID }} \
-            --password "${{ secrets.SHOPIFY_CLI_PASSWORD }}" \
-            --allow-live
+      - name: Deploy
+        run: npm install -g @shopify/cli@3.90.0 && SHOPIFY_CLI_PASSWORD="${{ secrets.SHOPIFY_CLI_PASSWORD }}" shopify theme push --store discount-mattress-4.myshopify.com --theme ${{ secrets.SHOPIFY_LIVE_THEME_ID }} --allow-live
