@@ -4,11 +4,15 @@
   {{ closest.product | structured_data }}
 </script>
 
-{% stylesheet %}
-.product-information[data-testid="product-information"] { padding-top: 48px !important; }
-@media (max-width: 749px) {
-  .product-information[data-testid="product-information"] { padding-top: 24px !important; }
-}
+<style>
+  .product-information[data-testid="product-information"] { padding-top: 48px !important; }
+  @media (max-width: 749px) {
+    .product-information[data-testid="product-information"] { padding-top: 24px !important; }
+  }
+  .product-information.section { margin-top: 48px !important; }
+  @media (max-width: 749px) {
+    .product-information.section { margin-top: 24px !important; }
+  }
   .variant-option--buttons .variant-option__button-label {
     min-width: 48px;
     padding: 10px 16px;
