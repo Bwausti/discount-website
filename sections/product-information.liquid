@@ -4,12 +4,14 @@
   {{ closest.product | structured_data }}
 </script>
 
-<style>
+{% stylesheet %}
   .product-information.section { padding-top: 48px !important; padding-bottom: 0 !important; }
   @media (max-width: 749px) {
     .product-information.section { padding-top: 24px !important; }
   }
-  /* PDP polish - variant picker, quantity, buy buttons */
+{% endstylesheet %}
+
+<style>
   .variant-option--buttons .variant-option__button-label {
     min-width: 48px;
     padding: 10px 16px;
