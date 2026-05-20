@@ -66,7 +66,8 @@
       },
       "block_order": [
         "title",
-        "content"
+        "content",
+        "location_info"
       ],
       "settings": {
         "content_direction": "column",
@@ -75,6 +76,32 @@
         "padding-block-start": 40,
         "padding-block-end": 0
       }
+    },
+    "location_info": {
+      "type": "text",
+      "name": "Location Info",
+      "settings": {
+        "text": "<p><strong>Discount Mattress — Bowling Green, KY</strong></p><p>Locally owned with two convenient locations to serve you.</p><p><strong>Campbell Ln Showroom:</strong><br>1555 Campbell Ln, Bowling Green, KY 42104<br>(270) 495-1603 &nbsp;|&nbsp; Mon-Sat 10-6</p><p><strong>Outlet:</strong><br>2734 Russellville Rd, Bowling Green, KY 42101<br>(270) 842-3888 &nbsp;|&nbsp; Mon-Sat 9-5:30, Sun 12-5</p><p>Some brands may be available at specific locations. Contact us before visiting if you are looking for a specific model.</p>",
+        "width": "100%",
+        "max_width": "narrow",
+        "alignment": "center",
+        "type_preset": "rte",
+        "font": "var(--font-primary--family)",
+        "font_size": "",
+        "line_height": "normal",
+        "letter_spacing": "normal",
+        "case": "none",
+        "wrap": "pretty",
+        "color": "",
+        "background": false,
+        "background_color": "#00000026",
+        "corner_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0
+      },
+      "blocks": {}
     },
     "form": {
       "type": "section",

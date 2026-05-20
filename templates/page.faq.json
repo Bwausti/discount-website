@@ -46,7 +46,7 @@
           "type": "text",
           "name": "CTA Links",
           "settings": {
-            "text": "<p><strong>Have more questions?</strong> We're happy to help in person or by phone.</p><p><a href=\"/pages/contact\">Contact Us</a> &nbsp;|&nbsp; <a href=\"/collections/all\">Shop Mattresses</a></p>",
+            "text": "<p><strong>Have more questions?</strong> We're happy to help in person or by phone.</p><p><strong>Showroom locations:</strong></p><ul><li><strong>Campbell Ln:</strong> 1555 Campbell Ln, Bowling Green, KY 42104 — (270) 495-1603, Mon-Sat 10-6</li><li><strong>Outlet:</strong> 2734 Russellville Rd, Bowling Green, KY 42101 — (270) 842-3888, Mon-Sat 9-5:30, Sun 12-5</li></ul><p>Some brands may be available at specific locations. Contact us before visiting if you are looking for a specific model.</p><p><a href=\"/pages/contact\">Contact Us</a> &nbsp;|&nbsp; <a href=\"/collections/all\">Shop Mattresses</a> &nbsp;|&nbsp; <a href=\"/pages/financing\">Financing</a></p>",
             "width": "100%",
             "max_width": "narrow",
             "alignment": "center",
