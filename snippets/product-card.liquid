@@ -107,6 +107,10 @@
     "
   >
     {{ children }}
+
+    <a href="{{ variant_to_link.url }}" class="card-view-mattress">
+      View Mattress
+    </a>
   </div>
 </product-card>
 
@@ -117,6 +121,28 @@
 
   .product-card__content slideshow-component {
     --cursor: pointer;
+  }
+
+  .card-view-mattress {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - var(--padding-inline-end, 0px) - var(--padding-inline-start, 0px));
+    margin: 10px auto 0;
+    padding: 10px 14px;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+    position: relative;
+    z-index: 2;
+  }
+
+  .card-view-mattress:hover {
+    opacity: 0.75;
   }
 
   @media screen and (max-width: 749px) {
