@@ -270,6 +270,28 @@
   </sticky-add-to-cart>
 {% endif %}
 
+{% comment %}── Trust / help section ──{% endcomment %}
+<div class="pdp-trust-section">
+  <div class="pdp-trust-grid">
+    <div class="pdp-trust-item">
+      <span class="pdp-trust-icon">🏪</span>
+      <span class="pdp-trust-text">Try it in our Bowling Green showroom</span>
+    </div>
+    <div class="pdp-trust-item">
+      <span class="pdp-trust-icon">🚚</span>
+      <span class="pdp-trust-text">Free local delivery available</span>
+    </div>
+    <div class="pdp-trust-item">
+      <span class="pdp-trust-icon">💬</span>
+      <span class="pdp-trust-text"><a href="/pages/contact" style="color:inherit;text-decoration:underline;">Questions? Contact us</a></span>
+    </div>
+    <div class="pdp-trust-item">
+      <span class="pdp-trust-icon">💳</span>
+      <span class="pdp-trust-text"><a href="/pages/financing" style="color:inherit;text-decoration:underline;">Financing available</a></span>
+    </div>
+  </div>
+</div>
+
 {% render 'product-information-content',
   product_media_size: closest.product.media.size,
   section_id: section.id,
