@@ -46,7 +46,7 @@
           "type": "text",
           "name": "CTA Links",
           "settings": {
-            "text": "<hr style=\"margin: 40px 0 24px;\"><div style=\"text-align: center;\"><p style=\"font-size: 15px; color: #475569; margin-bottom: 20px;\"><strong>Have more questions?</strong> We're happy to help in person or by phone.</p><p><a href=\"/pages/contact\" style=\"display: inline-block; background: #162b49; color: white; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; margin: 0 8px 8px 0;\">Contact Us</a><a href=\"/collections/all\" style=\"display: inline-block; border: 1px solid #cbd5e1; color: #334155; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px;\">Shop Mattresses</a></p></div>",
+            "text": "<p><strong>Have more questions?</strong> We're happy to help in person or by phone.</p><p><a href=\"/pages/contact\">Contact Us</a> &nbsp;|&nbsp; <a href=\"/collections/all\">Shop Mattresses</a></p>",
             "width": "100%",
             "max_width": "narrow",
             "alignment": "center",
