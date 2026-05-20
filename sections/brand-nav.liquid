@@ -10,16 +10,62 @@
         </svg>
       </button>
       <ul class="brand-nav__list">
-        {%- assign nav_items = "Shop All|Helix|Puffy|Nectar|DreamCloud|BedGear|Naturepedic|Serta|BedTech|Jamison|PranaSleep|Posh and Lavish|Financing|Contact|FAQ" | split: "|" -%}
-        {%- assign nav_urls = "/collections/all|/collections/helix|/collections/puffy|/collections/nectar|/collections/dreamcloud|/collections/bedgear|/collections/naturepedic|/collections/serta|/collections/bedtech|/collections/jamison|/collections/pranasleep|/collections/posh-and-lavish|/pages/financing|/pages/contact|/pages/faq" | split: "|" -%}
-        {%- for item in nav_items -%}
-          {%- assign i = forloop.index0 -%}
-          <li class="brand-nav__item">
-            <a href="{{ nav_urls[i] }}" class="brand-nav__link">
-              {{ item }}
-            </a>
-          </li>
-        {%- endfor -%}
+
+        {% comment %}── Shop All ──{% endcomment %}
+        <li class="brand-nav__item">
+          <a href="/collections/all" class="brand-nav__link">Shop All</a>
+        </li>
+
+        {% comment %}── Top Brands (dropdown) ──{% endcomment %}
+        <li class="brand-nav__item brand-nav__item--dropdown">
+          <button class="brand-nav__link brand-nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            Top Brands
+            <svg class="brand-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="brand-nav__dropdown">
+            <li><a href="/collections/helix" class="brand-nav__dropdown-link">Helix</a></li>
+            <li><a href="/collections/nectar" class="brand-nav__dropdown-link">Nectar</a></li>
+            <li><a href="/collections/puffy" class="brand-nav__dropdown-link">Puffy</a></li>
+            <li><a href="/collections/dreamcloud" class="brand-nav__dropdown-link">DreamCloud</a></li>
+            <li><a href="/collections/naturepedic" class="brand-nav__dropdown-link">Naturepedic</a></li>
+          </ul>
+        </li>
+
+        {% comment %}── More Brands (dropdown) ──{% endcomment %}
+        <li class="brand-nav__item brand-nav__item--dropdown">
+          <button class="brand-nav__link brand-nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+            More Brands
+            <svg class="brand-nav__chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <ul class="brand-nav__dropdown">
+            <li><a href="/collections/bedgear" class="brand-nav__dropdown-link">BedGear</a></li>
+            <li><a href="/collections/bedtech" class="brand-nav__dropdown-link">BedTech</a></li>
+            <li><a href="/collections/serta" class="brand-nav__dropdown-link">Serta</a></li>
+            <li><a href="/collections/jamison" class="brand-nav__dropdown-link">Jamison</a></li>
+            <li><a href="/collections/pranasleep" class="brand-nav__dropdown-link">PranaSleep</a></li>
+            <li><a href="/collections/posh-and-lavish" class="brand-nav__dropdown-link">Posh and Lavish</a></li>
+          </ul>
+        </li>
+
+        {% comment %}── Financing ──{% endcomment %}
+        <li class="brand-nav__item">
+          <a href="/pages/financing" class="brand-nav__link">Financing</a>
+        </li>
+
+        {% comment %}── Contact ──{% endcomment %}
+        <li class="brand-nav__item">
+          <a href="/pages/contact" class="brand-nav__link">Contact</a>
+        </li>
+
+        {% comment %}── FAQ ──{% endcomment %}
+        <li class="brand-nav__item">
+          <a href="/pages/faq" class="brand-nav__link">FAQ</a>
+        </li>
+
       </ul>
     </div>
   </div>
@@ -27,6 +73,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Mobile toggle
     const toggle = document.querySelector('.brand-nav__toggle');
     const list = document.querySelector('.brand-nav__list');
     if (toggle && list) {
@@ -36,6 +83,36 @@
         list.classList.toggle('brand-nav__list--open');
       });
     }
+
+    // Desktop dropdown toggles (click on mobile, hover on desktop)
+    const dropdownToggles = document.querySelectorAll('.brand-nav__dropdown-toggle');
+    dropdownToggles.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        // Only toggle on click for mobile (or keyboard)
+        const parent = this.closest('.brand-nav__item--dropdown');
+        const isOpen = parent.classList.toggle('brand-nav__dropdown--open');
+        this.setAttribute('aria-expanded', isOpen);
+      });
+
+      // Close on Escape
+      btn.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          const parent = this.closest('.brand-nav__item--dropdown');
+          parent.classList.remove('brand-nav__dropdown--open');
+          this.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.brand-nav__item--dropdown')) {
+        document.querySelectorAll('.brand-nav__item--dropdown.brand-nav__dropdown--open').forEach(function(el) {
+          el.classList.remove('brand-nav__dropdown--open');
+          el.querySelector('.brand-nav__dropdown-toggle').setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
   });
 </script>
 

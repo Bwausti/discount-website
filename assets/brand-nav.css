@@ -18,6 +18,7 @@
   min-height: 48px;
 }
 
+/* ── Mobile toggle ── */
 .brand-nav__toggle {
   display: none;
   align-items: center;
@@ -48,6 +49,7 @@
   transform: rotate(180deg);
 }
 
+/* ── Desktop nav list ── */
 .brand-nav__list {
   display: flex;
   list-style: none;
@@ -55,19 +57,21 @@
   padding: 0;
   gap: 0;
   width: 100%;
-  justify-content: space-between;
+  align-items: center;
 }
 
 .brand-nav__item {
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
+/* ── Direct links ── */
 .brand-nav__link {
   display: flex;
   align-items: center;
   height: 48px;
-  padding: 0 8px;
+  padding: 0 10px;
   color: #94a3b8;
   text-decoration: none;
   font-size: 13px;
@@ -77,6 +81,12 @@
   transition: color 0.2s, background 0.2s;
   border-bottom: 2px solid transparent;
   letter-spacing: 0.01em;
+  gap: 4px;
+  background: none;
+  cursor: pointer;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 
 .brand-nav__link:hover,
@@ -86,7 +96,79 @@
   border-bottom-color: #f2b705;
 }
 
-/* Responsive: collapse to dropdown on mobile */
+/* ── Dropdown toggle ── */
+.brand-nav__dropdown-toggle {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.brand-nav__item--dropdown .brand-nav__chevron {
+  margin-left: 2px;
+}
+
+.brand-nav__dropdown--open .brand-nav__dropdown-toggle .brand-nav__chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown menu ── */
+.brand-nav__dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 190px;
+  background: #162b49;
+  border: 1px solid #1e3a5f;
+  border-top: 2px solid #f2b705;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  padding: 6px 0;
+  margin: 0;
+  list-style: none;
+  z-index: 100;
+  border-radius: 0 0 6px 6px;
+}
+
+/* Hover open on desktop */
+@media (min-width: 769px) {
+  .brand-nav__item--dropdown:hover .brand-nav__dropdown,
+  .brand-nav__item--dropdown.brand-nav__dropdown--open .brand-nav__dropdown {
+    display: block;
+  }
+
+  .brand-nav__item--dropdown:hover .brand-nav__dropdown-toggle .brand-nav__chevron {
+    transform: rotate(180deg);
+  }
+}
+
+/* Click open on mobile (also works on desktop for keyboard) */
+.brand-nav__item--dropdown.brand-nav__dropdown--open .brand-nav__dropdown {
+  display: block;
+}
+
+.brand-nav__dropdown-link {
+  display: block;
+  padding: 10px 18px;
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  transition: background 0.15s, color 0.15s;
+}
+
+.brand-nav__dropdown-link:hover,
+.brand-nav__dropdown-link:focus {
+  color: #ffffff;
+  background: #1e3a5f;
+}
+
+/* ── Desktop spacing helper: push right items to the right ── */
+.brand-nav__item--spacer {
+  flex: 1;
+}
+
+/* ── Responsive: collapse to full-width mobile menu ── */
 @media (max-width: 768px) {
   .brand-nav__toggle {
     display: flex;
@@ -101,7 +183,6 @@
     right: 0;
     background: #162b49;
     border-top: 1px solid #1e3a5f;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     padding: 4px 0;
     gap: 0;
@@ -109,6 +190,11 @@
 
   .brand-nav__list--open {
     display: flex;
+  }
+
+  .brand-nav__item,
+  .brand-nav__item--dropdown {
+    width: 100%;
   }
 
   .brand-nav__link {
@@ -123,14 +209,29 @@
     background: #1e3a5f;
   }
 
-  .brand-nav__item:last-child .brand-nav__link {
-    border-bottom: none;
+  /* On mobile, dropdowns become visible sub-sections */
+  .brand-nav__dropdown {
+    display: block;
+    position: static;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    padding: 0 0 0 0;
+    background: transparent;
   }
-}
 
-@media (max-width: 1024px) {
-  .brand-nav__link {
-    font-size: 11px;
-    padding: 0 5px;
+  .brand-nav__dropdown-link {
+    padding: 10px 20px 10px 36px;
+    font-size: 13px;
+    border-bottom: 1px solid #1e293b;
+  }
+
+  .brand-nav__item--dropdown .brand-nav__chevron {
+    display: none;
+  }
+
+  .brand-nav__item:last-child .brand-nav__link,
+  .brand-nav__item--dropdown:last-child .brand-nav__link {
+    border-bottom: none;
   }
 }
