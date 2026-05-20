@@ -1,6 +1,6 @@
 {% if collection.handle != 'dreamcloud' %}{% break %}{% endif %}
 <!-- Section: dreamcloud-collection-banner -->
-<!-- Brand: DreamCloud | Classic / Premier / Luxe / Ultra -->
+<!-- Brand: DreamCloud | Classic Hybrid / Premier Hybrid / Luxe Hybrid / Ultra Hybrid -->
 <style>
   .dreamcloud-section { font-family: 'Inter', 'Segoe UI', sans-serif; }
   .dc-hero {
@@ -163,7 +163,6 @@
         </p>
         <div class="dc-hero__badges">
           <span class="dc-badge">Forever warranty</span>
-          <span class="dc-badge">Made in USA</span>
         </div>
         <div class="dc-hero__buttons">
           <a href="#dc-models" class="dc-btn-primary">Compare models →</a>
@@ -176,7 +175,7 @@
           {% assign dc_tiers = 'classic-hybrid,premier-hybrid,luxe-hybrid,ultra-hybrid' | split: ',' %}
           {% assign dc_tier_labels = 'CLASSIC|PREMIER|LUXE|ULTRA' | split: '|' %}
 
-          {% assign dc_tier_details = '10" / Entry-level|13" / Best seller|14" / Extra cooling|16" / Premium' | split: '|' %}
+          {% assign dc_tier_details = '12" / Entry-level|13" / Best seller|14" / Extra cooling|16" / Premium' | split: '|' %}
           {% for handle_suffix in dc_tiers %}
             {% assign handle = 'dreamcloud-' | append: handle_suffix %}
             {% assign prod = dc_products | where: 'handle', handle | first %}
@@ -229,7 +228,7 @@
 
     <div class="dc-tier-grid">
       {% assign dc_tiers = 'dreamcloud-classic-hybrid,dreamcloud-premier-hybrid,dreamcloud-luxe-hybrid,dreamcloud-ultra-hybrid' | split: ',' %}
-      {% assign dc_names = 'Classic, Premier, Luxe, Ultra' | split: ',' %}
+      {% assign dc_names = 'Classic Hybrid, Premier Hybrid, Luxe Hybrid, Ultra Hybrid' | split: ',' %}
 
       {% assign dc_specs = '12" hybrid,13" hybrid,14" hybrid,16" hybrid' | split: ',' %}
       {% assign dc_spec2 = 'Entry-level,Best seller,Extra cooling,Premium luxury' | split: ',' %}
@@ -271,12 +270,11 @@
       </div>
       <div class="dc-story__content">
         <p class="section-label" style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.22em;color:#d4af37;margin-bottom:8px;">Why DreamCloud</p>
-        <h2>America's #1 hybrid luxury mattress.</h2>
+        <h2>Luxury hybrid comfort at an accessible price.</h2>
         <p>DreamCloud's formula is simple — quilted euro top, pocketed coils, gel memory foam. Every model is built to the same standard: pressure relief that lasts, wrapped in luxury construction at an honest price.</p>
         <p>In our Bowling Green showroom, you can compare all four tiers side by side. All-foam versions are also available at every tier if you prefer no coils.</p>
         <div class="dc-story__badges">
           <span class="dc-story__badge">Forever Warranty</span>
-          <span class="dc-story__badge">Made in USA</span>
         </div>
       </div>
     </div>

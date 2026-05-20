@@ -98,14 +98,14 @@
     {%- capture layer_data_raw -%}Quilted Euro Top Cover|0.5|Durable premium euro top cover.|Cover||Quilted Euro Top|2.0|Plush euro-top layer.|PillowTop||High-Density Cooling Memory Foam|1.5|Extra-durable gel-infused memory foam.|Memory||Helix Dynamic Foam|2.0|Responsive transition foam.|Transition||Reinforced Coil Support Core|6.0|Extra-durable individually wrapped coils.|Coils||High-Density Support Foam|3.0|Thick high-density foam foundation.|Support{%- endcapture -%}
 
   {%- comment %}══════ DREAMCLOUD ══════{% endcomment %}
-  {%- when "dreamcloud-premier" or "dreamcloud-premier-hybrid" -%}
+  {%- when "dreamcloud-premier", "dreamcloud-premier-hybrid" -%}
     {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable, cashmere-blend quilted cover.|Cover||Plush Euro Top|1.5|Luxurious pillow-top layer with soft fiber fill for cloud-like feel.|PillowTop||Transition Polyfoam|1.0|Supportive transition foam bridges coils and comfort layers.|Transition||DreamCloud Memory Foam|2.0|Premium memory foam infused with gel for cooling pressure relief.|Memory||5-Zone Coil Support Core|6.0|Individually wrapped coils with 5 ergonomic zones for targeted support.|Coils||High-Density Support Foam|4.0|Sturdy foam base provides core support and minimizes sagging.|Support{%- endcapture -%}
 
   {%- comment %}══════ NECTAR ══════{% endcomment %}
-  {%- when "nectar-classic-memory-foam" -%}
+  {%- when "nectar-classic", "nectar-classic-memory-foam" -%}
     {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable, soft-touch cover with phase-change material.|Cover||Cooling Gel Memory Foam|1.0|Proprietary gel-infused foam draws heat away from the body.|Cooling Gel||Dynamic Response Memory Foam|2.0|Quilted memory foam that adapts to body shape and temperature for pressure relief.|Memory||Airflow Transfer Foam|1.0|Breathable transition foam promotes airflow through the mattress.|Transition||High-Density Support Foam|5.0|Thick support core for stability and alignment.|Support{%- endcapture -%}
 
-  {%- when "nectar-premier-memory-foam" -%}
+  {%- when "nectar-premier", "nectar-premier-memory-foam" -%}
     {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable cover with phase-change material.|Cover||Extra Plush Comfort Foam|1.0|Additional layer for enhanced pressure relief.|Foam||Cooling Gel Memory Foam|1.0|Gel-infused cooling foam.|Cooling Gel||Dynamic Response Memory Foam|2.0|Quilted memory foam for adaptive contour.|Memory||Airflow Transfer Foam|1.0|Breathable transition foam.|Transition||High-Density Support Foam|5.0|Thick support core for stability.|Support{%- endcapture -%}
 
     {%- when "puffy-lux-hybrid" -%}
@@ -114,7 +114,7 @@
     {%- when "nectar-classic-hybrid" -%}
     {%- capture layer_data_raw -%}Phase-Change Cover|0.5|Breathable cover with phase-change material for cooling.|Cover||Cooling Gel Memory Foam|1.0|Gel-infused cooling foam.|Memory||Dynamic Response Memory Foam|2.0|Adaptive memory foam for pressure relief.|Memory||Airflow Transfer Foam|1.0|Breathable transition foam.|Transition||Pocketed Coil Support Core|6.0|Individually wrapped coils for responsive support.|Coils||High-Density Support Foam|2.5|Sturdy support base.|Support{%- endcapture -%}
 
-    {%- when "nectar-kids-mattress" -%}
+    {%- when "nectar-kids", "nectar-kids-mattress" -%}
     {%- capture layer_data_raw -%}Certified Safe Cover|0.5|Safe, breathable cover certified for children.|Cover||Cooling Gel Memory Foam|1.0|Gentle cooling memory foam.|Memory||Dynamic Response Memory Foam|1.0|Adaptive support foam.|Memory||High-Density Support Foam|6.5|Support core for growing bodies.|Support{%- endcapture -%}
 
     {%- when "nectar-luxe-hybrid" -%}
@@ -139,7 +139,7 @@
     {%- capture layer_data_raw -%}GOTS Organic Cotton Cover|0.5|Organic cotton quilted cover.|Cover||Tufted Pillow Top|2.0|Elegant tufted pillow top with organic cotton and wool.|PillowTop||GOLS Organic Latex|2.0|GOLS certified organic latex comfort layer.|Latex||Microcoil Support Layer|2.0|Zoned microcoils for contouring support.|Coils||Organic Support Core|6.5|Organic support core.|Support{%- endcapture -%}
 
     {%- when "naturepedic-serenade" -%}
-    {%- capture layer_data_raw -%}GOTS Organic Cotton Cover|0.5|Organic cotton quilted cover.|Cover||GOLS Organic Latex|2.0|GOLS certified organic latex comfort layer.|Latex||Organic Support Core|7.5|Organic cotton and support core.|Support{%- endcapture -%}
+    {%- capture layer_data_raw -%}GOTS Organic Cotton Cover|0.5|Organic cotton quilted cover.|Cover||GOLS Organic Latex|2.0|Organic latex comfort layer for responsive pressure relief.|Latex||Encased Coil Support Core|8.0|Individually encased coils for durable support and airflow.|Coils||Organic Cotton Base|0.5|Organic cotton finishing layer.|Cover{%- endcapture -%}
 
     {%- when "serta-icomfortpro-mattress" -%}
     {%- capture layer_data_raw -%}EverCool Fabric Cover|0.5|Active climate-regulating fabric cover.|Cover||Triple Effects Gel Layer|1.0|Three-layer cooling gel system targeting heat, pressure, and motion.|Cooling Gel||Gel-Infused Memory Foam|2.0|Premium gel-infused memory foam for cooling contour.|Memory||Support Foam|8.5|High-density support foam.|Support{%- endcapture -%}
@@ -169,8 +169,7 @@
   {%- when "bedgear-m1-mattress" -%}
     {%- capture layer_data_raw -%}REACTO™ Performance Knit Cover|0.25|Breathable, stretch-knit cover with VERSA-TEX™ cooling technology.|Cover||VERSA-TEX™ Cooling Fabric|0.25|Moisture-wicking, temperature-regulating fabric layer.|Fabric||Renu™ Responsive Foam|2.0|BEDGEAR's proprietary responsive foam for pressure relief with bounce-back.|Memory||High-Density Support Foam|5.0|Stable base support core.|Support{%- endcapture -%}
 
-    {%- when "dreamcloud-premier-hybrid" -%}
-    {%- capture layer_data_raw -%}Quilted Cashmere-Blend Cover|0.5|Luxurious cashmere-blend quilted cover.|Cover||Plush Euro Top|1.5|Plush euro-top layer for cloud-like comfort.|PillowTop||Gel Memory Foam|2.0|Premium gel-infused memory foam for cooling pressure relief.|Memory||Transition Polyfoam|1.0|Supportive transition foam bridges coils and comfort layers.|Transition||5-Zone Coil Support Core|6.0|Individually wrapped coils with 5 ergonomic zones.|Coils||High-Density Support Foam|3.0|Sturdy foam base provides core support.|Support{%- endcapture -%}
+
 
     {%- when "dreamcloud-classic-hybrid" -%}
     {%- capture layer_data_raw -%}Quilted Cover|0.5|Breathable quilted cover.|Cover||Gel Memory Foam|1.5|Gel-infused memory foam for cooling pressure relief.|Memory||Transition Polyfoam|1.0|Supportive transition foam.|Transition||5-Zone Coil Support Core|6.0|Individually wrapped coils with 5 ergonomic zones.|Coils||High-Density Support Foam|3.0|Sturdy foam base.|Support{%- endcapture -%}

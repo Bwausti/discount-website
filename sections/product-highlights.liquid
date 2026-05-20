@@ -9,7 +9,7 @@
 {% comment %} Build firmness from tags {% endcomment %}
 {% assign firmness_label = '' %}
 {% assign firmness_value = 0 %}
-{% assign firmness_tags = 'soft::1|medium-soft::2|plush::2|pillow top::2|medium::3|medium-firm::4|firm::5|cushion-firm::5|extra-firm::6' | split: '|' %}
+{% assign firmness_tags = 'soft::1::Soft|medium-soft::2::Medium-Soft|plush::2::Plush|pillow top::2::Pillow Top|medium::3::Medium|medium-firm::4::Medium-Firm|firm::5::Firm|cushion-firm::5::Cushion Firm|extra-firm::6::Extra-Firm' | split: '|' %}
 {% for tag in p.tags %}
   {% assign t = tag | downcase | strip %}
   {% for ft in firmness_tags %}
@@ -18,7 +18,8 @@
     {% assign val = parts[1] | plus: 0 %}
     {% if t contains key and val > firmness_value %}
       {% assign firmness_value = val %}
-      {% assign firmness_label = key | capitalize %}
+      {% assign display_label = parts[2] | default: key %}
+      {% assign firmness_label = display_label %}
     {% endif %}
   {% endfor %}
 {% endfor %}
@@ -30,15 +31,15 @@
   {% assign is_mattress = false %}
 {% endif %}
 {% if firmness_label == '' and is_mattress %}
-  {% assign firmness_label = 'Medium' %}
-  {% assign firmness_value = 3 %}
+  {% assign firmness_label = 'See product details' %}
+  {% assign firmness_value = 0 %}
 {% elsif firmness_label == '' and is_mattress == false %}
   {% assign firmness_label = 'N/A' %}
   {% assign firmness_value = 0 %}
 {% endif %}
 
 {% comment %} Brand info map {% endcomment %}
-{% assign warranty_map = 'Helix+15 Year|Puffy+Lifetime|DreamCloud+Lifetime|Nectar+Forever|BedGear+20 Year|BedTech+Lifetime|Naturepedic+25 Year|Serta+10 Year|Jamison+10 Year|PranaSleep+20 Year|Posh and Lavish+Lifetime' | split: '|' %}
+{% assign warranty_map = 'Puffy+Lifetime|DreamCloud+Lifetime|Nectar+Forever|BedGear+20 Year|BedTech+Lifetime|Naturepedic+25 Year|Serta+10 Year|Jamison+10 Year|PranaSleep+20 Year|Posh and Lavish+Lifetime' | split: '|' %}
 
 {% assign vendor = p.vendor | strip %}
 {% assign vendor_lower = vendor | downcase %}
@@ -164,7 +165,7 @@
     <div class="prod-highlights__card">
       <p class="prod-highlights__label">Feel</p>
       <p class="prod-highlights__value">
-        {% if firmness_label != 'N/A' %}
+        {% if firmness_label != 'N/A' and firmness_label != 'See product details' %}
           {{ firmness_label }}
           <div class="firmness-bar">
             {% for i in (1..6) %}
@@ -181,7 +182,7 @@
             <span{% if firmness_value >= 5 %} class="active-label"{% endif %}>Firm</span>
           </div>
         {% else %}
-          <small>Not applicable</small>
+          <small>{{ firmness_label }}</small>
         {% endif %}
       </p>
     </div>

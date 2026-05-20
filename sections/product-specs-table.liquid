@@ -79,13 +79,13 @@
 {% comment %} Fallback: brand-based defaults {% endcomment %}
 {% if height_text == '' %}
   {% assign v = p.vendor | downcase | strip %}
-  {% if v == 'helix' %}{% assign height_text = '11.5–13" Profile' %}
-  {% elsif v == 'puffy' %}{% assign height_text = '10–14" Profile' %}
-  {% elsif v == 'dreamcloud' %}{% assign height_text = '13–14" Profile' %}
-  {% elsif v == 'nectar' %}{% assign height_text = '12" Profile' %}
+  {% if v == 'helix' %}{% assign height_text = '11.5–15.5" Profile' %}
+  {% elsif v == 'puffy' %}{% assign height_text = '10–16" Profile' %}
+  {% elsif v == 'dreamcloud' %}{% assign height_text = '12–16" Profile' %}
+  {% elsif v == 'nectar' %}{% assign height_text = '12–15" Profile' %}
   {% elsif v == 'bedgear' %}{% assign height_text = '10–13" Profile' %}
   {% elsif v == 'bedtech' %}{% assign height_text = '8–12" Profile' %}
-  {% elsif v == 'naturepedic' %}{% assign height_text = '8–11" Profile' %}
+  {% elsif v == 'naturepedic' %}{% assign height_text = '11–15" Profile' %}
   {% elsif v == 'serta' %}{% assign height_text = '10–14" Profile' %}
   {% elsif v == 'jamison' %}{% assign height_text = '8–12" Profile' %}
   {% elsif v == 'pranasleep' %}{% assign height_text = '10–13" Profile' %}
