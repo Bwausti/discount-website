@@ -4,21 +4,19 @@
   <div class="brand-nav__container">
     <div class="brand-nav__wrapper">
       <button class="brand-nav__toggle" aria-expanded="false" aria-label="Toggle brand navigation">
-        <span class="brand-nav__toggle-text">Browse Brands</span>
+        <span class="brand-nav__toggle-text">Browse</span>
         <svg class="brand-nav__chevron" width="12" height="8" viewBox="0 0 12 8" fill="none">
           <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </button>
       <ul class="brand-nav__list">
-        {%- assign brands = "Home|Helix|Puffy|DreamCloud|Nectar|BedGear|BedTech|Naturepedic|Serta|Jamison|PranaSleep|Posh and Lavish" | split: "|" -%}
-        {%- assign handles = "/|helix|puffy|dreamcloud|nectar|bedgear|bedtech|naturepedic|serta|jamison|pranasleep|posh-and-lavish" | split: "|" -%}
-        {%- for brand in brands -%}
+        {%- assign nav_items = "Shop All|Helix|Puffy|Nectar|DreamCloud|BedGear|Naturepedic|Serta|BedTech|Jamison|PranaSleep|Posh and Lavish|Financing|Contact|FAQ" | split: "|" -%}
+        {%- assign nav_urls = "/collections/all|/collections/helix|/collections/puffy|/collections/nectar|/collections/dreamcloud|/collections/bedgear|/collections/naturepedic|/collections/serta|/collections/bedtech|/collections/jamison|/collections/pranasleep|/collections/posh-and-lavish|/pages/financing|/pages/contact|/pages/faq" | split: "|" -%}
+        {%- for item in nav_items -%}
           {%- assign i = forloop.index0 -%}
-          {%- assign handle = handles[i] -%}
-          {%- assign collection_url = collections[handle].url -%}
           <li class="brand-nav__item">
-            <a href="{% if handle == '/' %}/{% elsif collection_url != blank %}{{ collection_url }}{% else %}/collections/{{ handle }}{% endif %}" class="brand-nav__link">
-              {{ brand }}
+            <a href="{{ nav_urls[i] }}" class="brand-nav__link">
+              {{ item }}
             </a>
           </li>
         {%- endfor -%}
