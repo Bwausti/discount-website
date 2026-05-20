@@ -1,0 +1,195 @@
+{% comment %}
+  Header Section - Main store header with logo, navigation, and cart icon
+{% endcomment %}
+
+<div class="header-wrapper color-{{ section.settings.color_scheme }}">
+  <header class="header">
+    <div class="header__container">
+      {% comment %} Logo / Store Name {% endcomment %}
+      <div class="header__logo">
+        {% if settings.logo != blank %}
+          <a href="{{ routes.root_url }}" class="header__logo-link">
+            <img
+              src="{{ settings.logo | image_url: width: 200 }}"
+              alt="{{ settings.logo.alt | default: shop.name }}"
+              width="{{ settings.logo.width }}"
+              height="{{ settings.logo.height }}"
+              class="header__logo-image"
+            >
+          </a>
+        {% else %}
+          <a href="{{ routes.root_url }}" class="header__logo-text">
+            {{ shop.name }}
+          </a>
+        {% endif %}
+      </div>
+
+      {% comment %} Navigation {% endcomment %}
+      <nav class="header__nav" aria-label="Main navigation">
+        {% if section.settings.menu != blank %}
+          <ul class="header__nav-list">
+            {% for link in linklists[section.settings.menu].links %}
+              <li class="header__nav-item">
+                <a href="{{ link.url }}" class="header__nav-link{% if link.active %} is-active{% endif %}">
+                  {{ link.title }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </nav>
+
+      {% comment %} Header Actions (Cart, Account) {% endcomment %}
+      <div class="header__actions">
+        {% render 'header-actions', section: section %}
+      </div>
+    </div>
+  </header>
+</div>
+
+<style>
+  .header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-background, #fff);
+    border-bottom: 1px solid var(--color-border, #e5e5e5);
+  }
+
+  .header {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .header__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    height: 64px;
+  }
+
+  .header__logo {
+    flex-shrink: 0;
+  }
+
+  .header__logo-link,
+  .header__logo-text {
+    display: block;
+    text-decoration: none;
+    color: var(--color-foreground, #1a1a1a);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .header__logo-image {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .header__nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .header__nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 32px;
+  }
+
+  .header__nav-link {
+    text-decoration: none;
+    color: var(--color-foreground, #1a1a1a);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.15s ease;
+  }
+
+  .header__nav-link:hover,
+  .header__nav-link.is-active {
+    color: var(--color-accent, #135157);
+  }
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .header__nav {
+      display: none;
+    }
+
+    .header {
+      padding: 0 16px;
+    }
+
+    .header__container {
+      height: 56px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "t:names.header",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.logo"
+    },
+    {
+      "type": "select",
+      "id": "logo_position",
+      "label": "Desktop logo position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "mobile_logo_position",
+      "label": "Mobile logo position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:content.navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:settings.menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme-1",
+      "label": "t:settings.color_scheme"
+    }
+  ]
+}
+{% endschema %}
