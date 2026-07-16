@@ -1,0 +1,44 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ * Template: page.policy
+ * Purpose:  Policy pages (Refund Policy, Shipping Policy, Terms of Service)
+ *           where Shopify Admin content already includes the page title as H1.
+ *           This template removes the theme-rendered heading block so only
+ *           the admin H1 appears — avoiding duplicate H1 headings.
+ *
+ * Usage:    In Shopify Admin > Pages > [Policy Page] > Theme Template
+ *           select "policy" from the template dropdown.
+ * ------------------------------------------------------------
+ */{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "page-content": {
+          "type": "page-content",
+          "settings": {},
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "page-content"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "color_scheme": "",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

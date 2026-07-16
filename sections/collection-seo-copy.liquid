@@ -1,0 +1,95 @@
+{% comment %}
+  collection-seo-copy.liquid
+  Shows SEO intro copy + bottom copy on specific collection pages.
+  Only renders for Pressure Relief, Cooling Comfort, Luxury Feel, Organic Materials.
+{% endcomment %}
+
+{%- assign handle = collection.handle -%}
+{%- assign show = false -%}
+{%- assign intro = '' -%}
+{%- assign bottom = '' -%}
+
+{%- if handle == 'pressure-relief' -%}
+  {%- assign show = true -%}
+  {%- capture intro -%}
+    Wake up sore or sleep mostly on your side? Pressure-relief mattresses are designed to cushion shoulders, hips, and joints while still supporting healthy alignment. Visit Discount Mattress in Bowling Green to compare foam and hybrid options side by side.
+  {%- endcapture -%}
+  {%- capture bottom -%}
+    Our pressure-relief collection includes mattresses built for side sleepers, joint comfort, and balanced support. Stop by our Bowling Green showroom to test different comfort levels and find the right fit before you buy.
+  {%- endcapture -%}
+{%- elsif handle == 'cooling-comfort' -%}
+  {%- assign show = true -%}
+  {%- capture intro -%}
+    If you sleep hot, cooling comfort matters. Compare mattresses with breathable covers, gel-infused foams, hybrid airflow, and cooling upgrades at Discount Mattress in Bowling Green.
+  {%- endcapture -%}
+  {%- capture bottom -%}
+    Cooling mattresses can help warmer sleepers stay more comfortable through the night. Visit our showroom to compare Nectar, Puffy, Serta, and other cooling options in person.
+  {%- endcapture -%}
+{%- elsif handle == 'luxury-feel' -%}
+  {%- assign show = true -%}
+  {%- capture intro -%}
+    Looking for a more elevated sleep experience? Our luxury-feel mattresses feature premium materials, enhanced support systems, plush comfort layers, and refined finishes.
+  {%- endcapture -%}
+  {%- capture bottom -%}
+    Compare luxury mattresses from brands like DreamCloud, Posh &amp; Lavish, Puffy, PranaSleep, and more at Discount Mattress in Bowling Green, KY.
+  {%- endcapture -%}
+{%- elsif handle == 'organic-materials' -%}
+  {%- assign show = true -%}
+  {%- capture intro -%}
+    Shop mattresses made with cleaner, more natural materials such as organic cotton, wool, and latex. Visit Discount Mattress to compare organic and natural-feel options in person.
+  {%- endcapture -%}
+  {%- capture bottom -%}
+    Organic-material mattresses are a strong choice for shoppers who care about cleaner materials, breathability, and comfort. Ask our team about Naturepedic and other natural mattress options.
+  {%- endcapture -%}
+{%- endif -%}
+
+{%- if show -%}
+<style>
+  .seo-copy {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+  .seo-copy--intro {
+    padding-top: 40px;
+    padding-bottom: 16px;
+  }
+  .seo-copy--bottom {
+    padding-top: 16px;
+    padding-bottom: 48px;
+    border-top: 1px solid #e2e8f0;
+  }
+  .seo-copy__text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #475569;
+    margin: 0;
+    max-width: 720px;
+  }
+  @media (max-width: 640px) {
+    .seo-copy { padding: 20px 16px; }
+    .seo-copy--intro { padding-top: 24px; }
+    .seo-copy__text { font-size: 14px; }
+  }
+</style>
+
+<div class="seo-copy seo-copy--intro">
+  <p class="seo-copy__text">{{ intro }}</p>
+</div>
+
+{%- if bottom != '' -%}
+<div class="seo-copy seo-copy--bottom">
+  <p class="seo-copy__text">{{ bottom }}</p>
+</div>
+{%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection SEO Copy",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": []
+}
+{% endschema %}

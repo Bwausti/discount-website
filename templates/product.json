@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -63,7 +72,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h1><strong>{{ product.vendor }}<\/strong><\/h1>",
+                "text": "<h1><strong>{{ product.vendor }}</strong></h1>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -129,7 +138,7 @@
                   "type": "text",
                   "name": "Product title",
                   "settings": {
-                    "text": "<h1>{{ closest.product.title }}<\/h1>",
+                    "text": "<h1>{{ closest.product.title }}</h1>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "left",
@@ -293,12 +302,8 @@
       "disabled": true,
       "settings": {}
     },
-    "product_specs_table": {
-      "type": "product-specs-table",
-      "settings": {}
-    },
-    "product_layer_diagram": {
-      "type": "product-layer-diagram",
+    "product_buying_guidance": {
+      "type": "product-buying-guidance",
       "settings": {}
     },
     "helix_product_addons": {
@@ -352,7 +357,7 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<h3>You may also like <\/h3>",
+            "text": "<h3>You may also like </h3>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -490,8 +495,7 @@
   "order": [
     "main",
     "product_highlights",
-    "product_specs_table",
-    "product_layer_diagram",
+    "product_buying_guidance",
     "helix_product_addons",
     "puffy_product_addons",
     "dreamcloud_product_addons",

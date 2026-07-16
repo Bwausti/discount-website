@@ -1060,6 +1060,33 @@ ul[product-grid-view='zoom-out'] .product-grid__card > * {
   font-weight: 400;
 }
 
+/* Product grid card — premium tile feel */
+@media (min-width: 750px) {
+  .product-grid-view-zoom-out--details {
+    padding: 14px 20px 0 !important;
+  }
+}
+
+/* Force product card border to premium solid style */
+.product-card,
+.product-grid__item,
+.collection-card {
+  border: 2px solid #d6d2c8 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+
+/* Ensure product card content respects minimum padding from all directions */
+@media (min-width: 750px) {
+  .product-grid__card {
+    --padding-inline-start: 20px !important;
+    --padding-inline-end: 20px !important;
+    --padding-block-start: 20px !important;
+    --padding-block-end: 16px !important;
+    padding-inline: 20px !important;
+    padding-block: 20px 16px !important;
+  }
+}
+
 .product-grid-view-zoom-out--details > span.h6,
 .product-grid-view-zoom-out--details > div.h6 > product-price {
   display: inline-block;

@@ -1,0 +1,281 @@
+{% comment %}
+  product-buying-guidance.liquid
+  Showroom availability, delivery, comfort guidance, and financing info
+  on every product page — fully editable via theme editor
+{% endcomment %}
+
+{%- assign section_enabled = section.settings.enable_section -%}
+{%- assign has_blocks = section.blocks.size -%}
+{%- if section_enabled == false or has_blocks == 0 -%}
+  {%- comment -%} Section disabled or no blocks — render nothing {%- endcomment -%}
+{%- else -%}
+
+<style>
+  .buying-guidance {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+  .buying-guidance__heading {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #64748b;
+    margin: 0 0 20px 0;
+    text-align: center;
+  }
+  .buying-guidance__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .buying-guidance__card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .buying-guidance__icon {
+    width: 36px;
+    height: 36px;
+    background: #162b49;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 14px 0;
+    flex-shrink: 0;
+  }
+  .buying-guidance__icon svg {
+    width: 18px;
+    height: 18px;
+    color: #ffffff;
+  }
+  .buying-guidance__title {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+  }
+  .buying-guidance__body {
+    font-size: 13px;
+    font-weight: 400;
+    color: #475569;
+    margin: 0 0 14px 0;
+    line-height: 1.55;
+    flex: 1;
+  }
+  .buying-guidance__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #162b49;
+    text-decoration: none;
+    padding: 7px 12px;
+    border: 1.5px solid #162b49;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    align-self: flex-start;
+    line-height: 1.4;
+  }
+  .buying-guidance__cta:hover {
+    background: #162b49;
+    color: #ffffff;
+  }
+  .buying-guidance__cta svg {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+  @media (max-width: 900px) {
+    .buying-guidance__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 540px) {
+    .buying-guidance {
+      padding: 24px 16px;
+    }
+    .buying-guidance__grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .buying-guidance__card {
+      padding: 18px 16px;
+    }
+    .buying-guidance__cta {
+      align-self: stretch;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+</style>
+
+<section
+  class="buying-guidance"
+  aria-label="Buying guidance"
+  role="complementary"
+>
+  {%- if section.blocks.size > 0 -%}
+    <p class="buying-guidance__heading">Before you buy</p>
+    <div class="buying-guidance__grid">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'guidance_card' -%}
+            {%- assign card_enabled = block.settings.card_enable -%}
+            {%- if card_enabled == false -%}
+              {%- continue -%}
+            {%- endif -%}
+            {%- assign icon_name = block.settings.icon | default: 'question_mark' -%}
+            <div class="buying-guidance__card" {{ block.shopify_attributes }}>
+              <div class="buying-guidance__icon" aria-hidden="true">
+                {%- render 'icon', icon: icon_name, width: 18, height: 18 -%}
+              </div>
+              <p class="buying-guidance__title">{{ block.settings.heading }}</p>
+              <p class="buying-guidance__body">{{ block.settings.body }}</p>
+              {%- if block.settings.cta_label != blank -%}
+                <a
+                  href="{{ block.settings.cta_url | default: '#' }}"
+                  class="buying-guidance__cta"
+                  {%- if block.settings.cta_url and block.settings.cta_url contains 'tel:' -%}
+                    aria-label="{{ block.settings.cta_label }}"
+                  {%- endif %}
+                >
+                  {%- render 'icon', icon: 'arrow-right', width: 12, height: 12 -%}
+                  {{ block.settings.cta_label }}
+                </a>
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Buying Guidance",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable buying guidance section",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "guidance_card",
+      "name": "Guidance Card",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "card_enable",
+          "label": "Show this card",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "storefront", "label": "Storefront / Location" },
+            { "value": "box", "label": "Box / Delivery" },
+            { "value": "star", "label": "Star / Recommendation" },
+            { "value": "lock", "label": "Lock / Secure" },
+            { "value": "price_tag", "label": "Price Tag / Finance" },
+            { "value": "question_mark", "label": "Question Mark / Help" }
+          ],
+          "default": "storefront"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Try Before You Buy"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Body copy",
+          "default": "Want to try this mattress first? Visit Discount Mattress in Bowling Green to compare comfort, support, and feel before you buy. Availability may vary by size and showroom, so call ahead if you're looking for a specific model."
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA label",
+          "default": "Call to Confirm Availability"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "CTA URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Buying Guidance",
+      "blocks": [
+        {
+          "type": "guidance_card",
+          "settings": {
+            "card_enable": true,
+            "icon": "storefront",
+            "heading": "Try Before You Buy",
+            "body": "Want to try this mattress first? Visit Discount Mattress in Bowling Green to compare comfort, support, and feel before you buy. Availability may vary by size and showroom, so call ahead if you're looking for a specific model.",
+            "cta_label": "Call to Confirm Availability",
+            "cta_url": "tel:+12704951603"
+          }
+        },
+        {
+          "type": "guidance_card",
+          "settings": {
+            "card_enable": true,
+            "icon": "box",
+            "heading": "Local Delivery & Pickup",
+            "body": "Local pickup and delivery options are available for Bowling Green-area shoppers. Ask our team about current delivery timing, setup options, and financing before checkout.",
+            "cta_label": "",
+            "cta_url": ""
+          }
+        },
+        {
+          "type": "guidance_card",
+          "settings": {
+            "card_enable": true,
+            "icon": "star",
+            "heading": "Not Sure Which Mattress?",
+            "body": "Not sure if this is the right feel? Our team can help you compare firmness, pressure relief, cooling, and support side by side in the showroom.",
+            "cta_label": "",
+            "cta_url": ""
+          }
+        },
+        {
+          "type": "guidance_card",
+          "settings": {
+            "card_enable": true,
+            "icon": "price_tag",
+            "heading": "Flexible Financing",
+            "body": "Flexible financing options may be available through Synchrony, Kafene, and Snap Finance. Ask in-store or contact us for current options.",
+            "cta_label": "",
+            "cta_url": ""
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -108,8 +108,8 @@
   >
     {{ children }}
 
-    <a href="{{ variant_to_link.url }}" class="card-view-mattress">
-      View Mattress
+    <a href="{{ variant_to_link.url }}" class="card-view-details">
+      View Details
     </a>
   </div>
 </product-card>
@@ -123,31 +123,141 @@
     --cursor: pointer;
   }
 
-  .card-view-mattress {
-    display: inline-flex;
+  /* Product card — premium solid feel */
+  .product-card {
+    border-radius: 12px;
+    border: 2px solid #d6d2c8;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+    overflow: hidden;
+  }
+
+  @media (any-pointer: fine) {
+    .product-card:hover {
+      box-shadow: 0 8px 28px rgba(0,0,0,0.13);
+      border-color: #bfb9ae;
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Card gallery — zoom on hover */
+  .card-gallery,
+  .product-card__image {
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  @media (any-pointer: fine) {
+    .product-card:hover .card-gallery,
+    .product-card:hover .product-card__image {
+      transform: scale(1.03);
+    }
+  }
+
+  /* View Details button — full width, dark border, clean */
+  .card-view-details {
+    display: flex;
     align-items: center;
     justify-content: center;
     width: calc(100% - var(--padding-inline-end, 0px) - var(--padding-inline-start, 0px));
-    margin: 10px auto 0;
-    padding: 10px 14px;
-    border: 1px solid currentColor;
+    margin: 12px auto 0;
+    padding: 11px 16px;
+    border: 1.5px solid #162b49;
     border-radius: 8px;
+    font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: 0.02em;
     text-decoration: none;
-    color: inherit;
-    transition: opacity 0.2s;
+    color: #162b49;
+    background: transparent;
+    transition: background 0.2s ease, color 0.2s ease;
     position: relative;
     z-index: 2;
   }
 
-  .card-view-mattress:hover {
-    opacity: 0.75;
+  .card-view-details:hover {
+    background: #162b49;
+    color: #ffffff;
+  }
+
+  /* Sale badge — sharp red accent */
+  .product-badges__badge {
+    --badge-font-size: 10px;
+    background: #cf2333 !important;
+    color: #ffffff !important;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: 3px;
+    border: none;
+  }
+
+  .product-badges__badge--rectangle {
+    padding-block: 5px;
+    padding-inline: 10px;
+  }
+
+  /* Price area — premium typography, clear hierarchy */
+  .product-grid-view-zoom-out--details {
+    padding: 14px 16px 0;
+  }
+
+  .product-grid-view-zoom-out--details h3 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #162b49;
+    min-height: 2.8em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    letter-spacing: -0.01em;
+  }
+
+  .product-grid-view-zoom-out--details .price {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #162b49 !important;
+    letter-spacing: -0.02em;
+    line-height: 1.2 !important;
+  }
+
+  .product-grid-view-zoom-out--details .compare-at-price {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: #64748b !important;
+    opacity: 1 !important;
+    text-decoration: line-through;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .product-grid-view-zoom-out--details .price__sale {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+
+  .product-grid-view-zoom-out--details .price__sale .price-item--sale {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #cf2333 !important;
+    letter-spacing: -0.02em;
   }
 
   @media screen and (max-width: 749px) {
-    .product-card slideshow-arrows .slideshow-control {
-      display: none;
+    .product-card {
+      border-radius: 10px;
+    }
+
+    .product-card:hover .card-gallery,
+    .product-card:hover .product-card__image {
+      transform: none; /* no zoom on mobile */
     }
   }
 {% endstylesheet %}

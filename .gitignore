@@ -1,5 +1,6 @@
 # Shopify CLI
 .shopify*
+!.shopifyignore
 *.sublime-project
 *.sublime-workspace
 

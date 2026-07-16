@@ -10,12 +10,15 @@
   {% assign title_lower = closest.product.title | downcase %}
   {% assign is_cloud = false %}
   {% assign is_lux = false %}
+  {% assign is_lux_hybrid = false %}
   {% assign is_royal = false %}
   {% assign is_monarch = false %}
   {% if title_lower contains "monarch" %}
     {% assign is_monarch = true %}
   {% elsif title_lower contains "royal" %}
     {% assign is_royal = true %}
+  {% elsif title_lower contains "lux hybrid" %}
+    {% assign is_lux_hybrid = true %}
   {% elsif title_lower contains "lux" %}
     {% assign is_lux = true %}
   {% elsif title_lower contains "cloud" %}
@@ -255,7 +258,25 @@
         </a>
       {% endif %}
 
-      {% if is_royal or title_lower contains "royal" or title_lower contains "lux hybrid" %}
+      {% if is_lux_hybrid %}
+        <div class="puffy-compare-card active">
+          <p class="puffy-compare-card__model">Premium</p>
+          <h3 class="puffy-compare-card__name">Puffy Lux Hybrid</h3>
+          <p class="puffy-compare-card__price">From $1,099</p>
+          <p class="puffy-compare-card__tag">Cooling hybrid with coils</p>
+          <p class="puffy-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/puffy-lux-hybrid" class="puffy-compare-card">
+          <p class="puffy-compare-card__model">Premium</p>
+          <h3 class="puffy-compare-card__name">Puffy Lux Hybrid</h3>
+          <p class="puffy-compare-card__price">From $1,099</p>
+          <p class="puffy-compare-card__tag">Cooling hybrid with coils</p>
+          <p class="puffy-compare-card__cta">View model →</p>
+        </a>
+      {% endif %}
+
+      {% if is_royal %}
         <div class="puffy-compare-card active">
           <p class="puffy-compare-card__model">Premium+</p>
           <h3 class="puffy-compare-card__name">Puffy Royal Hybrid</h3>
@@ -318,7 +339,7 @@
       <a href="/collections/bedgear" class="puffy-accessory-card">
         <p class="puffy-accessory-card__icon">🛏️</p>
         <h3 class="puffy-accessory-card__name">Performance Pillows</h3>
-        <p class="puffy-accessory-card__desc">Pair your Puffy with a BedGear performance pillow. Available in Storm (cooling) and Balance (adjustable loft) models.</p>
+        <p class="puffy-accessory-card__desc">Pair your Puffy with a BedGear performance pillow. Choose from Storm (cooling), Balance (adjustable loft), or the Cuddle Curve contour shapes for added neck support.</p>
         <p class="puffy-accessory-card__price">From $69</p>
         <p class="puffy-accessory-card__cta">Shop pillows →</p>
       </a>

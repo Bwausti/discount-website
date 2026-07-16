@@ -10,11 +10,9 @@
 {
   "sections": {
     "main": {
-      "type": "all-collections-grid",
+      "type": "comparisons",
       "settings": {}
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }

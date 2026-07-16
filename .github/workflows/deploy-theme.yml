@@ -1,40 +1,124 @@
-name: Deploy Shopify Theme
+name: Shopify Theme CI/CD
+
 on:
+  pull_request:
+    branches: [master]
   push:
     branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: shopify-theme-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SHOPIFY_CLI_VERSION: 3.88.1
+  SHOPIFY_STORE: discount-mattress-4.myshopify.com
+
 jobs:
-  deploy:
+  quality:
+    name: Theme Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Check Liquid, JSON, and theme structure
+        uses: shopify/theme-check-action@v2
+        with:
+          theme_root: .
+          version: ${{ env.SHOPIFY_CLI_VERSION }}
+          flags: --fail-level error --no-color
 
-      - name: Get fresh Shopify token
-        id: auth
+  deploy-staging:
+    name: Deploy staging theme
+    if: github.ref == 'refs/heads/master'
+    needs: quality
+    runs-on: ubuntu-latest
+    environment: Preview
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Get a theme-only Shopify token
         env:
           CLIENT_ID: ${{ secrets.SHOPIFY_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.SHOPIFY_CLIENT_SECRET }}
         run: |
-          RESPONSE=$(curl -s -X POST "https://discount-mattress-4.myshopify.com/admin/oauth/access_token" \
-            -H "Content-Type: application/json" \
-            -d "$(cat <<-EOF
-          {
-            "grant_type": "client_credentials",
-            "client_id": "${CLIENT_ID}",
-            "client_secret": "${CLIENT_SECRET}",
-            "scopes": ["write_themes","write_products","write_files"]
-          }
-          EOF
-          )")
-          TOKEN=$(echo "$RESPONSE" | python3 -c "import json,sys; print(json.load(sys.stdin)['access_token'])")
-          echo "$TOKEN" > /tmp/shopify-token
+          response=$(curl --fail-with-body --silent --show-error \
+            --request POST "https://${SHOPIFY_STORE}/admin/oauth/access_token" \
+            --header "Content-Type: application/json" \
+            --data "$(jq -nc \
+              --arg client_id "$CLIENT_ID" \
+              --arg client_secret "$CLIENT_SECRET" \
+              '{grant_type:"client_credentials",client_id:$client_id,client_secret:$client_secret,scopes:["write_themes"]}')")
+          token=$(jq -er '.access_token' <<< "$response")
+          echo "::add-mask::$token"
+          echo "SHOPIFY_ACCESS_TOKEN=$token" >> "$GITHUB_ENV"
 
       - name: Install Shopify CLI
-        run: npm install -g @shopify/cli
+        run: npm install --global "@shopify/cli@${SHOPIFY_CLI_VERSION}"
 
-      - name: Push theme to live
+      - name: Push to unpublished staging theme
+        env:
+          STAGING_THEME_ID: ${{ vars.SHOPIFY_STAGING_THEME_ID }}
         run: |
           shopify theme push \
-            --store discount-mattress-4.myshopify.com \
-            --theme ${{ secrets.SHOPIFY_LIVE_THEME_ID }} \
-            --password "$(cat /tmp/shopify-token)" \
-            --allow-live
+            --store "$SHOPIFY_STORE" \
+            --theme "$STAGING_THEME_ID" \
+            --password "$SHOPIFY_ACCESS_TOKEN" \
+            --strict \
+            --json
+
+      - name: Add staging preview to the job summary
+        env:
+          STAGING_THEME_ID: ${{ vars.SHOPIFY_STAGING_THEME_ID }}
+        run: |
+          echo "### Staging preview" >> "$GITHUB_STEP_SUMMARY"
+          echo "https://${SHOPIFY_STORE}?preview_theme_id=${STAGING_THEME_ID}" >> "$GITHUB_STEP_SUMMARY"
+
+  deploy-live:
+    name: Deploy live theme
+    if: github.ref == 'refs/heads/master'
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Get a theme-only Shopify token
+        env:
+          CLIENT_ID: ${{ secrets.SHOPIFY_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.SHOPIFY_CLIENT_SECRET }}
+        run: |
+          response=$(curl --fail-with-body --silent --show-error \
+            --request POST "https://${SHOPIFY_STORE}/admin/oauth/access_token" \
+            --header "Content-Type: application/json" \
+            --data "$(jq -nc \
+              --arg client_id "$CLIENT_ID" \
+              --arg client_secret "$CLIENT_SECRET" \
+              '{grant_type:"client_credentials",client_id:$client_id,client_secret:$client_secret,scopes:["write_themes"]}')")
+          token=$(jq -er '.access_token' <<< "$response")
+          echo "::add-mask::$token"
+          echo "SHOPIFY_ACCESS_TOKEN=$token" >> "$GITHUB_ENV"
+
+      - name: Install Shopify CLI
+        run: npm install --global "@shopify/cli@${SHOPIFY_CLI_VERSION}"
+
+      - name: Push to live theme
+        env:
+          LIVE_THEME_ID: ${{ secrets.SHOPIFY_LIVE_THEME_ID }}
+        run: |
+          shopify theme push \
+            --store "$SHOPIFY_STORE" \
+            --theme "$LIVE_THEME_ID" \
+            --password "$SHOPIFY_ACCESS_TOKEN" \
+            --allow-live \
+            --strict \
+            --json

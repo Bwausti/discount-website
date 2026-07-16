@@ -1,0 +1,215 @@
+<!-- Section: all-collections-grid -->
+<style>
+  .acg-section {
+    padding: 0;
+    background: #f7f6f1;
+  }
+
+  .acg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .acg-card {
+    text-decoration: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    display: block;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .acg-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  }
+
+  .acg-card-image {
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: #e8e4dc;
+  }
+
+  .acg-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .acg-card:hover .acg-card-image img {
+    transform: scale(1.04);
+  }
+
+  .acg-card-body {
+    padding: 20px 22px;
+  }
+
+  .acg-card-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #162b49;
+    margin: 0 0 6px 0;
+    line-height: 1.2;
+  }
+
+  .acg-card-count {
+    font-size: 13px;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  .acg-card-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #cf2333;
+    transition: gap 0.2s ease;
+  }
+
+  .acg-card:hover .acg-card-arrow {
+    gap: 10px;
+  }
+
+  .acg-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 20px 64px;
+  }
+
+  .acg-header {
+    margin-bottom: 36px;
+  }
+
+  .acg-header h1 {
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 800;
+    color: #162b49;
+    margin: 0 0 8px 0;
+  }
+
+  .acg-header p {
+    font-size: 15px;
+    color: #64748b;
+    margin: 0;
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .acg-container {
+      padding: 32px 16px 48px;
+    }
+
+    .acg-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .acg-card-image {
+      aspect-ratio: 16/9;
+    }
+
+    .acg-card-body {
+      padding: 16px 18px;
+    }
+
+    .acg-card-title {
+      font-size: 17px;
+    }
+  }
+
+  /* Tablet */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .acg-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
+<div class="acg-section">
+  <div class="acg-container">
+    <div class="acg-header">
+      <h2 style="font-size:clamp(28px,3.5vw,42px);font-weight:800;color:#162b49;margin:0;text-align:center;">Shop All Brands</h2>
+      <p>Browse our full selection of mattress brands available at our Bowling Green showroom.</p>
+    </div>
+
+    <div class="acg-grid">
+      {%- assign ordered_collections = collections | sort: 'title' -%}
+      {%- assign priority_handles = 'helix|dreamcloud|nectar|puffy|naturepedic|posh-and-lavish|pranasleep|serta|jamison|bedgear|bedtech' | split: '|' -%}
+      {%- assign priority_collections = '' -%}
+      {%- assign other_collections = '' -%}
+      {%- for c in ordered_collections -%}
+        {%- if c.handle == 'all' -%}{%- continue -%}{%- endif -%}
+        {%- if priority_handles contains c.handle -%}
+          {%- assign priority_collections = priority_collections | append: c.handle | append: ',' -%}
+        {%- else -%}
+          {%- assign other_collections = other_collections | append: c.handle | append: ',' -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign priority_list = priority_collections | split: ',' | compact -%}
+      {%- assign other_list = other_collections | split: ',' | compact -%}
+      {%- for handle in priority_list -%}
+        {%- assign collection = collections | find: 'handle', handle -%}
+        {%- if collection -%}
+          <a href="{{ collection.url }}" class="acg-card">
+            <div class="acg-card-image">
+              {%- if collection.image != blank -%}
+                <img src="{{ collection.image | image_url: width: 600 }}" alt="{{ collection.title }}" loading="lazy">
+              {%- else -%}
+                <img src="{{ 'dm-hero.jpg' | asset_url }}" alt="{{ collection.title }}" loading="lazy">
+              {%- endif -%}
+            </div>
+            <div class="acg-card-body">
+              <h3 class="acg-card-title">{{ collection.title }}</h3>
+              <p class="acg-card-count">{{ collection.products_count }} products</p>
+              <div class="acg-card-arrow">
+                Shop now
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- for handle in other_list -%}
+        {%- assign collection = collections | find: 'handle', handle -%}
+        {%- if collection -%}
+          <a href="{{ collection.url }}" class="acg-card">
+            <div class="acg-card-image">
+              {%- if collection.image != blank -%}
+                <img src="{{ collection.image | image_url: width: 600 }}" alt="{{ collection.title }}" loading="lazy">
+              {%- else -%}
+                <img src="{{ 'dm-hero.jpg' | asset_url }}" alt="{{ collection.title }}" loading="lazy">
+              {%- endif -%}
+            </div>
+            <div class="acg-card-body">
+              <h3 class="acg-card-title">{{ collection.title }}</h3>
+              <p class="acg-card-count">{{ collection.products_count }} products</p>
+              <div class="acg-card-arrow">
+                Shop now
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </div>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "All Collections Grid",
+  "settings": []
+}
+{% endschema %}

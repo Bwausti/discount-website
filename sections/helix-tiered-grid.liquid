@@ -13,6 +13,7 @@
   }
   .htg-tier {
     margin-bottom: 48px;
+    scroll-margin-top: 80px;
   }
   .htg-tier:last-child { margin-bottom: 0; }
   
@@ -173,7 +174,7 @@
   {% endfor %}
   
   {% if core_count > 0 %}
-  <div class="htg-tier">
+  <div id="core-products" class="htg-tier">
     <div class="htg-tier__header">
       <h2 class="htg-tier__name">Core Collection</h2>
       <span class="htg-tier__count">{{ core_count }} models</span>
@@ -207,7 +208,7 @@
   {% endfor %}
   
   {% if luxe_count > 0 %}
-  <div class="htg-tier">
+  <div id="luxe-products" class="htg-tier">
     <div class="htg-tier__header">
       <h2 class="htg-tier__name">Luxe Collection</h2>
       <span class="htg-tier__count">{{ luxe_count }} models</span>
@@ -241,7 +242,7 @@
   {% endfor %}
   
   {% if elite_count > 0 %}
-  <div class="htg-tier">
+  <div id="elite-products" class="htg-tier">
     <div class="htg-tier__header">
       <h2 class="htg-tier__name">Elite Collection</h2>
       <span class="htg-tier__count">{{ elite_count }} models</span>

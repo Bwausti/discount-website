@@ -269,6 +269,14 @@
         "padding-block-start": 0,
         "padding-block-end": 32
       }
+    },
+    "seo-copy": {
+      "type": "collection-seo-copy",
+      "settings": {}
+    },
+    "local-cta": {
+      "type": "collection-local-cta",
+      "settings": {}
     }
   },
   "order": [
@@ -283,7 +291,9 @@
     "jamison-banner",
     "pranasleep-banner",
     "posh-and-lavish-banner",
+    "seo-copy",
     "section",
-    "main"
+    "main",
+    "local-cta"
   ]
 }

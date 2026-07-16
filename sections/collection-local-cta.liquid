@@ -1,0 +1,113 @@
+{% comment %}
+  collection-local-cta.liquid
+  Local CTA strip for collection pages — "Visit showroom", "Call now", "Get directions"
+{% endcomment %}
+
+<style>
+  .ccta {
+    background: #162b49;
+    padding: 32px 24px;
+    margin-top: 0;
+  }
+  .ccta__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .ccta__text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ccta__icon {
+    font-size: 24px;
+    line-height: 1;
+  }
+  .ccta__message {
+    font-size: 17px;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    line-height: 1.4;
+  }
+  .ccta__message small {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.7);
+    display: block;
+    margin-top: 2px;
+  }
+  .ccta__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .ccta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .ccta__btn--call {
+    background: rgba(255,255,255,0.12);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .ccta__btn--call:hover {
+    background: rgba(255,255,255,0.2);
+  }
+  .ccta__btn--directions {
+    background: #f2b705;
+    color: #0f172a;
+  }
+  .ccta__btn--directions:hover {
+    background: #ffd24d;
+  }
+  @media (max-width: 640px) {
+    .ccta { padding: 24px 16px; }
+    .ccta__inner { flex-direction: column; text-align: center; }
+    .ccta__text { flex-direction: column; }
+    .ccta__actions { width: 100%; justify-content: center; }
+    .ccta__btn { flex: 1; justify-content: center; }
+  }
+</style>
+
+<div class="ccta">
+  <div class="ccta__inner">
+    <div class="ccta__text">
+      <span class="ccta__icon">🛏️</span>
+      <p class="ccta__message">
+        Want to try before you buy?
+        <small>Visit our Bowling Green showroom to compare models in person.</small>
+      </p>
+    </div>
+    <div class="ccta__actions">
+      <a href="tel:12704951603" class="ccta__btn ccta__btn--call">
+        📞 Call Now
+      </a>
+      <a href="https://maps.google.com/?q=1555+Campbell+Ln+Bowling+Green+KY+42104" class="ccta__btn ccta__btn--directions" target="_blank" rel="noopener">
+        🗺️ Get Directions
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Local CTA",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": []
+}
+{% endschema %}

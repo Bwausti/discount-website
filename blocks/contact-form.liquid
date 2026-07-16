@@ -49,79 +49,46 @@
     {%- endif -%}
 
     <div class="contact-form__form-row">
-      <label
-        class="visually-hidden"
-        for="ContactForm-name"
-      >
-        {{- 'blocks.contact_form.name' | t -}}
-      </label>
       <input
         type="text"
         id="ContactForm-name"
         class="contact-form__input"
-        autocomplete="name"
         name="contact[name]"
-        value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
-        placeholder="{{ 'blocks.contact_form.name' | t }}"
+        placeholder="Your Name"
       >
 
-      <label
-        class="visually-hidden"
-        for="ContactForm-email"
-      >
-        {{- 'blocks.contact_form.email' | t -}}
-        <span aria-hidden="true">*</span></label
-      >
       <input
         type="email"
         id="ContactForm-email"
         class="contact-form__input"
-        autocomplete="email"
         name="contact[email]"
         spellcheck="false"
         autocapitalize="off"
-        value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
         aria-required="true"
         {% if form.errors contains 'email' and form.id == form_id %}
           aria-invalid="true"
           aria-describedby="ContactForm-email-error"
         {% endif %}
-        placeholder="{{ 'blocks.contact_form.email' | t }}"
+        placeholder="Email Address *"
       >
     </div>
 
-    <label
-      class="visually-hidden"
-      for="ContactForm-phone"
-    >
-      {{- 'blocks.contact_form.phone' | t -}}
-    </label>
     <input
       type="tel"
       id="ContactForm-phone"
       class="contact-form__input"
-      autocomplete="tel"
       name="contact[phone]"
       pattern="[0-9\-]*"
-      value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
-      placeholder="{{ 'blocks.contact_form.phone' | t }}"
+      placeholder="Phone Number (optional)"
     >
 
-    <label
-      class="visually-hidden"
-      for="ContactForm-body"
-    >
-      {{- 'blocks.contact_form.comment' | t -}}
-    </label>
     <textarea
       rows="10"
       id="ContactForm-body"
       class="contact-form__input contact-form__input--textarea"
       name="contact[body]"
-      placeholder="{{ 'blocks.contact_form.comment' | t }}"
-    >
-      {{- form.body -}}
-    </textarea>
+      placeholder="How can we help?"
+    ></textarea>
 
     {{ submit_button }}
   {%- endform -%}
@@ -132,6 +99,8 @@
     display: flex;
     flex-direction: column;
     gap: var(--gap-md);
+    max-width: 560px;
+    margin: 0 auto;
   }
 
   .contact-form__form-row {
@@ -149,17 +118,31 @@
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: var(--color-input-text);
-    background-color: var(--color-input-background);
-    padding: var(--padding-lg) var(--padding-xl);
-    border-radius: var(--style-border-radius-inputs);
-    border: var(--style-border-width-inputs) solid var(--color-input-border);
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+    padding: 14px 18px;
+    border-radius: 8px;
+    border: 1.5px solid var(--color-border);
+    font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
     -webkit-font-smoothing: antialiased;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+  }
+
+  .contact-form__input::placeholder {
+    color: #94a3b8;
+  }
+
+  .contact-form__input:focus {
+    border-color: #162b49;
+    box-shadow: 0 0 0 3px rgba(22,43,73,0.08);
   }
 
   .contact-form__input--textarea {
     resize: vertical;
-    min-height: var(--input-textarea-min-height);
+    min-height: 140px;
+    padding: 16px 18px;
   }
 
   .contact-form__error,
@@ -167,6 +150,22 @@
     display: flex;
     align-items: center;
     gap: var(--gap-xs);
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .contact-form__error {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+  }
+
+  .contact-form__success {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
   }
 {% endstylesheet %}
 
