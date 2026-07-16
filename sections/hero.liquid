@@ -1,4 +1,57 @@
 <!-- Section: hero -->
+<style>
+  @media (max-width: 768px) {
+    .dm-hero-grid {
+      grid-template-columns: 1fr !important;
+      gap: 24px !important;
+    }
+    .dm-hero-image {
+      order: -1;
+    }
+    .dm-hero-content h1 {
+      font-size: clamp(26px, 7vw, 36px) !important;
+    }
+    .dm-hero-buttons {
+      flex-wrap: wrap !important;
+      overflow-x: visible !important;
+    }
+    .dm-hero-buttons a {
+      flex: 1 1 auto;
+      min-width: 0;
+      white-space: normal !important;
+      text-align: center;
+      font-size: 13px !important;
+      padding: 11px 16px !important;
+    }
+    .dm-hero-trust {
+      flex-wrap: wrap !important;
+      gap: 0 !important;
+    }
+    .dm-hero-trust > div {
+      flex: 1 1 50% !important;
+      padding: 8px 10px !important;
+      border-right: none !important;
+      box-sizing: border-box;
+    }
+    .dm-hero-trust > div:first-child {
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .dm-hero-trust > div:nth-child(2) {
+      border-bottom: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0 !important;
+    }
+    .dm-hero-trust > div:nth-child(3) {
+      flex: 1 1 100% !important;
+      padding-top: 10px !important;
+    }
+    .dm-hero-trust p {
+      font-size: 11px !important;
+    }
+    .dm-hero-trust p:first-child {
+      font-size: 12px !important;
+    }
+  }
+</style>
 <div style="background: white; padding: 32px 20px;">
 <div class="dm-hero-grid" style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 40px; align-items: center;">
 <div class="dm-hero-content">
@@ -6,11 +59,11 @@
   <img src="{{ 'dm-store-logo.png' | asset_url }}" alt="Discount Mattress" style="max-width: 100%; height: auto; max-height: 60px;">
 </a>
 <p style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.24em; color: #cf2333; margin: 0 0 16px 0; font-family: 'Inter', 'Segoe UI', sans-serif;">Bowling Green, KY — Locally owned &amp; operated</p>
-<h1 style="font-size: clamp(32px, 4.5vw, 64px); font-weight: 800; color: #0f172a; line-height: 0.95; letter-spacing: -0.02em; margin: 0 0 16px 0; font-family: 'Inter', 'Segoe UI', sans-serif;">Shop premium mattresses for less.</h1>
-<p style="font-size: 17px; font-weight: 400; color: #475569; line-height: 1.6; margin: 0 0 24px 0; max-width: 560px; font-family: 'Inter', 'Segoe UI', sans-serif;">Compare Helix, Puffy, Nectar, DreamCloud, and more at our Bowling Green showroom. Get expert help choosing the right mattress — no pressure, just honest advice.</p>
+<h1 style="font-size: clamp(32px, 4.5vw, 64px); font-weight: 800; color: #0f172a; line-height: 0.95; letter-spacing: -0.02em; margin: 0 0 16px 0; font-family: 'Inter', 'Segoe UI', sans-serif;">Shop premium mattresses for less in Bowling Green.</h1>
+<p style="font-size: 17px; font-weight: 400; color: #475569; line-height: 1.6; margin: 0 0 24px 0; max-width: 560px; font-family: 'Inter', 'Segoe UI', sans-serif;">Try Helix, Puffy, Nectar, DreamCloud, Serta, Naturepedic, and more in person. Get honest local help, flexible financing, and delivery options from a family-owned mattress store.</p>
 <div class="dm-hero-buttons" style="display: flex; gap: 10px; flex-wrap: nowrap; overflow-x: auto;">
 <a href="/collections/all" style="display: inline-flex; align-items: center; justify-content: center; background: #f2b705; color: #0f172a; padding: 13px 24px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 15px; white-space: nowrap; font-family: 'Inter', 'Segoe UI', sans-serif;">Shop Mattresses</a>
-<a href="/pages/contact" style="display: inline-flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; background: white; color: #0f172a; padding: 13px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 15px; white-space: nowrap; font-family: 'Inter', 'Segoe UI', sans-serif;">Visit Showroom</a>
+<a href="/pages/locations" style="display: inline-flex; align-items: center; justify-content: center; border: 1px solid #cbd5e1; background: white; color: #0f172a; padding: 13px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 15px; white-space: nowrap; font-family: 'Inter', 'Segoe UI', sans-serif;">Visit a Showroom</a>
 </div>
 <div class="dm-hero-trust" style="display: flex; gap: 0; margin-top: 24px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
 <div style="flex: 1; text-align: center; padding: 0 16px; border-right: 1px solid #e2e8f0;">

@@ -1,11 +1,48 @@
+{%- comment -%}
+  Utility bar — phone, hours, directions above main nav
+  Settings allow full editing via Shopify theme editor
+{%- endcomment -%}
+{%- if section.settings.enable_utility_bar -%}
+<div class="utility-bar" role="region" aria-label="Store information">
+  <div class="utility-bar__inner">
+    <span class="utility-bar__text">{{ section.settings.location_text }}</span>
+    <span class="utility-bar__separator" aria-hidden="true">•</span>
+    <span class="utility-bar__text">{{ section.settings.hours_text }}</span>
+    {%- if section.settings.phone_number != blank -%}
+    <span class="utility-bar__separator" aria-hidden="true">•</span>
+    <span class="utility-bar__text">{{ section.settings.phone_label }}
+      <a href="tel:{{ section.settings.phone_number | remove: ' ' | remove: '-' | remove: '(' | remove: ')' }}"
+         class="utility-bar__link">{{ section.settings.phone_display }}</a>
+    </span>
+    {%- endif -%}
+    <span class="utility-bar__actions">
+      {%- if section.settings.enable_call_button -%}
+      <a href="tel:{{ section.settings.phone_number | remove: ' ' | remove: '-' | remove: '(' | remove: ')' }}"
+         class="utility-bar__btn"
+         aria-label="Call us at {{ section.settings.phone_display }}">{{ section.settings.call_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.directions_url != blank -%}
+      <a href="{{ section.settings.directions_url }}"
+         class="utility-bar__btn"
+         target="_blank"
+         rel="noopener"
+         aria-label="Get directions to our store">{{ section.settings.directions_label }}</a>
+      {%- endif -%}
+    </span>
+  </div>
+</div>
+{%- endif -%}
+
 {% comment %}
-  Header Section - Main store header with logo, navigation, and cart icon
+  Unified Header — one row, all navigation merged
+  Dark navy (#162b49) + gold accent (#f2b705) + Inter font
 {% endcomment %}
 
-<div class="header-wrapper color-{{ section.settings.color_scheme }}">
+<div class="header-wrapper">
   <header class="header">
     <div class="header__container">
-      {% comment %} Logo / Store Name {% endcomment %}
+
+      {% comment %} Logo (left) {% endcomment %}
       <div class="header__logo">
         {% if settings.logo != blank %}
           <a href="{{ routes.root_url }}" class="header__logo-link">
@@ -24,40 +61,252 @@
         {% endif %}
       </div>
 
-      {% comment %} Navigation {% endcomment %}
+      {% comment %} Main Navigation (center) {% endcomment %}
       <nav class="header__nav" aria-label="Main navigation">
-        {% if section.settings.menu != blank %}
-          <ul class="header__nav-list">
+        <ul class="header__nav-list">
+
+          {% if section.settings.menu != blank %}
             {% for link in linklists[section.settings.menu].links %}
               <li class="header__nav-item">
-                <a href="{{ link.url }}" class="header__nav-link{% if link.active %} is-active{% endif %}">
+                {%- capture link_href -%}
+                  {%- if link.title == 'Catalog' -%}
+                    {{ link.url }}?sort_by=created-descending
+                  {%- else -%}
+                    {{ link.url }}
+                  {%- endif -%}
+                {%- endcapture -%}
+                <a href="{{ link_href }}" class="header__nav-link{% if link.active %} is-active{% endif %}">
                   {{ link.title }}
                 </a>
               </li>
             {% endfor %}
-          </ul>
-        {% endif %}
+          {% endif %}
+
+          <li class="header__nav-item header__nav-item--dropdown">
+            <button class="header__nav-link header__nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true" type="button">
+              Top Brands
+              <svg class="header__nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <ul class="header__nav-dropdown">
+              <li><a href="/collections/helix" class="header__nav-dropdown-link">Helix</a></li>
+              <li><a href="/collections/nectar" class="header__nav-dropdown-link">Nectar</a></li>
+              <li><a href="/collections/puffy" class="header__nav-dropdown-link">Puffy</a></li>
+              <li><a href="/collections/dreamcloud" class="header__nav-dropdown-link">DreamCloud</a></li>
+              <li><a href="/collections/naturepedic" class="header__nav-dropdown-link">Naturepedic</a></li>
+            </ul>
+          </li>
+
+          <li class="header__nav-item header__nav-item--dropdown">
+            <button class="header__nav-link header__nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true" type="button">
+              More Brands
+              <svg class="header__nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <ul class="header__nav-dropdown">
+              <li><a href="/collections/bedgear" class="header__nav-dropdown-link">BedGear</a></li>
+              <li><a href="/collections/bedtech" class="header__nav-dropdown-link">BedTech</a></li>
+              <li><a href="/collections/serta" class="header__nav-dropdown-link">Serta</a></li>
+              <li><a href="/collections/jamison" class="header__nav-dropdown-link">Jamison</a></li>
+              <li><a href="/collections/pranasleep" class="header__nav-dropdown-link">PranaSleep</a></li>
+              <li><a href="/collections/posh-and-lavish" class="header__nav-dropdown-link">Posh and Lavish</a></li>
+            </ul>
+          </li>
+
+        </ul>
       </nav>
 
-      {% comment %} Header Actions (Cart, Account) {% endcomment %}
+      {% comment %} Cart only (right) {% endcomment %}
       <div class="header__actions">
-        {% render 'header-actions', section: section %}
+        <button class="header__cart-btn" aria-label="Open cart ({{ cart.item_count }} items)" type="button" onclick="document.querySelector('cart-drawer-component')?.openDrawer()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3" d="M3.392 6.875h13.216v8.016c0 .567-.224 1.112-.624 1.513-.4.402-.941.627-1.506.627H5.522a2.13 2.13 0 0 1-1.506-.627 2.15 2.15 0 0 1-.624-1.513zM8.818 2.969h2.333c.618 0 1.211.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.313c0-.622.246-1.218.683-1.658a2.33 2.33 0 0 1 1.65-.686"/>
+          </svg>
+          {% if cart.item_count > 0 %}
+            <span class="header__cart-badge">{{ cart.item_count }}</span>
+          {% endif %}
+        </button>
       </div>
+
     </div>
   </header>
 </div>
 
+{% comment %} Mobile Bottom Navigation {% endcomment %}
+<ul class="mobile-nav" id="mobile-nav" role="list">
+  <li class="mobile-nav__item">
+    <a href="/" class="mobile-nav__link{% if request.path == '/' %} is-active{% endif %}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      Home
+    </a>
+  </li>
+  <li class="mobile-nav__item">
+    <a href="tel:12704951603" class="mobile-nav__link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      Call
+    </a>
+  </li>
+  <li class="mobile-nav__item">
+    <a href="/collections" class="mobile-nav__link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7"/>
+        <rect x="14" y="3" width="7" height="7"/>
+        <rect x="14" y="14" width="7" height="7"/>
+        <rect x="3" y="14" width="7" height="7"/>
+      </svg>
+      Shop
+    </a>
+  </li>
+  <li class="mobile-nav__item mobile-nav__item--cart">
+    <button class="mobile-nav__link" onclick="document.querySelector('cart-drawer-component')?.openDrawer()" type="button" aria-label="Open cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      Cart
+      {% if cart.item_count > 0 %}
+        <span class="mobile-nav__cart-badge">{{ cart.item_count }}</span>
+      {% endif %}
+    </button>
+  </li>
+</ul>
+
 <style>
+  :root {
+    --header-font: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  /* Utility bar — top strip above nav */
+  .utility-bar {
+    background: #162b49;
+    color: white;
+    font-family: var(--header-font);
+    font-size: 13px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .utility-bar__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 8px 24px 8px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .utility-bar__text {
+    color: rgba(255,255,255,0.85);
+    white-space: nowrap;
+  }
+  .utility-bar__link {
+    color: #f2b705;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .utility-bar__link:hover {
+    text-decoration: underline;
+  }
+  .utility-bar__separator {
+    color: rgba(255,255,255,0.3);
+    font-size: 10px;
+  }
+  .utility-bar__actions {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .utility-bar__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 12px;
+    background: rgba(255,255,255,0.12);
+    color: white;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .utility-bar__btn:hover {
+    background: rgba(255,255,255,0.2);
+  }
+  .utility-bar__btn--primary {
+    background: #cf2333;
+  }
+  .utility-bar__btn--primary:hover {
+    background: #b81e2c;
+  }
+  @media (max-width: 768px) {
+    .utility-bar__inner {
+      padding: 5px 12px;
+      gap: 4px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .utility-bar__text {
+      font-size: 10px;
+      white-space: normal;
+      flex: none;
+      min-width: 0;
+    }
+    .utility-bar__separator {
+      display: none;
+    }
+    .utility-bar__actions {
+      margin-left: 0;
+      flex-shrink: 0;
+    }
+    .utility-bar__btn {
+      font-size: 10px;
+      padding: 3px 8px;
+    }
+  }
+  @media (max-width: 400px) {
+    .utility-bar__inner {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2px 8px;
+      padding: 4px 8px;
+    }
+    .utility-bar__text {
+      font-size: 9px;
+      text-align: center;
+      flex: none;
+    }
+    .utility-bar__actions {
+      width: auto;
+      justify-content: center;
+      gap: 4px;
+    }
+    .utility-bar__btn {
+      font-size: 9px;
+      padding: 2px 8px;
+    }
+  }
+
+  /* ── Desktop Header ───────────────────────────────── */
   .header-wrapper {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: var(--color-background, #fff);
-    border-bottom: 1px solid var(--color-border, #e5e5e5);
+    z-index: 101;
+    background: #162b49;
+    border-bottom: 2px solid #f2b705;
   }
 
   .header {
-    max-width: var(--page-width, 1200px);
+    max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
   }
@@ -66,65 +315,283 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    height: 64px;
+    gap: 0;
+    height: 60px;
+    padding-left: 8px;
   }
 
   .header__logo {
     flex-shrink: 0;
+    margin-right: 24px;
   }
 
-  .header__logo-link,
+  .header__logo-link { display: block; text-decoration: none; }
+
   .header__logo-text {
     display: block;
     text-decoration: none;
-    color: var(--color-foreground, #1a1a1a);
-    font-size: 20px;
+    color: #ffffff;
+    font-family: var(--header-font);
+    font-size: 18px;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
   }
 
   .header__logo-image {
-    height: 40px;
+    height: 34px;
     width: auto;
     object-fit: contain;
+    filter: brightness(0) invert(1);
   }
 
   .header__nav {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .header__nav-list {
     display: flex;
+    align-items: center;
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: 32px;
+    gap: 0;
+  }
+
+  .header__nav-item {
+    margin: 0;
+    padding: 0;
+    position: relative;
   }
 
   .header__nav-link {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 0 12px;
     text-decoration: none;
-    color: var(--color-foreground, #1a1a1a);
-    font-size: 14px;
+    color: #94a3b8;
+    font-family: var(--header-font);
+    font-size: 13px;
     font-weight: 500;
-    transition: color 0.15s ease;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    transition: color 0.2s ease;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    gap: 4px;
   }
 
   .header__nav-link:hover,
   .header__nav-link.is-active {
-    color: var(--color-accent, #135157);
+    color: #ffffff;
+    border-bottom-color: #f2b705;
+  }
+
+  .header__nav-item--dropdown:hover .header__nav-dropdown-toggle {
+    color: #ffffff;
+    border-bottom-color: #f2b705;
+  }
+
+  .header__nav-chevron {
+    color: #94a3b8;
+    transition: transform 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .header__nav-item--dropdown:hover .header__nav-chevron,
+  .header__nav-item--dropdown.is-open .header__nav-chevron {
+    transform: rotate(180deg);
+    color: #ffffff;
+  }
+
+  .header__nav-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 180px;
+    background: #1e3a5f;
+    border: 1px solid #2d4a6f;
+    border-top: 2px solid #f2b705;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    padding: 6px 0;
+    margin: 0;
+    list-style: none;
+    z-index: 200;
+    border-radius: 0 0 6px 6px;
+  }
+
+  @media (min-width: 769px) {
+    .header__nav-item--dropdown:hover .header__nav-dropdown,
+    .header__nav-item--dropdown.is-open .header__nav-dropdown {
+      display: block;
+    }
+  }
+
+  .header__nav-item--dropdown.is-open .header__nav-dropdown {
+    display: block;
+  }
+
+  .header__nav-dropdown-link {
+    display: block;
+    padding: 9px 18px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-family: var(--header-font);
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+
+  .header__nav-dropdown-link:hover {
+    color: #ffffff;
+    background: #2d4a6f;
   }
 
   .header__actions {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-left: 16px;
+  }
+
+  .header__cart-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #94a3b8;
+    transition: color 0.2s ease, background 0.2s ease;
+    border-radius: 4px;
+    position: relative;
+    text-decoration: none;
+  }
+
+  .header__cart-btn:hover {
+    color: #ffffff;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .header__cart-btn svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+  }
+
+  .header__cart-badge {
+    position: absolute;
+    top: 4px;
+    right: 2px;
+    min-width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background-color: #f2b705;
+    color: #162b49;
+    font-family: var(--header-font);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 17px;
+    text-align: center;
+    padding: 0 4px;
+    box-sizing: border-box;
+    pointer-events: none;
+  }
+
+  /* ── Mobile Bottom Nav ─────────────────────────────── */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #162b49;
+    border-top: 1px solid #2d4a6f;
+    z-index: 500;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .mobile-nav { display: none; }
+    body { padding-bottom: 0; }
+  }
+
+  .mobile-nav__item {
+    flex: 1;
+    text-align: center;
+    border: none;
+    border-right: 1px solid #2d4a6f;
+  }
+
+  .mobile-nav__item:last-child { border-right: none; }
+
+  .mobile-nav__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 8px 4px;
+    text-decoration: none;
+    color: #94a3b8;
+    font-family: var(--header-font);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s ease;
+    background: none;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+  }
+
+  .mobile-nav__link svg {
+    width: 22px;
+    height: 22px;
+    display: block;
     flex-shrink: 0;
   }
 
-  @media screen and (max-width: 749px) {
+  .mobile-nav__link:hover,
+  .mobile-nav__link.is-active {
+    color: #f2b705;
+  }
+
+  .mobile-nav__cart-badge {
+    position: absolute;
+    top: 2px;
+    right: calc(50% - 18px);
+    min-width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #f2b705;
+    color: #162b49;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 16px;
+    text-align: center;
+    padding: 0 3px;
+    pointer-events: none;
+  }
+
+  .mobile-nav__item--cart {
+    position: relative;
+  }
+
+  /* ── Mobile Header Adjustments ──────────────────────── */
+  @media screen and (max-width: 768px) {
     .header__nav {
       display: none;
     }
@@ -134,10 +601,72 @@
     }
 
     .header__container {
-      height: 56px;
+      height: 50px;
+    }
+
+    .header__logo-image {
+      height: 28px;
+    }
+
+    .header__logo-text {
+      font-size: 16px;
+    }
+
+    .header__logo {
+      margin-right: 0;
+    }
+
+    .header__cart-btn {
+      width: 36px;
+      height: 36px;
+    }
+
+    .header__cart-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .header__cart-badge {
+      top: 2px;
+      right: 0px;
+      min-width: 15px;
+      height: 15px;
+      font-size: 9px;
+      line-height: 15px;
     }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var dropdownToggles = document.querySelectorAll('.header__nav-dropdown-toggle');
+    dropdownToggles.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var item = this.closest('.header__nav-item--dropdown');
+        var isOpen = item.classList.toggle('is-open');
+        this.setAttribute('aria-expanded', isOpen);
+      });
+
+      btn.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          var item = this.closest('.header__nav-item--dropdown');
+          item.classList.remove('is-open');
+          this.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.header__nav-item--dropdown')) {
+        document.querySelectorAll('.header__nav-item--dropdown.is-open').forEach(function(el) {
+          el.classList.remove('is-open');
+          el.querySelector('.header__nav-dropdown-toggle').setAttribute('aria-expanded', 'false');
+        });
+      }
+    });
+  });
+</script>
 
 {% schema %}
 {
@@ -145,47 +674,107 @@
   "settings": [
     {
       "type": "header",
-      "content": "t:content.logo"
+      "content": "Utility Bar"
     },
     {
-      "type": "select",
-      "id": "logo_position",
-      "label": "Desktop logo position",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" }
-      ],
-      "default": "left"
+      "type": "checkbox",
+      "id": "enable_utility_bar",
+      "label": "Enable utility bar",
+      "info": "Show a bar above the main navigation with location, hours, and action links",
+      "default": true
     },
     {
-      "type": "select",
-      "id": "mobile_logo_position",
-      "label": "Mobile logo position",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" }
-      ],
-      "default": "center"
+      "type": "text",
+      "id": "location_text",
+      "label": "Location text",
+      "default": "Bowling Green, KY mattress showrooms"
+    },
+    {
+      "type": "text",
+      "id": "hours_text",
+      "label": "Hours text",
+      "default": "Mon-Sat hours"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_call_button",
+      "label": "Show phone link in text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "label": "Phone label",
+      "default": "Call"
+    },
+    {
+      "type": "text",
+      "id": "phone_display",
+      "label": "Phone number (displayed)",
+      "info": "Number shown as text, e.g. (270) 495-1603",
+      "default": "(270) 495-1603"
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone number (for link)",
+      "info": "Used in tel: link, e.g. 2704951603",
+      "default": "2704951603"
+    },
+    {
+      "type": "text",
+      "id": "call_label",
+      "label": "Call button label",
+      "default": "Call Now"
     },
     {
       "type": "header",
-      "content": "t:content.navigation"
+      "content": "Utility Bar Buttons"
+    },
+    {
+      "type": "text",
+      "id": "directions_label",
+      "label": "Directions button label",
+      "default": "Get Directions"
+    },
+    {
+      "type": "url",
+      "id": "directions_url",
+      "label": "Directions URL",
+      "info": "Link to map/directions (Google Maps or store address page)"
+    },
+    {
+      "type": "text",
+      "id": "shop_label",
+      "label": "Shop button label",
+      "default": "Shop Mattresses"
+    },
+    {
+      "type": "url",
+      "id": "shop_url",
+      "label": "Shop button URL",
+      "default": "/collections/all"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
     },
     {
       "type": "link_list",
       "id": "menu",
-      "label": "t:settings.menu",
+      "label": "Navigation menu",
+      "info": "Links shown in the header (Home, Catalog, Financing, FAQ, Contact, etc.)",
       "default": "main-menu"
     },
     {
       "type": "header",
-      "content": "t:content.appearance"
+      "content": "Appearance"
     },
     {
       "type": "color_scheme",
       "id": "color_scheme",
       "default": "scheme-1",
-      "label": "t:settings.color_scheme"
+      "label": "Color scheme"
     }
   ]
 }

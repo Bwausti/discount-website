@@ -15,7 +15,7 @@
           "type": "text",
           "name": "t:names.title",
           "settings": {
-            "text": "<h1>{{ closest.page.title }}</h1>",
+            "text": "<h2>{{ closest.page.title }}</h2>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "center",
@@ -67,7 +67,7 @@
           "type": "text",
           "name": "Location Info",
           "settings": {
-            "text": "<p><strong>Discount Mattress</strong><br>1555 Campbell Ln<br>Bowling Green, KY 42104<br>270-495-1603</p><p><strong>Discount Mattress Outlet</strong><br>2734 Russellville Rd<br>Bowling Green, KY 42101<br>270-842-3888</p><p style="margin-top:12px;color:#64748b;font-size:13px;">Some brands may be available at specific locations. Contact us before visiting if you are looking for a specific model.</p>",
+            "text": "<p><strong>Discount Mattress</strong><br>1555 Campbell Ln<br>Bowling Green, KY 42104<br>270-495-1603</p><p><strong>Discount Mattress Outlet</strong><br>2734 Russellville Rd<br>Bowling Green, KY 42101<br>270-842-3888</p><p>Some brands may be available at specific locations. Contact us before visiting if you are looking for a specific model.</p>",
             "width": "100%",
             "max_width": "narrow",
             "alignment": "center",
@@ -169,9 +169,14 @@
         "padding-block-start": 32,
         "padding-block-end": 84
       }
+    },
+    "page-content": {
+      "type": "page-content",
+      "settings": {}
     }
   },
   "order": [
+    "page-content",
     "main",
     "form"
   ]

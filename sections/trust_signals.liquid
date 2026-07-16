@@ -1,4 +1,296 @@
 <!-- Section: trust_signals -->
-<div style="text-align: center; line-height: 0; padding: 0;">
-  <img src="https://cdn.shopify.com/s/files/1/0636/1271/5105/t/7/assets/trust-banner.jpg?v=1747502001" alt="12+ Brands · Local Presence · 4.9 Stars · Financing Available" style="width: 100%; max-width: 100%; display: block;">
-</div>
+{%- comment -%}
+  Live-text trust strip — replaces image banner with editable, accessible text.
+  Shown on homepage between hero and brand logos.
+{%- endcomment -%}
+
+{%- if section.settings.enable_section -%}
+<section
+  class="trust-signals"
+  aria-label="Trust signals"
+  style="
+    background: {{ section.settings.background_color }};
+    border-top: {{ section.settings.border_width }}px solid {{ section.settings.border_color }};
+    border-bottom: {{ section.settings.border_width }}px solid {{ section.settings.border_color }};
+  "
+>
+  <div class="trust-signals__inner page-width-content">
+    <ul class="trust-signals__list" role="list">
+
+      {%- for i in (1..6) -%}
+        {%- assign item_text_key = 'item_' | append: i | append: '_text' -%}
+        {%- assign item_url_key = 'item_' | append: i | append: '_url' -%}
+        {%- assign item_label_key = 'item_' | append: i | append: '_label' -%}
+
+        {%- assign item_text = section.settings[item_text_key] | strip -%}
+
+        {%- if item_text != blank -%}
+          {%- assign item_url = section.settings[item_url_key] -%}
+          {%- assign item_label = section.settings[item_label_key] -%}
+
+          <li class="trust-signals__item{% if forloop.last %} trust-signals__item--last{% endif %}">
+
+            {%- if item_url != blank -%}
+              <a
+                href="{{ item_url }}"
+                class="trust-signals__link"
+                {% if item_label != blank %}aria-label="{{ item_label }}"{% endif %}
+                {% if item_url contains 'google' or item_url contains 'maps' %}target="_blank" rel="noopener"{% endif %}
+              >
+                <span class="trust-signals__check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect width="14" height="14" rx="2" fill="#16a34a" opacity="0.12"/>
+                    <path d="M3.5 7L6 9.5L10.5 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                {{- item_text -}}
+              </a>
+            {%- else -%}
+              <span class="trust-signals__plain">
+                <span class="trust-signals__check" aria-hidden="true">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect width="14" height="14" rx="2" fill="#16a34a" opacity="0.12"/>
+                    <path d="M3.5 7L6 9.5L10.5 5" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                {{- item_text -}}
+              </span>
+            {%- endif -%}
+
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+
+    </ul>
+  </div>
+</section>
+{%- endif -%}
+
+{% stylesheet %}
+.trust-signals {
+  padding: 14px 0;
+}
+.trust-signals__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.trust-signals__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.trust-signals__item {
+  display: flex;
+  align-items: center;
+}
+.trust-signals__item:not(.trust-signals__item--last)::after {
+  content: "·";
+  display: inline-block;
+  margin: 0 12px;
+  color: #cbd5e1;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.trust-signals__check {
+  display: inline-flex;
+  align-items: center;
+  color: #16a34a;
+  margin-right: 5px;
+  flex-shrink: 0;
+}
+.trust-signals__plain,
+.trust-signals__link {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body, 'Inter', 'Segoe UI', sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 1;
+}
+a.trust-signals__link:hover {
+  color: #cf2333;
+  text-decoration: underline;
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+  .trust-signals__inner {
+    padding: 0 16px;
+  }
+  .trust-signals__list {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .trust-signals__item:not(.trust-signals__item--last)::after {
+    display: none;
+  }
+  .trust-signals__plain,
+  .trust-signals__link {
+    font-size: 12px;
+    white-space: normal;
+  }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Trust Strip",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_section",
+      "label": "Enable trust strip",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#e2e8f0"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Trust Items (up to 6)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave item text blank to hide it. Items are rendered in order."
+    },
+    {
+      "type": "text",
+      "id": "item_1_text",
+      "label": "Item 1 text",
+      "default": "12+ premium brands"
+    },
+    {
+      "type": "url",
+      "id": "item_1_url",
+      "label": "Item 1 URL (optional)"
+    },
+    {
+      "type": "text",
+      "id": "item_1_label",
+      "label": "Item 1 aria-label (optional)",
+      "info": "Only needed if the link text isn't descriptive enough"
+    },
+    {
+      "type": "text",
+      "id": "item_2_text",
+      "label": "Item 2 text",
+      "default": "2 Bowling Green locations"
+    },
+    {
+      "type": "url",
+      "id": "item_2_url",
+      "label": "Item 2 URL (optional)"
+    },
+    {
+      "type": "text",
+      "id": "item_2_label",
+      "label": "Item 2 aria-label (optional)"
+    },
+    {
+      "type": "text",
+      "id": "item_3_text",
+      "label": "Item 3 text",
+      "default": "4.9-star Google rating"
+    },
+    {
+      "type": "url",
+      "id": "item_3_url",
+      "label": "Item 3 URL (optional)",
+      "info": "Link to your Google Business Profile review page"
+    },
+    {
+      "type": "text",
+      "id": "item_3_label",
+      "label": "Item 3 aria-label (optional)",
+      "default": "Read our 4.9-star reviews on Google"
+    },
+    {
+      "type": "text",
+      "id": "item_4_text",
+      "label": "Item 4 text",
+      "default": "Financing available"
+    },
+    {
+      "type": "url",
+      "id": "item_4_url",
+      "label": "Item 4 URL (optional)"
+    },
+    {
+      "type": "text",
+      "id": "item_4_label",
+      "label": "Item 4 aria-label (optional)"
+    },
+    {
+      "type": "text",
+      "id": "item_5_text",
+      "label": "Item 5 text",
+      "default": "Local delivery options"
+    },
+    {
+      "type": "url",
+      "id": "item_5_url",
+      "label": "Item 5 URL (optional)"
+    },
+    {
+      "type": "text",
+      "id": "item_5_label",
+      "label": "Item 5 aria-label (optional)"
+    },
+    {
+      "type": "text",
+      "id": "item_6_text",
+      "label": "Item 6 text",
+      "info": "Leave blank to hide this item"
+    },
+    {
+      "type": "url",
+      "id": "item_6_url",
+      "label": "Item 6 URL (optional)"
+    },
+    {
+      "type": "text",
+      "id": "item_6_label",
+      "label": "Item 6 aria-label (optional)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Strip",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

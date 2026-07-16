@@ -8,8 +8,11 @@ Horizon Fresh theme for **discount-mattress-4.myshopify.com** — a physical mat
 # Install Shopify CLI (if not installed)
 npm install -g @shopify/cli
 
-# Preview locally (hot-reloads, connected to dev theme)
-shopify theme dev
+# Preview locally (hot-reloads against a temporary development theme)
+shopify theme dev --environment default
+
+# Run the same blocking checks used by GitHub
+shopify theme check --fail-level error
 
 # Open in browser
 open http://localhost:9292
@@ -19,9 +22,13 @@ open http://localhost:9292
 
 1. **Edit files** — Liquid in `sections/`, `snippets/`, `templates/`, `layout/`
 2. **Preview** — `shopify theme dev` serves on localhost:9292 against the Development theme
-3. **Push live** — `shopify theme push` deploys to the live Horizon Fresh theme
+3. **Open a pull request** — GitHub runs Theme Check before merge
+4. **Merge to `master`** — GitHub deploys to the unpublished staging theme first, then automatically updates the live Horizon Fresh theme
 
-Or just push to `master` — the GitHub Action auto-deploys.
+Staging preview: `https://discount-mattress-4.myshopify.com?preview_theme_id=136519155809`
+
+The previous Git commit is the rollback point for every deployment. Revert a
+bad commit and merge or push the revert to redeploy the prior version.
 
 ## Project Structure
 
@@ -54,5 +61,6 @@ node ~/clawd/scripts/shopify-skill/migrate-catalog.mjs --send --images
 - **No overwriting:** Do not use `custom-liquid` in template JSON for complex logic — create proper `.liquid` section files.
 - **No sleep trial language:** This is a physical showroom — no trial periods or comfort exchange mentions.
 - **Prices: The theme renders product prices from Shopify. No hardcoding.**
+- **Production drift:** Avoid editing theme code directly in Shopify. If an emergency edit is made there, pull the live theme back into Git before the next deployment.
 # Test comment - workflow check Tue May 19 10:32:34 CDT 2026
 test

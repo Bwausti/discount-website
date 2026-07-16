@@ -1,7 +1,13 @@
 {% comment %}
   helix-product-addons.liquid
-  Shows tier-specific Helix add-ons on product pages
-  Only renders on Helix products
+  Shows tier-specific Helix add-on options on product pages
+  Based on Helix Sleep's official tier structure (2025):
+  - Core: ErgoAlign Layer optional, GlacioTex Cooling Pillow Top optional
+  - Luxe: ErgoAlign Layer optional (zoned lumbar foam, integrated into comfort layer)
+  - Elite: ErgoAlign Layer STANDARD (built-in), GlacioTex + CoolForce standard
+
+  The ErgoAlign Layer is NEVER sold as a standalone product —
+  it is an integrated comfort upgrade added during mattress purchase.
 {% endcomment %}
 
 {% assign product_title = closest.product.title | downcase %}
@@ -11,10 +17,10 @@
 {% assign is_elite = false %}
 {% if closest.product.vendor == "Helix" %}
   {% assign is_helix_product = true %}
-  {% if product_title contains "luxe" %}
-    {% assign is_luxe = true %}
-  {% elsif product_title contains "elite" %}
+  {% if product_title contains "elite" %}
     {% assign is_elite = true %}
+  {% elsif product_title contains "luxe" %}
+    {% assign is_luxe = true %}
   {% else %}
     {% assign is_core = true %}
   {% endif %}
@@ -129,67 +135,73 @@
 
     <!-- Header -->
     <div class="helix-addons__header">
-      <p class="helix-addons__label">Complete your Helix</p>
-      {% if is_core %}
-        <h2 class="helix-addons__title">Core Layer Options</h2>
-        <p class="helix-addons__sub">Upgrade your Core mattress with cooling and support layers</p>
+      <p class="helix-addons__label">Layer &amp; Cooling Options</p>
+      {% if is_elite %}
+        <h2 class="helix-addons__title">Elite — Premium Built-in</h2>
+        <p class="helix-addons__sub">The Elite comes fully equipped with GlacioTex™ cooling, CoolForce™ system, and the ErgoAlign Layer as standard.</p>
       {% elsif is_luxe %}
-        <h2 class="helix-addons__title">Luxe Upgrade Options</h2>
-        <p class="helix-addons__sub">Add an ErgoAlign layer or swap your cover for maximum cooling</p>
+        <h2 class="helix-addons__title">Luxe — Optional Upgrades</h2>
+        <p class="helix-addons__sub">Add the ErgoAlign Layer for zoned lumbar support, or upgrade to a GlacioTex™ cooling pillow top.</p>
       {% else %}
-        <h2 class="helix-addons__title">Elite Enhancement Options</h2>
-        <p class="helix-addons__sub">Max out your Elite with the CoolForce layered system</p>
+        <h2 class="helix-addons__title">Core — Optional Upgrades</h2>
+        <p class="helix-addons__sub">Upgrade your Core mattress with the ErgoAlign Layer for targeted support or a GlacioTex™ cooling pillow top.</p>
       {% endif %}
     </div>
 
     <!-- Add-on cards -->
     <div class="helix-addons__grid">
 
-      {% if is_core %}
-        <!-- Core: GlacioTex Cooling Cover -->
-        <a href="/products/helix-glaciotex-cooling-cover-luxe" class="helix-addon-card">
-          <span class="helix-addon-card__tier-badge">Core Compatible</span>
-          <h3 class="helix-addon-card__name">GlacioTex™ Cooling Cover</h3>
-          <p class="helix-addon-card__desc">Add instant cooling to your Core mattress. GlacioTex fabric pulls heat away from your body for a cooler night's sleep.</p>
-          <p class="helix-addon-card__price">From $187</p>
-          <p class="helix-addon-card__cta">Add to order →</p>
-        </a>
+      {% if is_elite %}
+        {% comment %} Elite: Everything is standard {% endcomment %}
+        <div class="helix-addon-card" style="cursor:default;">
+          <span class="helix-addon-card__tier-badge elite">Standard</span>
+          <h3 class="helix-addon-card__name">ErgoAlign™ Layer</h3>
+          <p class="helix-addon-card__desc">Zoned lumbar support layer integrated into the Elite's comfort system. Ultra-dense foam segment under the midsection provides targeted support and spinal alignment.</p>
+          <p class="helix-addon-card__price">Included</p>
+        </div>
+
+        <div class="helix-addon-card" style="cursor:default;">
+          <span class="helix-addon-card__tier-badge elite">Standard</span>
+          <h3 class="helix-addon-card__name">GlacioTex™ + CoolForce™</h3>
+          <p class="helix-addon-card__desc">Cool-to-touch cover with phase-change materials plus active cooling layer beneath for temperature regulation.</p>
+          <p class="helix-addon-card__price">Included</p>
+        </div>
 
       {% elsif is_luxe %}
-        <!-- Luxe: GlacioTex Cooling Pillow Top + ErgoAlign Layer -->
-        <a href="/products/helix-midnight-luxe" class="helix-addon-card">
-          <span class="helix-addon-card__tier-badge luxe">Luxe Built-in</span>
-          <h3 class="helix-addon-card__name">GlacioTex™ Cooling Pillow Top</h3>
-          <p class="helix-addon-card__desc">Upgrade your Luxe's already-premium cover. Adds an extra layer of cooling directly to the mattress surface.</p>
-          <p class="helix-addon-card__price">From $280</p>
-          <p class="helix-addon-card__cta">Add to order →</p>
-        </a>
+        {% comment %} Luxe: ErgoAlign Layer is optional, Cooling Pillow Top is optional {% endcomment %}
+        <div class="helix-addon-card" style="cursor:default;">
+          <span class="helix-addon-card__tier-badge luxe">Optional Upgrade</span>
+          <h3 class="helix-addon-card__name">ErgoAlign™ Layer</h3>
+          <p class="helix-addon-card__desc">A zoned foam layer integrated into the Luxe comfort system. Ultra-dense foam beneath your midsection provides targeted lumbar support and spinal alignment. Available as an upgrade when purchased with your Luxe mattress.</p>
+          <p class="helix-addon-card__price">Add $187</p>
+          <p class="helix-addon-card__cta">Ask in store →</p>
+        </div>
 
-        <a href="/products/helix-ergoalign-layer" class="helix-addon-card">
-          <span class="helix-addon-card__tier-badge luxe">Luxe Compatible</span>
-          <h3 class="helix-addon-card__name">ErgoAlign™ Contour Layer</h3>
-          <p class="helix-addon-card__desc">A zoned foam layer that targets pressure points under your hips and spine. Twin XL through CA King available.</p>
-          <p class="helix-addon-card__price">From $187 (built-in) / $325+ (standalone)</p>
-          <p class="helix-addon-card__cta">Add to order →</p>
-        </a>
+        <div class="helix-addon-card" style="cursor:default;">
+          <span class="helix-addon-card__tier-badge luxe">Optional Upgrade</span>
+          <h3 class="helix-addon-card__name">GlacioTex™ Cooling Pillow Top</h3>
+          <p class="helix-addon-card__desc">Upgrade your Luxe cover to GlacioTex™ — a cool-to-touch fabric that pulls heat away from your body for a cooler sleep surface.</p>
+          <p class="helix-addon-card__price">Ask for pricing</p>
+          <p class="helix-addon-card__cta">Ask in store →</p>
+        </div>
 
       {% else %}
-        <!-- Elite: GlacioTex Cooling Cover + CoolForce -->
-        <a href="/products/helix-midnight-elite" class="helix-addon-card">
-          <span class="helix-addon-card__tier-badge elite">Elite Built-in</span>
-          <h3 class="helix-addon-card__name">GlacioTex™ + CoolForce™ System</h3>
-          <p class="helix-addon-card__desc">The Elite's standard cooling system — a GlacioTex cover combined with a CoolForce layer beneath it for active temperature regulation.</p>
-          <p class="helix-addon-card__price">Included with Elite</p>
-          <p class="helix-addon-card__cta">Included →</p>
-        </a>
+        {% comment %} Core: Both ErgoAlign Layer and GlacioTex are optional (2025 update) {% endcomment %}
+        <div class="helix-addon-card" style="cursor:default;">
+          <span class="helix-addon-card__tier-badge">Optional Upgrade</span>
+          <h3 class="helix-addon-card__name">ErgoAlign™ Layer</h3>
+          <p class="helix-addon-card__desc">Add zoned lumbar support to your Core mattress. An ultra-dense foam segment under your midsection provides targeted support where you need it most. Integrated into the comfort layer.</p>
+          <p class="helix-addon-card__price">Add $187</p>
+          <p class="helix-addon-card__cta">Ask in store →</p>
+        </div>
 
-        <a href="/products/helix-ergoalign-layer" class="helix-addon-card">
-          <span class="helix-addon-card__tier-badge elite">Elite Compatible</span>
-          <h3 class="helix-addon-card__name">ErgoAlign™ Contour Layer</h3>
-          <p class="helix-addon-card__desc">Max out your Elite's pressure relief. The ErgoAlign layer pairs with the microcoil stack for enhanced lumbar support.</p>
-          <p class="helix-addon-card__price">From $187 (built-in) / $325+ (standalone)</p>
-          <p class="helix-addon-card__cta">Add to order →</p>
-        </a>
+        <div class="helix-addon-card" style="cursor:default;">
+          <span class="helix-addon-card__tier-badge">Optional Upgrade</span>
+          <h3 class="helix-addon-card__name">GlacioTex™ Cooling Pillow Top</h3>
+          <p class="helix-addon-card__desc">Upgrade your Core cover to GlacioTex™ for a cooler sleep surface. Phase-change fabric pulls heat away from your body throughout the night.</p>
+          <p class="helix-addon-card__price">Add $187</p>
+          <p class="helix-addon-card__cta">Ask in store →</p>
+        </div>
       {% endif %}
 
     </div>

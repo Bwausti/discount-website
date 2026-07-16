@@ -9,12 +9,23 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "all-collections-grid",
+    "puffy-banner": {
+      "type": "puffy-collection-banner",
       "settings": {}
+    },
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "product_grid_width": "centered",
+        "columns_gap_horizontal": 20,
+        "columns_gap_vertical": 20,
+        "padding-block-start": 8,
+        "padding-block-end": 40
+      }
     }
   },
   "order": [
+    "puffy-banner",
     "main"
   ]
 }

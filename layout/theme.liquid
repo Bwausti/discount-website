@@ -6,6 +6,7 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {%- if settings.favicon != blank -%}
       <link rel="icon" type="image/x-icon" href="{{ "favicon.ico" | asset_url }}">
     {%- endif -%}
@@ -22,6 +23,7 @@
     {% endif %}
 
     {%- render 'meta-tags' -%}
+
     {%- render 'stylesheets' -%}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
@@ -39,7 +41,8 @@
   <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     {% section 'header' %}
-    {% section 'brand-nav' %}
+    {% comment %} Brand nav merged into header — removed per Blake request 2026-05-21 {% endcomment %}
+    {% comment %} {% section 'brand-nav' %} {% endcomment %}
 
     <script>
       // Inline header height and menu style calculations to prevent layout shift

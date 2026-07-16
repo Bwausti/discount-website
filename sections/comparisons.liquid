@@ -1,0 +1,395 @@
+{% comment %}
+  comparisons.liquid
+  Brand comparison page — Helix vs Nectar, Puffy vs DreamCloud, Best by sleeper type
+  Clean, showroom-first layout. No clutter.
+{% endcomment %}
+
+<style>
+  .cmp-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  .cmp-hero {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .cmp-hero h1 {
+    font-size: clamp(28px, 3.5vw, 38px);
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px 0;
+    line-height: 1.15;
+  }
+  .cmp-hero p {
+    font-size: 16px;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 540px;
+  }
+
+  /* Section */
+  .cmp-section {
+    margin-bottom: 56px;
+  }
+  .cmp-section:last-child { margin-bottom: 0; }
+  .cmp-section__label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #cf2333;
+    margin: 0 0 4px 0;
+  }
+  .cmp-section__title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 20px 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* Comparison table */
+  .cmp-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 16px;
+  }
+  .cmp-table th {
+    background: #f8fafc;
+    padding: 14px 18px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    width: 28%;
+  }
+  .cmp-table th:first-child { width: 20%; }
+  .cmp-table td {
+    padding: 14px 18px;
+    font-size: 14px;
+    color: #0f172a;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table tr:nth-child(even) td { background: #fafbfc; }
+
+  .cmp-table__brand {
+    font-weight: 800;
+    font-size: 15px;
+  }
+  .cmp-table__tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: 6px;
+  }
+  .cmp-table__tag--best { background: #dcfce7; color: #166534; }
+  .cmp-table__tag--value { background: #dbeafe; color: #1e40af; }
+  .cmp-table__tag--premium { background: #fef9c3; color: #854d0e; }
+
+  .cmp-verdict {
+    background: #f7f6f1;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .cmp-verdict__icon {
+    font-size: 18px;
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+  .cmp-verdict__text {
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .cmp-verdict__text strong { color: #0f172a; }
+
+  /* Sleeper type grid */
+  .cmp-sleeper-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .cmp-sleeper-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 24px;
+    transition: box-shadow 0.2s;
+  }
+  .cmp-sleeper-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .cmp-sleeper-card__icon { font-size: 28px; margin-bottom: 8px; }
+  .cmp-sleeper-card__name {
+    font-size: 16px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+  }
+  .cmp-sleeper-card__note {
+    font-size: 12px;
+    color: #64748b;
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+  }
+  .cmp-sleeper-card__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .cmp-sleeper-card__list li {
+    padding: 6px 0;
+    border-top: 1px solid #f1f5f9;
+    font-size: 14px;
+  }
+  .cmp-sleeper-card__list li:first-child { border-top: none; }
+  .cmp-sleeper-card__list a {
+    color: #0f172a;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .cmp-sleeper-card__list a:hover { color: #cf2333; }
+  .cmp-sleeper-card__list small {
+    color: #94a3b8;
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  /* Showroom CTA */
+  .cmp-cta {
+    margin-top: 48px;
+    text-align: center;
+    padding: 32px;
+    background: #f7f6f1;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+  }
+  .cmp-cta p {
+    font-size: 15px;
+    color: #475569;
+    margin: 0 0 16px 0;
+    line-height: 1.6;
+  }
+  .cmp-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: #162b49;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    transition: background 0.2s;
+  }
+  .cmp-cta__btn:hover { background: #1e3a5f; }
+
+  @media (max-width: 640px) {
+    .cmp-wrap { padding: 32px 16px 48px; }
+    .cmp-sleeper-grid { grid-template-columns: 1fr; }
+    .cmp-table th,
+    .cmp-table td { padding: 10px 12px; font-size: 13px; }
+    .cmp-table th { width: 30%; }
+  }
+</style>
+
+<div class="cmp-wrap">
+
+  <div class="cmp-hero">
+    <h1>Compare mattresses side by side</h1>
+    <p>Not sure which brand fits best? See how the top names stack up on feel, price, and construction — then visit our showroom to try them yourself.</p>
+  </div>
+
+  {% comment %} ─── Helix vs Nectar ─── {% endcomment %}
+  <div class="cmp-section">
+    <p class="cmp-section__label">Comparison</p>
+    <h2 class="cmp-section__title">Helix vs. Nectar</h2>
+
+    <table class="cmp-table">
+      <tr>
+        <th></th>
+        <th><span class="cmp-table__brand">Helix</span> <span class="cmp-table__tag cmp-table__tag--best">Best for personalization</span></th>
+        <th><span class="cmp-table__brand">Nectar</span> <span class="cmp-table__tag cmp-table__tag--value">Best value</span></th>
+      </tr>
+      <tr>
+        <th>Best for</th>
+        <td>Side &amp; stomach sleepers who want hybrid support</td>
+        <td>Side sleepers who want deep memory foam pressure relief</td>
+      </tr>
+      <tr>
+        <th>Feel</th>
+        <td>Medium-firm hybrid (balanced foam + coils)</td>
+        <td>Medium-firm memory foam (slow-sinking contour)</td>
+      </tr>
+      <tr>
+        <th>Type</th>
+        <td>Hybrid (foam + pocketed coils)</td>
+        <td>Memory foam (all-foam construction)</td>
+      </tr>
+      <tr>
+        <th>Price range</th>
+        <td>$799 – $2,999</td>
+        <td>$899 – $2,499</td>
+      </tr>
+      <tr>
+        <th>Firmness options</th>
+        <td>6 feels (soft to firm) across Core, Luxe, Elite</td>
+        <td>Single medium-firm feel</td>
+      </tr>
+      <tr>
+        <th>Key feature</th>
+        <td>Sleep quiz matches you to a feel + 7-zone coil support</td>
+        <td>Long-lasting memory foam with cooling cover upgrade</td>
+      </tr>
+      <tr>
+        <th>In showroom</th>
+        <td>All 21 models — Core, Luxe, Elite</td>
+        <td>Nectar Classic and Premier</td>
+      </tr>
+    </table>
+
+    <div class="cmp-verdict">
+      <span class="cmp-verdict__icon">💡</span>
+      <p class="cmp-verdict__text">
+        <strong>Choose Helix</strong> if you want to match firmness to your sleep position and prefer a hybrid feel with bounce. <strong>Choose Nectar</strong> if you want deep, slow-sinking pressure relief at a lower price point — especially for side sleeping.
+      </p>
+    </div>
+  </div>
+
+  {% comment %} ─── Puffy vs DreamCloud ─── {% endcomment %}
+  <div class="cmp-section">
+    <p class="cmp-section__label">Comparison</p>
+    <h2 class="cmp-section__title">Puffy vs. DreamCloud</h2>
+
+    <table class="cmp-table">
+      <tr>
+        <th></th>
+        <th><span class="cmp-table__brand">Puffy</span> <span class="cmp-table__tag cmp-table__tag--best">Best for pressure relief</span></th>
+        <th><span class="cmp-table__brand">DreamCloud</span> <span class="cmp-table__tag cmp-table__tag--premium">Luxury feel</span></th>
+      </tr>
+      <tr>
+        <th>Best for</th>
+        <td>Side sleepers &amp; people with joint pain</td>
+        <td>Back sleepers &amp; couples who want a premium hybrid</td>
+      </tr>
+      <tr>
+        <th>Feel</th>
+        <td>Plush memory foam — cloud-like contour</td>
+        <td>Medium-firm hybrid with euro-top pillow top</td>
+      </tr>
+      <tr>
+        <th>Type</th>
+        <td>Memory foam (hybrid option on Royal model)</td>
+        <td>Hybrid (foam + encased coils)</td>
+      </tr>
+      <tr>
+        <th>Price range</th>
+        <td>$599 – $1,695</td>
+        <td>$999 – $1,899</td>
+      </tr>
+      <tr>
+        <th>Trial</th>
+        <td>101 nights</td>
+        <td>365 nights</td>
+      </tr>
+      <tr>
+        <th>Key feature</th>
+        <td>Cooling gel memory foam + lifetime warranty</td>
+        <td>Euro-top pillow top + cashmere blend cover</td>
+      </tr>
+      <tr>
+        <th>In showroom</th>
+        <td>All 5 models — Cloud to Royal</td>
+        <td>DreamCloud Premier Hybrid</td>
+      </tr>
+    </table>
+
+    <div class="cmp-verdict">
+      <span class="cmp-verdict__icon">💡</span>
+      <p class="cmp-verdict__text">
+        <strong>Choose Puffy</strong> if you want a plush, cloud-like feel with serious pressure relief for hips and shoulders. <strong>Choose DreamCloud</strong> if you want a luxury hybrid with a euro-top feel and the longest trial period in the industry.
+      </p>
+    </div>
+  </div>
+
+  {% comment %} ─── Best by sleeper type ─── {% endcomment %}
+  <div class="cmp-section">
+    <p class="cmp-section__label">Recommendations</p>
+    <h2 class="cmp-section__title">Best mattress by sleeper type</h2>
+
+    <div class="cmp-sleeper-grid">
+      <div class="cmp-sleeper-card">
+        <div class="cmp-sleeper-card__icon">🌙</div>
+        <p class="cmp-sleeper-card__name">Side Sleepers</p>
+        <p class="cmp-sleeper-card__note">Need pressure relief at shoulders and hips</p>
+        <ul class="cmp-sleeper-card__list">
+          <li><a href="/collections/helix">Helix Midnight</a> <small>— Medium-firm hybrid</small></li>
+          <li><a href="/collections/nectar">Nectar Classic</a> <small>— Memory foam contour</small></li>
+          <li><a href="/collections/puffy">Puffy Cloud</a> <small>— Plush pressure relief</small></li>
+          <li><a href="/collections/helix">Helix Sunset</a> <small>— Soft side-sleeper feel</small></li>
+        </ul>
+      </div>
+
+      <div class="cmp-sleeper-card">
+        <div class="cmp-sleeper-card__icon">⚖️</div>
+        <p class="cmp-sleeper-card__name">Back Sleepers</p>
+        <p class="cmp-sleeper-card__note">Need balanced support and spinal alignment</p>
+        <ul class="cmp-sleeper-card__list">
+          <li><a href="/collections/helix">Helix Dusk</a> <small>— Medium-firm hybrid</small></li>
+          <li><a href="/collections/dreamcloud">DreamCloud Premier</a> <small>— Luxury hybrid</small></li>
+          <li><a href="/collections/naturepedic">Naturepedic EOS</a> <small>— Adjustable support</small></li>
+          <li><a href="/collections/helix">Helix Moonlight</a> <small>— Soft balanced feel</small></li>
+        </ul>
+      </div>
+
+      <div class="cmp-sleeper-card">
+        <div class="cmp-sleeper-card__icon">💪</div>
+        <p class="cmp-sleeper-card__name">Stomach Sleepers</p>
+        <p class="cmp-sleeper-card__note">Need firmer support to keep hips aligned</p>
+        <ul class="cmp-sleeper-card__list">
+          <li><a href="/collections/helix">Helix Dawn</a> <small>— Firm hybrid support</small></li>
+          <li><a href="/collections/helix">Helix Twilight</a> <small>— Firm with contour</small></li>
+          <li><a href="/collections/helix">Helix Plus</a> <small>— Extra support</small></li>
+          <li><a href="/collections/serta">Serta Perfect Sleeper</a> <small>— Firm options</small></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} ─── CTA ─── {% endcomment %}
+  <div class="cmp-cta">
+    <p>Reading specs only goes so far. Come lie down on each model at our Bowling Green showroom — your body knows best.</p>
+    <a href="/pages/locations" class="cmp-cta__btn">Visit a showroom</a>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Brand Comparisons",
+  "settings": [],
+  "enabled_on": {
+    "templates": ["page"]
+  }
+}
+{% endschema %}

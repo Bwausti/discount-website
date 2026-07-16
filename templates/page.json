@@ -15,7 +15,7 @@
           "type": "text",
           "name": "Title",
           "settings": {
-            "text": "<h1>{{ closest.page.title }}</h1>",
+            "text": "<h2>{{ closest.page.title }}</h2>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "left",
@@ -54,9 +54,14 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "page-content": {
+      "type": "page-content",
+      "settings": {}
     }
   },
   "order": [
+    "page-content",
     "main"
   ]
 }

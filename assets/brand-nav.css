@@ -1,7 +1,8 @@
 /* Brand Navigation Bar */
 .brand-nav {
-  background: #162b49;
-  border-bottom: 1px solid #1e3a5f;
+  background: #1e3a5f;
+  border-top: 2px solid #f2b705;
+  border-bottom: 1px solid #1a3251;
   position: relative;
   z-index: 50;
 }
@@ -15,7 +16,7 @@
 .brand-nav__wrapper {
   display: flex;
   align-items: center;
-  min-height: 48px;
+  min-height: 42px;
 }
 
 /* ── Mobile toggle ── */
@@ -38,7 +39,7 @@
 }
 
 .brand-nav__toggle:hover {
-  background: #1e3a5f;
+  background: #2d4a6f;
 }
 
 .brand-nav__chevron {
@@ -70,7 +71,7 @@
 .brand-nav__link {
   display: flex;
   align-items: center;
-  height: 48px;
+  height: 42px;
   padding: 0 10px;
   color: #94a3b8;
   text-decoration: none;
@@ -118,10 +119,10 @@
   top: 100%;
   left: 0;
   min-width: 190px;
-  background: #162b49;
-  border: 1px solid #1e3a5f;
+  background: #1e3a5f;
+  border: 1px solid #2d4a6f;
   border-top: 2px solid #f2b705;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   padding: 6px 0;
   margin: 0;
   list-style: none;
@@ -160,7 +161,7 @@
 .brand-nav__dropdown-link:hover,
 .brand-nav__dropdown-link:focus {
   color: #ffffff;
-  background: #1e3a5f;
+  background: #2d4a6f;
 }
 
 /* ── Desktop spacing helper: push right items to the right ── */
@@ -181,9 +182,9 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: #162b49;
-    border-top: 1px solid #1e3a5f;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    background: #1e3a5f;
+    border-top: 1px solid #2d4a6f;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     padding: 4px 0;
     gap: 0;
   }
@@ -205,8 +206,8 @@
   }
 
   .brand-nav__link:hover {
-    border-bottom-color: #1e3a5f;
-    background: #1e3a5f;
+    border-bottom-color: #2d4a6f;
+    background: #2d4a6f;
   }
 
   /* On mobile, dropdowns become visible sub-sections */

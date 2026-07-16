@@ -1,0 +1,357 @@
+{% comment %}
+  page-content.liquid
+  Renders styled page-specific content for contact and locations pages.
+{% endcomment %}
+
+{%- assign page_handle = page.handle -%}
+
+{%- if page_handle == 'contact' -%}
+<style>
+  /* Hide the default page content since we have styled cards */
+  .template-page-contact .main-page-content,
+  .template-page-contact [data-section-id].main-page,
+  .template-page-contact .page-content-wrapper { display: none !important; }
+  .template-page-contact .section { margin-top: 0; }
+
+  .pg-contact-wrap {
+    background: linear-gradient(to bottom, #f7f6f1 0%, white 100%);
+    padding: 48px 24px 24px;
+  }
+  .pg-contact-intro {
+    max-width: 720px;
+    margin: 0 auto 48px;
+    text-align: center;
+  }
+  .pg-contact-intro h2 {
+    font-size: 28px;
+    font-weight: 900;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px 0;
+    line-height: 1.15;
+  }
+  .pg-contact-intro p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #475569;
+    margin: 0;
+  }
+  .pg-contact-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .pg-contact-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 28px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .pg-contact-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+  .pg-contact-card__label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: #cf2333;
+    margin: 0 0 8px 0;
+  }
+  .pg-contact-card__name {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+  }
+  .pg-contact-card__addr {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+  }
+  .pg-contact-card__phone {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 16px 0;
+  }
+  .pg-contact-card__phone a {
+    color: #0f172a;
+    text-decoration: none;
+  }
+  .pg-contact-card__phone a:hover {
+    color: #cf2333;
+  }
+  .pg-contact-card__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .pg-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    transition: background 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .pg-btn--primary {
+    background: #162b49;
+    color: white;
+  }
+  .pg-btn--primary:hover {
+    background: #1e3a5f;
+  }
+  .pg-btn--outline {
+    border: 1px solid #cbd5e1;
+    color: #0f172a;
+    background: white;
+  }
+  .pg-btn--outline:hover {
+    border-color: #94a3b8;
+    background: #f8fafc;
+  }
+  @media (max-width: 640px) {
+    .pg-contact-wrap { padding: 32px 16px 16px; }
+    .pg-contact-cards { grid-template-columns: 1fr; }
+    .pg-contact-intro h2 { font-size: 24px; }
+  }
+</style>
+
+<div class="pg-contact-wrap">
+  <div class="pg-contact-intro">
+    <h2>Get in touch with our team</h2>
+    <p>Have a question about a mattress, financing, delivery, or showroom availability? Call or visit our Bowling Green locations. Our local team can help you compare brands, comfort levels, and price options before you buy.</p>
+  </div>
+  <div class="pg-contact-cards">
+    <div class="pg-contact-card">
+      <p class="pg-contact-card__label">Main Showroom</p>
+      <p class="pg-contact-card__name">Discount Mattress</p>
+      <p class="pg-contact-card__addr">
+        1555 Campbell Ln<br>
+        Bowling Green, KY 42104<br>
+        Mon-Sat: 10:00 AM - 6:00 PM
+      </p>
+      <p class="pg-contact-card__phone"><a href="tel:12704951603">(270) 495-1603</a></p>
+      <div class="pg-contact-card__actions">
+        <a href="tel:12704951603" class="pg-btn pg-btn--primary">Call Campbell Lane</a>
+        <a href="https://maps.google.com/?q=1555+Campbell+Ln+Bowling+Green+KY+42104" target="_blank" rel="noopener" class="pg-btn pg-btn--outline">Get Directions</a>
+      </div>
+    </div>
+    <div class="pg-contact-card">
+      <p class="pg-contact-card__label">Outlet Store</p>
+      <p class="pg-contact-card__name">Discount Mattress Outlet</p>
+      <p class="pg-contact-card__addr">
+        2734 Russellville Rd<br>
+        Bowling Green, KY 42101<br>
+        Call for hours
+      </p>
+      <p class="pg-contact-card__phone"><a href="tel:12708423888">(270) 842-3888</a></p>
+      <div class="pg-contact-card__actions">
+        <a href="tel:12708423888" class="pg-btn pg-btn--primary">Call Russellville Road</a>
+        <a href="https://maps.google.com/?q=2734+Russellville+Rd+Bowling+Green+KY+42101" target="_blank" rel="noopener" class="pg-btn pg-btn--outline">Get Directions</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- elsif page_handle == 'locations' -%}
+<style>
+  /* Hide the default page content since we have styled cards */
+  .template-page-locations .main-page-content,
+  .template-page-locations [data-section-id].main-page,
+  .template-page-locations .page-content-wrapper { display: none !important; }
+
+  .pg-loc-hero {
+    background: #162b49;
+    padding: 60px 24px;
+    text-align: center;
+  }
+  .pg-loc-hero h1 {
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 900;
+    color: white;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  .pg-loc-hero p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+    margin: 0 auto;
+    max-width: 520px;
+    line-height: 1.6;
+  }
+  .pg-loc-strip {
+    background: #f7f6f1;
+    padding: 20px 24px;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .pg-loc-strip p {
+    font-size: 14px;
+    color: #475569;
+    margin: 0;
+    line-height: 1.5;
+  }
+  .pg-loc-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .pg-loc-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .pg-loc-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+  .pg-loc-card__tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+  .pg-loc-card__tag--main {
+    background: #162b49;
+    color: white;
+  }
+  .pg-loc-card__tag--outlet {
+    background: #f2b705;
+    color: #0f172a;
+  }
+  .pg-loc-card__name {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+  }
+  .pg-loc-card__addr {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    margin: 0 0 6px 0;
+  }
+  .pg-loc-card__phone {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+  }
+  .pg-loc-card__phone a {
+    color: #0f172a;
+    text-decoration: none;
+  }
+  .pg-loc-card__phone a:hover {
+    color: #cf2333;
+  }
+  .pg-loc-card__hours {
+    font-size: 13px;
+    color: #64748b;
+    margin: 0 0 20px 0;
+  }
+  .pg-loc-card__actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .pg-loc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    transition: background 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .pg-loc-btn--primary {
+    background: #162b49;
+    color: white;
+  }
+  .pg-loc-btn--primary:hover {
+    background: #1e3a5f;
+  }
+  .pg-loc-btn--outline {
+    border: 1px solid #cbd5e1;
+    color: #0f172a;
+    background: white;
+  }
+  .pg-loc-btn--outline:hover {
+    border-color: #94a3b8;
+    background: #f8fafc;
+  }
+  @media (max-width: 640px) {
+    .pg-loc-hero { padding: 40px 16px; }
+    .pg-loc-grid { grid-template-columns: 1fr; padding: 32px 16px; }
+  }
+</style>
+
+<div class="pg-loc-hero">
+  <h1>Visit our Bowling Green showrooms</h1>
+  <p>Two locations to serve you. Stop by to compare brands, test comfort levels, and get expert help in person.</p>
+</div>
+
+<div class="pg-loc-strip">
+  <p>Planning to try a specific brand or model? Call ahead and we'll help confirm availability before you visit.</p>
+</div>
+
+<div class="pg-loc-grid">
+  <div class="pg-loc-card">
+    <span class="pg-loc-card__tag pg-loc-card__tag--main">Main Showroom</span>
+    <p class="pg-loc-card__name">Discount Mattress</p>
+    <p class="pg-loc-card__addr">1555 Campbell Ln, Bowling Green, KY 42104</p>
+    <p class="pg-loc-card__phone"><a href="tel:12704951603">(270) 495-1603</a></p>
+    <p class="pg-loc-card__hours">Mon-Sat: 10:00 AM - 6:00 PM</p>
+    <div class="pg-loc-card__actions">
+      <a href="tel:12704951603" class="pg-loc-btn pg-loc-btn--primary">Call Campbell Lane</a>
+      <a href="https://maps.google.com/?q=1555+Campbell+Ln+Bowling+Green+KY+42104" target="_blank" rel="noopener" class="pg-loc-btn pg-loc-btn--outline">Get Directions</a>
+    </div>
+  </div>
+  <div class="pg-loc-card">
+    <span class="pg-loc-card__tag pg-loc-card__tag--outlet">Outlet Store</span>
+    <p class="pg-loc-card__name">Discount Mattress Outlet</p>
+    <p class="pg-loc-card__addr">2734 Russellville Rd, Bowling Green, KY 42101</p>
+    <p class="pg-loc-card__phone"><a href="tel:12708423888">(270) 842-3888</a></p>
+    <p class="pg-loc-card__hours">Call for hours</p>
+    <div class="pg-loc-card__actions">
+      <a href="tel:12708423888" class="pg-loc-btn pg-loc-btn--primary">Call Russellville Road</a>
+      <a href="https://maps.google.com/?q=2734+Russellville+Rd+Bowling+Green+KY+42101" target="_blank" rel="noopener" class="pg-loc-btn pg-loc-btn--outline">Get Directions</a>
+    </div>
+  </div>
+</div>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Page Content",
+  "settings": [],
+  "enabled_on": {
+    "templates": ["page"]
+  }
+}
+{% endschema %}

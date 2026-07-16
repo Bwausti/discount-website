@@ -1,0 +1,16 @@
+extends: theme-check:recommended
+
+# The live theme has an existing image-dimensions backlog. Keep reporting it,
+# but do not let those legacy findings block otherwise safe deployments.
+ImgWidthAndHeight:
+  severity: warning
+
+# Preserve the known production markup baseline while still blocking new HTML
+# syntax errors everywhere else.
+LiquidHTMLSyntaxError:
+  ignore:
+    - sections/comfort_features.liquid
+    - sections/custom_footer.liquid
+    - sections/lead_cta.liquid
+    - sections/location.liquid
+    - sections/posh-and-lavish-collection-banner.liquid

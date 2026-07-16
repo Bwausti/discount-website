@@ -1,0 +1,10 @@
+[environments.default]
+store = "discount-mattress-4.myshopify.com"
+
+[environments.staging]
+store = "discount-mattress-4.myshopify.com"
+theme = "136519155809"
+
+[environments.production]
+store = "discount-mattress-4.myshopify.com"
+theme = "135157579873"
