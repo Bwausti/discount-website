@@ -9,8 +9,8 @@
  */
 {
   "sections": {
-    "puffy-banner": {
-      "type": "puffy-collection-banner",
+    "brand-collection": {
+      "type": "brand-collection",
       "settings": {}
     },
     "main": {
@@ -25,7 +25,7 @@
     }
   },
   "order": [
-    "puffy-banner",
+    "brand-collection",
     "main"
   ]
 }

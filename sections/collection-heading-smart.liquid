@@ -1,0 +1,26 @@
+{% liquid
+  assign branded_collections = 'puffy,dreamcloud,nectar,bedgear,bedtech,naturepedic,serta,jamison,pranasleep,posh-and-lavish,helix' | split: ','
+%}
+
+{% unless branded_collections contains collection.handle %}
+  <style>
+    .dm-smart-collection-heading { width: min(1200px, calc(100% - 40px)); margin: 0 auto; padding: 42px 0 22px; }
+    .dm-smart-collection-heading h1 { margin: 0; color: #172b47; font-size: clamp(36px, 5vw, 58px); line-height: 1; letter-spacing: -.045em; }
+    .dm-smart-collection-heading__description { max-width: 720px; margin-top: 14px; color: #617083; font-size: 15px; line-height: 1.7; }
+    .dm-smart-collection-heading__description > *:first-child { margin-top: 0; }
+    .dm-smart-collection-heading__description > *:last-child { margin-bottom: 0; }
+    @media (max-width: 749px) { .dm-smart-collection-heading { width: calc(100% - 32px); padding: 32px 0 18px; } }
+  </style>
+  <header class="dm-smart-collection-heading">
+    <h1>{{ collection.title }}</h1>
+    {% if collection.description != blank %}<div class="dm-smart-collection-heading__description rte">{{ collection.description }}</div>{% endif %}
+  </header>
+{% endunless %}
+
+{% schema %}
+{
+  "name": "Smart collection heading",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": []
+}
+{% endschema %}
