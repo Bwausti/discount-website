@@ -295,19 +295,21 @@ class ProductFormComponent extends Component {
       return;
     }
 
-    // Helix cooling upgrades are separate products in the catalog. Add the
-    // selected mattress and upgrade together so the configuration stays clear.
-    const selectedHelixUpgrade = /** @type {HTMLInputElement | null} */ (
-      this.querySelector('[data-helix-cooling-option]:checked')
+    // Helix covers and support layers are separate catalog products. Add every
+    // selected paid upgrade with the mattress in one cart request.
+    const selectedHelixAddons = /** @type {HTMLInputElement[]} */ (
+      Array.from(this.querySelectorAll('[data-helix-addon-option]:checked'))
     );
-    const helixUpgradeVariantId = selectedHelixUpgrade?.dataset.addonVariantId;
-    if (helixUpgradeVariantId) {
+    const helixAddonVariantIds = [
+      ...new Set(selectedHelixAddons.map((option) => option.dataset.addonVariantId).filter(Boolean)),
+    ];
+    if (helixAddonVariantIds.length > 0) {
       const intendedVariantId = this.#getIntendedVariantId();
       const quantity = this.#getQuantity();
       if (intendedVariantId) {
         this.#processBatchAddToCart([
           { variantId: intendedVariantId, quantity },
-          { variantId: helixUpgradeVariantId, quantity },
+          ...helixAddonVariantIds.map((variantId) => ({ variantId, quantity })),
         ]);
         return;
       }

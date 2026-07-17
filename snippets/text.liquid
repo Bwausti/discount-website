@@ -12,6 +12,7 @@
   assign plain_text = block_settings.text | strip_newlines | strip
   assign visible_text = plain_text | strip_html
   assign text_width = width | default: block_settings.width
+  assign product_title_downcase = closest.product.title | downcase
   assign use_helix_product_summary = false
   if closest.product.vendor == 'Helix' and closest.product.type == 'Mattress' and block_settings.text == closest.product.description
     assign use_helix_product_summary = true
@@ -94,7 +95,11 @@
 {% elsif plain_text != blank %}
   <{{ element }} {{ attributes | strip_newlines | strip }}>
     {% if use_helix_product_summary %}
-      <p>Personalized hybrid comfort with wrapped-coil support. Choose your size, collection, and cooling setup above.</p>
+      {% if product_title_downcase contains 'luxe' %}
+        <p>Personalized hybrid comfort with wrapped-coil support. Choose your size, cover, and support layer above.</p>
+      {% else %}
+        <p>Personalized hybrid comfort with wrapped-coil support. Choose your size, collection, and cooling setup above.</p>
+      {% endif %}
     {% else %}
       {{ block.settings.text }}
     {% endif %}

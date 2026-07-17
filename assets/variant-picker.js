@@ -46,12 +46,33 @@ export default class VariantPicker extends Component {
     });
 
     this.addEventListener('change', this.variantChanged.bind(this));
+    this.#selectConfiguredDefault();
     this.#resizeObserver.observe(this);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this.#resizeObserver.disconnect();
+  }
+
+  /**
+   * Selects a merchandised default (Queen on Helix Luxe) when the URL does not
+   * already specify a customer-selected variant.
+   */
+  #selectConfiguredDefault() {
+    const defaultOptionValue = this.dataset.defaultOptionValue;
+    if (!defaultOptionValue || new URL(window.location.href).searchParams.has('variant')) return;
+
+    const select = this.querySelector('select');
+    if (!(select instanceof HTMLSelectElement)) return;
+
+    const matchingOption = Array.from(select.options).find(
+      (option) => option.value.toLowerCase() === defaultOptionValue.toLowerCase()
+    );
+    if (!matchingOption || select.value === matchingOption.value) return;
+
+    select.value = matchingOption.value;
+    select.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   /**

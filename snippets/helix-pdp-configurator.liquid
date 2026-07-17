@@ -34,6 +34,7 @@
   assign core_cooling = all_products['helix-cooling-cover']
   assign luxe_cooling = all_products['helix-glaciotex-cooling-cover-luxe']
   assign luxe_coolforce = all_products['helix-glaciotex-cooling-cover-coolforce-layer']
+  assign luxe_ergoalign = all_products['helix-ergoalign-layer-luxe']
 -%}
 
 {%- if is_helix_mattress -%}
@@ -68,18 +69,18 @@
     </nav>
 
     <fieldset class="helix-config__fieldset">
-      <legend>Cooling</legend>
+      <legend>{% if helix_tier == 'Luxe' %}Cover{% else %}Cooling{% endif %}</legend>
       <div class="helix-config__options">
         {%- if helix_tier == 'Core' -%}
           <label class="helix-config__option">
-            <input type="radio" name="helix_cooling_upgrade" value="Breath Knit Cover" data-helix-cooling-option checked>
+            <input type="radio" name="helix_cover_{{ product.id }}" value="Breath Knit Cover" data-helix-addon-option data-helix-cover-option checked>
             <span class="helix-config__check" aria-hidden="true"></span>
             <span class="helix-config__option-copy"><strong>Breath Knit Cover</strong><small>Light and breathable</small></span>
             <span class="helix-config__option-price">Included</span>
           </label>
           {%- if core_cooling.available -%}
             <label class="helix-config__option">
-              <input type="radio" name="helix_cooling_upgrade" value="GlacioTex Cooling Pillow Top" data-helix-cooling-option data-addon-variant-id="{{ core_cooling.selected_or_first_available_variant.id }}">
+              <input type="radio" name="helix_cover_{{ product.id }}" value="GlacioTex Cooling Pillow Top" data-helix-addon-option data-helix-cover-option data-addon-variant-id="{{ core_cooling.selected_or_first_available_variant.id }}">
               <span class="helix-config__check" aria-hidden="true"></span>
               <span class="helix-config__option-copy"><strong>GlacioTex™ Pillow Top</strong><small>Cool-to-touch upgrade</small></span>
               <span class="helix-config__option-price">+{{ core_cooling.price | money }}</span>
@@ -87,14 +88,14 @@
           {%- endif -%}
         {%- elsif helix_tier == 'Luxe' -%}
           <label class="helix-config__option">
-            <input type="radio" name="helix_cooling_upgrade" value="TENCEL Cover" data-helix-cooling-option checked>
+            <input type="radio" name="helix_cover_{{ product.id }}" value="TENCEL Cover" data-helix-addon-option data-helix-cover-option checked>
             <span class="helix-config__check" aria-hidden="true"></span>
             <span class="helix-config__option-copy"><strong>TENCEL™ Cover</strong><small>Soft and breathable</small></span>
             <span class="helix-config__option-price">Included</span>
           </label>
           {%- if luxe_cooling.available -%}
             <label class="helix-config__option">
-              <input type="radio" name="helix_cooling_upgrade" value="GlacioTex Cooling Cover" data-helix-cooling-option data-addon-variant-id="{{ luxe_cooling.selected_or_first_available_variant.id }}">
+              <input type="radio" name="helix_cover_{{ product.id }}" value="GlacioTex Cooling Cover" data-helix-addon-option data-helix-cover-option data-addon-variant-id="{{ luxe_cooling.selected_or_first_available_variant.id }}">
               <span class="helix-config__check" aria-hidden="true"></span>
               <span class="helix-config__option-copy"><strong>GlacioTex™ Cover</strong><small>Cool-to-touch surface</small></span>
               <span class="helix-config__option-price">+{{ luxe_cooling.price | money }}</span>
@@ -102,7 +103,7 @@
           {%- endif -%}
           {%- if luxe_coolforce.available -%}
             <label class="helix-config__option">
-              <input type="radio" name="helix_cooling_upgrade" value="GlacioTex Cover and CoolForce Layer" data-helix-cooling-option data-addon-variant-id="{{ luxe_coolforce.selected_or_first_available_variant.id }}">
+              <input type="radio" name="helix_cover_{{ product.id }}" value="GlacioTex Cover and CoolForce Layer" data-helix-addon-option data-helix-cover-option data-addon-variant-id="{{ luxe_coolforce.selected_or_first_available_variant.id }}">
               <span class="helix-config__check" aria-hidden="true"></span>
               <span class="helix-config__option-copy"><strong>GlacioTex™ + CoolForce™</strong><small>Maximum cooling</small></span>
               <span class="helix-config__option-price">+{{ luxe_coolforce.price | money }}</span>
@@ -121,19 +122,41 @@
       </div>
     </fieldset>
 
-    <div class="helix-config__support">
-      <div>
-        <span class="helix-config__support-label">Support</span>
-        {%- if helix_tier == 'Elite' -%}
-          <strong>ErgoAlign™ contour layer included</strong>
-        {%- else -%}
-          <strong>{{ helix_tier }} support layer included</strong>
-        {%- endif -%}
+    {%- if helix_tier == 'Luxe' -%}
+      <fieldset class="helix-config__fieldset helix-config__fieldset--support">
+        <legend>Support layer</legend>
+        <div class="helix-config__options">
+          <label class="helix-config__option">
+            <input type="radio" name="helix_support_{{ product.id }}" value="Luxe Layer" data-helix-addon-option data-helix-support-option checked>
+            <span class="helix-config__check" aria-hidden="true"></span>
+            <span class="helix-config__option-copy"><strong>Luxe Layer</strong><small>Responsive support for your sleep style</small></span>
+            <span class="helix-config__option-price">Included</span>
+          </label>
+          {%- if luxe_ergoalign.available -%}
+            <label class="helix-config__option">
+              <input type="radio" name="helix_support_{{ product.id }}" value="ErgoAlign Layer" data-helix-addon-option data-helix-support-option data-addon-variant-id="{{ luxe_ergoalign.selected_or_first_available_variant.id }}">
+              <span class="helix-config__check" aria-hidden="true"></span>
+              <span class="helix-config__option-copy"><strong>ErgoAlign™ Layer</strong><small>Extra support across the lower back and hips</small></span>
+              <span class="helix-config__option-price">+{{ luxe_ergoalign.price | money }}</span>
+            </label>
+          {%- endif -%}
+        </div>
+      </fieldset>
+    {%- else -%}
+      <div class="helix-config__support">
+        <div>
+          <span class="helix-config__support-label">Support</span>
+          {%- if helix_tier == 'Elite' -%}
+            <strong>ErgoAlign™ contour layer included</strong>
+          {%- else -%}
+            <strong>{{ helix_tier }} support layer included</strong>
+          {%- endif -%}
+        </div>
+        {%- unless helix_tier == 'Elite' -%}
+          <a href="tel:+12704951603">Ask about ErgoAlign™</a>
+        {%- endunless -%}
       </div>
-      {%- unless helix_tier == 'Elite' -%}
-        <a href="tel:+12704951603">Ask about ErgoAlign™</a>
-      {%- endunless -%}
-    </div>
+    {%- endif -%}
   </helix-configurator>
 
   <style>
@@ -209,6 +232,7 @@
       padding: 0;
       border: 0;
     }
+    .helix-config__fieldset--support { margin-top: 18px; }
     .helix-config__fieldset legend,
     .helix-config__support-label {
       margin-bottom: 9px;

@@ -1,4 +1,10 @@
 {%- liquid
+  assign product_title_downcase = product.title | downcase
+  assign is_helix_luxe = false
+  if product.vendor == 'Helix' and product.type == 'Mattress' and product_title_downcase contains 'luxe'
+    assign is_helix_luxe = true
+  endif
+
   assign fulfillment_status = product.metafields.custom.fulfillment_status.value | default: 'special_order'
   assign shipping_eta = product.metafields.custom.shipping_eta.value
   assign warranty_summary = product.metafields.custom.warranty_summary.value
@@ -28,40 +34,57 @@
   endif
 -%}
 
-<aside class="dm-product-assurance" aria-label="Availability, delivery, and warranty information">
-  <div class="dm-product-assurance__status {{ status_class }}">
-    <span class="dm-product-assurance__dot" aria-hidden="true"></span>
-    <div>
-      <p class="dm-product-assurance__title">{{ status_title }}</p>
-      <p>{{ status_copy }}</p>
+{%- if is_helix_luxe -%}
+  <div class="dm-luxe-assurance" aria-label="Delivery and warranty benefits">
+    <div class="dm-luxe-assurance__badge">
+      <span aria-hidden="true">✓</span>
+      <strong>Free Nationwide Delivery</strong>
+    </div>
+    <div class="dm-luxe-assurance__badge">
+      <span aria-hidden="true">✓</span>
+      <strong>15 yr Warranty</strong>
     </div>
   </div>
-  <div class="dm-product-assurance__details">
-    <div>
-      <span class="dm-product-assurance__label">Delivery timing</span>
-      <p>{{ shipping_eta }}</p>
-    </div>
-    <div>
-      <span class="dm-product-assurance__label">Warranty</span>
-      <p>{{ warranty_summary }}</p>
-    </div>
-    {%- if showroom_locations != blank -%}
+{%- else -%}
+  <aside class="dm-product-assurance" aria-label="Availability, delivery, and warranty information">
+    <div class="dm-product-assurance__status {{ status_class }}">
+      <span class="dm-product-assurance__dot" aria-hidden="true"></span>
       <div>
-        <span class="dm-product-assurance__label">Try it in store</span>
-        <p>
-          {%- if showroom_locations.first -%}
-            {{ showroom_locations | join: ', ' }}
-          {%- else -%}
-            {{ showroom_locations }}
-          {%- endif -%}
-          . Call ahead to confirm the model is on the floor.
-        </p>
+        <p class="dm-product-assurance__title">{{ status_title }}</p>
+        <p>{{ status_copy }}</p>
       </div>
-    {%- endif -%}
-  </div>
-</aside>
+    </div>
+    <div class="dm-product-assurance__details">
+      <div>
+        <span class="dm-product-assurance__label">Delivery timing</span>
+        <p>{{ shipping_eta }}</p>
+      </div>
+      <div>
+        <span class="dm-product-assurance__label">Warranty</span>
+        <p>{{ warranty_summary }}</p>
+      </div>
+      {%- if showroom_locations != blank -%}
+        <div>
+          <span class="dm-product-assurance__label">Try it in store</span>
+          <p>
+            {%- if showroom_locations.first -%}
+              {{ showroom_locations | join: ', ' }}
+            {%- else -%}
+              {{ showroom_locations }}
+            {%- endif -%}
+            . Call ahead to confirm the model is on the floor.
+          </p>
+        </div>
+      {%- endif -%}
+    </div>
+  </aside>
+{%- endif -%}
 
 <style>
+  .dm-luxe-assurance { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; margin: 14px 0 18px; }
+  .dm-luxe-assurance__badge { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 10px 12px; border: 1px solid #d7e0ea; border-radius: 10px; background: #f5f8fc; color: #162b49; text-align: center; }
+  .dm-luxe-assurance__badge span { display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: #162b49; color: #fff; font-size: 11px; font-weight: 900; flex: 0 0 auto; }
+  .dm-luxe-assurance__badge strong { font-size: 12px; line-height: 1.25; }
   .dm-product-assurance { margin: 14px 0 16px; border: 1px solid #dbe3ec; border-radius: 12px; overflow: hidden; background: #fff; color: #334155; }
   .dm-product-assurance p { margin: 3px 0 0; font-size: 12px; line-height: 1.5; }
   .dm-product-assurance__status { display: flex; gap: 10px; padding: 13px 14px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
@@ -73,4 +96,7 @@
   .dm-product-assurance__details > div { padding: 11px 14px; }
   .dm-product-assurance__details > div + div { border-top: 1px solid #edf1f5; }
   .dm-product-assurance__label { display: block; color: #0f172a; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  @media (max-width: 420px) {
+    .dm-luxe-assurance { grid-template-columns: 1fr; gap: 7px; }
+  }
 </style>
