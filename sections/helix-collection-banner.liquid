@@ -24,7 +24,7 @@
   }
   @media (max-width: 860px) {
     .helix-hero__content { grid-template-columns: 1fr !important; padding: 40px 20px; }
-    .helix-hero__right { display: none !important; }
+    .helix-hero__right { margin-top: 4px; }
   }
   .helix-hero__left { max-width: 600px; }
   .helix-eyebrow {
@@ -78,17 +78,21 @@
     background: rgba(255,255,255,0.95); backdrop-filter: blur(12px);
     border-radius: 12px; padding: 24px; border: 1px solid rgba(255,255,255,0.2);
   }
-  .helix-hero__showroom-note { font-size: 15px; font-weight: 700; color: #0f172a; line-height: 1.5; }
-  .helix-hero__products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
-  .helix-hero__product-card {
-    background: #f4f2ea; border-radius: 8px; overflow: hidden;
-    text-decoration: none; transition: transform 0.2s, background 0.2s;
-    display: block;
+  .helix-hero__featured { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(220px,.9fr); overflow: hidden; border-radius: 10px; background: #13233f; color: white; text-decoration: none; }
+  .helix-hero__featured:hover .helix-hero__featured-image img { transform: scale(1.035); }
+  .helix-hero__featured-image { min-height: 340px; background: #eef1f5; }
+  .helix-hero__featured-image img { width: 100%; height: 100%; object-fit: contain; transition: transform .35s ease; }
+  .helix-hero__featured-copy { display: flex; flex-direction: column; justify-content: center; padding: 28px; }
+  .helix-hero__featured-label { width: fit-content; margin-bottom: 17px; padding: 6px 10px; border-radius: 999px; background: #f2b705; color: #13233f; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+  .helix-hero__featured-copy h2 { margin: 0 0 11px; color: white; font-size: clamp(27px,3vw,39px); line-height: 1; letter-spacing: -.035em; }
+  .helix-hero__featured-copy p { margin: 0; color: #c8d1df; font-size: 13px; line-height: 1.55; }
+  .helix-hero__featured-points { display: grid; gap: 7px; margin-top: 18px; color: white; font-size: 12px; font-weight: 700; }
+  .helix-hero__featured-cta { margin-top: 23px; color: #f2b705; font-size: 13px; font-weight: 850; }
+  @media (max-width: 640px) {
+    .helix-hero__featured { grid-template-columns: 1fr; }
+    .helix-hero__featured-image { min-height: 235px; }
+    .helix-hero__featured-copy { padding: 24px; }
   }
-  .helix-hero__product-card:hover { transform: translateY(-3px); background: #eee9dc; }
-  .helix-hero__product-img { position: relative; aspect-ratio: 5/4; overflow: hidden; }
-  .helix-hero__product-img img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
-  .helix-hero__product-name { padding: 10px 10px 12px; font-size: 12px; font-weight: 800; color: #0f172a; line-height: 1.3; }
   /* Trust bar */
   .helix-trust { background: white; border-bottom: 1px solid #e2e8f0; }
   .helix-trust__grid { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
@@ -182,33 +186,23 @@
           <span class="helix-badge">Shop online or compare locally</span>
         </div>
         <div class="helix-hero__buttons">
-          <a href="#tier-products" class="helix-btn-primary">Shop by tier</a>
+          <a href="{{ routes.root_url }}products/helix-midnight-luxe" class="helix-btn-primary">Shop Midnight Luxe</a>
+          <a href="#tier-products" class="helix-btn-secondary">Compare all Helix</a>
         </div>
       </div>
       <div class="helix-hero__right">
-        <p class="helix-hero__showroom-note">
-          Compare Core, Luxe, and Elite online, then call either showroom to confirm which floor models are available to try.
-        </p>
-        <div class="helix-hero__products">
-          <a href="{{ routes.root_url }}products/helix-midnight" class="helix-hero__product-card">
-            <div class="helix-hero__product-img">
-              <img src="{{ 'dm-helix-midnight-core-new.jpg' | asset_url }}" alt="Helix Midnight" loading="lazy" width="800" height="656">
-            </div>
-            <p class="helix-hero__product-name">Helix Midnight<br><span style="font-weight:400;color:#64748b;font-size:11px;">Medium feel · Core</span></p>
-          </a>
-          <a href="{{ routes.root_url }}products/helix-midnight-luxe" class="helix-hero__product-card">
-            <div class="helix-hero__product-img">
-              <img src="{{ 'dm-helix-midnight-luxe-new.jpg' | asset_url }}" alt="Helix Midnight Luxe" loading="lazy" width="1220" height="790">
-            </div>
-            <p class="helix-hero__product-name">Helix Midnight Luxe<br><span style="font-weight:400;color:#64748b;font-size:11px;">Pillow top upgrade</span></p>
-          </a>
-          <a href="{{ routes.root_url }}products/helix-midnight-elite" class="helix-hero__product-card">
-            <div class="helix-hero__product-img">
-              <img src="{{ 'dm-helix-midnight-elite-new.jpg' | asset_url }}" alt="Helix Midnight Elite" loading="lazy" width="800" height="709">
-            </div>
-            <p class="helix-hero__product-name">Helix Midnight Elite<br><span style="font-weight:400;color:#64748b;font-size:11px;">Premium cooling · 16"</span></p>
-          </a>
-        </div>
+        <a href="{{ routes.root_url }}products/helix-midnight-luxe" class="helix-hero__featured">
+          <div class="helix-hero__featured-image">
+            <img src="{{ 'dm-helix-midnight-luxe-new.jpg' | asset_url }}" alt="Helix Midnight Luxe mattress" loading="eager" width="1220" height="790">
+          </div>
+          <div class="helix-hero__featured-copy">
+            <span class="helix-hero__featured-label">Balanced option</span>
+            <h2>Helix Midnight Luxe</h2>
+            <p>The easiest place to start: a medium feel with a premium pillow top and zoned lumbar support.</p>
+            <div class="helix-hero__featured-points"><span>Medium feel</span><span>Side sleepers &amp; couples</span><span>Cooling upgrades available</span></div>
+            <span class="helix-hero__featured-cta">View Midnight Luxe →</span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -252,7 +246,7 @@
         <p>Each tier adds height, cooling, and pressure-relief upgrades. Start with the level, then pick your feel.</p>
       </div>
       <div class="helix-tier-header__right">
-        <p><strong>Not sure?</strong> Most shoppers start with Core, then compare Luxe for the pillow-top upgrade. Elite is the premium pick for maximum cooling and support.</p>
+        <p><strong>Not sure?</strong> Start with the Midnight Luxe. Its medium feel, pillow top, and zoned support make it the most balanced Helix option to compare against softer or firmer models.</p>
       </div>
     </div>
 
@@ -278,9 +272,9 @@
         </div>
         <div class="helix-tier-card__body">
           <div class="helix-tier-card__name">Luxe</div>
-          <div class="helix-tier-card__price">Pillow-top build</div>
+          <div class="helix-tier-card__price">Most popular · Balanced starting point</div>
           <p class="helix-tier-card__summary">Adds a premium pillow top, zoned lumbar support, and TENCEL™ cover options. 14" profiles.</p>
-          <div class="helix-tier-card__best-for">✅ Pressure relief · Couples · Plusher step-up feel</div>
+          <div class="helix-tier-card__best-for">Midnight Luxe leads this collection · Pressure relief · Couples · Medium feel</div>
           <span class="helix-tier-card__selector">Shop Luxe →</span>
         </div>
       </a>
@@ -318,8 +312,8 @@
             <p>Sunset and Midnight start the pressure-relief comparison. Start here if you wake up with shoulder or hip pain.</p>
           </div>
           <div class="helix-story__col">
-            <h4>Balanced support</h4>
-            <p>Moonlight has a soft feel for back and stomach sleepers. Dusk is the balanced option for combination sleepers who switch positions at night.</p>
+            <h4>Balanced favorite</h4>
+            <p>Midnight Luxe is the medium-feel starting point for side sleepers and couples. Dusk keeps that balanced feel for back and stomach sleepers.</p>
           </div>
           <div class="helix-story__col">
             <h4>Firmer support</h4>

@@ -2,7 +2,7 @@
   Utility bar — phone, hours, directions above main nav
   Settings allow full editing via Shopify theme editor
 {%- endcomment -%}
-{%- assign all_products_url = routes.collections_url | append: '/all' -%}
+{%- assign mattress_shop_url = routes.collections_url -%}
 {%- if section.settings.enable_utility_bar -%}
 <div class="utility-bar" role="region" aria-label="Store information">
   <div class="utility-bar__inner">
@@ -75,8 +75,8 @@
               <li class="header__nav-item">
                 {%- liquid
                   assign link_href = link.url
-                  if link.title == 'Catalog'
-                    assign link_href = link_href | append: '?sort_by=created-descending'
+                  if link.title == 'Shop Mattresses' or link.title == 'Catalog'
+                    assign link_href = mattress_shop_url
                   endif
                 -%}
                 <a href="{{ link_href }}" class="header__nav-link{% if link.active %} is-active{% endif %}">
@@ -159,7 +159,7 @@
       <strong>Menu</strong>
       <button type="button" class="mobile-menu-panel__close" data-mobile-menu-close aria-label="Close menu">&times;</button>
     </div>
-    <a href="{{ all_products_url }}">Shop Mattresses</a>
+    <a href="{{ mattress_shop_url }}">Shop Mattresses</a>
     <a href="{{ routes.search_url }}">Search</a>
     <a href="{{ routes.root_url }}pages/locations">Locations</a>
     <a href="{{ routes.root_url }}pages/financing">Financing</a>
@@ -948,7 +948,7 @@
       "type": "url",
       "id": "shop_url",
       "label": "Shop button URL",
-      "default": "/collections/all"
+      "default": "/collections"
     },
     {
       "type": "header",

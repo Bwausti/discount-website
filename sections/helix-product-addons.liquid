@@ -10,6 +10,10 @@
   endif
 
   assign title_downcase = closest.product.title | downcase
+  assign show_midnight_luxe_video = false
+  if closest.product.handle == 'helix-midnight-luxe'
+    assign show_midnight_luxe_video = true
+  endif
   assign tier = 'Core'
   assign height = '11.5 in.'
   assign tier_summary = 'Responsive hybrid comfort with the best starting value.'
@@ -144,9 +148,10 @@
       <div class="helix-story__videos" id="HelixVideos-{{ section.id }}">
         <div class="helix-story__video-heading">
           <p class="helix-story__eyebrow">From Helix</p>
-          <h3>See the difference</h3>
+          <h3>{% if show_midnight_luxe_video %}See the Midnight Luxe{% else %}Cooling, explained{% endif %}</h3>
         </div>
-        <div class="helix-story__video-grid">
+        <div class="helix-story__video-grid{% unless show_midnight_luxe_video %} is-single{% endunless %}">
+          {%- if show_midnight_luxe_video -%}
           <article class="helix-story__video-card">
             <div class="helix-story__frame">
               <video
@@ -161,6 +166,7 @@
             </div>
             <div><strong>Inside the Midnight Luxe</strong><span>A closer look at Helix's popular Luxe model.</span></div>
           </article>
+          {%- endif -%}
           <article class="helix-story__video-card">
             <div class="helix-story__frame">
               <video
@@ -220,6 +226,7 @@
     .helix-story__videos h3 { color: #fff; }
     .helix-story__video-heading { margin-bottom: 26px; }
     .helix-story__video-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
+    .helix-story__video-grid.is-single { grid-template-columns: minmax(0,680px); }
     .helix-story__video-card { overflow: hidden; border: 1px solid rgba(255,255,255,.14); border-radius: 14px; background: #1c3154; }
     .helix-story__frame { position: relative; aspect-ratio: 16/9; background: #0a1629; }
     .helix-story__frame video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }

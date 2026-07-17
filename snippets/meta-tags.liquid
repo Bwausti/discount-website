@@ -6,7 +6,7 @@
 
   if request.page_type == 'index'
     assign dm_title = 'Discount Mattress | Mattress Store in Bowling Green, KY'
-    assign dm_desc = 'Shop Helix, Puffy, Nectar, DreamCloud, Serta, and more online or at Discount Mattress in Bowling Green, Kentucky. Local help, financing, and free standard shipping in 50 states plus DC.'
+    assign dm_desc = 'Shop Helix, Puffy, Nectar, DreamCloud, Serta, and more online or at Discount Mattress in Bowling Green, Kentucky. Local help, financing, and Free Nationwide Delivery.'
   elsif request.page_type == 'product'
     assign clean_product_title = product.title | replace: 'Discount Mattress 4', 'Discount Mattress'
     assign dm_title = clean_product_title | append: ' | Discount Mattress'
@@ -28,8 +28,8 @@
     endif
     assign dm_image = collection.image
   elsif request.page_type == 'list-collections'
-    assign dm_title = 'Mattress Brands | Discount Mattress Bowling Green'
-    assign dm_desc = 'Compare leading mattress brands including Helix, Puffy, Nectar, DreamCloud, Serta, Naturepedic, BedGear, and more.'
+    assign dm_title = 'Shop Mattresses | Discount Mattress'
+    assign dm_desc = 'Shop mattresses by comfort goal or compare leading brands including Helix, Puffy, Nectar, DreamCloud, Serta, Naturepedic, and more.'
   elsif request.page_type == 'policy'
     assign policy_title = page_title | default: 'Store Policy'
     assign dm_title = policy_title | append: ' | Discount Mattress'
