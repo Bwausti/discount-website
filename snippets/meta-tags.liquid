@@ -6,9 +6,10 @@
 
   if request.page_type == 'index'
     assign dm_title = 'Discount Mattress | Mattress Store in Bowling Green, KY'
-    assign dm_desc = 'Shop Helix, Puffy, Nectar, DreamCloud, Serta, and more online or at Discount Mattress in Bowling Green, Kentucky. Local help, financing, delivery, and nationwide shipping.'
+    assign dm_desc = 'Shop Helix, Puffy, Nectar, DreamCloud, Serta, and more online or at Discount Mattress in Bowling Green, Kentucky. Local help, financing, and free standard shipping in 50 states plus DC.'
   elsif request.page_type == 'product'
-    assign dm_title = product.title | append: ' | Discount Mattress'
+    assign clean_product_title = product.title | replace: 'Discount Mattress 4', 'Discount Mattress'
+    assign dm_title = clean_product_title | append: ' | Discount Mattress'
     assign dm_type = 'product'
     assign dm_image = product.featured_media.preview_image | default: product.featured_image
     if product.vendor == 'Helix' and product.type == 'Mattress'
@@ -19,6 +20,9 @@
   elsif request.page_type == 'collection'
     assign dm_title = collection.title | append: ' | Discount Mattress'
     assign dm_desc = collection.description | strip_html | strip | truncate: 155
+    if collection.handle == 'helix'
+      assign dm_desc = 'Compare Helix Core, Luxe, and Elite mattresses, including model-specific cooling and support options, with local help from Discount Mattress.'
+    endif
     if dm_desc == blank
       assign dm_desc = 'Shop ' | append: collection.title | append: ' at Discount Mattress in Bowling Green, Kentucky. Compare options online or get local help in our showrooms.'
     endif
@@ -26,6 +30,14 @@
   elsif request.page_type == 'list-collections'
     assign dm_title = 'Mattress Brands | Discount Mattress Bowling Green'
     assign dm_desc = 'Compare leading mattress brands including Helix, Puffy, Nectar, DreamCloud, Serta, Naturepedic, BedGear, and more.'
+  elsif request.page_type == 'policy'
+    assign policy_title = page_title | default: 'Store Policy'
+    assign dm_title = policy_title | append: ' | Discount Mattress'
+    if request.path contains 'privacy'
+      assign dm_desc = 'Review how Discount Mattress collects, uses, and protects personal information and the privacy choices available to customers.'
+    else
+      assign dm_desc = 'Review the current store policy for Discount Mattress in Bowling Green, Kentucky.'
+    endif
   elsif request.page_type == 'page'
     assign dm_title = page.title | append: ' | Discount Mattress'
     if page_description == blank
@@ -36,7 +48,19 @@
     elsif page.handle == 'locations'
       assign dm_desc = 'Find Discount Mattress showroom locations, phone numbers, current hours, and directions in Bowling Green, Kentucky.'
     elsif page.handle == 'financing'
-      assign dm_desc = 'Explore flexible mattress financing options available at Discount Mattress in Bowling Green, Kentucky.'
+      assign dm_desc = 'Explore mattress financing options at Discount Mattress in Bowling Green. Approval, rates, and terms are set by each financing provider.'
+    elsif page.handle == 'about-us'
+      assign dm_desc = 'Meet Discount Mattress, a family-owned Bowling Green mattress store with two local showrooms and straightforward help comparing leading brands.'
+    elsif page.handle == 'faq'
+      assign dm_desc = 'Get clear answers about mattress availability, delivery, pickup, returns, warranties, financing, setup, and cancellations at Discount Mattress.'
+    elsif page.handle == 'data-sharing-opt-out'
+      assign dm_desc = 'Review and manage privacy choices related to data sharing and targeted advertising for Discount Mattress.'
+    elsif page.handle contains 'shipping'
+      assign dm_desc = 'Review shipping, delivery, pickup, timing, and destination information for orders from Discount Mattress.'
+    elsif page.handle contains 'refund' or page.handle contains 'return'
+      assign dm_desc = 'Review return, refund, cancellation, and exchange information for purchases from Discount Mattress.'
+    elsif page.handle contains 'terms'
+      assign dm_desc = 'Review the website and purchase terms that apply when using Discount Mattress services.'
     endif
   elsif request.page_type == 'article'
     assign dm_title = article.title | append: ' | Discount Mattress'
@@ -45,12 +69,27 @@
     if page_description == blank
       assign dm_desc = article.excerpt_or_content | strip_html | strip | truncate: 155
     endif
+  elsif request.page_type == 'blog'
+    assign dm_title = blog.title | append: ' | Discount Mattress'
+    assign dm_desc = 'Practical mattress shopping guides from Discount Mattress in Bowling Green, Kentucky.'
+  elsif request.page_type == 'cart'
+    assign dm_title = 'Your Cart | Discount Mattress'
+    assign dm_desc = 'Review your mattress selection, availability guidance, delivery information, and order total before checkout.'
+  elsif request.page_type == 'search'
+    assign dm_title = 'Search Mattresses & Brands | Discount Mattress'
+    assign dm_desc = 'Search mattresses, bedding, brands, and sleep products available from Discount Mattress.'
+  elsif request.page_type == '404'
+    assign dm_title = 'Page Not Found | Discount Mattress'
+    assign dm_desc = 'The page you requested could not be found. Shop mattresses or contact the Discount Mattress team for help.'
   endif
 -%}
 
 <title>{{ dm_title | escape }}</title>
 <meta name="description" content="{{ dm_desc | strip_html | strip | escape }}">
 <link rel="canonical" href="{{ canonical_url }}">
+{%- if request.page_type == 'blog' and blog.handle == 'news' and blog.articles_count < 3 -%}
+  <meta name="robots" content="noindex,follow">
+{%- endif -%}
 
 <meta property="og:site_name" content="{{ shop.name | escape }}">
 <meta property="og:url" content="{{ canonical_url }}">

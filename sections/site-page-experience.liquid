@@ -1,0 +1,158 @@
+{%- assign dm_page_handle = page.handle -%}
+{%- if dm_page_handle == 'about-us' or dm_page_handle == 'locations' or dm_page_handle == 'faq' or dm_page_handle == 'financing' -%}
+  <style>
+    .template-page-{{ dm_page_handle }} .main-page,
+    .template-page-{{ dm_page_handle }} .main-page-content { display: none !important; }
+    .dm-page { color: #334155; background: #fff; }
+    .dm-page * { box-sizing: border-box; }
+    .dm-page__hero { padding: 72px 24px; background: #162b49; color: #fff; text-align: center; }
+    .dm-page__eyebrow { margin: 0 0 10px; color: #f2b705; font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    .dm-page__hero h1 { max-width: 820px; margin: 0 auto 14px; color: #fff; font-size: clamp(34px, 5vw, 56px); line-height: 1.02; letter-spacing: -.03em; }
+    .dm-page__hero p:last-child { max-width: 700px; margin: 0 auto; color: rgba(255,255,255,.76); font-size: 16px; line-height: 1.65; }
+    .dm-page__section { max-width: 1120px; margin: 0 auto; padding: 64px 24px; }
+    .dm-page__section--tint { max-width: none; background: #f7f6f1; }
+    .dm-page__section--tint > div { max-width: 1120px; margin: 0 auto; }
+    .dm-page__heading { margin: 0 0 12px; color: #162b49; font-size: clamp(26px, 3.5vw, 38px); line-height: 1.1; letter-spacing: -.02em; }
+    .dm-page__lede { max-width: 720px; margin: 0 0 32px; color: #64748b; font-size: 15px; line-height: 1.7; }
+    .dm-page__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .dm-page__grid--three { grid-template-columns: repeat(3, 1fr); }
+    .dm-page__card { padding: 26px; border: 1px solid #dbe3ec; border-radius: 14px; background: #fff; box-shadow: 0 2px 10px rgba(15,23,42,.04); }
+    .dm-page__card h2, .dm-page__card h3 { margin: 0 0 9px; color: #162b49; font-size: 20px; line-height: 1.2; }
+    .dm-page__card p { margin: 0; font-size: 14px; line-height: 1.65; }
+    .dm-page__photo { width: 100%; aspect-ratio: 16/10; margin-bottom: 20px; border-radius: 10px; object-fit: cover; }
+    .dm-page__label { display: inline-block; margin-bottom: 10px; color: #cf2333; font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    .dm-page__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .dm-page__button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 11px 18px; border: 1px solid #162b49; border-radius: 7px; background: #162b49; color: #fff; font-size: 13px; font-weight: 800; text-decoration: none; }
+    .dm-page__button--outline { background: #fff; color: #162b49; }
+    .dm-page__note { padding: 18px 20px; border-left: 3px solid #f2b705; background: #fff9df; color: #594a16; font-size: 13px; line-height: 1.6; }
+    .dm-page__faq { max-width: 880px; margin: 0 auto; }
+    .dm-page__faq details { border-bottom: 1px solid #dbe3ec; }
+    .dm-page__faq summary { position: relative; padding: 22px 44px 22px 0; color: #162b49; font-size: 16px; font-weight: 800; cursor: pointer; list-style: none; }
+    .dm-page__faq summary::-webkit-details-marker { display: none; }
+    .dm-page__faq summary::after { content: "+"; position: absolute; right: 4px; top: 18px; font-size: 24px; font-weight: 400; }
+    .dm-page__faq details[open] summary::after { content: "–"; }
+    .dm-page__faq details div { padding: 0 44px 22px 0; color: #64748b; font-size: 14px; line-height: 1.7; }
+    .dm-page__cta { padding: 48px 24px; background: #f2b705; text-align: center; }
+    .dm-page__cta h2 { margin: 0 0 8px; color: #162b49; font-size: 28px; }
+    .dm-page__cta p { margin: 0 auto 18px; color: #4b4a3f; }
+    @media (max-width: 780px) {
+      .dm-page__hero { padding: 48px 20px; }
+      .dm-page__section { padding: 44px 18px; }
+      .dm-page__grid, .dm-page__grid--three { grid-template-columns: 1fr; }
+      .dm-page__actions { flex-direction: column; }
+      .dm-page__button { width: 100%; }
+    }
+  </style>
+
+  {%- if dm_page_handle == 'about-us' -%}
+    <article class="dm-page">
+      <header class="dm-page__hero">
+        <p class="dm-page__eyebrow">Local help. Better sleep.</p>
+        <h1>A mattress store built around real comparisons</h1>
+        <p>Discount Mattress is a family-owned Bowling Green business with two local showrooms and a straightforward way to shop leading mattress brands.</p>
+      </header>
+      <section class="dm-page__section">
+        <div class="dm-page__grid">
+          <div>
+            <p class="dm-page__eyebrow">Our approach</p>
+            <h2 class="dm-page__heading">Start with how you sleep</h2>
+            <p class="dm-page__lede">We help narrow the choices by comfort, sleep position, temperature, materials, and budget. Then you can compare the strongest options side by side instead of guessing from a product grid.</p>
+            <div class="dm-page__actions">
+              <a class="dm-page__button" href="{{ routes.all_products_collection_url }}">Shop mattresses</a>
+              <a class="dm-page__button dm-page__button--outline" href="/pages/locations">Visit a showroom</a>
+            </div>
+          </div>
+          <img class="dm-page__photo" src="{{ 'CampbellLnInside.jpg' | asset_img_url: '1000x' }}" alt="Inside the Discount Mattress Campbell Lane showroom" width="774" height="483" loading="lazy">
+        </div>
+      </section>
+      <section class="dm-page__section dm-page__section--tint">
+        <div>
+          <h2 class="dm-page__heading">What you can expect</h2>
+          <div class="dm-page__grid dm-page__grid--three">
+            <div class="dm-page__card"><h3>Clear guidance</h3><p>Useful comparisons and concise answers without overloading you with technical language.</p></div>
+            <div class="dm-page__card"><h3>Brands worth comparing</h3><p>Online favorites and established mattress makers, available to explore in one place.</p></div>
+            <div class="dm-page__card"><h3>Local follow-through</h3><p>Real people to call about availability, showroom models, financing, pickup, and delivery.</p></div>
+          </div>
+        </div>
+      </section>
+      <div class="dm-page__cta"><h2>Let’s find a better fit</h2><p>Browse online or call before your visit to confirm a specific model.</p><a class="dm-page__button" href="/pages/contact">Talk to our team</a></div>
+    </article>
+
+  {%- elsif dm_page_handle == 'locations' -%}
+    <article class="dm-page">
+      <header class="dm-page__hero">
+        <p class="dm-page__eyebrow">Bowling Green, Kentucky</p>
+        <h1>Visit a Discount Mattress showroom</h1>
+        <p>Compare comfort in person and get help narrowing brands, models, and price options. Call ahead for current hours and floor-model availability.</p>
+      </header>
+      <section class="dm-page__section">
+        <div class="dm-page__grid">
+          <article class="dm-page__card" id="campbell-lane">
+            <img class="dm-page__photo" src="{{ 'DiscountMatt1.jpg' | asset_img_url: '900x' }}" alt="Discount Mattress on Campbell Lane" width="1164" height="727" loading="lazy">
+            <span class="dm-page__label">Main showroom</span>
+            <h2>Campbell Lane</h2>
+            <p>1555 Campbell Ln<br>Bowling Green, KY 42104<br><a href="tel:12704951603">(270) 495-1603</a><br>Call for current hours.</p>
+            <div class="dm-page__actions"><a class="dm-page__button" href="tel:12704951603">Call showroom</a><a class="dm-page__button dm-page__button--outline" href="https://maps.google.com/?q=1555+Campbell+Ln+Bowling+Green+KY+42104" target="_blank" rel="noopener">Directions</a></div>
+          </article>
+          <article class="dm-page__card" id="russellville-road">
+            <img class="dm-page__photo" src="{{ 'DiscountMatt2.jpg' | asset_img_url: '900x' }}" alt="Discount Mattress Outlet on Russellville Road" width="1164" height="727" loading="lazy">
+            <span class="dm-page__label">Outlet store</span>
+            <h2>Russellville Road</h2>
+            <p>2734 Russellville Rd<br>Bowling Green, KY 42101<br><a href="tel:12708423888">(270) 842-3888</a><br>Call for current hours.</p>
+            <div class="dm-page__actions"><a class="dm-page__button" href="tel:12708423888">Call outlet</a><a class="dm-page__button dm-page__button--outline" href="https://maps.google.com/?q=2734+Russellville+Rd+Bowling+Green+KY+42101" target="_blank" rel="noopener">Directions</a></div>
+          </article>
+        </div>
+        <p class="dm-page__note" style="margin-top: 24px;">Looking for a specific brand or mattress? Call before visiting and the team will help confirm whether it is available to try at that location.</p>
+      </section>
+    </article>
+
+  {%- elsif dm_page_handle == 'faq' -%}
+    <article class="dm-page">
+      <header class="dm-page__hero">
+        <p class="dm-page__eyebrow">Good to know</p>
+        <h1>Mattress shopping questions, answered</h1>
+        <p>Clear guidance about availability, fulfillment, financing, policies, and getting help before or after an order.</p>
+      </header>
+      <section class="dm-page__section dm-page__faq">
+        <details><summary>Is every mattress shown online physically in stock?</summary><div>Not always. Online availability may include showroom, warehouse, or supplier availability. We confirm the selected model and size before scheduling fulfillment.</div></details>
+        <details><summary>How does nationwide shipping work?</summary><div>Free standard shipping is configured for the 50 states and Washington, DC. Express service may cost extra. Territories, PO boxes, and APO/FPO addresses are not currently supported.</div></details>
+        <details><summary>Can I pick up my order at a showroom?</summary><div>Pickup may be available for eligible products after the team confirms the item and location. Wait for confirmation before traveling to the store.</div></details>
+        <details><summary>How long will my order take?</summary><div>Timing varies by brand, model, size, and destination. Check the estimate on the product page when available, or call for the most current guidance.</div></details>
+        <details><summary>How do returns and exchanges work?</summary><div>Terms can vary by product, condition, manufacturer program, and purchase channel. Review the written refund policy and any product-specific terms before purchasing.</div></details>
+        <details><summary>What warranty comes with my mattress?</summary><div>Warranty coverage is provided under the applicable manufacturer terms and varies by model. Ask us for the written coverage and claim process before purchase.</div></details>
+        <details><summary>Is financing available?</summary><div>Financing options may be available to qualified applicants. Approval, rates, fees, payment amounts, and terms are determined by the financing provider.</div></details>
+        <details><summary>Do you provide setup or old mattress removal?</summary><div>Availability and cost vary by order and destination. Contact the team before checkout if either service is important to your purchase.</div></details>
+        <details><summary>When is payment captured for an online order?</summary><div>Your payment method is authorized at checkout. We confirm product availability before capturing payment; if the order cannot be confirmed, the authorization is canceled instead.</div></details>
+        <details><summary>Can I cancel an order?</summary><div>Contact us as quickly as possible. Whether an order can be changed or canceled depends on its fulfillment status and the applicable written policy.</div></details>
+        <details><summary>How can I confirm a model is available to try?</summary><div>Call Campbell Lane at <a href="tel:12704951603">(270) 495-1603</a> or Russellville Road at <a href="tel:12708423888">(270) 842-3888</a> before visiting.</div></details>
+      </section>
+      <div class="dm-page__cta"><h2>Still have a question?</h2><p>Our local team can help with a product, order, or showroom visit.</p><a class="dm-page__button" href="/pages/contact">Contact Discount Mattress</a></div>
+    </article>
+
+  {%- elsif dm_page_handle == 'financing' -%}
+    <article class="dm-page">
+      <header class="dm-page__hero">
+        <p class="dm-page__eyebrow">Payment flexibility</p>
+        <h1>Explore mattress financing options</h1>
+        <p>Ask our team which financing paths may be available for your purchase and review the provider’s terms before applying.</p>
+      </header>
+      <section class="dm-page__section">
+        <div class="dm-page__grid dm-page__grid--three">
+          <div class="dm-page__card"><span class="dm-page__label">Step 1</span><h2>Choose your mattress</h2><p>Narrow the product, size, and any accessories so you know the amount you may need to finance.</p></div>
+          <div class="dm-page__card"><span class="dm-page__label">Step 2</span><h2>Compare available paths</h2><p>Ask which providers and application options apply to your purchase and location.</p></div>
+          <div class="dm-page__card"><span class="dm-page__label">Step 3</span><h2>Review before accepting</h2><p>Check the full payment schedule, fees, interest or lease cost, late terms, and total cost.</p></div>
+        </div>
+        <p class="dm-page__note" style="margin-top: 24px;">Financing is subject to provider approval and eligibility. Rates, fees, terms, and payment amounts are set by the provider, not Discount Mattress. An option that lowers the monthly payment may increase the total cost.</p>
+        <div class="dm-page__actions" style="justify-content: center; margin-top: 28px;"><a class="dm-page__button" href="tel:12704951603">Call about financing</a><a class="dm-page__button dm-page__button--outline" href="/pages/locations">Visit a showroom</a></div>
+      </section>
+    </article>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Site page experience",
+  "settings": [],
+  "enabled_on": { "templates": ["page"] }
+}
+{% endschema %}

@@ -68,7 +68,7 @@
 
   <!-- HERO -->
   <section class="bg-hero">
-    <img src="{{ 'bedgear-storm-card.jpg' | asset_url }}" alt="Bedgear" class="bg-hero__bg" loading="eager">
+    <img src="{{ 'bedgear-storm-card.jpg' | asset_url }}" alt="Bedgear" class="bg-hero__bg" loading="eager" width="1600" height="900">
     <div class="bg-hero__content">
       <div class="bg-hero__left">
         <span class="bg-eyebrow">Available in Bowling Green, KY</span>
@@ -91,7 +91,7 @@
           <a href="/products/bedgear-storm" class="bg-hero__pillow-card">
             <div class="bg-hero__pillow-img">
               {% if storm_prod and storm_prod.images.size > 0 %}
-                <img src="{{ storm_prod.images[1] | default: storm_prod.images[0] | image_url: width: 300 }}" alt="Storm" loading="lazy">
+                <img src="{{ storm_prod.images[1] | default: storm_prod.images[0] | image_url: width: 300 }}" alt="Storm" loading="lazy" width="300" height="300">
               {% endif %}
             </div>
             <div class="bg-hero__pillow-name">Storm Performance</div>
@@ -102,7 +102,7 @@
           <a href="/products/bedgear-balance" class="bg-hero__pillow-card">
             <div class="bg-hero__pillow-img">
               {% if bal_prod and bal_prod.images.size > 0 %}
-                <img src="{{ bal_prod.images[1] | default: bal_prod.images[0] | image_url: width: 300 }}" alt="Balance" loading="lazy">
+                <img src="{{ bal_prod.images[1] | default: bal_prod.images[0] | image_url: width: 300 }}" alt="Balance" loading="lazy" width="300" height="300">
               {% endif %}
             </div>
             <div class="bg-hero__pillow-name">Balance Performance</div>
@@ -129,7 +129,7 @@
           <a href="/products/{{ handle }}" class="bg-card">
             <div class="bg-card__img">
               {% assign img = prod.images[1] | default: prod.images[0] %}
-              <img src="{{ img | image_url: width: 500 }}" alt="{{ prod.title }}" loading="lazy">
+              <img src="{{ img | image_url: width: 500 }}" alt="{{ prod.title }}" loading="lazy" width="500" height="500">
             </div>
             <div class="bg-card__body">
               <div class="bg-card__name">{{ prod.title }}</div>
@@ -154,7 +154,7 @@
         {% assign story_prod = bg_prods | where: 'handle', 'bedgear-storm' | first %}
         {% if story_prod and story_prod.images.size > 0 %}
           {% assign story_img = story_prod.images[2] | default: story_prod.images[0] %}
-          <img src="{{ story_img | image_url: width: 800 }}" alt="Bedgear" loading="lazy">
+          <img src="{{ story_img | image_url: width: 800 }}" alt="Bedgear" loading="lazy" width="800" height="450">
         {% endif %}
       </div>
       <div>

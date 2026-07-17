@@ -2,6 +2,8 @@
   {% break %}
 {% endif %}
 
+{% # theme-check-disable RemoteAsset %}
+<!-- Conditional image sources below all use Shopify image_url or asset_url filters. -->
 <!-- Section: pranasleep-collection-banner -->
 <!-- Brand: PranaSleep | Natural Talalay Latex Hybrids -->
 <style>
@@ -164,8 +166,7 @@
       src="{{ 'prana-hero-bg.jpg' | asset_url }}"
       alt="PranaSleep mattress collection"
       class="prana-hero__bg"
-      loading="eager"
-    >
+      loading="eager" width="1600" height="900">
     <div class="prana-hero__content">
       <div class="prana-hero__left">
         <span class="prana-eyebrow">Available in Bowling Green, KY</span>
@@ -190,19 +191,19 @@
         <div class="prana-hero__products" style="grid-template-columns:repeat(3,1fr)">
           <a href="/products/karma-elite-2-hybrid-firm" class="prana-hero__product-card">
             <div class="prana-hero__product-img">
-              <img src="{% if prana_firm and prana_firm.featured_image %}{{ prana_firm.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Firm" loading="lazy">
+              <img src="{% if prana_firm and prana_firm.featured_image %}{{ prana_firm.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Firm" loading="lazy" width="500" height="500">
             </div>
             <p class="prana-hero__product-name">Karma Elite 2 Firm<br><span style="font-weight:400;color:#64748b;font-size:11px;">Firm Talalay latex feel</span></p>
           </a>
           <a href="/products/karma-elite-2-hybrid-plush" class="prana-hero__product-card">
             <div class="prana-hero__product-img">
-              <img src="{% if prana_plush and prana_plush.featured_image %}{{ prana_plush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Plush" loading="lazy">
+              <img src="{% if prana_plush and prana_plush.featured_image %}{{ prana_plush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Plush" loading="lazy" width="500" height="500">
             </div>
             <p class="prana-hero__product-name">Karma Elite 2 Plush<br><span style="font-weight:400;color:#64748b;font-size:11px;">Plush Talalay latex feel</span></p>
           </a>
           <a href="/products/karma-elite-2-hybrid-super-cush" class="prana-hero__product-card">
             <div class="prana-hero__product-img">
-              <img src="{% if prana_cush and prana_cush.featured_image %}{{ prana_cush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-cush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Super Cush" loading="lazy">
+              <img src="{% if prana_cush and prana_cush.featured_image %}{{ prana_cush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-cush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Super Cush" loading="lazy" width="500" height="500">
             </div>
             <p class="prana-hero__product-name">Karma Elite 2 Super Cush<br><span style="font-weight:400;color:#64748b;font-size:11px;">Super cush Talalay latex feel</span></p>
           </a>
@@ -253,7 +254,7 @@
       <!-- Karma Elite 2 Hybrid Firm -->
       <a href="/products/karma-elite-2-hybrid-firm" class="prana-product-card">
         <div class="prana-product-card__img">
-          <img src="{% if prana_firm and prana_firm.featured_image %}{{ prana_firm.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Firm" loading="lazy">
+          <img src="{% if prana_firm and prana_firm.featured_image %}{{ prana_firm.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Firm" loading="lazy" width="500" height="500">
         </div>
         <div class="prana-product-card__body">
           <div class="prana-product-card__name">Karma Elite 2 Firm</div>
@@ -270,7 +271,7 @@
       <!-- Karma Elite 2 Hybrid Plush -->
       <a href="/products/karma-elite-2-hybrid-plush" class="prana-product-card">
         <div class="prana-product-card__img">
-          <img src="{% if prana_plush and prana_plush.featured_image %}{{ prana_plush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Plush" loading="lazy">
+          <img src="{% if prana_plush and prana_plush.featured_image %}{{ prana_plush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-plush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Plush" loading="lazy" width="500" height="500">
         </div>
         <div class="prana-product-card__body">
           <div class="prana-product-card__name">Karma Elite 2 Plush</div>
@@ -287,7 +288,7 @@
       <!-- Karma Elite 2 Hybrid Super Cush -->
       <a href="/products/karma-elite-2-hybrid-super-cush" class="prana-product-card">
         <div class="prana-product-card__img">
-          <img src="{% if prana_cush and prana_cush.featured_image %}{{ prana_cush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-cush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Super Cush" loading="lazy">
+          <img src="{% if prana_cush and prana_cush.featured_image %}{{ prana_cush.featured_image | image_url: width: 500 }}{% else %}{{ 'prana-karma-cush-card.jpg' | asset_url }}{% endif %}" alt="Karma Elite 2 Super Cush" loading="lazy" width="500" height="500">
         </div>
         <div class="prana-product-card__body">
           <div class="prana-product-card__name">Karma Elite 2 Super Cush</div>
@@ -307,7 +308,7 @@
   <section class="prana-story">
     <div class="prana-story__inner">
       <div class="prana-story__img">
-        <img src="{{ 'prana-story-bg.jpg' | asset_url }}" alt="PranaSleep lifestyle" loading="lazy">
+        <img src="{{ 'prana-story-bg.jpg' | asset_url }}" alt="PranaSleep lifestyle" loading="lazy" width="1600" height="900">
       </div>
       <div class="prana-story__content">
         <p class="section-label">Why PranaSleep</p>

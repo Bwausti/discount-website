@@ -142,6 +142,10 @@
         "padding-block-end": 0
       }
     },
+    "collection-guide": {
+      "type": "collection-guide",
+      "settings": {}
+    },
     "main": {
       "type": "main-collection",
       "blocks": {
@@ -263,6 +267,8 @@
         "full_width_on_mobile": true,
         "columns_gap_horizontal": 16,
         "columns_gap_vertical": 24,
+        "enable_infinite_scroll": false,
+        "products_per_page": 24,
         "padding-inline-start": 0,
         "padding-inline-end": 0,
         "color_scheme": "scheme-1",
@@ -291,9 +297,10 @@
     "jamison-banner",
     "pranasleep-banner",
     "posh-and-lavish-banner",
-    "seo-copy",
+    "collection-guide",
     "section",
     "main",
+    "seo-copy",
     "local-cta"
   ]
 }

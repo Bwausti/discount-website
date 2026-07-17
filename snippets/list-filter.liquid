@@ -33,10 +33,14 @@
     assign is_vertical = true
   endif
   assign filter_param_name = filter.param_name | escape | replace: '.', '-'
+  assign id_context = 'inline'
+  if in_drawer
+    assign id_context = 'drawer'
+  endif
 -%}
 {% capture accordion_children %}
   <details
-    id="Facet-Details-{{ sectionId }}-{{ filter.param_name | escape | replace: '.', '-' }}"
+    id="Facet-Details-{{ sectionId }}-{{ filter.param_name | escape | replace: '.', '-' }}-{{ id_context }}"
     class="facets__panel"
     {% if filter_style == 'horizontal' %}
       data-auto-close-details="desktop"
@@ -110,11 +114,11 @@
         data-close-on-resize
       {% endunless %}
       class="facets__inputs facets__panel-content details-content{% if filter_style == 'horizontal' %} color-{{ settings.popover_color_scheme }}{% endif %}"
-      id="facet-inputs-{{ filter.param_name | escape | replace: '.', '-' }}"
+      id="facet-inputs-{{ filter.param_name | escape | replace: '.', '-' }}-{{ id_context }}"
     >
       <facet-inputs-component
         on:change="/updateFilters"
-        id="facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}"
+        id="facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}-{{ id_context }}"
       >
         {% liquid
           assign has_active_values = false
@@ -188,7 +192,7 @@
             endif
           %}
           <ul
-            id="filters-list-{{ sectionId }}-{{ filter.param_name | escape | replace: '.', '-' }}"
+            id="filters-list-{{ sectionId }}-{{ filter.param_name | escape | replace: '.', '-' }}-{{ id_context }}"
             class="facets__inputs-list{% if should_use_pills %} facets__inputs-list--grid{% endif %} list-unstyled{% if is_swatch %} facets__inputs-list--swatches{% if show_swatch_label %} facets__inputs-list--swatches-grid{% endif %}{% endif %}{% if is_image %} facets__inputs-list--images{% endif %}"
             {% if is_swatch %}
               style="--swatch-columns: {{ swatch_columns }};"
@@ -231,7 +235,7 @@
                   <fieldset
                     class="variant-option variant-option--buttons variant-option--images"
                     aria-label="{{ value.label }}"
-                    on:keydown="#facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}/handleKeyDown"
+                    on:keydown="#facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}-{{ id_context }}/handleKeyDown"
                   >
                     <div class="facets__image-wrapper">
                       {% if value.image %}
@@ -276,7 +280,7 @@
                   <fieldset
                     class="variant-option variant-option--buttons variant-option--swatches {% if is_disabled %}variant-option--swatches-disabled{% endif %}"
                     aria-label="{{ value.label }}"
-                    on:keydown="#facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}/handleKeyDown"
+                    on:keydown="#facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}-{{ id_context }}/handleKeyDown"
                   >
                     <label
                       class="variant-option__button-label variant-option__button-label--has-swatch"
@@ -327,7 +331,7 @@
                   {% if should_use_pills %}
                     <div
                       class="facets__pill-wrapper"
-                      on:keydown="#facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}/handleKeyDown"
+                      on:keydown="#facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}-{{ id_context }}/handleKeyDown"
                     >
                       <input
                         type="checkbox"
@@ -387,7 +391,7 @@
             ref="showMoreButton"
             on:click="/toggle"
             aria-expanded="false"
-            aria-controls="filters-list-{{ sectionId }}-{{ filter.param_name | escape | replace: '.', '-' }}"
+            aria-controls="filters-list-{{ sectionId }}-{{ filter.param_name | escape | replace: '.', '-' }}-{{ id_context }}"
           >
             <span class="svg-wrapper icon-plus">
               {{- 'icon-plus.svg' | inline_asset_content -}}

@@ -173,7 +173,7 @@
           <a href="/products/{{ handle }}" class="dcg-card">
             <div class="dcg-card__image">
               {% if prod.featured_image %}
-                <img src="{{ prod.featured_image | image_url: width: 400 }}" alt="{{ hybrid_names[forloop.index0] }}" loading="lazy">
+                <img src="{{ prod.featured_image | image_url: width: 400 }}" alt="{{ hybrid_names[forloop.index0] }}" loading="lazy" width="400" height="400">
               {% endif %}
               <span class="dcg-card__badge" style="background:#d4af37;color:#0f1a2e;">Hybrid</span>
             </div>
@@ -207,7 +207,7 @@
           <a href="/products/{{ handle }}" class="dcg-card">
             <div class="dcg-card__image">
               {% if prod.featured_image %}
-                <img src="{{ prod.featured_image | image_url: width: 400 }}" alt="{{ foam_names[forloop.index0] }}" loading="lazy">
+                <img src="{{ prod.featured_image | image_url: width: 400 }}" alt="{{ foam_names[forloop.index0] }}" loading="lazy" width="400" height="400">
               {% endif %}
               <span class="dcg-card__badge" style="background:#0f1a2e;color:white;">All-Foam</span>
             </div>

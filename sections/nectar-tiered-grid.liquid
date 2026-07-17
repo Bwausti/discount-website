@@ -135,9 +135,9 @@
             <div class="neg-card__image">
               {% assign images = prod.images %}
               {% if images.size > 1 %}
-                <img src="{{ images[1] | image_url: width: 500 }}" alt="{{ foam_names[forloop.index0] }}" loading="lazy">
+                <img src="{{ images[1] | image_url: width: 500 }}" alt="{{ foam_names[forloop.index0] }}" loading="lazy" width="500" height="500">
               {% elsif images.size > 0 %}
-                <img src="{{ images[0] | image_url: width: 500 }}" alt="{{ foam_names[forloop.index0] }}" loading="lazy">
+                <img src="{{ images[0] | image_url: width: 500 }}" alt="{{ foam_names[forloop.index0] }}" loading="lazy" width="500" height="500">
               {% endif %}
               <span class="neg-card__badge" style="background:#0b1a2d;color:white;">Foam</span>
             </div>
@@ -171,9 +171,9 @@
             <div class="neg-card__image">
               {% assign images = prod.images %}
               {% if images.size > 1 %}
-                <img src="{{ images[1] | image_url: width: 500 }}" alt="{{ hybrid_names[forloop.index0] }}" loading="lazy">
+                <img src="{{ images[1] | image_url: width: 500 }}" alt="{{ hybrid_names[forloop.index0] }}" loading="lazy" width="500" height="500">
               {% elsif images.size > 0 %}
-                <img src="{{ images[0] | image_url: width: 500 }}" alt="{{ hybrid_names[forloop.index0] }}" loading="lazy">
+                <img src="{{ images[0] | image_url: width: 500 }}" alt="{{ hybrid_names[forloop.index0] }}" loading="lazy" width="500" height="500">
               {% endif %}
               <span class="neg-card__badge" style="background:#2ec4b6;color:white;">Hybrid</span>
             </div>

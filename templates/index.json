@@ -21,8 +21,15 @@
     "trust_signals": {
       "type": "trust_signals",
       "settings": {
+        "item_1_text": "Curated mattress brands",
+        "item_2_text": "Two Bowling Green showrooms",
+        "item_2_url": "/pages/locations",
+        "item_3_text": "Local shopping help",
         "item_3_url": "/pages/contact",
-        "item_3_label": "Talk to a sleep expert"
+        "item_3_label": "Talk to our local team",
+        "item_4_text": "Financing options",
+        "item_4_url": "/pages/financing",
+        "item_5_text": "Delivery and pickup options"
       }
     },
     "brand_logos": {

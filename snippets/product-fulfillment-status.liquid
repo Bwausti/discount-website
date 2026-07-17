@@ -1,0 +1,76 @@
+{%- liquid
+  assign fulfillment_status = product.metafields.custom.fulfillment_status.value | default: 'special_order'
+  assign shipping_eta = product.metafields.custom.shipping_eta.value
+  assign warranty_summary = product.metafields.custom.warranty_summary.value
+  assign showroom_locations = product.metafields.custom.showroom_locations.value
+
+  case fulfillment_status
+    when 'in_stock'
+      assign status_title = 'Available now'
+      assign status_copy = 'This model is marked in stock. We will confirm the selected size before scheduling fulfillment.'
+      assign status_class = 'is-ready'
+    when 'supplier_confirmed'
+      assign status_title = 'Supplier availability confirmed'
+      assign status_copy = 'This model is available through our supplier. Timing depends on size and destination.'
+      assign status_class = 'is-confirmed'
+    else
+      assign status_title = 'Availability confirmation'
+      assign status_copy = 'This model may be special order. We will confirm availability before scheduling fulfillment.'
+      assign status_class = 'is-special-order'
+  endcase
+
+  if shipping_eta == blank
+    assign shipping_eta = 'Delivery timing is confirmed after the selected size and destination are reviewed.'
+  endif
+
+  if warranty_summary == blank
+    assign warranty_summary = 'Manufacturer warranty terms vary by model. Ask us for the written coverage before purchase.'
+  endif
+-%}
+
+<aside class="dm-product-assurance" aria-label="Availability, delivery, and warranty information">
+  <div class="dm-product-assurance__status {{ status_class }}">
+    <span class="dm-product-assurance__dot" aria-hidden="true"></span>
+    <div>
+      <p class="dm-product-assurance__title">{{ status_title }}</p>
+      <p>{{ status_copy }}</p>
+    </div>
+  </div>
+  <div class="dm-product-assurance__details">
+    <div>
+      <span class="dm-product-assurance__label">Delivery timing</span>
+      <p>{{ shipping_eta }}</p>
+    </div>
+    <div>
+      <span class="dm-product-assurance__label">Warranty</span>
+      <p>{{ warranty_summary }}</p>
+    </div>
+    {%- if showroom_locations != blank -%}
+      <div>
+        <span class="dm-product-assurance__label">Try it in store</span>
+        <p>
+          {%- if showroom_locations.first -%}
+            {{ showroom_locations | join: ', ' }}
+          {%- else -%}
+            {{ showroom_locations }}
+          {%- endif -%}
+          . Call ahead to confirm the model is on the floor.
+        </p>
+      </div>
+    {%- endif -%}
+  </div>
+</aside>
+
+<style>
+  .dm-product-assurance { margin: 14px 0 16px; border: 1px solid #dbe3ec; border-radius: 12px; overflow: hidden; background: #fff; color: #334155; }
+  .dm-product-assurance p { margin: 3px 0 0; font-size: 12px; line-height: 1.5; }
+  .dm-product-assurance__status { display: flex; gap: 10px; padding: 13px 14px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+  .dm-product-assurance__dot { width: 9px; height: 9px; margin-top: 5px; border-radius: 50%; background: #b7791f; flex: 0 0 auto; }
+  .dm-product-assurance__status.is-ready .dm-product-assurance__dot,
+  .dm-product-assurance__status.is-confirmed .dm-product-assurance__dot { background: #16803c; }
+  .dm-product-assurance__title { margin-top: 0 !important; color: #0f172a; font-size: 13px !important; font-weight: 800; }
+  .dm-product-assurance__details { display: grid; gap: 0; }
+  .dm-product-assurance__details > div { padding: 11px 14px; }
+  .dm-product-assurance__details > div + div { border-top: 1px solid #edf1f5; }
+  .dm-product-assurance__label { display: block; color: #0f172a; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+</style>

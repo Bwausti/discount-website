@@ -26,7 +26,7 @@
   {% endif %}
 {% endif %}
 
-{% if is_nectar_product %}
+{% if is_nectar_product and is_kids == false %}
 
 <style>
   .nectar-addons {
@@ -242,7 +242,7 @@
           <p class="nectar-compare-card__cta">You're viewing →</p>
         </div>
       {% else %}
-        <a href="/collections/nectar" class="nectar-compare-card">
+        <a href="{{ routes.collections_url }}/nectar" class="nectar-compare-card">
           <p class="nectar-compare-card__tier">Entry</p>
           <h3 class="nectar-compare-card__name">Nectar Classic</h3>
           <p class="nectar-compare-card__tag">Award-winning comfort</p>
@@ -266,7 +266,7 @@
           <p class="nectar-compare-card__cta">You're viewing →</p>
         </div>
       {% else %}
-        <a href="/collections/nectar" class="nectar-compare-card">
+        <a href="{{ routes.collections_url }}/nectar" class="nectar-compare-card">
           <p class="nectar-compare-card__tier">Mid</p>
           <h3 class="nectar-compare-card__name">Nectar Premier</h3>
           <p class="nectar-compare-card__tag">Enhanced cooling</p>
@@ -290,7 +290,7 @@
           <p class="nectar-compare-card__cta">You're viewing →</p>
         </div>
       {% else %}
-        <a href="/collections/nectar" class="nectar-compare-card">
+        <a href="{{ routes.collections_url }}/nectar" class="nectar-compare-card">
           <p class="nectar-compare-card__tier">Premium</p>
           <h3 class="nectar-compare-card__name">Nectar Luxe</h3>
           <p class="nectar-compare-card__tag">Ultimate comfort</p>
@@ -314,7 +314,7 @@
           <p class="nectar-compare-card__cta">You're viewing →</p>
         </div>
       {% else %}
-        <a href="/collections/nectar" class="nectar-compare-card">
+        <a href="{{ routes.collections_url }}/nectar" class="nectar-compare-card">
           <p class="nectar-compare-card__tier">Top</p>
           <h3 class="nectar-compare-card__name">Nectar Ultra</h3>
           <p class="nectar-compare-card__tag">Best-in-class</p>
@@ -332,7 +332,7 @@
     <div class="nectar-accessories">
 
       <!-- Adjustable Base -->
-      <a href="/collections/bedtech" class="nectar-accessory-card">
+      <a href="{{ routes.collections_url }}/bedtech" class="nectar-accessory-card">
         <p class="nectar-accessory-card__icon">⚡</p>
         <h3 class="nectar-accessory-card__name">Adjustable Bed Base</h3>
         <p class="nectar-accessory-card__desc">Elevate your head or feet with a BedTech adjustable base. Zero-gravity positioning, massage, and under-bed lighting available.</p>
@@ -350,7 +350,7 @@
       </a>
 
       <!-- Pillows -->
-      <a href="/collections/bedgear" class="nectar-accessory-card">
+      <a href="{{ routes.collections_url }}/bedgear" class="nectar-accessory-card">
         <p class="nectar-accessory-card__icon">🛏️</p>
         <h3 class="nectar-accessory-card__name">Performance Pillows</h3>
         <p class="nectar-accessory-card__desc">Pair your Nectar with a BedGear performance pillow. Choose from Storm (cooling), Balance (adjustable loft), or the Cuddle Curve contour shapes for added neck support.</p>

@@ -4,7 +4,7 @@
       <img src="{{ 'logo.png' | asset_url }}" alt="Discount Mattress" width="210" height="36" loading="lazy">
       <p>Better sleep starts with the right fit. Shop leading brands online or get local help in Bowling Green.</p>
       <div class="dm-footer__actions">
-        <a href="/collections/all">Shop mattresses</a>
+        <a href="{{ routes.collections_url }}/all">Shop mattresses</a>
         <a href="/pages/locations" class="is-secondary">Visit a showroom</a>
       </div>
     </div>
@@ -12,17 +12,18 @@
     <nav class="dm-footer__nav" aria-label="Footer navigation">
       <div>
         <h2>Shop</h2>
-        <a href="/collections/helix">Helix</a>
-        <a href="/collections/puffy">Puffy</a>
-        <a href="/collections/dreamcloud">DreamCloud</a>
-        <a href="/collections/nectar">Nectar</a>
-        <a href="/collections/serta">Serta</a>
-        <a href="/collections">All brands</a>
+        <a href="{{ routes.collections_url }}/helix">Helix</a>
+        <a href="{{ routes.collections_url }}/puffy">Puffy</a>
+        <a href="{{ routes.collections_url }}/dreamcloud">DreamCloud</a>
+        <a href="{{ routes.collections_url }}/nectar">Nectar</a>
+        <a href="{{ routes.collections_url }}/serta">Serta</a>
+        <a href="{{ routes.collections_url }}">All brands</a>
       </div>
       <div>
         <h2>Help</h2>
         <a href="/pages/brand-comparisons">Compare brands</a>
         <a href="/pages/financing">Financing</a>
+        <a href="/pages/about-us">About</a>
         <a href="/pages/faq">FAQ</a>
         <a href="/pages/contact">Contact</a>
         <a href="/pages/locations">Locations &amp; hours</a>
@@ -48,9 +49,9 @@
     <p>&copy; {{ 'now' | date: '%Y' }} Discount Mattress. Bowling Green, Kentucky.</p>
     <div>
       <a href="/policies/privacy-policy">Privacy</a>
-      <a href="/policies/refund-policy">Returns</a>
-      <a href="/policies/shipping-policy">Shipping</a>
-      <a href="/policies/terms-of-service">Terms</a>
+      <a href="/pages/refund-policy">Returns</a>
+      <a href="/pages/shipping-policy">Shipping</a>
+      <a href="/pages/terms-of-service">Terms</a>
     </div>
   </div>
 </footer>

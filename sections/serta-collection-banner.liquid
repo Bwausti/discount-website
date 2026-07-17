@@ -1,3 +1,5 @@
+{% # theme-check-disable RemoteAsset %}
+<!-- Conditional image sources below all use Shopify image_url or asset_url filters. -->
 <!-- Section: serta-collection-banner -->
 <!-- Brand: Serta | Collections: iComfort + Cascade | 6 models -->
 {% if closest.collection.handle != 'serta' %}{% break %}{% endif %}
@@ -165,8 +167,7 @@
       src="{{ 'serta-hero-bg.jpg' | asset_url }}"
       alt="Serta mattress collection"
       class="serta-hero__bg"
-      loading="eager"
-    >
+      loading="eager" width="1600" height="900">
     <div class="serta-hero__content">
       <div class="serta-hero__left">
         <span class="serta-eyebrow">Available in Bowling Green, KY</span>
@@ -192,19 +193,19 @@
         <div class="serta-hero__products">
           <a href="/products/serta-icomfort-mattress" class="serta-hero__product-card">
             <div class="serta-hero__product-img">
-              <img src="{% if serta_icomfort and serta_icomfort.featured_image %}{{ serta_icomfort.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta iComfort" loading="lazy">
+              <img src="{% if serta_icomfort and serta_icomfort.featured_image %}{{ serta_icomfort.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta iComfort" loading="lazy" width="500" height="500">
             </div>
             <p class="serta-hero__product-name">Serta iComfort<br><span style="font-weight:400;color:#64748b;font-size:11px;">Memory foam · EverCool fabric</span></p>
           </a>
           <a href="/products/serta-icomfortpro-mattress" class="serta-hero__product-card">
             <div class="serta-hero__product-img">
-              <img src="{% if serta_icomfortpro and serta_icomfortpro.featured_image %}{{ serta_icomfortpro.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta iComfortPro" loading="lazy">
+              <img src="{% if serta_icomfortpro and serta_icomfortpro.featured_image %}{{ serta_icomfortpro.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta iComfortPro" loading="lazy" width="500" height="500">
             </div>
             <p class="serta-hero__product-name">Serta iComfortPro<br><span style="font-weight:400;color:#64748b;font-size:11px;">Premium · Triple Effects gel</span></p>
           </a>
           <a href="/products/serta-cascade-ridge-plush" class="serta-hero__product-card">
             <div class="serta-hero__product-img">
-              <img src="{% if serta_ridge and serta_ridge.featured_image %}{{ serta_ridge.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Ridge" loading="lazy">
+              <img src="{% if serta_ridge and serta_ridge.featured_image %}{{ serta_ridge.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Ridge" loading="lazy" width="500" height="500">
             </div>
             <p class="serta-hero__product-name">Serta Cascade Ridge Plush<br><span style="font-weight:400;color:#64748b;font-size:11px;">Hybrid · Plush feel</span></p>
           </a>
@@ -255,7 +256,7 @@
       <!-- iComfort -->
       <a href="/products/serta-icomfort-mattress" class="serta-collection-card">
         <div class="serta-collection-card__img">
-          <img src="{% if serta_icomfort and serta_icomfort.featured_image %}{{ serta_icomfort.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta iComfort" loading="lazy">
+          <img src="{% if serta_icomfort and serta_icomfort.featured_image %}{{ serta_icomfort.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta iComfort" loading="lazy" width="500" height="500">
         </div>
         <div class="serta-collection-card__body">
           <div class="serta-collection-card__name">Serta iComfort</div>
@@ -269,7 +270,7 @@
       <!-- iComfortPro -->
       <a href="/products/serta-icomfortpro-mattress" class="serta-collection-card">
         <div class="serta-collection-card__img">
-          <img src="{% if serta_icomfortpro and serta_icomfortpro.featured_image %}{{ serta_icomfortpro.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta iComfortPro" loading="lazy">
+          <img src="{% if serta_icomfortpro and serta_icomfortpro.featured_image %}{{ serta_icomfortpro.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta iComfortPro" loading="lazy" width="500" height="500">
         </div>
         <div class="serta-collection-card__body">
           <div class="serta-collection-card__name">Serta iComfortPro</div>
@@ -283,7 +284,7 @@
       <!-- Cascade Ridge Plush -->
       <a href="/products/serta-cascade-ridge-plush" class="serta-collection-card">
         <div class="serta-collection-card__img">
-          <img src="{% if serta_ridge and serta_ridge.featured_image %}{{ serta_ridge.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Ridge Plush" loading="lazy">
+          <img src="{% if serta_ridge and serta_ridge.featured_image %}{{ serta_ridge.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Ridge Plush" loading="lazy" width="500" height="500">
         </div>
         <div class="serta-collection-card__body">
           <div class="serta-collection-card__name">Serta Cascade Ridge Plush</div>
@@ -310,7 +311,7 @@
       <!-- Cascade Canyon Firm -->
       <a href="/products/serta-cascade-canyon-firm" class="serta-collection-card">
         <div class="serta-collection-card__img">
-          <img src="{% if serta_cany_firm and serta_cany_firm.featured_image %}{{ serta_cany_firm.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Canyon Firm" loading="lazy">
+          <img src="{% if serta_cany_firm and serta_cany_firm.featured_image %}{{ serta_cany_firm.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-icomfort-card.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Canyon Firm" loading="lazy" width="500" height="500">
         </div>
         <div class="serta-collection-card__body">
           <div class="serta-collection-card__name">Cascade Canyon Firm</div>
@@ -325,7 +326,7 @@
       <!-- Cascade Canyon Medium -->
       <a href="/products/serta-cascade-canyon-medium" class="serta-collection-card">
         <div class="serta-collection-card__img">
-          <img src="{% if serta_canyon_med and serta_canyon_med.featured_image %}{{ serta_canyon_med.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-hero-bg.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Canyon Medium" loading="lazy">
+          <img src="{% if serta_canyon_med and serta_canyon_med.featured_image %}{{ serta_canyon_med.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-hero-bg.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Canyon Medium" loading="lazy" width="500" height="281">
         </div>
         <div class="serta-collection-card__body">
           <div class="serta-collection-card__name">Cascade Canyon Medium</div>
@@ -340,7 +341,7 @@
       <!-- Cascade Range Plush Pillow Top -->
       <a href="/products/serta-cascade-range-plush-pillow-top" class="serta-collection-card">
         <div class="serta-collection-card__img">
-          <img src="{% if serta_range_plush and serta_range_plush.featured_image %}{{ serta_range_plush.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-hero-bg.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Range Plush Pillow Top" loading="lazy">
+          <img src="{% if serta_range_plush and serta_range_plush.featured_image %}{{ serta_range_plush.featured_image | image_url: width: 500 }}{% else %}{{ 'serta-hero-bg.jpg' | asset_url }}{% endif %}" alt="Serta Cascade Range Plush Pillow Top" loading="lazy" width="500" height="281">
         </div>
         <div class="serta-collection-card__body">
           <div class="serta-collection-card__name">Cascade Range Plush Pillow Top</div>
@@ -357,7 +358,7 @@
   <section class="serta-story">
     <div class="serta-story__inner">
     <div class="serta-story__img">
-        <img src="{% if serta_icomfort and serta_icomfort.featured_image %}{{ serta_icomfort.featured_image | image_url: width: 800 }}{% else %}{{ 'serta-hero-bg.jpg' | asset_url }}{% endif %}" alt="Serta heritage" loading="lazy">
+        <img src="{% if serta_icomfort and serta_icomfort.featured_image %}{{ serta_icomfort.featured_image | image_url: width: 800 }}{% else %}{{ 'serta-hero-bg.jpg' | asset_url }}{% endif %}" alt="Serta heritage" loading="lazy" width="800" height="450">
       </div>
       <div class="serta-story__content">
         <p class="section-label">Why Serta</p>

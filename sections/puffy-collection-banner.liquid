@@ -160,7 +160,7 @@
     <div class="puffy-hero__bg"></div>
     <div class="puffy-hero__content">
       <div class="puffy-hero__left">
-        <img src="{{ 'logo-puffy.png' | asset_url }}" alt="Puffy" class="puffy-logo" loading="eager">
+        <img src="{{ 'logo-puffy.png' | asset_url }}" alt="Puffy" class="puffy-logo" loading="eager" width="600" height="600">
         <span class="puffy-eyebrow">Available in our Bowling Green showroom</span>
         <h2 style="font-size: clamp(32px,4vw,52px);font-weight:800;color:#162b49;margin:0;line-height:1.1;font-family:var(--header-font, Inter, sans-serif);">Puffy</h2>
         <p class="puffy-hero__tagline">Cloud-like comfort. Pressure-relieving memory foam.</p>
@@ -174,7 +174,7 @@
         </div>
         <div class="puffy-hero__buttons">
           <a href="#puffy-models" class="puffy-btn-primary">Compare models ↓</a>
-          <a href="/collections/puffy" class="puffy-btn-secondary">Show all</a>
+          <a href="{{ routes.collections_url }}/puffy" class="puffy-btn-secondary">Show all</a>
         </div>
       </div>
       <div class="puffy-hero__right">
@@ -190,7 +190,7 @@
             <a href="/products/{{ h }}" class="puffy-model-row">
               <div class="puffy-model-img">
                 {% if prod and prod.featured_image %}
-                  <img src="{{ prod.featured_image | image_url: width: 160 }}" alt="{{ puffy_names[label_idx] }}" loading="lazy" style="width:100px;height:70px;object-fit:cover;border-radius:6px;display:block;">
+                  <img src="{{ prod.featured_image | image_url: width: 160 }}" alt="{{ puffy_names[label_idx] }}" loading="lazy" style="width:100px;height:70px;object-fit:cover;border-radius:6px;display:block;" width="160" height="160">
                 {% endif %}
               </div>
               <div class="puffy-model-info">
@@ -248,7 +248,7 @@
         <a href="/products/{{ h }}" class="puffy-model-card">
           <div class="puffy-model-card__img">
             {% if prod and prod.featured_image %}
-              <img src="{{ prod.featured_image | image_url: width: 500 }}" alt="{{ puffy_card_names[idx] }}" loading="lazy">
+              <img src="{{ prod.featured_image | image_url: width: 500 }}" alt="{{ puffy_card_names[idx] }}" loading="lazy" width="500" height="500">
             {% endif %}
           </div>
           <div class="puffy-model-card__body">
@@ -274,7 +274,7 @@
   <section class="puffy-story">
     <div class="puffy-story__inner">
       <div class="puffy-story__img">
-        <img src="{{ 'puffy-cloud-card.jpg' | asset_url }}" alt="Puffy" loading="lazy">
+        <img src="{{ 'puffy-cloud-card.jpg' | asset_url }}" alt="Puffy" loading="lazy" width="600" height="600">
       </div>
       <div class="puffy-story__content">
         <span style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.22em;color:#2563eb;margin-bottom:8px;display:block;">Why Puffy</span>

@@ -5,8 +5,6 @@
 </script>
 
 <style>
-  /* PDP TOP SPACING TEST UNIQUE-123456 */
-  .dm-top-spacing-test { padding-top: 77px !important; display: block !important; }
   /* PDP polish - variant picker, quantity, buy buttons */
   .variant-option--buttons .variant-option__button-label {
     min-width: 48px;
@@ -109,6 +107,8 @@
     .buy-buttons-block .add-to-cart-button { font-size: 13px; padding: 14px 16px; }
   }
 </style>
+
+{% render 'product-breadcrumbs', product: closest.product %}
 
 {% capture media_gallery %}
   {%- content_for 'block',

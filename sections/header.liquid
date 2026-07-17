@@ -2,6 +2,7 @@
   Utility bar — phone, hours, directions above main nav
   Settings allow full editing via Shopify theme editor
 {%- endcomment -%}
+{%- assign all_products_url = routes.collections_url | append: '/all' -%}
 {%- if section.settings.enable_utility_bar -%}
 <div class="utility-bar" role="region" aria-label="Store information">
   <div class="utility-bar__inner">
@@ -66,20 +67,26 @@
         <ul class="header__nav-list">
 
           {% if section.settings.menu != blank %}
+            {%- assign dm_menu_has_about = false -%}
             {% for link in linklists[section.settings.menu].links %}
+              {%- if link.url contains '/pages/about-us' -%}
+                {%- assign dm_menu_has_about = true -%}
+              {%- endif -%}
               <li class="header__nav-item">
-                {%- capture link_href -%}
-                  {%- if link.title == 'Catalog' -%}
-                    {{ link.url }}?sort_by=created-descending
-                  {%- else -%}
-                    {{ link.url }}
-                  {%- endif -%}
-                {%- endcapture -%}
+                {%- liquid
+                  assign link_href = link.url
+                  if link.title == 'Catalog'
+                    assign link_href = link_href | append: '?sort_by=created-descending'
+                  endif
+                -%}
                 <a href="{{ link_href }}" class="header__nav-link{% if link.active %} is-active{% endif %}">
                   {{ link.title }}
                 </a>
               </li>
             {% endfor %}
+            {%- unless dm_menu_has_about -%}
+              <li class="header__nav-item"><a href="{{ routes.root_url }}pages/about-us" class="header__nav-link">About</a></li>
+            {%- endunless -%}
           {% endif %}
 
           <li class="header__nav-item header__nav-item--dropdown">
@@ -90,11 +97,11 @@
               </svg>
             </button>
             <ul class="header__nav-dropdown">
-              <li><a href="/collections/helix" class="header__nav-dropdown-link">Helix</a></li>
-              <li><a href="/collections/nectar" class="header__nav-dropdown-link">Nectar</a></li>
-              <li><a href="/collections/puffy" class="header__nav-dropdown-link">Puffy</a></li>
-              <li><a href="/collections/dreamcloud" class="header__nav-dropdown-link">DreamCloud</a></li>
-              <li><a href="/collections/naturepedic" class="header__nav-dropdown-link">Naturepedic</a></li>
+              <li><a href="{{ routes.collections_url }}/helix" class="header__nav-dropdown-link">Helix</a></li>
+              <li><a href="{{ routes.collections_url }}/nectar" class="header__nav-dropdown-link">Nectar</a></li>
+              <li><a href="{{ routes.collections_url }}/puffy" class="header__nav-dropdown-link">Puffy</a></li>
+              <li><a href="{{ routes.collections_url }}/dreamcloud" class="header__nav-dropdown-link">DreamCloud</a></li>
+              <li><a href="{{ routes.collections_url }}/naturepedic" class="header__nav-dropdown-link">Naturepedic</a></li>
             </ul>
           </li>
 
@@ -106,12 +113,12 @@
               </svg>
             </button>
             <ul class="header__nav-dropdown">
-              <li><a href="/collections/bedgear" class="header__nav-dropdown-link">BedGear</a></li>
-              <li><a href="/collections/bedtech" class="header__nav-dropdown-link">BedTech</a></li>
-              <li><a href="/collections/serta" class="header__nav-dropdown-link">Serta</a></li>
-              <li><a href="/collections/jamison" class="header__nav-dropdown-link">Jamison</a></li>
-              <li><a href="/collections/pranasleep" class="header__nav-dropdown-link">PranaSleep</a></li>
-              <li><a href="/collections/posh-and-lavish" class="header__nav-dropdown-link">Posh and Lavish</a></li>
+              <li><a href="{{ routes.collections_url }}/bedgear" class="header__nav-dropdown-link">BedGear</a></li>
+              <li><a href="{{ routes.collections_url }}/bedtech" class="header__nav-dropdown-link">BedTech</a></li>
+              <li><a href="{{ routes.collections_url }}/serta" class="header__nav-dropdown-link">Serta</a></li>
+              <li><a href="{{ routes.collections_url }}/jamison" class="header__nav-dropdown-link">Jamison</a></li>
+              <li><a href="{{ routes.collections_url }}/pranasleep" class="header__nav-dropdown-link">PranaSleep</a></li>
+              <li><a href="{{ routes.collections_url }}/posh-and-lavish" class="header__nav-dropdown-link">Posh and Lavish</a></li>
             </ul>
           </li>
 
@@ -120,6 +127,18 @@
 
       {% comment %} Cart only (right) {% endcomment %}
       <div class="header__actions">
+        <button
+          class="header__menu-btn"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-menu-panel"
+          aria-label="Open menu"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+          <span>Menu</span>
+        </button>
         <button class="header__cart-btn" aria-label="Open cart ({{ cart.item_count }} items)" type="button" onclick="document.querySelector('cart-drawer-component')?.openDrawer()">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 20 20" fill="none" aria-hidden="true">
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.3" d="M3.392 6.875h13.216v8.016c0 .567-.224 1.112-.624 1.513-.4.402-.941.627-1.506.627H5.522a2.13 2.13 0 0 1-1.506-.627 2.15 2.15 0 0 1-.624-1.513zM8.818 2.969h2.333c.618 0 1.211.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.313c0-.622.246-1.218.683-1.658a2.33 2.33 0 0 1 1.65-.686"/>
@@ -134,10 +153,39 @@
   </header>
 </div>
 
+<div class="mobile-menu-overlay" data-mobile-menu-overlay hidden>
+  <nav class="mobile-menu-panel" id="mobile-menu-panel" aria-label="Mobile navigation">
+    <div class="mobile-menu-panel__header">
+      <strong>Menu</strong>
+      <button type="button" class="mobile-menu-panel__close" data-mobile-menu-close aria-label="Close menu">&times;</button>
+    </div>
+    <a href="{{ all_products_url }}">Shop Mattresses</a>
+    <a href="{{ routes.search_url }}">Search</a>
+    <a href="{{ routes.root_url }}pages/locations">Locations</a>
+    <a href="{{ routes.root_url }}pages/financing">Financing</a>
+    <a href="{{ routes.root_url }}pages/about-us">About</a>
+    <a href="{{ routes.root_url }}pages/faq">FAQ</a>
+    <a href="{{ routes.root_url }}pages/contact">Contact</a>
+    <a href="tel:12704951603">Call (270) 495-1603</a>
+    <div class="mobile-menu-panel__label">Brands</div>
+    <div class="mobile-menu-panel__brands">
+      <a href="{{ routes.collections_url }}/helix">Helix</a>
+      <a href="{{ routes.collections_url }}/nectar">Nectar</a>
+      <a href="{{ routes.collections_url }}/puffy">Puffy</a>
+      <a href="{{ routes.collections_url }}/dreamcloud">DreamCloud</a>
+      <a href="{{ routes.collections_url }}/serta">Serta</a>
+      <a href="{{ routes.collections_url }}">All brands</a>
+    </div>
+    <button class="mobile-menu-panel__cart" onclick="document.querySelector('cart-drawer-component')?.openDrawer()" type="button">
+      View Cart{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}
+    </button>
+  </nav>
+</div>
+
 {% comment %} Mobile Bottom Navigation {% endcomment %}
 <ul class="mobile-nav" id="mobile-nav" role="list">
   <li class="mobile-nav__item">
-    <a href="/" class="mobile-nav__link{% if request.path == '/' %} is-active{% endif %}">
+    <a href="{{ routes.root_url }}" class="mobile-nav__link{% if request.path == '/' %} is-active{% endif %}">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
         <polyline points="9 22 9 12 15 12 15 22"/>
@@ -154,7 +202,7 @@
     </a>
   </li>
   <li class="mobile-nav__item">
-    <a href="/collections" class="mobile-nav__link">
+    <a href="{{ routes.collections_url }}" class="mobile-nav__link">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         <rect x="3" y="3" width="7" height="7"/>
         <rect x="14" y="3" width="7" height="7"/>
@@ -462,6 +510,31 @@
     margin-left: 16px;
   }
 
+  .header__menu-btn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-height: 40px;
+    padding: 0 8px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #ffffff;
+    font: 600 12px/1 var(--header-font);
+    cursor: pointer;
+  }
+
+  .header__menu-btn:hover,
+  .header__menu-btn:focus-visible {
+    background: rgba(255,255,255,0.08);
+  }
+
+  .header__menu-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
   .header__cart-btn {
     display: flex;
     align-items: center;
@@ -594,11 +667,95 @@
     position: relative;
   }
 
+  .mobile-menu-overlay[hidden] { display: none !important; }
+
+  .mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 650;
+    background: rgba(9, 20, 37, 0.58);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .mobile-menu-panel {
+    width: min(88vw, 360px);
+    height: 100%;
+    overflow-y: auto;
+    padding: max(18px, env(safe-area-inset-top)) 20px calc(26px + env(safe-area-inset-bottom));
+    background: #ffffff;
+    box-shadow: -18px 0 48px rgba(9, 20, 37, 0.2);
+    font-family: var(--header-font);
+  }
+
+  .mobile-menu-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    color: #162b49;
+    font-size: 20px;
+  }
+
+  .mobile-menu-panel__close {
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: #f4f1e9;
+    color: #162b49;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .mobile-menu-panel > a,
+  .mobile-menu-panel__brands a {
+    display: block;
+    padding: 13px 4px;
+    border-bottom: 1px solid #e8e5dd;
+    color: #162b49;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 650;
+  }
+
+  .mobile-menu-panel__label {
+    margin-top: 20px;
+    color: #667085;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .mobile-menu-panel__brands {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 18px;
+  }
+
+  .mobile-menu-panel__brands a { font-size: 14px; }
+
+  .mobile-menu-panel__cart {
+    width: 100%;
+    margin-top: 22px;
+    padding: 14px 18px;
+    border: 0;
+    border-radius: 6px;
+    background: #f2b705;
+    color: #162b49;
+    font: 800 15px/1 var(--header-font);
+    cursor: pointer;
+  }
+
   /* ── Mobile Header Adjustments ──────────────────────── */
   @media screen and (max-width: 768px) {
     .header__nav {
       display: none;
     }
+
+    .header__menu-btn { display: inline-flex; }
 
     .header {
       padding: 0 16px;
@@ -643,6 +800,40 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    var menuButton = document.querySelector('.header__menu-btn');
+    var menuOverlay = document.querySelector('[data-mobile-menu-overlay]');
+    var menuClose = document.querySelector('[data-mobile-menu-close]');
+
+    function closeMobileMenu() {
+      if (!menuOverlay || !menuButton) return;
+      menuOverlay.hidden = true;
+      menuButton.setAttribute('aria-expanded', 'false');
+      menuButton.setAttribute('aria-label', 'Open menu');
+      document.body.style.overflow = '';
+      menuButton.focus();
+    }
+
+    function openMobileMenu() {
+      if (!menuOverlay || !menuButton) return;
+      menuOverlay.hidden = false;
+      menuButton.setAttribute('aria-expanded', 'true');
+      menuButton.setAttribute('aria-label', 'Close menu');
+      document.body.style.overflow = 'hidden';
+      menuClose?.focus();
+    }
+
+    menuButton?.addEventListener('click', function() {
+      if (menuOverlay?.hidden) openMobileMenu();
+      else closeMobileMenu();
+    });
+    menuClose?.addEventListener('click', closeMobileMenu);
+    menuOverlay?.addEventListener('click', function(event) {
+      if (event.target === menuOverlay) closeMobileMenu();
+    });
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && menuOverlay && !menuOverlay.hidden) closeMobileMenu();
+    });
+
     var dropdownToggles = document.querySelectorAll('.header__nav-dropdown-toggle');
     dropdownToggles.forEach(function(btn) {
       btn.addEventListener('click', function(e) {
@@ -697,7 +888,7 @@
       "type": "text",
       "id": "hours_text",
       "label": "Hours text",
-      "default": "Mon-Sat hours"
+      "default": "Call for current hours"
     },
     {
       "type": "checkbox",
