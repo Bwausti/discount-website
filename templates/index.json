@@ -21,8 +21,8 @@
     "trust_signals": {
       "type": "trust_signals",
       "settings": {
-        "item_3_url": "https://search.google.com/local/reviews?placeid=",
-        "item_3_label": "Read our Google reviews"
+        "item_3_url": "/pages/contact",
+        "item_3_label": "Talk to a sleep expert"
       }
     },
     "brand_logos": {

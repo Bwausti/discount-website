@@ -70,6 +70,7 @@ jobs:
             --store "$SHOPIFY_STORE" \
             --theme "$STAGING_THEME_ID" \
             --password "$SHOPIFY_ACCESS_TOKEN" \
+            --ignore "assets/financing/**" \
             --strict \
             --json
 
@@ -120,5 +121,6 @@ jobs:
             --theme "$LIVE_THEME_ID" \
             --password "$SHOPIFY_ACCESS_TOKEN" \
             --allow-live \
+            --ignore "assets/financing/**" \
             --strict \
             --json

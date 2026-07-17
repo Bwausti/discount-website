@@ -2,6 +2,7 @@
 .github/**
 data/**
 docs/**
+assets/financing/**
 *.md
 *.toml
 .theme-check.yml

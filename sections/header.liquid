@@ -524,8 +524,12 @@
   }
 
   @media screen and (max-width: 768px) {
-    .mobile-nav { display: none; }
-    body { padding-bottom: 0; }
+    .mobile-nav {
+      display: flex;
+      padding-bottom: env(safe-area-inset-bottom);
+      box-shadow: 0 -8px 24px rgba(9, 20, 37, 0.14);
+    }
+    body { padding-bottom: calc(62px + env(safe-area-inset-bottom)); }
   }
 
   .mobile-nav__item {

@@ -1,218 +1,265 @@
 {% comment %}
-  helix-product-addons.liquid
-  Shows tier-specific Helix add-on options on product pages
-  Based on Helix Sleep's official tier structure (2025):
-  - Core: ErgoAlign Layer optional, GlacioTex Cooling Pillow Top optional
-  - Luxe: ErgoAlign Layer optional (zoned lumbar foam, integrated into comfort layer)
-  - Elite: ErgoAlign Layer STANDARD (built-in), GlacioTex + CoolForce standard
-
-  The ErgoAlign Layer is NEVER sold as a standalone product —
-  it is an integrated comfort upgrade added during mattress purchase.
+  Helix mattress story section.
+  Product and cooling media are first-party assets served by Helix Sleep's Shopify CDN.
 {% endcomment %}
 
-{% assign product_title = closest.product.title | downcase %}
-{% assign is_helix_product = false %}
-{% assign is_core = false %}
-{% assign is_luxe = false %}
-{% assign is_elite = false %}
-{% if closest.product.vendor == "Helix" %}
-  {% assign is_helix_product = true %}
-  {% if product_title contains "elite" %}
-    {% assign is_elite = true %}
-  {% elsif product_title contains "luxe" %}
-    {% assign is_luxe = true %}
-  {% else %}
-    {% assign is_core = true %}
-  {% endif %}
-{% endif %}
+{%- liquid
+  assign is_helix_mattress = false
+  if closest.product.vendor == 'Helix' and closest.product.type == 'Mattress'
+    assign is_helix_mattress = true
+  endif
 
-{% if is_helix_product %}
+  assign title_downcase = closest.product.title | downcase
+  assign tier = 'Core'
+  assign height = '11.5 in.'
+  assign tier_summary = 'Responsive hybrid comfort with the best starting value.'
+  assign cooling = 'Breath Knit cover; GlacioTex™ pillow top available.'
+  assign support = 'Standard support; ErgoAlign™ available by special order.'
+  if title_downcase contains 'elite'
+    assign tier = 'Elite'
+    assign height = '15 in.'
+    assign tier_summary = 'Premium comfort, microcoil support, and advanced cooling.'
+    assign cooling = 'GlacioTex™ Elite cover included; CoolForce™ available.'
+    assign support = 'ErgoAlign™ contour layer included.'
+  elsif title_downcase contains 'luxe'
+    assign tier = 'Luxe'
+    assign height = '13.5 in.'
+    assign tier_summary = 'A plush pillow top with zoned lumbar support.'
+    assign cooling = 'TENCEL™ included; GlacioTex™ and CoolForce™ available.'
+    assign support = 'Luxe support; ErgoAlign™ available by special order.'
+  endif
 
-<style>
-  .helix-addons {
-    background: #f7f6f1;
-    border-top: 1px solid #e2e8f0;
-    padding: 48px 24px;
-    margin-top: 0;
-  }
-  .helix-addons__inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .helix-addons__header {
-    margin-bottom: 32px;
-  }
-  .helix-addons__label {
-    font-size: 10px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: #cf2333;
-    margin-bottom: 8px;
-  }
-  .helix-addons__title {
-    font-size: clamp(22px, 2.5vw, 32px);
-    font-weight: 900;
-    color: #0f172a;
-    letter-spacing: -0.02em;
-    margin: 0 0 8px 0;
-  }
-  .helix-addons__sub {
-    font-size: 14px;
-    color: #64748b;
-    margin: 0;
-  }
-  .helix-addons__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-  }
-  .helix-addon-card {
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    text-decoration: none;
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-  }
-  .helix-addon-card:hover {
-    border-color: #f2b705;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-    transform: translateY(-2px);
-  }
-  .helix-addon-card__tier-badge {
-    display: inline-block;
-    font-size: 9px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    padding: 3px 10px;
-    border-radius: 4px;
-    background: #f7f6f1;
-    color: #334155;
-    width: fit-content;
-  }
-  .helix-addon-card__tier-badge.luxe { background: #fef9e7; color: #92400e; }
-  .helix-addon-card__tier-badge.elite { background: #eff6ff; color: #1e40af; }
-  .helix-addon-card__name {
-    font-size: 16px;
-    font-weight: 800;
-    color: #0f172a;
-    margin: 0;
-  }
-  .helix-addon-card__desc {
-    font-size: 13px;
-    color: #64748b;
-    line-height: 1.55;
-    margin: 0;
-    flex-grow: 1;
-  }
-  .helix-addon-card__price {
-    font-size: 15px;
-    font-weight: 700;
-    color: #0f172a;
-    margin: 0;
-  }
-  .helix-addon-card__cta {
-    font-size: 12px;
-    font-weight: 800;
-    color: #cf2333;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: auto;
-  }
-  .helix-addon-card:hover .helix-addon-card__cta { gap: 8px; }
-</style>
+  assign model = 'Midnight'
+  assign feel = 'Medium'
+  assign sleeper = 'Side sleepers'
+  assign model_summary = 'Balanced pressure relief with steady hybrid support.'
+  if title_downcase contains 'sunset'
+    assign model = 'Sunset'
+    assign feel = 'Soft'
+    assign sleeper = 'Side sleepers'
+    assign model_summary = 'Deep cushioning for shoulders and hips.'
+  elsif title_downcase contains 'moonlight'
+    assign model = 'Moonlight'
+    assign feel = 'Soft'
+    assign sleeper = 'Back & stomach sleepers'
+    assign model_summary = 'Gentle comfort with a more responsive surface.'
+  elsif title_downcase contains 'dusk'
+    assign model = 'Dusk'
+    assign feel = 'Medium'
+    assign sleeper = 'Back & stomach sleepers'
+    assign model_summary = 'Balanced comfort that makes changing positions easy.'
+  elsif title_downcase contains 'twilight'
+    assign model = 'Twilight'
+    assign feel = 'Firm'
+    assign sleeper = 'Side sleepers'
+    assign model_summary = 'Firm support with pressure relief where it counts.'
+  elsif title_downcase contains 'dawn'
+    assign model = 'Dawn'
+    assign feel = 'Firm'
+    assign sleeper = 'Back & stomach sleepers'
+    assign model_summary = 'A supportive, on-top-of-the-bed feel.'
+  elsif title_downcase contains 'plus'
+    assign model = 'Plus'
+    assign feel = 'Medium-firm'
+    assign sleeper = 'Extra support'
+    assign model_summary = 'Reinforced comfort and support for plus-size sleepers.'
+  endif
 
-<div class="helix-addons">
-  <div class="helix-addons__inner">
+  assign base_handle = closest.product.handle | remove: '-luxe' | remove: '-elite'
+  assign core_product = all_products[base_handle]
+  assign luxe_handle = base_handle | append: '-luxe'
+  assign luxe_product = all_products[luxe_handle]
+  assign elite_handle = base_handle | append: '-elite'
+  assign elite_product = all_products[elite_handle]
+-%}
 
-    <!-- Header -->
-    <div class="helix-addons__header">
-      <p class="helix-addons__label">Layer &amp; Cooling Options</p>
-      {% if is_elite %}
-        <h2 class="helix-addons__title">Elite — Premium Built-in</h2>
-        <p class="helix-addons__sub">The Elite comes fully equipped with GlacioTex™ cooling, CoolForce™ system, and the ErgoAlign Layer as standard.</p>
-      {% elsif is_luxe %}
-        <h2 class="helix-addons__title">Luxe — Optional Upgrades</h2>
-        <p class="helix-addons__sub">Add the ErgoAlign Layer for zoned lumbar support, or upgrade to a GlacioTex™ cooling pillow top.</p>
-      {% else %}
-        <h2 class="helix-addons__title">Core — Optional Upgrades</h2>
-        <p class="helix-addons__sub">Upgrade your Core mattress with the ErgoAlign Layer for targeted support or a GlacioTex™ cooling pillow top.</p>
-      {% endif %}
+{%- if is_helix_mattress -%}
+  <section class="helix-story" aria-labelledby="HelixStoryTitle-{{ section.id }}">
+    <div class="helix-story__inner">
+      <div class="helix-story__heading">
+        <div>
+          <p class="helix-story__eyebrow">{{ model }} {{ tier }}</p>
+          <h2 id="HelixStoryTitle-{{ section.id }}">Made for the way you sleep</h2>
+        </div>
+        <p>{{ model_summary }}</p>
+      </div>
+
+      <div class="helix-story__facts" role="list">
+        <div class="helix-story__fact" role="listitem">
+          <span>Feel</span>
+          <strong>{{ feel }}</strong>
+          <small>{{ sleeper }}</small>
+        </div>
+        <div class="helix-story__fact" role="listitem">
+          <span>Profile</span>
+          <strong>{{ height }}</strong>
+          <small>{{ tier_summary }}</small>
+        </div>
+        <div class="helix-story__fact" role="listitem">
+          <span>Cooling</span>
+          <strong>{{ tier }}</strong>
+          <small>{{ cooling }}</small>
+        </div>
+        <div class="helix-story__fact" role="listitem">
+          <span>Support</span>
+          <strong>{% if tier == 'Elite' %}ErgoAlign™{% else %}Customizable{% endif %}</strong>
+          <small>{{ support }}</small>
+        </div>
+      </div>
+
+      <div class="helix-story__compare">
+        <div class="helix-story__compare-copy">
+          <p class="helix-story__eyebrow">Same feel, three collections</p>
+          <h3>Choose your comfort level</h3>
+          <p>Move up for a taller profile, more contouring, and more cooling.</p>
+        </div>
+        <div class="helix-story__tier-grid">
+          {%- if core_product != blank -%}
+            <a href="{{ core_product.url }}" class="helix-story__tier-card{% if tier == 'Core' %} is-current{% endif %}"{% if tier == 'Core' %} aria-current="page"{% endif %}>
+              <span class="helix-story__tier-name">Core</span>
+              <strong>11.5 in.</strong>
+              <small>Essential hybrid comfort</small>
+              <b>{{ core_product.price | money }}+</b>
+            </a>
+          {%- endif -%}
+          {%- if luxe_product != blank -%}
+            <a href="{{ luxe_product.url }}" class="helix-story__tier-card{% if tier == 'Luxe' %} is-current{% endif %}"{% if tier == 'Luxe' %} aria-current="page"{% endif %}>
+              <span class="helix-story__tier-name">Luxe</span>
+              <strong>13.5 in.</strong>
+              <small>Pillow top + zoned support</small>
+              <b>{{ luxe_product.price | money }}+</b>
+            </a>
+          {%- endif -%}
+          {%- if elite_product != blank -%}
+            <a href="{{ elite_product.url }}" class="helix-story__tier-card{% if tier == 'Elite' %} is-current{% endif %}"{% if tier == 'Elite' %} aria-current="page"{% endif %}>
+              <span class="helix-story__tier-name">Elite</span>
+              <strong>15 in.</strong>
+              <small>Microcoils + premium cooling</small>
+              <b>{{ elite_product.price | money }}+</b>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="helix-story__videos" id="HelixVideos-{{ section.id }}">
+        <div class="helix-story__video-heading">
+          <p class="helix-story__eyebrow">From Helix</p>
+          <h3>See the difference</h3>
+        </div>
+        <div class="helix-story__video-grid">
+          <article class="helix-story__video-card">
+            <div class="helix-story__frame">
+              <video
+                controls
+                playsinline
+                preload="metadata"
+                poster="https://cdn.shopify.com/s/files/1/3097/9106/files/preview_images/2080c9164d5943758241dea64e3b1836.thumbnail.0000000000.jpg?v=1737731882&width=960"
+                aria-label="Helix Midnight Luxe mattress overview"
+              >
+                <source src="https://cdn.shopify.com/videos/c/vp/2080c9164d5943758241dea64e3b1836/2080c9164d5943758241dea64e3b1836.HD-720p-4.5Mbps-41527333.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div><strong>Inside the Midnight Luxe</strong><span>A closer look at Helix's popular Luxe model.</span></div>
+          </article>
+          <article class="helix-story__video-card">
+            <div class="helix-story__frame">
+              <video
+                controls
+                playsinline
+                preload="metadata"
+                poster="https://cdn.shopify.com/s/files/1/3097/9106/files/preview_images/5faf5020f2594b2f945e05021b29e2e7.thumbnail.0000000000.jpg?v=1737677510&width=960"
+                aria-label="Helix GlacioTex cooling cover overview"
+              >
+                <source src="https://cdn.shopify.com/videos/c/vp/5faf5020f2594b2f945e05021b29e2e7/5faf5020f2594b2f945e05021b29e2e7.HD-720p-4.5Mbps-41490760.mp4" type="video/mp4">
+                <track kind="captions" src="https://videos.gotolstoy.com/public/818cbd02-1370-4752-8bbd-20cf44e188f2/56726696-ca9d-4502-85bc-e2dfb8b47ace/56726696-ca9d-4502-85bc-e2dfb8b47ace.vtt" srclang="en" label="English">
+              </video>
+            </div>
+            <div><strong>GlacioTex™ cooling</strong><span>How the cool-to-touch cover works.</span></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="helix-story__help">
+        <div>
+          <strong>Want to try it first?</strong>
+          <span>Visit our Bowling Green showroom for local help.</span>
+        </div>
+        <a href="/pages/locations">Get directions</a>
+        <a href="tel:+12704951603" class="is-secondary">Call (270) 495-1603</a>
+      </div>
     </div>
+  </section>
 
-    <!-- Add-on cards -->
-    <div class="helix-addons__grid">
-
-      {% if is_elite %}
-        {% comment %} Elite: Everything is standard {% endcomment %}
-        <div class="helix-addon-card" style="cursor:default;">
-          <span class="helix-addon-card__tier-badge elite">Standard</span>
-          <h3 class="helix-addon-card__name">ErgoAlign™ Layer</h3>
-          <p class="helix-addon-card__desc">Zoned lumbar support layer integrated into the Elite's comfort system. Ultra-dense foam segment under the midsection provides targeted support and spinal alignment.</p>
-          <p class="helix-addon-card__price">Included</p>
-        </div>
-
-        <div class="helix-addon-card" style="cursor:default;">
-          <span class="helix-addon-card__tier-badge elite">Standard</span>
-          <h3 class="helix-addon-card__name">GlacioTex™ + CoolForce™</h3>
-          <p class="helix-addon-card__desc">Cool-to-touch cover with phase-change materials plus active cooling layer beneath for temperature regulation.</p>
-          <p class="helix-addon-card__price">Included</p>
-        </div>
-
-      {% elsif is_luxe %}
-        {% comment %} Luxe: ErgoAlign Layer is optional, Cooling Pillow Top is optional {% endcomment %}
-        <div class="helix-addon-card" style="cursor:default;">
-          <span class="helix-addon-card__tier-badge luxe">Optional Upgrade</span>
-          <h3 class="helix-addon-card__name">ErgoAlign™ Layer</h3>
-          <p class="helix-addon-card__desc">A zoned foam layer integrated into the Luxe comfort system. Ultra-dense foam beneath your midsection provides targeted lumbar support and spinal alignment. Available as an upgrade when purchased with your Luxe mattress.</p>
-          <p class="helix-addon-card__price">Add $187</p>
-          <p class="helix-addon-card__cta">Ask in store →</p>
-        </div>
-
-        <div class="helix-addon-card" style="cursor:default;">
-          <span class="helix-addon-card__tier-badge luxe">Optional Upgrade</span>
-          <h3 class="helix-addon-card__name">GlacioTex™ Cooling Pillow Top</h3>
-          <p class="helix-addon-card__desc">Upgrade your Luxe cover to GlacioTex™ — a cool-to-touch fabric that pulls heat away from your body for a cooler sleep surface.</p>
-          <p class="helix-addon-card__price">Ask for pricing</p>
-          <p class="helix-addon-card__cta">Ask in store →</p>
-        </div>
-
-      {% else %}
-        {% comment %} Core: Both ErgoAlign Layer and GlacioTex are optional (2025 update) {% endcomment %}
-        <div class="helix-addon-card" style="cursor:default;">
-          <span class="helix-addon-card__tier-badge">Optional Upgrade</span>
-          <h3 class="helix-addon-card__name">ErgoAlign™ Layer</h3>
-          <p class="helix-addon-card__desc">Add zoned lumbar support to your Core mattress. An ultra-dense foam segment under your midsection provides targeted support where you need it most. Integrated into the comfort layer.</p>
-          <p class="helix-addon-card__price">Add $187</p>
-          <p class="helix-addon-card__cta">Ask in store →</p>
-        </div>
-
-        <div class="helix-addon-card" style="cursor:default;">
-          <span class="helix-addon-card__tier-badge">Optional Upgrade</span>
-          <h3 class="helix-addon-card__name">GlacioTex™ Cooling Pillow Top</h3>
-          <p class="helix-addon-card__desc">Upgrade your Core cover to GlacioTex™ for a cooler sleep surface. Phase-change fabric pulls heat away from your body throughout the night.</p>
-          <p class="helix-addon-card__price">Add $187</p>
-          <p class="helix-addon-card__cta">Ask in store →</p>
-        </div>
-      {% endif %}
-
-    </div>
-  </div>
-</div>
-
-{% endif %}
+  <style>
+    .helix-story { background: #f5f3ee; color: #13233f; padding: clamp(52px,7vw,92px) 22px; }
+    .helix-story__inner { max-width: 1180px; margin: 0 auto; }
+    .helix-story__heading { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(280px,.85fr); align-items: end; gap: 48px; margin-bottom: 30px; }
+    .helix-story__eyebrow { margin: 0 0 9px; color: #bf2540; font-size: 11px; font-weight: 850; letter-spacing: .15em; text-transform: uppercase; }
+    .helix-story h2, .helix-story h3 { margin: 0; color: #13233f; letter-spacing: -.035em; }
+    .helix-story h2 { font-size: clamp(31px,4.2vw,54px); line-height: 1.02; }
+    .helix-story h3 { font-size: clamp(25px,3vw,38px); line-height: 1.05; }
+    .helix-story__heading > p { max-width: 470px; margin: 0; color: #52627a; font-size: 17px; line-height: 1.55; }
+    .helix-story__facts { display: grid; grid-template-columns: repeat(4,1fr); overflow: hidden; border: 1px solid #d8d5ce; border-radius: 16px; background: #fff; }
+    .helix-story__fact { min-height: 154px; padding: 23px; border-right: 1px solid #e4e1da; }
+    .helix-story__fact:last-child { border: 0; }
+    .helix-story__fact span { display: block; margin-bottom: 18px; color: #7a8799; font-size: 10px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    .helix-story__fact strong { display: block; margin-bottom: 7px; font-size: 20px; }
+    .helix-story__fact small { display: block; color: #617087; font-size: 12px; line-height: 1.48; }
+    .helix-story__compare { display: grid; grid-template-columns: minmax(230px,.72fr) minmax(0,1.55fr); gap: 56px; align-items: center; padding: clamp(58px,7vw,88px) 0; }
+    .helix-story__compare-copy > p:last-child { max-width: 350px; margin: 15px 0 0; color: #617087; line-height: 1.55; }
+    .helix-story__tier-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+    .helix-story__tier-card { display: flex; min-height: 196px; flex-direction: column; padding: 22px; border: 1px solid #d8d5ce; border-radius: 14px; background: #fff; color: #13233f; text-decoration: none; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+    .helix-story__tier-card:hover { transform: translateY(-3px); border-color: #98a5b5; box-shadow: 0 12px 30px rgba(19,35,63,.08); }
+    .helix-story__tier-card.is-current { border: 2px solid #13233f; padding: 21px; box-shadow: 0 12px 30px rgba(19,35,63,.08); }
+    .helix-story__tier-name { width: fit-content; margin-bottom: 25px; padding: 5px 9px; border-radius: 999px; background: #eef1f5; color: #13233f; font-size: 10px; font-weight: 850; letter-spacing: .09em; text-transform: uppercase; }
+    .helix-story__tier-card.is-current .helix-story__tier-name { background: #13233f; color: #fff; }
+    .helix-story__tier-card strong { font-size: 23px; }
+    .helix-story__tier-card small { margin: 6px 0 18px; color: #617087; font-size: 12px; line-height: 1.4; }
+    .helix-story__tier-card b { margin-top: auto; font-size: 13px; }
+    .helix-story__videos { padding: clamp(46px,6vw,72px); border-radius: 22px; background: #13233f; color: #fff; }
+    .helix-story__videos h3 { color: #fff; }
+    .helix-story__video-heading { margin-bottom: 26px; }
+    .helix-story__video-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
+    .helix-story__video-card { overflow: hidden; border: 1px solid rgba(255,255,255,.14); border-radius: 14px; background: #1c3154; }
+    .helix-story__frame { position: relative; aspect-ratio: 16/9; background: #0a1629; }
+    .helix-story__frame video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+    .helix-story__video-card > div:last-child { display: flex; flex-direction: column; gap: 4px; padding: 17px 18px; }
+    .helix-story__video-card strong { font-size: 14px; }
+    .helix-story__video-card span { color: #b9c5d5; font-size: 12px; }
+    .helix-story__help { display: grid; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; gap: 12px; margin-top: 18px; padding: 22px 24px; border: 1px solid #d8d5ce; border-radius: 14px; background: #fff; }
+    .helix-story__help > div { display: flex; flex-direction: column; gap: 3px; }
+    .helix-story__help strong { font-size: 15px; }
+    .helix-story__help span { color: #617087; font-size: 12px; }
+    .helix-story__help a { padding: 10px 16px; border-radius: 8px; background: #c9233b; color: #fff; font-size: 12px; font-weight: 800; text-decoration: none; white-space: nowrap; }
+    .helix-story__help a.is-secondary { background: #eef1f5; color: #13233f; }
+    @media (max-width: 900px) {
+      .helix-story__facts { grid-template-columns: repeat(2,1fr); }
+      .helix-story__fact:nth-child(2) { border-right: 0; }
+      .helix-story__fact:nth-child(-n+2) { border-bottom: 1px solid #e4e1da; }
+      .helix-story__compare { grid-template-columns: 1fr; gap: 28px; }
+      .helix-story__help { grid-template-columns: 1fr 1fr; }
+      .helix-story__help > div { grid-column: 1/-1; }
+      .helix-story__help a { text-align: center; }
+    }
+    @media (max-width: 680px) {
+      .helix-story { padding-inline: 16px; }
+      .helix-story__heading { grid-template-columns: 1fr; gap: 18px; }
+      .helix-story__heading > p { font-size: 15px; }
+      .helix-story__facts { grid-template-columns: 1fr; }
+      .helix-story__fact { min-height: 0; border-right: 0; border-bottom: 1px solid #e4e1da; }
+      .helix-story__fact:nth-child(2) { border-bottom: 1px solid #e4e1da; }
+      .helix-story__tier-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 7px; }
+      .helix-story__tier-card { min-width: 210px; min-height: 174px; scroll-snap-align: start; }
+      .helix-story__videos { padding: 28px 16px; border-radius: 16px; }
+      .helix-story__video-grid { grid-template-columns: 1fr; }
+      .helix-story__help { grid-template-columns: 1fr; padding: 20px; }
+    }
+  </style>
+{%- endif -%}
 
 {% schema %}
 {
-  "name": "Helix Product Add-ons",
+  "name": "Helix product experience",
   "enabled_on": {
     "templates": ["product"]
   },

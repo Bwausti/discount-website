@@ -124,9 +124,7 @@
     </main>
 
     {% unless template == 'index' %}
-    <footer>
-      {% sections 'footer-group' %}
-    </footer>
+      {% section 'custom_footer' %}
     {% endunless %}
 
     {% render 'search-modal' %}

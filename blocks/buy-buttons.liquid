@@ -63,6 +63,7 @@
           ref="variantId"
           value="{{ product.selected_or_first_available_variant.id }}"
         >
+        {% render 'helix-pdp-configurator', product: product %}
         {%- if block_settings.gift_card_form and product.gift_card? -%}
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section, block: block -%}
           <span class="buy-buttons-block__bar">
@@ -224,12 +225,14 @@
             add_to_cart_text: add_to_cart_text
           %}
 
-          {% content_for 'block',
-            type: 'accelerated-checkout',
-            id: 'accelerated-checkout',
-            can_add_to_cart: can_add_to_cart,
-            form_obj: form
-          %}
+          {%- unless product.vendor == 'Helix' and product.type == 'Mattress' -%}
+            {% content_for 'block',
+              type: 'accelerated-checkout',
+              id: 'accelerated-checkout',
+              can_add_to_cart: can_add_to_cart,
+              form_obj: form
+            %}
+          {%- endunless -%}
         </div>
         {%- if block_settings.gift_card_form and product.gift_card? -%}
           </span>

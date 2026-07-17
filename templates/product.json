@@ -72,7 +72,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h1><strong>{{ product.vendor }}</strong></h1>",
+                "text": "<p><strong>{{ product.vendor }}</strong></p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
