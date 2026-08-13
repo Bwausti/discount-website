@@ -9,17 +9,73 @@
  */
 {
   "sections": {
-    "nectar-banner": {
-      "type": "nectar-collection-banner",
+    "brand-collection": {
+      "type": "brand-collection",
       "settings": {}
     },
-    "nectar-tiered-grid": {
-      "type": "nectar-tiered-grid",
-      "settings": {}
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "filters": {
+          "type": "filters",
+          "static": true,
+          "settings": {},
+          "blocks": {}
+        },
+        "product-card": {
+          "type": "_product-card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 4,
+            "inherit_color_scheme": true,
+            "border": "solid",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 8
+          },
+          "blocks": {
+            "card-gallery": {
+              "type": "_product-card-gallery",
+              "settings": {
+                "image_ratio": "square"
+              },
+              "blocks": {}
+            },
+            "product-title": {
+              "type": "product-title",
+              "settings": {
+                "width": "100%",
+                "padding-block-start": 4
+              },
+              "blocks": {}
+            },
+            "price": {
+              "type": "price",
+              "settings": {
+                "show_sale_price_first": true,
+                "width": "100%"
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "card-gallery",
+            "product-title",
+            "price"
+          ]
+        }
+      },
+      "settings": {
+        "product_grid_width": "centered",
+        "columns_gap_horizontal": 20,
+        "columns_gap_vertical": 24,
+        "padding-block-start": 8,
+        "padding-block-end": 40
+      }
     }
   },
   "order": [
-    "nectar-banner",
-    "nectar-tiered-grid"
+    "brand-collection",
+    "main"
   ]
 }

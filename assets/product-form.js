@@ -295,6 +295,26 @@ class ProductFormComponent extends Component {
       return;
     }
 
+    // Helix covers and support layers are separate catalog products. Add every
+    // selected paid upgrade with the mattress in one cart request.
+    const selectedHelixAddons = /** @type {HTMLInputElement[]} */ (
+      Array.from(this.querySelectorAll('[data-helix-addon-option]:checked'))
+    );
+    const helixAddonVariantIds = [
+      ...new Set(selectedHelixAddons.map((option) => option.dataset.addonVariantId).filter(Boolean)),
+    ];
+    if (helixAddonVariantIds.length > 0) {
+      const intendedVariantId = this.#getIntendedVariantId();
+      const quantity = this.#getQuantity();
+      if (intendedVariantId) {
+        this.#processBatchAddToCart([
+          { variantId: intendedVariantId, quantity },
+          ...helixAddonVariantIds.map((variantId) => ({ variantId, quantity })),
+        ]);
+        return;
+      }
+    }
+
     this.#processAddToCart(undefined, undefined, event);
   }
 

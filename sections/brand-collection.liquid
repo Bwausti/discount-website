@@ -1,0 +1,457 @@
+{% liquid
+  assign supported_brands = 'puffy,dreamcloud,nectar,bedgear,bedtech,naturepedic,jamison,pranasleep,posh-and-lavish' | split: ','
+  assign brand_handle = collection.handle
+%}
+
+{% if supported_brands contains brand_handle %}
+  {% liquid
+    assign brand_name = collection.title
+    assign eyebrow = 'Premium sleep, made easier'
+    assign headline = collection.title | append: ' at Discount Mattress'
+    assign intro = collection.description | strip_html | truncatewords: 32
+    assign hero_asset = ''
+    assign hero_product_handle = ''
+    assign image_fit = 'cover'
+    assign logo_asset = ''
+    assign logo_class = ''
+    assign cta_label = 'Shop the collection'
+    assign cta_target = '#brand-shop-all'
+    assign edit_title = 'A better place to start'
+    assign edit_intro = 'Begin with these customer favorites, then compare every available option below.'
+    assign featured_handles = ''
+    assign featured_labels = ''
+    assign featured_notes = ''
+    assign fact_one = 'Free nationwide delivery'
+    assign fact_two = 'Shop online or in store'
+    assign fact_three = 'Local help when you need it'
+    assign story_eyebrow = 'Why this brand'
+    assign story_title = 'Comfort with a point of view.'
+    assign story_copy = 'A focused collection for shoppers who want a clearer path to the right sleep setup.'
+    assign shop_heading = 'Shop all ' | append: collection.title
+    assign hero_alt = collection.title | append: ' collection'
+    assign hero_background = '#eef4f8'
+    assign hero_ink = '#11253d'
+    assign body_ink = '#11253d'
+    assign accent = '#1d6fa5'
+    assign accent_ink = '#ffffff'
+    assign soft_background = '#f5f8fa'
+
+    case brand_handle
+      when 'puffy'
+        assign eyebrow = 'Cloudlike comfort, thoughtfully layered'
+        assign headline = 'Find your Puffy comfort level.'
+        assign intro = 'Explore contouring foam and responsive hybrid designs, from everyday comfort to deeper luxury.'
+        assign hero_asset = 'puffy-lux-card.jpg'
+        assign brand_name = 'Puffy'
+        assign cta_label = 'Compare Puffy mattresses'
+        assign edit_title = 'Start with the Puffy favorites'
+        assign edit_intro = 'Four distinct steps from balanced comfort to handcrafted luxury.'
+        assign featured_handles = 'puffy-lux-hybrid|puffy-royal-hybrid|puffy-monarch|puffy-legacy'
+        assign featured_labels = 'Best place to start|Elevated pressure relief|Deep luxury feel|Handcrafted flagship'
+        assign featured_notes = 'A responsive hybrid with a medium-plush feel.|A plusher design with zoned support.|An ultra-premium hybrid with responsive natural materials.|The ultimate-plush Puffy with cashmere, horsehair, and Talalay latex.'
+        assign fact_two = 'Foam & hybrid options'
+        assign fact_three = 'Six comfort levels'
+        assign story_title = 'Soft where you want it. Supportive where it matters.'
+        assign story_copy = 'Puffy pairs contouring comfort with a clean, approachable model ladder. Choose the feel and construction that best match the way you sleep.'
+        assign hero_background = '#e8f6ff'
+        assign hero_ink = '#102c45'
+        assign body_ink = '#102c45'
+        assign accent = '#128ac7'
+        assign soft_background = '#f2faff'
+      when 'dreamcloud'
+        assign eyebrow = 'Hotel-inspired comfort at home'
+        assign headline = 'Make every night feel like an upgrade.'
+        assign intro = 'DreamCloud combines a polished quilted feel with your choice of memory foam or responsive hybrid support.'
+        assign hero_asset = 'dm-dreamcloud-bg.webp'
+        assign logo_asset = 'logo-dreamcloud.png'
+        assign logo_class = 'dm-brand-wordmark--light'
+        assign cta_label = 'Compare DreamCloud tiers'
+        assign edit_title = 'Choose your DreamCloud tier'
+        assign edit_intro = 'A simple progression from essential comfort to the most elevated finish.'
+        assign featured_handles = 'dreamcloud-premier-hybrid|dreamcloud-classic-hybrid|dreamcloud-luxe-hybrid'
+        assign featured_labels = 'Balanced favorite|Everyday luxury|Extra comfort & cooling'
+        assign featured_notes = 'The strongest balance of comfort, support, and value.|An approachable entry into the DreamCloud feel.|A taller, more refined step up in the collection.'
+        assign fact_two = 'Memory foam or hybrid'
+        assign fact_three = 'Four distinct tiers'
+        assign story_title = 'A more polished kind of comfort.'
+        assign story_copy = 'DreamCloud is made for shoppers who want a substantial mattress, a tailored look, and an easy-to-understand step-up path.'
+        assign hero_background = '#0d1b31'
+        assign hero_ink = '#fff9ef'
+        assign body_ink = '#14243b'
+        assign accent = '#d1a84c'
+        assign accent_ink = '#111a28'
+        assign soft_background = '#f5f1e8'
+      when 'nectar'
+        assign eyebrow = 'Comfort without the guesswork'
+        assign headline = 'Pick your feel. Keep it simple.'
+        assign intro = 'Nectar offers a clear choice of memory foam or hybrid support across four easy-to-compare comfort tiers.'
+        assign hero_asset = 'nectar-premier-card.jpg'
+        assign logo_asset = 'logo-nectar.png'
+        assign cta_label = 'Compare Nectar mattresses'
+        assign edit_title = 'Three easy ways into Nectar'
+        assign edit_intro = 'Start with the construction and comfort level that feels most like you.'
+        assign featured_handles = 'nectar-premier-hybrid|nectar-classic-memory-foam|nectar-luxe-hybrid'
+        assign featured_labels = 'Most balanced|Classic contouring|Cooler step-up'
+        assign featured_notes = 'Foam comfort with responsive coil support.|The familiar all-foam Nectar feel at an approachable level.|A more elevated hybrid with added comfort layers.'
+        assign fact_two = 'Foam & hybrid choices'
+        assign fact_three = 'Four simple tiers'
+        assign story_title = 'The shortest path to your comfort match.'
+        assign story_copy = 'Nectar keeps the decision focused: choose foam or hybrid, then decide how far you want to step up in cooling and cushioning.'
+        assign hero_background = '#e8f7ef'
+        assign hero_ink = '#102d2b'
+        assign body_ink = '#102d2b'
+        assign accent = '#52c96b'
+        assign accent_ink = '#102d2b'
+        assign soft_background = '#f2fbf5'
+      when 'bedgear'
+        assign brand_name = 'BEDGEAR'
+        assign eyebrow = 'Performance bedding, fit to you'
+        assign headline = 'Meet the BEDGEAR best sellers.'
+        assign intro = 'Shop our most popular performance pillows, including classic and Cuddle Curve designs for cooler, more personalized sleep.'
+        assign hero_asset = 'bedgear-hero-bg.jpg'
+        assign logo_asset = 'logo-bedgear.png'
+        assign image_fit = 'contain'
+        assign cta_label = 'Shop the best sellers'
+        assign cta_target = '#brand-featured'
+        assign edit_title = 'BEDGEAR top sellers'
+        assign edit_intro = 'Compare Storm and Balance in their classic and Cuddle Curve designs.'
+        assign featured_handles = 'bedgear-storm|storm-cuddle-curve-performance®-pillow|bedgear-balance|balance-cuddle-curve-performance®-pillow'
+        assign featured_labels = 'Personalized cooling|Cooling cuddle curve|Balanced comfort|Contoured comfort'
+        assign featured_notes = 'A responsive performance pillow with cooling airflow.|Storm cooling with a curved shape made for closer shoulder and neck support.|A versatile pillow built for adaptable support.|Balance comfort in a curved design that contours around the shoulder.'
+        assign fact_two = 'Storm & Balance pillows'
+        assign fact_three = 'Classic & Cuddle Curve'
+        assign story_title = 'Treat sleep like performance.'
+        assign story_copy = 'BEDGEAR brings an athletic mindset to the whole bed—more airflow, better-fitting pillows, and layers designed to work together.'
+        assign shop_heading = 'Shop all BEDGEAR performance bedding'
+        assign hero_background = '#090d14'
+        assign hero_ink = '#ffffff'
+        assign body_ink = '#101722'
+        assign accent = '#19aee5'
+        assign accent_ink = '#071018'
+        assign soft_background = '#eef8fc'
+      when 'bedtech'
+        assign brand_name = 'BedTech'
+        assign eyebrow = 'Adjustable comfort, made practical'
+        assign headline = 'Put your sleep position in your hands.'
+        assign intro = 'Compare adjustable bases, foundations, and upholstered platforms—from simple head lift to feature-rich relaxation.'
+        assign hero_asset = 'bedtech-base-v2.jpg'
+        assign logo_asset = 'logo-bedtech.png'
+        assign logo_class = 'dm-brand-wordmark--light'
+        assign cta_label = 'Compare BedTech bases'
+        assign edit_title = 'Find the right level of adjustability'
+        assign edit_intro = 'Start with how much movement, convenience, and in-bed relaxation you want.'
+        assign featured_handles = 'bedtech-bt3000|bedtech-bt6500|bedtech-bthu'
+        assign featured_labels = 'Smart all-around choice|Maximum feature set|Simple head adjustment'
+        assign featured_notes = 'A versatile base with a strong mix of comfort features.|The premium BedTech base for a more complete setup.|A straightforward way to add adjustable comfort.'
+        assign fact_two = 'Adjustable & platform bases'
+        assign fact_three = 'Multiple feature levels'
+        assign story_title = 'Your bed should move with your life.'
+        assign story_copy = 'BedTech makes it easier to read, relax, elevate, and settle in with a range that moves from simple function to premium control.'
+        assign shop_heading = 'Shop all BedTech bases'
+        assign hero_background = '#111924'
+        assign hero_ink = '#ffffff'
+        assign body_ink = '#14202b'
+        assign accent = '#20b8c6'
+        assign accent_ink = '#07161a'
+        assign soft_background = '#eef8f8'
+      when 'naturepedic'
+        assign brand_name = 'Naturepedic'
+        assign eyebrow = 'Organic comfort, beautifully considered'
+        assign headline = 'Sleep closer to nature.'
+        assign intro = 'Explore thoughtfully built mattresses featuring organic materials, responsive latex, and supportive coil systems.'
+        assign hero_asset = 'naturepedic-hero-bg.jpg'
+        assign cta_label = 'Explore Naturepedic'
+        assign edit_title = 'Find your Naturepedic starting point'
+        assign edit_intro = 'From refined simplicity to highly customizable comfort.'
+        assign featured_handles = 'naturepedic-eos-classic|naturepedic-concerto-pillow-top|naturepedic-serenade'
+        assign featured_labels = 'Most customizable|Plush, tailored comfort|Streamlined organic hybrid'
+        assign featured_notes = 'A modular design built to personalize each side.|A cushioned pillow-top feel with responsive support.|A clean, approachable introduction to organic comfort.'
+        assign fact_two = 'Organic materials'
+        assign fact_three = 'Latex & coil support'
+        assign story_title = 'Comfort you can feel good about.'
+        assign story_copy = 'Naturepedic brings natural materials and careful construction together in a lineup that ranges from simple to deeply personalized.'
+        assign hero_background = '#f1eee3'
+        assign hero_ink = '#243e31'
+        assign body_ink = '#243e31'
+        assign accent = '#527451'
+        assign soft_background = '#f6f5ed'
+      when 'jamison'
+        assign brand_name = 'Jamison'
+        assign eyebrow = 'Handmade American comfort since 1883'
+        assign headline = 'Bring resort-worthy comfort home.'
+        assign intro = 'Discover Jamison’s heritage of American craftsmanship through two distinct collections: responsive Autograph support and relaxing Resort Foam.'
+        assign hero_product_handle = 'jamison-autograph-collection'
+        assign logo_asset = 'logo-jamison.png'
+        assign cta_label = 'Explore Jamison'
+        assign edit_title = 'Two distinct Jamison experiences'
+        assign edit_intro = 'Choose a more responsive innerspring feel or settle into contouring resort-style foam.'
+        assign featured_handles = 'jamison-autograph-collection|jamison-resort-foam-collection'
+        assign featured_labels = 'Responsive heritage|Resort-style contouring'
+        assign featured_notes = 'An advanced innerspring collection with adaptable support.|Foam comfort inspired by the ease of a hotel stay.'
+        assign fact_two = 'Handmade in the USA'
+        assign fact_three = 'Foam & innerspring'
+        assign story_title = 'More than 140 years of mattress making.'
+        assign story_copy = 'Jamison pairs longstanding craftsmanship with straightforward comfort stories—supportive, durable, and made to be experienced in person.'
+        assign hero_background = '#5b2430'
+        assign hero_ink = '#fff8ee'
+        assign body_ink = '#4b2530'
+        assign accent = '#c9a66b'
+        assign accent_ink = '#2c1820'
+        assign soft_background = '#faf3e9'
+      when 'pranasleep'
+        assign brand_name = 'PranaSleep'
+        assign eyebrow = 'Buoyant comfort. Restorative design.'
+        assign headline = 'Float into a more responsive kind of comfort.'
+        assign intro = 'The Karma Elite 2 hybrid pairs natural Talalay latex with pocketed coils in three carefully tuned comfort feels.'
+        assign hero_asset = 'prana-hero-bg.jpg'
+        assign logo_asset = 'logo-pranasleep.png'
+        assign cta_label = 'Choose your Karma feel'
+        assign edit_title = 'One mattress. Three comfort feels.'
+        assign edit_intro = 'The same buoyant hybrid foundation, tuned from firm to deeply cushioned.'
+        assign featured_handles = 'karma-elite-2-hybrid-plush|karma-elite-2-hybrid-firm|karma-elite-2-hybrid-super-cush'
+        assign featured_labels = 'Balanced pressure relief|Responsive & supportive|Deepest cushion'
+        assign featured_notes = 'A plush feel that cushions without feeling stuck.|A firmer surface with the buoyancy of Talalay latex.|The softest, most enveloping feel in the group.'
+        assign fact_two = 'Natural Talalay latex'
+        assign fact_three = 'Three comfort feels'
+        assign story_title = 'Buoyancy instead of sink.'
+        assign story_copy = 'PranaSleep’s Karma Elite 2 line is for sleepers who want responsive pressure relief, breathable materials, and a more elevated feel.'
+        assign hero_background = '#f3ece7'
+        assign hero_ink = '#3c2136'
+        assign body_ink = '#3c2136'
+        assign accent = '#c76034'
+        assign soft_background = '#faf5f1'
+      when 'posh-and-lavish'
+        assign brand_name = 'Posh+Lavish'
+        assign eyebrow = 'Handcrafted, naturally refined luxury'
+        assign headline = 'Sleep should feel weightless.'
+        assign intro = 'Experience handcrafted mattresses and pillow-top pairings designed around buoyant comfort, natural materials, and lasting support.'
+        assign hero_asset = 'posh-story-bg.jpg'
+        assign cta_label = 'Explore Posh+Lavish'
+        assign edit_title = 'Choose your Posh+Lavish experience'
+        assign edit_intro = 'Begin with Providence, then add a true pillow top for another layer of responsive luxury.'
+        assign featured_handles = 'providence|providence-3-true-pillow-top'
+        assign featured_labels = 'The foundation|The full pillow-top experience'
+        assign featured_notes = 'A handcrafted mattress with an uplifting, buoyant feel.|Providence paired with a removable true pillow top for deeper cushioning.'
+        assign fact_two = 'Handcrafted in the USA'
+        assign fact_three = 'Buoyant natural comfort'
+        assign story_title = 'Luxury that feels quietly different.'
+        assign story_copy = 'Posh+Lavish focuses on exceptional materials, hand-built construction, and a lifted feeling that lets the body relax without disappearing into the bed.'
+        assign shop_heading = 'Shop all Posh+Lavish'
+        assign hero_background = '#242326'
+        assign hero_ink = '#fffdf8'
+        assign body_ink = '#2c292d'
+        assign accent = '#d0b98d'
+        assign accent_ink = '#242326'
+        assign soft_background = '#f6f2ea'
+    endcase
+
+    assign featured_handle_list = featured_handles | split: '|'
+    assign featured_label_list = featured_labels | split: '|'
+    assign featured_note_list = featured_notes | split: '|'
+    assign hero_product = collection.products | where: 'handle', hero_product_handle | first
+  %}
+
+  <style>
+    .dm-brand-collection {
+      --brand-hero-bg: {{ hero_background }}; --brand-hero-ink: {{ hero_ink }}; --brand-ink: {{ body_ink }};
+      --brand-accent: {{ accent }}; --brand-accent-ink: {{ accent_ink }}; --brand-soft: {{ soft_background }};
+      color: var(--brand-ink); background: #fff;
+    }
+    .dm-brand-collection *, .dm-brand-collection *::before, .dm-brand-collection *::after { box-sizing: border-box; }
+    .dm-brand-shell { width: min(1320px, calc(100% - 48px)); margin-inline: auto; }
+    .dm-brand-hero { position: relative; isolation: isolate; overflow: hidden; background: var(--brand-hero-bg); color: var(--brand-hero-ink); }
+    .dm-brand-hero::before { content: ''; position: absolute; width: 520px; height: 520px; right: -180px; top: -230px; border: 1px solid color-mix(in srgb, var(--brand-accent) 45%, transparent); border-radius: 50%; opacity: .6; z-index: -1; }
+    .dm-brand-hero::after { content: ''; position: absolute; width: 340px; height: 340px; left: -190px; bottom: -230px; background: var(--brand-accent); filter: blur(90px); border-radius: 50%; opacity: .16; z-index: -1; }
+    .dm-brand-breadcrumb { padding-top: 18px; font-size: 12px; font-weight: 700; letter-spacing: .02em; opacity: .74; }
+    .dm-brand-breadcrumb a { color: inherit; text-decoration: none; }
+    .dm-brand-hero__grid { min-height: 610px; display: grid; grid-template-columns: minmax(0, .86fr) minmax(500px, 1.14fr); gap: clamp(38px, 6vw, 88px); align-items: center; padding-block: 52px 68px; }
+    .dm-brand-hero__copy { max-width: 620px; }
+    .dm-brand-wordmark { display: block; width: auto; max-width: 220px; height: 58px; object-fit: contain; object-position: left center; margin-bottom: 28px; }
+    .dm-brand-wordmark--light { filter: grayscale(1) brightness(0) invert(1); }
+    .dm-brand-wordmark-text { margin: 0 0 24px; font-size: clamp(28px, 3vw, 46px); font-weight: 900; line-height: 1; letter-spacing: -.045em; }
+    .dm-brand-collection--posh-and-lavish .dm-brand-wordmark-text { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+    .dm-brand-collection--puffy .dm-brand-wordmark-text { font-size: clamp(38px, 4vw, 56px); letter-spacing: -.06em; }
+    .dm-brand-eyebrow { margin: 0 0 14px; color: var(--brand-accent); font-size: 11px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
+    .dm-brand-hero h1 { max-width: 720px; margin: 0; color: inherit; font-size: clamp(42px, 5.4vw, 76px); line-height: .98; letter-spacing: -.055em; text-wrap: balance; }
+    .dm-brand-collection--posh-and-lavish .dm-brand-hero h1 { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+    .dm-brand-hero__intro { max-width: 590px; margin: 24px 0 0; color: inherit; font-size: clamp(16px, 1.45vw, 19px); line-height: 1.62; opacity: .82; }
+    .dm-brand-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+    .dm-brand-button { display: inline-flex; min-height: 50px; align-items: center; justify-content: center; gap: 9px; padding: 12px 21px; border: 1px solid transparent; border-radius: 999px; color: var(--brand-accent-ink); background: var(--brand-accent); font-size: 14px; font-weight: 850; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
+    .dm-brand-button:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgb(0 0 0 / .14); }
+    .dm-brand-button--secondary { color: inherit; background: transparent; border-color: color-mix(in srgb, currentColor 32%, transparent); }
+    .dm-brand-button svg { width: 17px; height: 17px; }
+    .dm-brand-hero__visual { position: relative; min-width: 0; }
+    .dm-brand-hero__frame { position: relative; overflow: hidden; min-height: 490px; border: 1px solid color-mix(in srgb, var(--brand-hero-ink) 22%, transparent); border-radius: 32px; background: color-mix(in srgb, var(--brand-hero-bg) 72%, white); box-shadow: 0 32px 80px rgb(0 0 0 / .18); }
+    .dm-brand-hero__frame img { display: block; width: 100%; height: 100%; min-height: 490px; object-fit: cover; }
+    .dm-brand-hero__frame--contain img { object-fit: contain; padding: 7%; }
+    .dm-brand-collection--puffy .dm-brand-hero__frame img { object-position: center 36%; }
+    .dm-brand-collection--dreamcloud .dm-brand-hero__frame img { object-position: 61% center; }
+    .dm-brand-collection--posh-and-lavish .dm-brand-hero__frame img { object-position: 68% center; }
+    .dm-brand-visual-note { position: absolute; left: 22px; right: 22px; bottom: 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px 17px; border: 1px solid rgb(255 255 255 / .55); border-radius: 16px; color: #16243a; background: rgb(255 255 255 / .9); box-shadow: 0 10px 30px rgb(0 0 0 / .13); backdrop-filter: blur(14px); }
+    .dm-brand-visual-note strong { display: block; font-size: 13px; }
+    .dm-brand-visual-note span { display: block; margin-top: 3px; color: #5d6877; font-size: 11px; }
+    .dm-brand-visual-note__mark { display: grid !important; flex: 0 0 34px; width: 34px; height: 34px; place-items: center; border-radius: 50%; color: var(--brand-accent-ink) !important; background: var(--brand-accent); }
+    .dm-brand-proof { border-bottom: 1px solid #e7e4df; background: #fff; }
+    .dm-brand-proof__grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .dm-brand-proof__item { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 76px; padding: 16px 22px; color: var(--brand-ink); font-size: 13px; font-weight: 800; text-align: center; }
+    .dm-brand-proof__item + .dm-brand-proof__item { border-left: 1px solid #e7e4df; }
+    .dm-brand-proof__icon { display: grid; flex: 0 0 27px; width: 27px; height: 27px; place-items: center; border-radius: 50%; color: var(--brand-accent-ink); background: var(--brand-accent); }
+    .dm-brand-proof__icon svg { width: 14px; height: 14px; }
+    .dm-brand-edit { padding-block: clamp(68px, 8vw, 110px); background: #fff; }
+    .dm-brand-edit__header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .62fr); gap: 40px; align-items: end; margin-bottom: 34px; }
+    .dm-brand-edit h2, .dm-brand-shop-heading h2 { margin: 0; color: var(--brand-ink); font-size: clamp(34px, 4vw, 54px); line-height: 1.03; letter-spacing: -.045em; text-wrap: balance; }
+    .dm-brand-collection--posh-and-lavish :is(.dm-brand-edit h2, .dm-brand-shop-heading h2, .dm-brand-story h2) { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; }
+    .dm-brand-edit__intro { margin: 0; color: #657080; font-size: 15px; line-height: 1.7; }
+    .dm-brand-edit__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 18px; }
+    .dm-brand-card { position: relative; display: flex; min-width: 0; flex-direction: column; overflow: hidden; border: 1px solid #e1dfda; border-radius: 22px; color: var(--brand-ink); background: #fff; box-shadow: 0 12px 34px rgb(25 34 46 / .06); text-decoration: none; transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+    .dm-brand-card:hover { transform: translateY(-5px); border-color: color-mix(in srgb, var(--brand-accent) 66%, #d6d2ca); box-shadow: 0 22px 50px rgb(25 34 46 / .12); }
+    .dm-brand-card__media { position: relative; aspect-ratio: 1.42 / 1; overflow: hidden; background: var(--brand-soft); }
+    .dm-brand-card__media img { display: block; width: 100%; height: 100%; object-fit: contain; padding: 8%; transition: transform .35s ease; }
+    .dm-brand-card:hover .dm-brand-card__media img { transform: scale(1.035); }
+    .dm-brand-card__badge { position: absolute; top: 14px; left: 14px; z-index: 1; padding: 7px 10px; border-radius: 999px; color: var(--brand-accent-ink); background: var(--brand-accent); font-size: 9px; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; }
+    .dm-brand-card__body { display: flex; flex: 1; flex-direction: column; padding: 21px; }
+    .dm-brand-card h3 { margin: 0; color: inherit; font-size: 21px; line-height: 1.15; letter-spacing: -.025em; }
+    .dm-brand-card__note { margin: 10px 0 17px; color: #687382; font-size: 13px; line-height: 1.55; }
+    .dm-brand-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: auto; padding-top: 15px; border-top: 1px solid #eceae6; }
+    .dm-brand-card__price { font-size: 14px; font-weight: 850; }
+    .dm-brand-card__arrow { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 50%; color: var(--brand-accent-ink); background: var(--brand-accent); transition: transform .2s ease; }
+    .dm-brand-card:hover .dm-brand-card__arrow { transform: translateX(3px); }
+    .dm-brand-card__arrow svg { width: 15px; height: 15px; }
+    .dm-brand-story { padding-block: clamp(64px, 7vw, 96px); background: var(--brand-soft); }
+    .dm-brand-story__grid { display: grid; grid-template-columns: minmax(0, .86fr) minmax(360px, 1.14fr); gap: clamp(42px, 8vw, 110px); align-items: center; }
+    .dm-brand-story h2 { margin: 0; color: var(--brand-ink); font-size: clamp(34px, 4vw, 56px); line-height: 1.03; letter-spacing: -.045em; text-wrap: balance; }
+    .dm-brand-story__copy { margin: 22px 0 0; color: #626d7a; font-size: 16px; line-height: 1.75; }
+    .dm-brand-story__points { display: grid; gap: 12px; }
+    .dm-brand-story__point { display: grid; grid-template-columns: auto 1fr; gap: 15px; align-items: center; padding: 18px; border: 1px solid color-mix(in srgb, var(--brand-accent) 24%, #ddd9d2); border-radius: 17px; color: var(--brand-ink); background: rgb(255 255 255 / .72); }
+    .dm-brand-story__point > .dm-brand-story__number { display: grid; width: 38px; height: 38px; margin-top: 0; place-items: center; border-radius: 12px; color: var(--brand-accent-ink); background: var(--brand-accent); font-size: 12px; font-weight: 900; line-height: 1; }
+    .dm-brand-story__point strong { display: block; font-size: 14px; }
+    .dm-brand-story__point span { display: block; margin-top: 3px; color: #6d7682; font-size: 12px; line-height: 1.45; }
+    .dm-brand-shop-heading { padding: 64px 24px 22px; background: #fff; text-align: center; }
+    .dm-brand-shop-heading p { margin: 12px 0 0; color: #6a7480; font-size: 14px; }
+    body:has(.dm-brand-collection) .product-grid-container { background: #fff; }
+    body:has(.dm-brand-collection) .collection-wrapper { width: min(1320px, calc(100% - 48px)); margin-inline: auto; }
+    body:has(.dm-brand-collection) .product-grid__item { overflow: hidden; border: 1px solid #e2e0dc !important; border-radius: 18px; background: #fff; box-shadow: 0 8px 24px rgb(22 31 43 / .05); transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+    body:has(.dm-brand-collection) .product-grid__item:hover { transform: translateY(-3px); border-color: #c9c6bf !important; box-shadow: 0 18px 38px rgb(22 31 43 / .11); }
+    body:has(.dm-brand-collection) .product-grid__card { padding-bottom: 16px; }
+    body:has(.dm-brand-collection) .product-grid__card > *:not(.card-gallery) { margin-inline: 16px; }
+    body:has(.dm-brand-collection) .facets-controls-wrapper { border-top: 1px solid #e9e7e2; border-bottom: 1px solid #e9e7e2; }
+    @media (max-width: 990px) {
+      .dm-brand-hero__grid { min-height: auto; grid-template-columns: 1fr; gap: 38px; padding-block: 40px 52px; }
+      .dm-brand-hero__copy { max-width: 760px; }
+      .dm-brand-hero__frame, .dm-brand-hero__frame img { min-height: 440px; }
+      .dm-brand-edit__header, .dm-brand-story__grid { grid-template-columns: 1fr; gap: 24px; }
+      .dm-brand-story__points { grid-template-columns: repeat(3, 1fr); }
+      .dm-brand-story__point { grid-template-columns: 1fr; align-items: start; }
+    }
+    @media (max-width: 749px) {
+      .dm-brand-shell { width: min(100% - 32px, 1320px); }
+      .dm-brand-breadcrumb { padding-top: 13px; font-size: 11px; }
+      .dm-brand-hero__grid { gap: 30px; padding-block: 30px 36px; }
+      .dm-brand-wordmark { max-width: 180px; height: 48px; margin-bottom: 20px; }
+      .dm-brand-wordmark-text { margin-bottom: 19px; }
+      .dm-brand-hero h1 { font-size: clamp(38px, 12.5vw, 54px); }
+      .dm-brand-hero__intro { margin-top: 18px; font-size: 15px; }
+      .dm-brand-actions { margin-top: 24px; }
+      .dm-brand-button { width: 100%; }
+      .dm-brand-hero__frame, .dm-brand-hero__frame img { min-height: 340px; }
+      .dm-brand-hero__frame { border-radius: 22px; }
+      .dm-brand-collection--dreamcloud .dm-brand-hero__frame img { object-position: 68% center; }
+      .dm-brand-collection--posh-and-lavish .dm-brand-hero__frame img { object-position: 72% center; }
+      .dm-brand-visual-note { left: 12px; right: 12px; bottom: 12px; padding: 12px 13px; }
+      .dm-brand-proof__grid { grid-template-columns: 1fr; padding-block: 5px; }
+      .dm-brand-proof__item { min-height: 54px; justify-content: flex-start; text-align: left; }
+      .dm-brand-proof__item + .dm-brand-proof__item { border-top: 1px solid #e7e4df; border-left: 0; }
+      .dm-brand-edit { padding-block: 58px; }
+      .dm-brand-edit__header { margin-bottom: 25px; }
+      .dm-brand-edit h2, .dm-brand-shop-heading h2, .dm-brand-story h2 { font-size: 36px; }
+      .dm-brand-edit__grid { grid-template-columns: 1fr; }
+      .dm-brand-card { border-radius: 18px; }
+      .dm-brand-card__media { aspect-ratio: 1.55 / 1; }
+      .dm-brand-story__points { grid-template-columns: 1fr; }
+      .dm-brand-story__point { grid-template-columns: auto 1fr; }
+      .dm-brand-shop-heading { padding: 52px 20px 18px; }
+      body:has(.dm-brand-collection) .collection-wrapper { width: 100%; }
+      body:has(.dm-brand-collection) .product-grid { padding-inline: 12px; }
+      body:has(.dm-brand-collection) .product-grid__item { border-radius: 13px; }
+      body:has(.dm-brand-collection) .product-grid__card > *:not(.card-gallery) { margin-inline: 11px; }
+    }
+  </style>
+
+  <div class="dm-brand-collection dm-brand-collection--{{ brand_handle }}">
+    <section class="dm-brand-hero" aria-labelledby="dm-brand-title-{{ section.id }}">
+      <div class="dm-brand-shell">
+        <nav class="dm-brand-breadcrumb" aria-label="Breadcrumb"><a href="{{ routes.root_url }}">Home</a> <span aria-hidden="true">/</span> <span>{{ brand_name }}</span></nav>
+        <div class="dm-brand-hero__grid">
+          <div class="dm-brand-hero__copy">
+            {% if logo_asset != blank %}
+              <img class="dm-brand-wordmark {{ logo_class }}" src="{{ logo_asset | asset_url }}" alt="{{ brand_name }}" width="240" height="72" loading="eager">
+            {% else %}
+              <p class="dm-brand-wordmark-text">{{ brand_name }}</p>
+            {% endif %}
+            <p class="dm-brand-eyebrow">{{ eyebrow }}</p>
+            <h1 id="dm-brand-title-{{ section.id }}">{{ headline }}</h1>
+            <p class="dm-brand-hero__intro">{{ intro }}</p>
+            <div class="dm-brand-actions">
+              <a class="dm-brand-button" href="{{ cta_target }}">{{ cta_label }}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <a class="dm-brand-button dm-brand-button--secondary" href="/pages/locations">Try it in our showroom</a>
+            </div>
+          </div>
+          <div class="dm-brand-hero__visual">
+            <div class="dm-brand-hero__frame{% if image_fit == 'contain' %} dm-brand-hero__frame--contain{% endif %}">
+              {% if hero_product and hero_product.featured_image %}
+                {{ hero_product.featured_image | image_url: width: 1600 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1600', sizes: '(min-width: 990px) 52vw, 100vw', alt: hero_alt }}
+              {% else %}
+                <img src="{{ hero_asset | asset_url }}" alt="{{ hero_alt }}" width="1600" height="1100" loading="eager" fetchpriority="high">
+              {% endif %}
+              <div class="dm-brand-visual-note"><div><strong>See the difference in person</strong><span>Expert help at our Bowling Green showroom</span></div><span class="dm-brand-visual-note__mark" aria-hidden="true">✓</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="dm-brand-proof"><div class="dm-brand-shell dm-brand-proof__grid">
+      {% for fact in (1..3) %}
+        {% case fact %}{% when 1 %}{% assign fact_text = fact_one %}{% when 2 %}{% assign fact_text = fact_two %}{% else %}{% assign fact_text = fact_three %}{% endcase %}
+        <div class="dm-brand-proof__item"><span class="dm-brand-proof__icon" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="m3.5 8.2 2.8 2.8 6.2-6.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>{{ fact_text }}</span></div>
+      {% endfor %}
+    </div></div>
+
+    <section class="dm-brand-edit" id="brand-featured" aria-labelledby="dm-brand-edit-title-{{ section.id }}"><div class="dm-brand-shell">
+      <div class="dm-brand-edit__header"><div><p class="dm-brand-eyebrow">Our edit</p><h2 id="dm-brand-edit-title-{{ section.id }}">{{ edit_title }}</h2></div><p class="dm-brand-edit__intro">{{ edit_intro }}</p></div>
+      <div class="dm-brand-edit__grid">
+        {% for featured_handle in featured_handle_list %}
+          {% assign featured_product = collection.products | where: 'handle', featured_handle | first %}
+          {% if featured_product %}
+            <a class="dm-brand-card" href="{{ featured_product.url }}">
+              <div class="dm-brand-card__media"><span class="dm-brand-card__badge">{{ featured_label_list[forloop.index0] }}</span>{% if featured_product.featured_image %}{{ featured_product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 990px) 30vw, 100vw', alt: featured_product.title }}{% endif %}</div>
+              <div class="dm-brand-card__body"><h3>{{ featured_product.title }}</h3><p class="dm-brand-card__note">{{ featured_note_list[forloop.index0] }}</p><div class="dm-brand-card__footer"><span class="dm-brand-card__price">From {{ featured_product.price_min | money_without_trailing_zeros }}</span><span class="dm-brand-card__arrow" aria-hidden="true"><svg viewBox="0 0 18 18" fill="none"><path d="M3.5 9h10M10 5.5 13.5 9 10 12.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div></section>
+
+    <section class="dm-brand-story" aria-labelledby="dm-brand-story-title-{{ section.id }}"><div class="dm-brand-shell dm-brand-story__grid">
+      <div><p class="dm-brand-eyebrow">{{ story_eyebrow }}</p><h2 id="dm-brand-story-title-{{ section.id }}">{{ story_title }}</h2><p class="dm-brand-story__copy">{{ story_copy }}</p></div>
+      <div class="dm-brand-story__points">
+        <div class="dm-brand-story__point"><span class="dm-brand-story__number">01</span><div><strong>Compare with confidence</strong><span>Clear model choices, real prices, and no maze of marketing copy.</span></div></div>
+        <div class="dm-brand-story__point"><span class="dm-brand-story__number">02</span><div><strong>Try before you decide</strong><span>Visit our Bowling Green showroom for hands-on help.</span></div></div>
+        <div class="dm-brand-story__point"><span class="dm-brand-story__number">03</span><div><strong>Delivered nationwide</strong><span>Shop from home with free nationwide delivery.</span></div></div>
+      </div>
+    </div></section>
+
+    {% unless brand_handle == 'bedgear' %}
+      <div class="dm-brand-shop-heading" id="brand-shop-all"><p class="dm-brand-eyebrow">The complete collection</p><h2>{{ shop_heading }}</h2><p>{{ collection.products_count }} {% if collection.products_count == 1 %}product{% else %}products{% endif %}</p></div>
+    {% endunless %}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Brand collection",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [],
+  "presets": [{ "name": "Brand collection" }]
+}
+{% endschema %}

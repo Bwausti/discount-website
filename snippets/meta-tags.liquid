@@ -1,65 +1,126 @@
-{% comment %}SEO override snippet{% endcomment %}
-
 {%- liquid
   assign dm_title = page_title | default: shop.name
   assign dm_desc = page_description | default: shop.description | default: shop.name
+  assign dm_type = 'website'
+  assign dm_image = page_image
+  assign dm_image_url = ''
 
-  assign req_path = request.path | strip
-
-  if req_path == '/' or req_path == '' or request.page_type == 'index'
-    assign dm_title = 'Discount Mattress Bowling Green, KY'
-    assign dm_desc = 'Shop Helix, Puffy, Nectar, DreamCloud, Serta, and more at Discount Mattress in Bowling Green, KY. Try top mattress brands in-store with local service, financing, and delivery.'
-
-  elsif req_path contains '/collections/all'
-    assign dm_title = 'Shop Mattresses and Bedding in Bowling Green, KY'
-    assign dm_desc = 'Compare mattresses, pillows, bedding, and accessories from top brands at Discount Mattress. Visit our Bowling Green showrooms for local help, financing, and delivery options.'
-
-  elsif req_path contains '/collections/pressure-relief'
-    assign dm_title = 'Pressure Relief Mattresses in Bowling Green, KY'
-    assign dm_desc = 'Find pressure-relieving mattresses for side sleepers, sore joints, and better comfort. Try foam and hybrid options in-store at Discount Mattress in Bowling Green, KY.'
-
-  elsif req_path contains '/collections/puffy'
-    assign dm_title = 'Puffy Mattresses in Bowling Green, KY'
-    assign dm_desc = 'Shop Puffy mattresses at Discount Mattress in Bowling Green, KY. Try Puffy Cloud, Lux, and Royal Hybrid in person at our showroom.'
-
-  elsif req_path contains '/collections/helix'
-    assign dm_title = 'Helix Mattresses in Bowling Green, KY'
-    assign dm_desc = 'Shop Helix mattresses at Discount Mattress in Bowling Green, KY. Try personalized Sleepquiz recommendations in person.'
-
-  elsif req_path contains '/collections/cooling'
-    assign dm_title = 'Cooling Mattresses in Bowling Green, KY'
-    assign dm_desc = 'If you sleep hot, cooling comfort matters. Compare mattresses with breathable covers, gel-infused foams, and hybrid airflow at Discount Mattress in Bowling Green, KY.'
-
-  elsif req_path contains '/collections/luxury'
-    assign dm_title = 'Luxury Mattresses in Bowling Green, KY'
-    assign dm_desc = 'Looking for a more elevated sleep experience? Our luxury-feel mattresses feature premium materials and enhanced support systems.'
-
-  elsif req_path contains '/collections/organic'
-    assign dm_title = 'Organic Mattresses in Bowling Green, KY'
-    assign dm_desc = 'Shop mattresses made with organic cotton, wool, and latex at Discount Mattress in Bowling Green, KY.'
-
-  elsif req_path contains '/collections' or request.page_type == 'list-collections'
-    assign dm_title = 'Mattress Brands in Bowling Green, KY'
-    assign dm_desc = 'Browse premium mattress brands available at Discount Mattress in Bowling Green, KY, including Helix, Puffy, Nectar, DreamCloud, Serta, Naturepedic, BedGear, and more.'
-
-  elsif request.page_type == 'page'
-    if page.handle == 'contact'
-      assign dm_title = 'Contact Discount Mattress in Bowling Green, KY'
-      assign dm_desc = 'Call or visit Discount Mattress in Bowling Green, KY. Get help choosing the right mattress, ask about financing, or find directions to our Campbell Lane and Russellville Road locations.'
-    elsif page.handle == 'locations'
-      assign dm_title = 'Discount Mattress Locations in Bowling Green, KY'
-      assign dm_desc = 'Visit Discount Mattress in Bowling Green, KY. Find showroom addresses, phone numbers, hours, directions, and local mattress shopping help.'
-    elsif page.handle == 'faq'
-      assign dm_title = 'Mattress Store FAQ | Discount Mattress'
-      assign dm_desc = 'Get answers about mattress brands, financing, delivery, pickup, returns, showroom visits, and shopping at Discount Mattress in Bowling Green, KY.'
-    elsif page.handle == 'financing'
-      assign dm_title = 'Mattress Financing in Bowling Green, KY'
-      assign dm_desc = 'Learn about mattress financing options at Discount Mattress in Bowling Green, KY, including flexible payment options through trusted financing partners.'
+  if request.page_type == 'index'
+    assign dm_title = 'Discount Mattress | Mattress Store in Bowling Green, KY'
+    assign dm_desc = 'Shop Helix, Puffy, Nectar, DreamCloud, Naturepedic, and more online or at Discount Mattress in Bowling Green, Kentucky. Local help, financing, and Free Nationwide Delivery.'
+  elsif request.page_type == 'product'
+    assign clean_product_title = product.title | replace: 'Discount Mattress 4', 'Discount Mattress'
+    assign dm_title = clean_product_title | append: ' | Discount Mattress'
+    assign dm_type = 'product'
+    assign dm_image = product.featured_media.preview_image | default: product.featured_image
+    if product.handle == 'bedgear-m3'
+      assign dm_image_url = 'bedgear-m3-mattress-official.jpg' | asset_url
     endif
+    if product.vendor == 'Helix' and product.type == 'Mattress'
+      assign dm_desc = 'Shop the ' | append: product.title | append: ' hybrid mattress at Discount Mattress. Compare Core, Luxe, and Elite options, choose cooling upgrades, and get local help in Bowling Green.'
+    elsif page_description == blank
+      assign dm_desc = product.description | strip_html | strip | truncate: 155
+    endif
+  elsif request.page_type == 'collection'
+    assign dm_title = collection.title | append: ' | Discount Mattress'
+    assign dm_desc = collection.description | strip_html | strip | truncate: 155
+    if collection.handle == 'helix'
+      assign dm_desc = 'Compare Helix Core, Luxe, and Elite mattresses, including model-specific cooling and support options, with local help from Discount Mattress.'
+    endif
+    if dm_desc == blank
+      assign dm_desc = 'Shop ' | append: collection.title | append: ' at Discount Mattress in Bowling Green, Kentucky. Compare options online or get local help in our showrooms.'
+    endif
+    assign dm_image = collection.image
+  elsif request.page_type == 'list-collections'
+    assign dm_title = 'Shop Mattresses | Discount Mattress'
+    assign dm_desc = 'Shop mattresses by comfort goal or compare leading brands including Helix, Puffy, Nectar, DreamCloud, Naturepedic, and more.'
+  elsif request.page_type == 'policy'
+    assign policy_title = page_title | default: 'Store Policy'
+    assign dm_title = policy_title | append: ' | Discount Mattress'
+    if request.path contains 'privacy'
+      assign dm_desc = 'Review how Discount Mattress collects, uses, and protects personal information and the privacy choices available to customers.'
+    else
+      assign dm_desc = 'Review the current store policy for Discount Mattress in Bowling Green, Kentucky.'
+    endif
+  elsif request.page_type == 'page'
+    assign dm_title = page.title | append: ' | Discount Mattress'
+    if page_description == blank
+      assign dm_desc = page.content | strip_html | strip | truncate: 155
+    endif
+    if page.handle == 'contact'
+      assign dm_desc = 'Contact Discount Mattress in Bowling Green, Kentucky for mattress shopping help, financing questions, delivery information, and showroom directions.'
+    elsif page.handle == 'locations'
+      assign dm_desc = 'Find Discount Mattress showroom locations, phone numbers, current hours, and directions in Bowling Green, Kentucky.'
+    elsif page.handle == 'financing'
+      assign dm_desc = 'Compare Synchrony credit financing, Kafene lease-to-own, and Snap Finance payment options at Discount Mattress in Bowling Green.'
+    elsif page.handle == 'about-us'
+      assign dm_desc = 'Meet Discount Mattress, a family-owned Bowling Green mattress store with two local showrooms and straightforward help comparing leading brands.'
+    elsif page.handle == 'faq'
+      assign dm_desc = 'Get clear answers about mattress availability, delivery, pickup, returns, warranties, financing, setup, and cancellations at Discount Mattress.'
+    elsif page.handle == 'data-sharing-opt-out'
+      assign dm_desc = 'Review and manage privacy choices related to data sharing and targeted advertising for Discount Mattress.'
+    elsif page.handle contains 'shipping'
+      assign dm_desc = 'Review shipping, delivery, pickup, timing, and destination information for orders from Discount Mattress.'
+    elsif page.handle contains 'refund' or page.handle contains 'return'
+      assign dm_desc = 'Review return, refund, cancellation, and exchange information for purchases from Discount Mattress.'
+    elsif page.handle contains 'terms'
+      assign dm_desc = 'Review the website and purchase terms that apply when using Discount Mattress services.'
+    endif
+  elsif request.page_type == 'article'
+    assign dm_title = article.title | append: ' | Discount Mattress'
+    assign dm_type = 'article'
+    assign dm_image = article.image
+    if page_description == blank
+      assign dm_desc = article.excerpt_or_content | strip_html | strip | truncate: 155
+    endif
+  elsif request.page_type == 'blog'
+    assign dm_title = blog.title | append: ' | Discount Mattress'
+    assign dm_desc = 'Practical mattress shopping guides from Discount Mattress in Bowling Green, Kentucky.'
+  elsif request.page_type == 'cart'
+    assign dm_title = 'Your Cart | Discount Mattress'
+    assign dm_desc = 'Review your mattress selection, availability guidance, delivery information, and order total before checkout.'
+  elsif request.page_type == 'search'
+    assign dm_title = 'Search Mattresses & Brands | Discount Mattress'
+    assign dm_desc = 'Search mattresses, bedding, brands, and sleep products available from Discount Mattress.'
+  elsif request.page_type == '404'
+    assign dm_title = 'Page Not Found | Discount Mattress'
+    assign dm_desc = 'The page you requested could not be found. Shop mattresses or contact the Discount Mattress team for help.'
   endif
 -%}
 
+<title>{{ dm_title | escape }}</title>
+<meta name="description" content="{{ dm_desc | strip_html | strip | escape }}">
+<link rel="canonical" href="{{ canonical_url }}">
+{%- if request.page_type == 'blog' and blog.handle == 'news' and blog.articles_count < 3 -%}
+  <meta name="robots" content="noindex,follow">
+{%- endif -%}
+
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:url" content="{{ canonical_url }}">
 <meta property="og:title" content="{{ dm_title | escape }}">
+<meta property="og:type" content="{{ dm_type }}">
+<meta property="og:description" content="{{ dm_desc | strip_html | strip | escape }}">
+
+{%- if dm_image_url != blank -%}
+  <meta property="og:image" content="https:{{ dm_image_url }}">
+  <meta property="og:image:secure_url" content="https:{{ dm_image_url }}">
+  <meta property="og:image:width" content="1000">
+{%- elsif dm_image -%}
+  <meta property="og:image" content="https:{{ dm_image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ dm_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="1200">
+{%- endif -%}
+
+{%- if request.page_type == 'product' -%}
+  <meta property="product:price:amount" content="{{ product.selected_or_first_available_variant.price | money_without_currency | strip_html }}">
+  <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+{%- endif -%}
+
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ dm_title | escape }}">
-<title>{{ dm_title }}</title>
-{% comment %}viewport meta goes here via section injection{% endcomment %}
+<meta name="twitter:description" content="{{ dm_desc | strip_html | strip | escape }}">
+{%- if dm_image_url != blank -%}
+  <meta name="twitter:image" content="https:{{ dm_image_url }}">
+{%- elsif dm_image -%}
+  <meta name="twitter:image" content="https:{{ dm_image | image_url: width: 1200 }}">
+{%- endif -%}

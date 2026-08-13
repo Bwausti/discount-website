@@ -49,6 +49,8 @@
         src="{{ p.featured_image | image_url: width: 400 }}"
         srcset="{{ p.featured_image | image_url: width: 400 }} 1x, {{ p.featured_image | image_url: width: 800 }} 2x"
         alt="{{ p.title }}"
+        width="400"
+        height="400"
         loading="lazy"
       >
     {% else %}

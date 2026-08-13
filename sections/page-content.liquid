@@ -22,7 +22,7 @@
     margin: 0 auto 48px;
     text-align: center;
   }
-  .pg-contact-intro h2 {
+  .pg-contact-intro h1 {
     font-size: 28px;
     font-weight: 900;
     color: #0f172a;
@@ -124,13 +124,13 @@
   @media (max-width: 640px) {
     .pg-contact-wrap { padding: 32px 16px 16px; }
     .pg-contact-cards { grid-template-columns: 1fr; }
-    .pg-contact-intro h2 { font-size: 24px; }
+    .pg-contact-intro h1 { font-size: 24px; }
   }
 </style>
 
 <div class="pg-contact-wrap">
   <div class="pg-contact-intro">
-    <h2>Get in touch with our team</h2>
+    <h1>Get in touch with our team</h1>
     <p>Have a question about a mattress, financing, delivery, or showroom availability? Call or visit our Bowling Green locations. Our local team can help you compare brands, comfort levels, and price options before you buy.</p>
   </div>
   <div class="pg-contact-cards">
@@ -140,7 +140,7 @@
       <p class="pg-contact-card__addr">
         1555 Campbell Ln<br>
         Bowling Green, KY 42104<br>
-        Mon-Sat: 10:00 AM - 6:00 PM
+        Call for current hours
       </p>
       <p class="pg-contact-card__phone"><a href="tel:12704951603">(270) 495-1603</a></p>
       <div class="pg-contact-card__actions">
@@ -165,7 +165,12 @@
   </div>
 </div>
 
-{%- elsif page_handle == 'locations' -%}
+{%- elsif page_handle == 'data-sharing-opt-out' -%}
+  <header style="padding: 48px 24px 0; text-align: center;">
+    <h1 style="margin: 0; color: #162b49; font-size: clamp(30px, 4vw, 44px); line-height: 1.1;">Your Privacy Choices</h1>
+  </header>
+
+{%- elsif false and page_handle == 'locations' -%}
 <style>
   /* Hide the default page content since we have styled cards */
   .template-page-locations .main-page-content,

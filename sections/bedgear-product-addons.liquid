@@ -150,7 +150,7 @@
     <div class="bg-grid">
 
       {% if is_mattress and is_pillow != true and is_protector != true %}
-        <!-- On a mattress: show the other mattress tier + pillows + protector -->
+        <!-- On a mattress: show the other mattress tier. Accessories appear in the shared setup section. -->
         {% if closest.product.title contains "M3" %}
           <a href="/products/bedgear-m5" class="bg-card">
             <p class="bg-card__icon">🌙</p>
@@ -170,24 +170,6 @@
             <p class="bg-card__cta">View M3 →</p>
           </a>
         {% endif %}
-
-        <a href="/collections/bedgear" class="bg-card">
-          <p class="bg-card__icon">🛏️</p>
-          <span class="bg-card__badge neutral">Accessory</span>
-          <h3 class="bg-card__name">Performance Pillows</h3>
-          <p class="bg-card__desc">Storm cooling or Balance adjustable loft — designed to work with BedGear's airflow mattress technology.</p>
-          <p class="bg-card__price">From $79.99</p>
-          <p class="bg-card__cta">Shop pillows →</p>
-        </a>
-
-        <a href="/products/bedgear-dri-tec" class="bg-card">
-          <p class="bg-card__icon">🛡️</p>
-          <span class="bg-card__badge neutral">Protection</span>
-          <h3 class="bg-card__name">Dri-Tec Mattress Protector</h3>
-          <p class="bg-card__desc">Waterproof, breathable, and machine-washable. Keeps your BedGear mattress in pristine condition.</p>
-          <p class="bg-card__price">$119.99</p>
-          <p class="bg-card__cta">Add protection →</p>
-        </a>
 
       {% elsif is_pillow %}
         <!-- On a pillow page: show both mattresses + protector -->
@@ -238,7 +220,7 @@
           <p class="bg-card__cta">View M5 →</p>
         </a>
 
-        <a href="/collections/bedgear" class="bg-card">
+        <a href="{{ routes.collections_url }}/bedgear" class="bg-card">
           <p class="bg-card__icon">🛏️</p>
           <span class="bg-card__badge neutral">Pillow</span>
           <h3 class="bg-card__name">Performance Pillows</h3>
@@ -265,7 +247,7 @@
           <p class="bg-card__price">$2,200</p>
           <p class="bg-card__cta">View M5 →</p>
         </a>
-        <a href="/collections/bedgear" class="bg-card">
+        <a href="{{ routes.collections_url }}/bedgear" class="bg-card">
           <p class="bg-card__icon">🛏️</p>
           <span class="bg-card__badge neutral">Pillow</span>
           <h3 class="bg-card__name">Performance Pillows</h3>

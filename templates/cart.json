@@ -8,6 +8,10 @@
  * ------------------------------------------------------------
  */{
   "sections": {
+    "cart-assurance": {
+      "type": "cart-assurance",
+      "settings": {}
+    },
     "cart-section": {
       "type": "main-cart",
       "blocks": {
@@ -259,6 +263,7 @@
     }
   },
   "order": [
+    "cart-assurance",
     "cart-section",
     "product_list_NNFgcy"
   ]

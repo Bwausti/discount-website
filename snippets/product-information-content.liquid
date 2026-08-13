@@ -7,6 +7,7 @@
   @param {number} product_media_size - Number of media items in the product
   @param {string} section_id - Unique section ID
   @param {object} settings - Section settings object
+  @param {boolean} is_helix_luxe - Whether to apply the Helix Luxe purchase layout
   @param {string} media_gallery - Captured HTML for the product media gallery block
   @param {string} product_details - Captured HTML for the product details block
   @param {string} additional_blocks - Captured HTML for additional section blocks
@@ -78,7 +79,7 @@
 
 <div class="section-background color-{{ settings.color_scheme }}"></div>
 <div
-  class="product-information section section--{{ content_width }} spacing-style color-{{ settings.color_scheme }} relative"
+  class="product-information{% if is_helix_luxe %} product-information--helix-luxe{% endif %} section section--{{ content_width }} spacing-style color-{{ settings.color_scheme }} relative"
   style="--padding-block-start: 48px; --padding-block-end: 0px; --gap: {{ settings.gap }}px; padding-top: 48px;"
   data-testid="product-information"
 >

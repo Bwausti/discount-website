@@ -1,0 +1,340 @@
+{%- assign dm_page_handle = page.handle -%}
+{%- if dm_page_handle == 'about-us' or dm_page_handle == 'locations' or dm_page_handle == 'faq' or dm_page_handle == 'financing' -%}
+  <style>
+    .template-page-{{ dm_page_handle }} .main-page,
+    .template-page-{{ dm_page_handle }} .main-page-content { display: none !important; }
+    .dm-page { color: #334155; background: #fff; }
+    .dm-page * { box-sizing: border-box; }
+    .dm-page__hero { padding: 72px 24px; background: #162b49; color: #fff; text-align: center; }
+    .dm-page__eyebrow { margin: 0 0 10px; color: #f2b705; font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    .dm-page__hero h1 { max-width: 820px; margin: 0 auto 14px; color: #fff; font-size: clamp(34px, 5vw, 56px); line-height: 1.02; letter-spacing: -.03em; }
+    .dm-page__hero p:last-child { max-width: 700px; margin: 0 auto; color: rgba(255,255,255,.76); font-size: 16px; line-height: 1.65; }
+    .dm-page__section { max-width: 1120px; margin: 0 auto; padding: 64px 24px; }
+    .dm-page__section--tint { max-width: none; background: #f7f6f1; }
+    .dm-page__section--tint > div { max-width: 1120px; margin: 0 auto; }
+    .dm-page__heading { margin: 0 0 12px; color: #162b49; font-size: clamp(26px, 3.5vw, 38px); line-height: 1.1; letter-spacing: -.02em; }
+    .dm-page__lede { max-width: 720px; margin: 0 0 32px; color: #64748b; font-size: 15px; line-height: 1.7; }
+    .dm-page__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .dm-page__grid--three { grid-template-columns: repeat(3, 1fr); }
+    .dm-page__card { padding: 26px; border: 1px solid #dbe3ec; border-radius: 14px; background: #fff; box-shadow: 0 2px 10px rgba(15,23,42,.04); }
+    .dm-page__card h2, .dm-page__card h3 { margin: 0 0 9px; color: #162b49; font-size: 20px; line-height: 1.2; }
+    .dm-page__card p { margin: 0; font-size: 14px; line-height: 1.65; }
+    .dm-page__photo { width: 100%; aspect-ratio: 16/10; margin-bottom: 20px; border-radius: 10px; object-fit: cover; }
+    .dm-page__label { display: inline-block; margin-bottom: 10px; color: #cf2333; font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+    .dm-page__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .dm-page__button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 11px 18px; border: 1px solid #162b49; border-radius: 7px; background: #162b49; color: #fff; font-size: 13px; font-weight: 800; text-decoration: none; }
+    .dm-page__button--outline { background: #fff; color: #162b49; }
+    .dm-page__note { padding: 18px 20px; border-left: 3px solid #f2b705; background: #fff9df; color: #594a16; font-size: 13px; line-height: 1.6; }
+    .dm-page__faq { max-width: 880px; margin: 0 auto; }
+    .dm-page__faq details { border-bottom: 1px solid #dbe3ec; }
+    .dm-page__faq summary { position: relative; padding: 22px 44px 22px 0; color: #162b49; font-size: 16px; font-weight: 800; cursor: pointer; list-style: none; }
+    .dm-page__faq summary::-webkit-details-marker { display: none; }
+    .dm-page__faq summary::after { content: "+"; position: absolute; right: 4px; top: 18px; font-size: 24px; font-weight: 400; }
+    .dm-page__faq details[open] summary::after { content: "–"; }
+    .dm-page__faq details div { padding: 0 44px 22px 0; color: #64748b; font-size: 14px; line-height: 1.7; }
+    .dm-page__cta { padding: 48px 24px; background: #f2b705; text-align: center; }
+    .dm-page__cta h2 { margin: 0 0 8px; color: #162b49; font-size: 28px; }
+    .dm-page__cta p { margin: 0 auto 18px; color: #4b4a3f; }
+    .dm-financing { background: #f6f8fb; }
+    .dm-financing__hero { padding: 76px 24px; background: radial-gradient(circle at 85% 15%, rgba(66, 116, 166, .36), transparent 30%), #10233d; color: #fff; }
+    .dm-financing__hero-inner { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(360px, .95fr); align-items: center; gap: 64px; max-width: 1180px; margin: 0 auto; }
+    .dm-financing__hero h1 { max-width: 720px; margin: 0 0 18px; color: #fff; font-size: clamp(40px, 5.4vw, 68px); line-height: .98; letter-spacing: -.045em; }
+    .dm-financing__hero-copy { max-width: 660px; margin: 0; color: #d5dfeb; font-size: 17px; line-height: 1.65; }
+    .dm-financing__hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .dm-financing__hero .dm-page__button { border-color: #f2b705; background: #f2b705; color: #10233d; }
+    .dm-financing__hero .dm-page__button--outline { border-color: rgba(255,255,255,.34); background: transparent; color: #fff; }
+    .dm-financing__logo-panel { display: grid; gap: 10px; padding: 14px; border: 1px solid rgba(255,255,255,.13); border-radius: 20px; background: rgba(255,255,255,.07); box-shadow: 0 24px 60px rgba(0,0,0,.18); backdrop-filter: blur(8px); }
+    .dm-financing__logo-row { display: grid; grid-template-columns: 170px 1fr; align-items: center; min-height: 86px; padding: 16px 18px; border-radius: 12px; background: #fff; color: #10233d; }
+    .dm-financing__logo-row--kafene { background: #062d4e; color: #fff; }
+    .dm-financing__logo-row img { display: block; width: auto; max-width: 145px; max-height: 38px; object-fit: contain; }
+    .dm-financing__logo-row--kafene img { max-height: 40px; }
+    .dm-financing__logo-row strong { display: block; margin-bottom: 3px; font-size: 13px; }
+    .dm-financing__logo-row span { display: block; color: #68778a; font-size: 12px; line-height: 1.35; }
+    .dm-financing__logo-row--kafene span { color: #bcefdc; }
+    .dm-financing__intro { max-width: 1180px; margin: 0 auto; padding: 68px 24px 44px; }
+    .dm-financing__intro-head { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: end; margin-bottom: 28px; }
+    .dm-financing__intro-head p { margin: 0; color: #617085; font-size: 15px; line-height: 1.7; }
+    .dm-financing__type-grid { display: grid; grid-template-columns: repeat(3, 1fr); overflow: hidden; border: 1px solid #d7e0ea; border-radius: 16px; background: #fff; }
+    .dm-financing__type { padding: 26px; border-right: 1px solid #d7e0ea; }
+    .dm-financing__type:last-child { border-right: 0; }
+    .dm-financing__type-number { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; margin-bottom: 18px; border-radius: 50%; background: #eaf0f7; color: #10233d; font-size: 11px; font-weight: 900; }
+    .dm-financing__type h2 { margin: 0 0 8px; color: #10233d; font-size: 19px; }
+    .dm-financing__type p { margin: 0; color: #64748b; font-size: 13px; line-height: 1.6; }
+    .dm-financing__providers { max-width: 1180px; margin: 0 auto; padding: 32px 24px 72px; }
+    .dm-financing__providers-head { max-width: 760px; margin-bottom: 30px; }
+    .dm-finance-provider { display: grid; grid-template-columns: 300px 1fr; overflow: hidden; margin-bottom: 22px; border: 1px solid #d6dfe9; border-radius: 18px; background: #fff; box-shadow: 0 10px 30px rgba(15,35,61,.06); }
+    .dm-finance-provider__brand { display: flex; flex-direction: column; justify-content: space-between; min-height: 100%; padding: 30px; background: #f1f4f8; }
+    .dm-finance-provider--synchrony .dm-finance-provider__brand { background: #f9c900; }
+    .dm-finance-provider--kafene .dm-finance-provider__brand { background: #062d4e; color: #fff; }
+    .dm-finance-provider--snap .dm-finance-provider__brand { background: #eef4ff; }
+    .dm-finance-provider__brand img { display: block; width: auto; max-width: 190px; max-height: 58px; object-fit: contain; object-position: left center; }
+    .dm-finance-provider--kafene .dm-finance-provider__brand img { max-width: 210px; }
+    .dm-finance-provider__brand-label { margin-top: 42px; }
+    .dm-finance-provider__brand-label span { display: block; margin-bottom: 8px; font-size: 10px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+    .dm-finance-provider__brand-label strong { display: block; max-width: 230px; color: #10233d; font-size: 24px; line-height: 1.1; }
+    .dm-finance-provider--kafene .dm-finance-provider__brand-label strong { color: #fff; }
+    .dm-finance-provider__content { padding: 32px 34px; }
+    .dm-finance-provider__content > p { max-width: 760px; margin: 0 0 24px; color: #506075; font-size: 14px; line-height: 1.7; }
+    .dm-finance-provider__facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; overflow: hidden; margin: 0 0 26px; border: 1px solid #dde5ed; border-radius: 12px; background: #dde5ed; }
+    .dm-finance-provider__fact { padding: 17px 18px; background: #fff; }
+    .dm-finance-provider__fact dt { margin-bottom: 5px; color: #7a8798; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .dm-finance-provider__fact dd { margin: 0; color: #10233d; font-size: 13px; font-weight: 700; line-height: 1.5; }
+    .dm-finance-provider__steps-title { margin: 0 0 12px; color: #10233d; font-size: 14px; font-weight: 900; }
+    .dm-finance-provider__steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 0; margin: 0 0 24px; list-style: none; counter-reset: provider-step; }
+    .dm-finance-provider__steps li { position: relative; padding: 34px 12px 12px; border-radius: 9px; background: #f5f7fa; color: #536176; font-size: 11px; line-height: 1.45; counter-increment: provider-step; }
+    .dm-finance-provider__steps li::before { content: counter(provider-step); position: absolute; top: 10px; left: 12px; color: #cf2333; font-size: 11px; font-weight: 900; }
+    .dm-finance-provider__links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+    .dm-finance-provider__official { color: #10233d; font-size: 12px; font-weight: 850; text-underline-offset: 3px; }
+    .dm-financing__start { max-width: none; padding: 68px 24px; background: #10233d; color: #fff; }
+    .dm-financing__start-inner { display: grid; grid-template-columns: .75fr 1.25fr; gap: 64px; max-width: 1180px; margin: 0 auto; }
+    .dm-financing__start h2 { margin: 0 0 14px; color: #fff; font-size: clamp(28px, 4vw, 42px); line-height: 1.05; }
+    .dm-financing__start p { margin: 0; color: #b9c7d8; font-size: 14px; line-height: 1.65; }
+    .dm-financing__checklist { display: grid; gap: 10px; }
+    .dm-financing__check { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; padding: 16px 18px; border: 1px solid rgba(255,255,255,.13); border-radius: 11px; background: rgba(255,255,255,.06); }
+    .dm-financing__check span { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: #f2b705; color: #10233d; font-size: 11px; font-weight: 900; }
+    .dm-financing__check strong { display: block; margin-bottom: 3px; color: #fff; font-size: 13px; }
+    .dm-financing__check p { font-size: 12px; }
+    .dm-financing__disclosure { max-width: 1000px; margin: 0 auto; padding: 28px 24px 60px; color: #68778a; font-size: 11px; line-height: 1.7; }
+    @media (max-width: 780px) {
+      .dm-page__hero { padding: 48px 20px; }
+      .dm-page__section { padding: 44px 18px; }
+      .dm-page__grid, .dm-page__grid--three { grid-template-columns: 1fr; }
+      .dm-page__actions { flex-direction: column; }
+      .dm-page__button { width: 100%; }
+      .dm-financing__hero { padding: 50px 18px; }
+      .dm-financing__hero-inner, .dm-financing__intro-head, .dm-financing__start-inner { grid-template-columns: 1fr; gap: 30px; }
+      .dm-financing__hero-actions { flex-direction: column; }
+      .dm-financing__hero-actions .dm-page__button { width: 100%; }
+      .dm-financing__logo-row { grid-template-columns: 125px 1fr; padding: 14px; }
+      .dm-financing__logo-row img { max-width: 108px; max-height: 32px; }
+      .dm-financing__intro { padding: 48px 18px 30px; }
+      .dm-financing__type-grid { grid-template-columns: 1fr; }
+      .dm-financing__type { border-right: 0; border-bottom: 1px solid #d7e0ea; }
+      .dm-financing__type:last-child { border-bottom: 0; }
+      .dm-financing__providers { padding: 26px 18px 48px; }
+      .dm-finance-provider { grid-template-columns: 1fr; }
+      .dm-finance-provider__brand { min-height: 210px; }
+      .dm-finance-provider__content { padding: 26px 20px; }
+      .dm-finance-provider__facts { grid-template-columns: 1fr; }
+      .dm-finance-provider__steps { grid-template-columns: repeat(2, 1fr); }
+      .dm-financing__start { padding: 48px 18px; }
+    }
+  </style>
+
+  {%- if dm_page_handle == 'about-us' -%}
+    <article class="dm-page">
+      <header class="dm-page__hero">
+        <p class="dm-page__eyebrow">Local help. Better sleep.</p>
+        <h1>A mattress store built around real comparisons</h1>
+        <p>Discount Mattress is a family-owned Bowling Green business with two local showrooms and a straightforward way to shop leading mattress brands.</p>
+      </header>
+      <section class="dm-page__section">
+        <div class="dm-page__grid">
+          <div>
+            <p class="dm-page__eyebrow">Our approach</p>
+            <h2 class="dm-page__heading">Start with how you sleep</h2>
+            <p class="dm-page__lede">We help narrow the choices by comfort, sleep position, temperature, materials, and budget. Then you can compare the strongest options side by side instead of guessing from a product grid.</p>
+            <div class="dm-page__actions">
+              <a class="dm-page__button" href="{{ routes.all_products_collection_url }}">Shop mattresses</a>
+              <a class="dm-page__button dm-page__button--outline" href="/pages/locations">Visit a showroom</a>
+            </div>
+          </div>
+          <img class="dm-page__photo" src="{{ 'CampbellLnInside.jpg' | asset_img_url: '1000x' }}" alt="Inside the Discount Mattress Campbell Lane showroom" width="774" height="483" loading="lazy">
+        </div>
+      </section>
+      <section class="dm-page__section dm-page__section--tint">
+        <div>
+          <h2 class="dm-page__heading">What you can expect</h2>
+          <div class="dm-page__grid dm-page__grid--three">
+            <div class="dm-page__card"><h3>Clear guidance</h3><p>Useful comparisons and concise answers without overloading you with technical language.</p></div>
+            <div class="dm-page__card"><h3>Brands worth comparing</h3><p>Online favorites and established mattress makers, available to explore in one place.</p></div>
+            <div class="dm-page__card"><h3>Local follow-through</h3><p>Real people to call about availability, showroom models, financing, pickup, and delivery.</p></div>
+          </div>
+        </div>
+      </section>
+      <div class="dm-page__cta"><h2>Let’s find a better fit</h2><p>Browse online or call before your visit to confirm a specific model.</p><a class="dm-page__button" href="/pages/contact">Talk to our team</a></div>
+    </article>
+
+  {%- elsif dm_page_handle == 'locations' -%}
+    <article class="dm-page">
+      <header class="dm-page__hero">
+        <p class="dm-page__eyebrow">Bowling Green, Kentucky</p>
+        <h1>Visit a Discount Mattress showroom</h1>
+        <p>Compare comfort in person and get help narrowing brands, models, and price options. Call ahead for current hours and floor-model availability.</p>
+      </header>
+      <section class="dm-page__section">
+        <div class="dm-page__grid">
+          <article class="dm-page__card" id="campbell-lane">
+            <img class="dm-page__photo" src="{{ 'DiscountMatt1.jpg' | asset_img_url: '900x' }}" alt="Discount Mattress on Campbell Lane" width="1164" height="727" loading="lazy">
+            <span class="dm-page__label">Main showroom</span>
+            <h2>Campbell Lane</h2>
+            <p>1555 Campbell Ln<br>Bowling Green, KY 42104<br><a href="tel:12704951603">(270) 495-1603</a><br>Call for current hours.</p>
+            <div class="dm-page__actions"><a class="dm-page__button" href="tel:12704951603">Call showroom</a><a class="dm-page__button dm-page__button--outline" href="https://maps.google.com/?q=1555+Campbell+Ln+Bowling+Green+KY+42104" target="_blank" rel="noopener">Directions</a></div>
+          </article>
+          <article class="dm-page__card" id="russellville-road">
+            <img class="dm-page__photo" src="{{ 'DiscountMatt2.jpg' | asset_img_url: '900x' }}" alt="Discount Mattress Outlet on Russellville Road" width="1164" height="727" loading="lazy">
+            <span class="dm-page__label">Outlet store</span>
+            <h2>Russellville Road</h2>
+            <p>2734 Russellville Rd<br>Bowling Green, KY 42101<br><a href="tel:12708423888">(270) 842-3888</a><br>Call for current hours.</p>
+            <div class="dm-page__actions"><a class="dm-page__button" href="tel:12708423888">Call outlet</a><a class="dm-page__button dm-page__button--outline" href="https://maps.google.com/?q=2734+Russellville+Rd+Bowling+Green+KY+42101" target="_blank" rel="noopener">Directions</a></div>
+          </article>
+        </div>
+        <p class="dm-page__note" style="margin-top: 24px;">Looking for a specific brand or mattress? Call before visiting and the team will help confirm whether it is available to try at that location.</p>
+      </section>
+    </article>
+
+  {%- elsif dm_page_handle == 'faq' -%}
+    <article class="dm-page">
+      <header class="dm-page__hero">
+        <p class="dm-page__eyebrow">Good to know</p>
+        <h1>Mattress shopping questions, answered</h1>
+        <p>Clear guidance about availability, fulfillment, financing, policies, and getting help before or after an order.</p>
+      </header>
+      <section class="dm-page__section dm-page__faq">
+        <details><summary>Is every mattress shown online physically in stock?</summary><div>Not always. Online availability may include showroom, warehouse, or supplier availability. We confirm the selected model and size before scheduling fulfillment.</div></details>
+        <details><summary>How does nationwide shipping work?</summary><div>Free Nationwide Delivery is available on eligible mattress orders. Timing varies by brand, model, size, and destination.</div></details>
+        <details><summary>Can I pick up my order at a showroom?</summary><div>Pickup may be available for eligible products after the team confirms the item and location. Wait for confirmation before traveling to the store.</div></details>
+        <details><summary>How long will my order take?</summary><div>Timing varies by brand, model, size, and destination. Check the estimate on the product page when available, or call for the most current guidance.</div></details>
+        <details><summary>How do returns and exchanges work?</summary><div>Terms can vary by product, condition, manufacturer program, and purchase channel. Review the written refund policy and any product-specific terms before purchasing.</div></details>
+        <details><summary>What warranty comes with my mattress?</summary><div>Warranty coverage is provided under the applicable manufacturer terms and varies by model. Ask us for the written coverage and claim process before purchase.</div></details>
+        <details><summary>Is financing available?</summary><div>Financing options may be available to qualified applicants. Approval, rates, fees, payment amounts, and terms are determined by the financing provider.</div></details>
+        <details><summary>Do you provide setup or old mattress removal?</summary><div>Availability and cost vary by order and destination. Contact the team before checkout if either service is important to your purchase.</div></details>
+        <details><summary>When is payment captured for an online order?</summary><div>Your payment method is authorized at checkout. We confirm product availability before capturing payment; if the order cannot be confirmed, the authorization is canceled instead.</div></details>
+        <details><summary>Can I cancel an order?</summary><div>Contact us as quickly as possible. Whether an order can be changed or canceled depends on its fulfillment status and the applicable written policy.</div></details>
+        <details><summary>How can I confirm a model is available to try?</summary><div>Call Campbell Lane at <a href="tel:12704951603">(270) 495-1603</a> or Russellville Road at <a href="tel:12708423888">(270) 842-3888</a> before visiting.</div></details>
+      </section>
+      <div class="dm-page__cta"><h2>Still have a question?</h2><p>Our local team can help with a product, order, or showroom visit.</p><a class="dm-page__button" href="/pages/contact">Contact Discount Mattress</a></div>
+    </article>
+
+  {%- elsif dm_page_handle == 'financing' -%}
+    <article class="dm-page dm-financing">
+      <header class="dm-financing__hero">
+        <div class="dm-financing__hero-inner">
+          <div>
+            <p class="dm-page__eyebrow">Financing and lease-to-own</p>
+            <h1>Compare payment options before you apply</h1>
+            <p class="dm-financing__hero-copy">Discount Mattress offers payment options through Synchrony, Kafene, and Snap Finance. These providers do not all offer the same type of product. Approval and the written terms come from the provider.</p>
+            <div class="dm-financing__hero-actions">
+              <a class="dm-page__button" href="tel:12704951603">Call for an application</a>
+              <a class="dm-page__button dm-page__button--outline" href="/pages/locations">Apply at a showroom</a>
+            </div>
+          </div>
+          <div class="dm-financing__logo-panel" aria-label="Available payment providers">
+            <div class="dm-financing__logo-row">
+              <img src="{{ 'sync-logo.svg' | asset_url }}" alt="Synchrony" width="161" height="35">
+              <div><strong>Credit financing</strong><span>Credit approval and account terms apply.</span></div>
+            </div>
+            <div class="dm-financing__logo-row dm-financing__logo-row--kafene">
+              <img src="{{ 'kafene-logo.svg' | asset_url }}" alt="Kafene" width="174" height="56">
+              <div><strong>Lease-to-own</strong><span>A lease agreement, not a loan.</span></div>
+            </div>
+            <div class="dm-financing__logo-row">
+              <img src="{{ 'snapfin-logo.svg' | asset_url }}" alt="Snap Finance" width="108" height="48">
+              <div><strong>Offer type varies</strong><span>Lease-to-own, installment loan, or retail installment contract.</span></div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="dm-financing__intro">
+        <div class="dm-financing__intro-head">
+          <div>
+            <p class="dm-page__eyebrow">Start with the product type</p>
+            <h2 class="dm-page__heading">The monthly payment is only part of the comparison</h2>
+          </div>
+          <p>Before accepting an offer, identify whether it is credit or a lease. Then compare the cash price, total of payments, interest or cost of lease, payment frequency, early purchase terms, and who owns the merchandise during the agreement.</p>
+        </div>
+        <div class="dm-financing__type-grid">
+          <article class="dm-financing__type"><span class="dm-financing__type-number">01</span><h2>Credit financing</h2><p>You borrow or use a credit account to complete the purchase, then repay under the credit agreement. Interest and promotional terms may apply.</p></article>
+          <article class="dm-financing__type"><span class="dm-financing__type-number">02</span><h2>Lease-to-own</h2><p>The provider purchases the merchandise and leases it to you. You obtain ownership after completing the required payments or an available early purchase option.</p></article>
+          <article class="dm-financing__type"><span class="dm-financing__type-number">03</span><h2>Offer-specific terms</h2><p>The provider, purchase amount, and state can affect which product is offered. The name and terms on the written agreement control.</p></article>
+        </div>
+      </section>
+
+      <section class="dm-financing__providers">
+        <div class="dm-financing__providers-head">
+          <p class="dm-page__eyebrow">Available providers</p>
+          <h2 class="dm-page__heading">How each option works</h2>
+          <p class="dm-page__lede">The summaries below follow each provider’s current consumer information. Your approval and agreement may differ.</p>
+        </div>
+
+        <article class="dm-finance-provider dm-finance-provider--synchrony">
+          <div class="dm-finance-provider__brand">
+            <img src="{{ 'sync-logo.svg' | asset_url }}" alt="Synchrony" width="161" height="35" loading="lazy">
+            <div class="dm-finance-provider__brand-label"><span>Product category</span><strong>Credit financing</strong></div>
+          </div>
+          <div class="dm-finance-provider__content">
+            <p>Synchrony offers credit cards and loans. Ask Discount Mattress which current Synchrony application and promotional financing offers are available for your purchase.</p>
+            <dl class="dm-finance-provider__facts">
+              <div class="dm-finance-provider__fact"><dt>Application</dt><dd>Credit approval is required. Synchrony states that credit card and loan applications may affect your credit score.</dd></div>
+              <div class="dm-finance-provider__fact"><dt>After approval</dt><dd>Use the approved credit product to complete the purchase, then make payments under the account agreement.</dd></div>
+              <div class="dm-finance-provider__fact"><dt>Promotions</dt><dd>Available offers may use deferred-interest or reduced-interest terms. Offers vary.</dd></div>
+              <div class="dm-finance-provider__fact"><dt>Review</dt><dd>Check the APR, minimum payment, promotion expiration, and what happens if the promotional balance is not paid on time.</dd></div>
+            </dl>
+            <p class="dm-finance-provider__steps-title">Typical process</p>
+            <ol class="dm-finance-provider__steps"><li>Confirm the purchase total.</li><li>Request the current application.</li><li>Submit the application to Synchrony.</li><li>Review the credit agreement before purchase.</li></ol>
+            <div class="dm-finance-provider__links"><a class="dm-page__button" href="tel:12704951603" aria-label="Request a financing application by calling Discount Mattress at (270) 495-1603">Request a financing application</a><a class="dm-finance-provider__official" href="https://www.synchrony.com/financing/how-it-works" target="_blank" rel="noopener">Read Synchrony’s financing guide</a></div>
+          </div>
+        </article>
+
+        <article class="dm-finance-provider dm-finance-provider--kafene">
+          <div class="dm-finance-provider__brand">
+            <img src="{{ 'kafene-logo.svg' | asset_url }}" alt="Kafene" width="174" height="56" loading="lazy">
+            <div class="dm-finance-provider__brand-label"><span>Product category</span><strong>Lease-to-own</strong></div>
+          </div>
+          <div class="dm-finance-provider__content">
+            <p>Kafene is not a loan. If an application is approved, Kafene purchases the merchandise from the store and leases it to the customer until the customer obtains ownership.</p>
+            <dl class="dm-finance-provider__facts">
+              <div class="dm-finance-provider__fact"><dt>Application</dt><dd>Kafene says its application typically takes about 60 seconds. Approval is not guaranteed.</dd></div>
+              <div class="dm-finance-provider__fact"><dt>Basic eligibility</dt><dd>Kafene lists age 18+, government-issued ID, at least $800 monthly income, and an active checking account.</dd></div>
+              <div class="dm-finance-provider__fact"><dt>Payments</dt><dd>Accounts are generally set for automatic payments aligned with the customer’s pay schedule. The agreement provides the exact frequency and amount.</dd></div>
+              <div class="dm-finance-provider__fact"><dt>Ownership and return</dt><dd>Ownership follows completion of required payments or an available early purchase option. Kafene also describes a right to end the lease and arrange return under its terms.</dd></div>
+            </dl>
+            <p class="dm-finance-provider__steps-title">Typical process</p>
+            <ol class="dm-finance-provider__steps"><li>Apply through the store’s Kafene link.</li><li>Kafene provides its decision and approved amount.</li><li>Review and sign the lease on your phone.</li><li>Make the agreed payments until purchase or return.</li></ol>
+            <div class="dm-finance-provider__links"><a class="dm-page__button" href="tel:12704951603" aria-label="Request a financing application by calling Discount Mattress at (270) 495-1603">Request a financing application</a><a class="dm-finance-provider__official" href="https://www.kafene.com/faq" target="_blank" rel="noopener">Read Kafene’s customer FAQ</a></div>
+          </div>
+        </article>
+
+        <article class="dm-finance-provider dm-finance-provider--snap">
+          <div class="dm-finance-provider__brand">
+            <img src="{{ 'snapfin-logo.svg' | asset_url }}" alt="Snap Finance" width="108" height="48" loading="lazy">
+            <div class="dm-finance-provider__brand-label"><span>Product category</span><strong>Offer type varies</strong></div>
+          </div>
+          <div class="dm-finance-provider__content">
+            <p>Snap Finance supports lease-to-own, bank-partner installment loans, and merchant retail installment contracts. The product offered depends on the merchant, purchase, and state.</p>
+            <dl class="dm-finance-provider__facts">
+              <div class="dm-finance-provider__fact"><dt>Application</dt><dd>Snap accepts applications online or through participating stores. Not all applicants are approved.</dd></div>
+              <div class="dm-finance-provider__fact"><dt>Basic eligibility</dt><dd>Snap lists legal contracting age, qualifying monthly income, an active checking account, email, and smartphone number.</dd></div>
+              <div class="dm-finance-provider__fact"><dt>Approved amount</dt><dd>Snap states that average approvals across its product types range from $300 to $5,000, subject to underwriting.</dd></div>
+              <div class="dm-finance-provider__fact"><dt>Ownership and payments</dt><dd>For lease-to-own, Snap owns the merchandise until required payments or an early purchase are completed. Loan and installment-contract terms work differently.</dd></div>
+            </dl>
+            <p class="dm-finance-provider__steps-title">Typical process</p>
+            <ol class="dm-finance-provider__steps"><li>Apply using the store’s Snap option.</li><li>Snap provides a decision and available product.</li><li>Identify the product type and total cost.</li><li>Sign the agreement and follow its payment schedule.</li></ol>
+            <div class="dm-finance-provider__links"><a class="dm-page__button" href="tel:12704951603" aria-label="Request a financing application by calling Discount Mattress at (270) 495-1603">Request a financing application</a><a class="dm-finance-provider__official" href="https://snapfinance.com/how-it-works" target="_blank" rel="noopener">Read Snap Finance’s guide</a></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="dm-financing__start">
+        <div class="dm-financing__start-inner">
+          <div><p class="dm-page__eyebrow">Start at Discount Mattress</p><h2>Get the correct application for your purchase</h2><p>Provider programs and promotional offers can change. Call or visit so the team can confirm the current application and eligible purchase amount.</p><div class="dm-financing__hero-actions"><a class="dm-page__button" href="tel:12704951603">Call (270) 495-1603</a><a class="dm-page__button dm-page__button--outline" href="/pages/locations">View showrooms</a></div></div>
+          <div class="dm-financing__checklist">
+            <div class="dm-financing__check"><span>1</span><div><strong>Choose the merchandise</strong><p>Confirm the mattress, size, accessories, taxes, and complete purchase amount.</p></div></div>
+            <div class="dm-financing__check"><span>2</span><div><strong>Get the current provider link</strong><p>Discount Mattress will identify the applications currently available for that purchase.</p></div></div>
+            <div class="dm-financing__check"><span>3</span><div><strong>Review the written agreement</strong><p>Confirm the product type, payment schedule, total cost, interest or cost of lease, and ownership terms before accepting.</p></div></div>
+          </div>
+        </div>
+      </section>
+      <p class="dm-financing__disclosure">Financing and lease-to-own are subject to provider approval, eligibility, state availability, and the provider’s written terms. Discount Mattress does not guarantee approval or an advertised amount. Promotional financing may require minimum monthly payments and may include deferred interest. Lease-to-own generally costs more than the cash price if carried to the full term. Some Snap retail installment contracts may be originated by the merchant and serviced by Snap Finance. The agreement presented to you controls if it differs from this summary.</p>
+    </article>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Site page experience",
+  "settings": [],
+  "enabled_on": { "templates": ["page"] }
+}
+{% endschema %}

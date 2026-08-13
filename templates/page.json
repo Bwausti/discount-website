@@ -8,6 +8,10 @@
  * ------------------------------------------------------------
  */{
   "sections": {
+    "site-page-experience": {
+      "type": "site-page-experience",
+      "settings": {}
+    },
     "main": {
       "type": "main-page",
       "blocks": {
@@ -61,6 +65,7 @@
     }
   },
   "order": [
+    "site-page-experience",
     "page-content",
     "main"
   ]

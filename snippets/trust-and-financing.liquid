@@ -1,36 +1,62 @@
-<div class="pdp-trust-section">
-  <div class="pdp-trust-grid">
-    <div class="pdp-trust-item">
-      <span class="pdp-trust-icon">🔒</span>
-      <span class="pdp-trust-text">Secure checkout</span>
+{%- liquid
+  assign product_title_downcase = product.title | downcase
+  assign is_helix_luxe = false
+  if product.vendor == 'Helix' and product.type == 'Mattress' and product_title_downcase contains 'luxe'
+    assign is_helix_luxe = true
+  endif
+-%}
+
+<div class="pdp-trust-section{% if is_helix_luxe %} pdp-trust-section--luxe{% endif %}">
+  {%- unless is_helix_luxe -%}
+    <div class="pdp-trust-grid">
+      <div class="pdp-trust-item">
+        <span class="pdp-trust-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        </span>
+        <span class="pdp-trust-text">Secure checkout</span>
+      </div>
+      <div class="pdp-trust-item">
+        <span class="pdp-trust-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h11v10H3zM14 10h4l3 3v4h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+        </span>
+        <span class="pdp-trust-text">{% if product.vendor == 'Helix' %}Free Nationwide Delivery{% else %}Delivery available{% endif %}</span>
+      </div>
+      <div class="pdp-trust-item">
+        <span class="pdp-trust-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v5c0 4.5-2.8 8-7 10-4.2-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        </span>
+        <span class="pdp-trust-text">Brand warranty</span>
+      </div>
+      <div class="pdp-trust-item">
+        <span class="pdp-trust-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20v-9l8-7 8 7v9"/><path d="M8 20v-6h8v6"/></svg>
+        </span>
+        <span class="pdp-trust-text">Local showroom help</span>
+      </div>
     </div>
-    <div class="pdp-trust-item">
-      <span class="pdp-trust-icon">🚚</span>
-      <span class="pdp-trust-text">Free local delivery</span>
-    </div>
-    <div class="pdp-trust-item">
-      <span class="pdp-trust-icon">🛡️</span>
-      <span class="pdp-trust-text">Brand warranty included</span>
-    </div>
-    <div class="pdp-trust-item">
-      <span class="pdp-trust-icon">🏷️</span>
-      <span class="pdp-trust-text">Competitive pricing</span>
-    </div>
-  </div>
+  {%- endunless -%}
 
   <div class="pdp-financing">
-    <p class="pdp-financing-heading">FINANCE WITH CONFIDENCE</p>
+    <div class="pdp-financing-copy">
+      <p class="pdp-financing-eyebrow">Flexible ways to pay</p>
+      <p class="pdp-financing-heading">Financing available</p>
+      <p class="pdp-financing-subhead">Compare credit financing and lease-to-own options.</p>
+    </div>
     <div class="pdp-financing-logos">
-      <div class="pdp-financing-tile">
-        <img src="{{ 'financing/synchrony-logo.svg' | asset_url }}" alt="Synchrony" loading="lazy" width="160" height="35">
+      <div class="pdp-financing-tile pdp-financing-tile--synchrony">
+        <img src="{{ 'sync-logo.svg' | asset_url }}" alt="Synchrony" loading="lazy" width="161" height="35">
+        <span>Credit options</span>
       </div>
-      <div class="pdp-financing-tile">
-        <img src="{{ 'financing/kafene-logo.svg' | asset_url }}" alt="Kafene" loading="lazy" width="160" height="52">
+      <div class="pdp-financing-tile pdp-financing-tile--kafene">
+        <img src="{{ 'kafene-logo.svg' | asset_url }}" alt="Kafene" loading="lazy" width="174" height="56">
+        <span>Lease-to-own</span>
       </div>
-      <div class="pdp-financing-tile">
-        <img src="{{ 'financing/snap-logo.svg' | asset_url }}" alt="Snap Finance" loading="lazy" width="160" height="80">
+      <div class="pdp-financing-tile pdp-financing-tile--snap">
+        <img src="{{ 'snapfin-logo.svg' | asset_url }}" alt="Snap Finance" loading="lazy" width="108" height="48">
+        <span>Offer type varies</span>
       </div>
     </div>
-    <a href="/pages/financing" class="pdp-financing-btn">Learn about financing →</a>
+    <a href="/pages/financing" class="pdp-financing-btn">View financing options <span aria-hidden="true">→</span></a>
+    <p class="pdp-financing-disclosure">Approval and written terms are set by each provider. Product type varies.</p>
   </div>
 </div>

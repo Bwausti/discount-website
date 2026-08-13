@@ -1,0 +1,85 @@
+{%- liquid
+  assign site_url = shop.url
+  assign organization_id = site_url | append: '#organization'
+  assign website_id = site_url | append: '#website'
+  assign campbell_id = site_url | append: '#campbell-lane'
+  assign russellville_id = site_url | append: '#russellville-road'
+  assign search_term_token = '{' | append: 'search_term_string' | append: '}'
+  assign search_url = site_url | append: '/search?q=' | append: search_term_token
+  assign logo_url = 'dm-store-logo.png' | asset_url | prepend: 'https:'
+-%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": {{ organization_id | json }},
+      "name": "Discount Mattress",
+      "url": {{ site_url | json }},
+      "logo": {{ logo_url | json }},
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+1-270-495-1603",
+          "contactType": "sales",
+          "areaServed": "US"
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+1-270-842-3888",
+          "contactType": "sales",
+          "areaServed": "US"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": {{ website_id | json }},
+      "url": {{ site_url | json }},
+      "name": "Discount Mattress",
+      "publisher": { "@id": {{ organization_id | json }} },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": {{ search_url | json }}
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": ["MattressStore", "LocalBusiness"],
+      "@id": {{ campbell_id | json }},
+      "name": "Discount Mattress — Campbell Lane",
+      "url": {{ site_url | append: '/pages/locations#campbell-lane' | json }},
+      "telephone": "+1-270-495-1603",
+      "parentOrganization": { "@id": {{ organization_id | json }} },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1555 Campbell Ln",
+        "addressLocality": "Bowling Green",
+        "addressRegion": "KY",
+        "postalCode": "42104",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": ["MattressStore", "LocalBusiness"],
+      "@id": {{ russellville_id | json }},
+      "name": "Discount Mattress Outlet — Russellville Road",
+      "url": {{ site_url | append: '/pages/locations#russellville-road' | json }},
+      "telephone": "+1-270-842-3888",
+      "parentOrganization": { "@id": {{ organization_id | json }} },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2734 Russellville Rd",
+        "addressLocality": "Bowling Green",
+        "addressRegion": "KY",
+        "postalCode": "42101",
+        "addressCountry": "US"
+      }
+    }
+  ]
+}
+</script>

@@ -1,0 +1,173 @@
+{% comment %}
+  Shared accessory recommendations for manufacturer mattress product pages.
+{% endcomment %}
+
+{% assign setup_product_type = closest.product.type | downcase %}
+
+{% if closest.product.vendor != blank and setup_product_type == 'mattress' %}
+  <style>
+    .complete-setup {
+      background: #f7f6f3;
+      border-top: 1px solid #e4e2dc;
+      padding: 52px 24px;
+    }
+
+    .complete-setup__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .complete-setup__header {
+      max-width: 640px;
+      margin-bottom: 24px;
+    }
+
+    .complete-setup__eyebrow {
+      color: #cf2333;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      margin: 0 0 8px;
+      text-transform: uppercase;
+    }
+
+    .complete-setup__title {
+      color: #162b49;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0 0 10px;
+    }
+
+    .complete-setup__intro {
+      color: #5f6b7a;
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .complete-setup__grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .complete-setup__card {
+      background: #ffffff;
+      border: 1px solid #dedede;
+      border-radius: 12px;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 100%;
+      padding: 22px;
+      text-decoration: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .complete-setup__card:hover {
+      border-color: #cf2333;
+      box-shadow: 0 8px 24px rgba(22, 43, 73, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .complete-setup__card:focus-visible {
+      outline: 3px solid rgba(207, 35, 51, 0.35);
+      outline-offset: 3px;
+    }
+
+    .complete-setup__icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .complete-setup__name {
+      color: #162b49;
+      font-size: 17px;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .complete-setup__description {
+      color: #64748b;
+      flex-grow: 1;
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .complete-setup__cta {
+      color: #cf2333;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 749px) {
+      .complete-setup {
+        padding: 40px 20px;
+      }
+
+      .complete-setup__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .complete-setup__card {
+        transition: none;
+      }
+
+      .complete-setup__card:hover {
+        transform: none;
+      }
+    }
+  </style>
+
+  <section class="complete-setup" aria-labelledby="CompleteSetupTitle-{{ section.id }}">
+    <div class="complete-setup__inner">
+      <header class="complete-setup__header">
+        <p class="complete-setup__eyebrow">Finish your sleep system</p>
+        <h2 class="complete-setup__title" id="CompleteSetupTitle-{{ section.id }}">Complete Your Setup</h2>
+        <p class="complete-setup__intro">Pair your new mattress with comfort, protection, and personalized support.</p>
+      </header>
+
+      <div class="complete-setup__grid">
+        <a class="complete-setup__card" href="{{ routes.collections_url }}/bedtech">
+          <span class="complete-setup__icon" aria-hidden="true">⚡</span>
+          <h3 class="complete-setup__name">Adjustable Base</h3>
+          <p class="complete-setup__description">Elevate your head or feet with zero-gravity positioning, massage, and under-bed lighting available on select models.</p>
+          <p class="complete-setup__cta">Browse bases →</p>
+        </a>
+
+        <a class="complete-setup__card" href="{{ routes.root_url }}products/bedgear-dri-tec">
+          <span class="complete-setup__icon" aria-hidden="true">🛡️</span>
+          <h3 class="complete-setup__name">Mattress Protector</h3>
+          <p class="complete-setup__description">Help keep your mattress clean with waterproof, breathable protection that is easy to wash.</p>
+          <p class="complete-setup__cta">Add protection →</p>
+        </a>
+
+        <a class="complete-setup__card" href="{{ routes.collections_url }}/bedgear">
+          <span class="complete-setup__icon" aria-hidden="true">☁️</span>
+          <h3 class="complete-setup__name">Performance Pillows</h3>
+          <p class="complete-setup__description">Choose cooling, adjustable-loft, or contoured support for a more comfortable night's sleep.</p>
+          <p class="complete-setup__cta">Shop pillows →</p>
+        </a>
+      </div>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Complete Your Setup",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": []
+}
+{% endschema %}

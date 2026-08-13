@@ -17,6 +17,9 @@
     if featured_media_url == blank
       assign featured_media_url = product.featured_media.preview_image | image_url: width: 500
     endif
+    if product.handle == 'bedgear-m3'
+      assign featured_media_url = 'bedgear-m3-mattress-official.jpg' | asset_url
+    endif
   endif
 
   assign url = product.selected_or_first_available_variant.url

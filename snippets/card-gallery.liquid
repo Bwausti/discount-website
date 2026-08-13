@@ -72,7 +72,7 @@
     --gallery-aspect-ratio: {{ ratio }};
   "
   data-product-id="{{ product.id }}"
-  {% if settings.show_second_image_on_hover %}
+  {% if settings.show_second_image_on_hover and product.handle != 'bedgear-m3' %}
     on:pointerenter="/previewImage"
     on:pointerleave="/resetImage"
   {% endif %}
@@ -82,7 +82,27 @@
   data-image-ratio="{{ block_settings.image_ratio }}"
   {{ block.shopify_attributes }}
 >
-  {%- if product.media.size > 0 -%}
+  {%- if product.handle == 'bedgear-m3' -%}
+    <a
+      class="contents"
+      ref="cardGalleryLink"
+      href="{{ product.selected_or_first_available_variant.url }}"
+      aria-label="{{ product.title | escape }}"
+    >
+      <div class="product-media-container media-fit product-media-container--image">
+        <div class="product-media">
+          <img
+            src="{{ 'bedgear-m3-mattress-official.jpg' | asset_url }}"
+            alt="BEDGEAR M3 Performance Mattress"
+            class="product-media__image"
+            width="1000"
+            height="1000"
+            loading="lazy"
+          >
+        </div>
+      </div>
+    </a>
+  {%- elsif product.media.size > 0 -%}
     {% liquid
       # Check if there are generic media that are not variant images
       assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'

@@ -1,215 +1,176 @@
-<!-- Section: all-collections-grid -->
-<style>
-  .acg-section {
-    padding: 0;
-    background: #f7f6f1;
-  }
+<!-- Curated mattress discovery page for /collections. -->
+{%- liquid
+  assign brand_handles = 'helix|puffy|nectar|dreamcloud|naturepedic|posh-and-lavish|pranasleep|jamison|bedgear|bedtech' | split: '|'
+-%}
 
-  .acg-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-
-  .acg-card {
-    text-decoration: none;
-    border-radius: 12px;
-    overflow: hidden;
-    background: white;
-    display: block;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .acg-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  }
-
-  .acg-card-image {
-    position: relative;
-    aspect-ratio: 4/3;
-    overflow: hidden;
-    background: #e8e4dc;
-  }
-
-  .acg-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
-  }
-
-  .acg-card:hover .acg-card-image img {
-    transform: scale(1.04);
-  }
-
-  .acg-card-body {
-    padding: 20px 22px;
-  }
-
-  .acg-card-title {
-    font-size: 18px;
-    font-weight: 800;
-    color: #162b49;
-    margin: 0 0 6px 0;
-    line-height: 1.2;
-  }
-
-  .acg-card-count {
-    font-size: 13px;
-    color: #94a3b8;
-    margin: 0;
-  }
-
-  .acg-card-arrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 12px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #cf2333;
-    transition: gap 0.2s ease;
-  }
-
-  .acg-card:hover .acg-card-arrow {
-    gap: 10px;
-  }
-
-  .acg-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 48px 20px 64px;
-  }
-
-  .acg-header {
-    margin-bottom: 36px;
-  }
-
-  .acg-header h1 {
-    font-size: clamp(22px, 3vw, 32px);
-    font-weight: 800;
-    color: #162b49;
-    margin: 0 0 8px 0;
-  }
-
-  .acg-header p {
-    font-size: 15px;
-    color: #64748b;
-    margin: 0;
-  }
-
-  /* Mobile */
-  @media (max-width: 768px) {
-    .acg-container {
-      padding: 32px 16px 48px;
-    }
-
-    .acg-grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    .acg-card-image {
-      aspect-ratio: 16/9;
-    }
-
-    .acg-card-body {
-      padding: 16px 18px;
-    }
-
-    .acg-card-title {
-      font-size: 17px;
-    }
-  }
-
-  /* Tablet */
-  @media (min-width: 769px) and (max-width: 1024px) {
-    .acg-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-</style>
-
-<div class="acg-section">
-  <div class="acg-container">
-    <div class="acg-header">
-      <h2 style="font-size:clamp(28px,3.5vw,42px);font-weight:800;color:#162b49;margin:0;text-align:center;">Shop All Brands</h2>
-      <p>Browse our full selection of mattress brands available at our Bowling Green showroom.</p>
+<section class="mattress-shop">
+  <div class="mattress-shop__hero">
+    <div class="mattress-shop__hero-copy">
+      <p class="mattress-shop__eyebrow">A simpler place to start</p>
+      <h1>Find the right mattress faster.</h1>
+      <p>Start with your comfort goal or compare trusted brands. Every path below stays focused on mattresses.</p>
+      <div class="mattress-shop__quick-links" aria-label="Shop mattresses by comfort">
+        <a href="{{ routes.collections_url }}/pressure-relief">Pressure relief</a>
+        <a href="{{ routes.collections_url }}/cooling-comfort">Cooling</a>
+        <a href="{{ routes.collections_url }}/luxury-feel">Luxury feel</a>
+        <a href="{{ routes.collections_url }}/organic-materials">Organic materials</a>
+      </div>
     </div>
 
-    <div class="acg-grid">
-      {%- assign ordered_collections = collections | sort: 'title' -%}
-      {%- assign priority_handles = 'helix|dreamcloud|nectar|puffy|naturepedic|posh-and-lavish|pranasleep|serta|jamison|bedgear|bedtech' | split: '|' -%}
-      {%- assign priority_collections = '' -%}
-      {%- assign other_collections = '' -%}
-      {%- for c in ordered_collections -%}
-        {%- if c.handle == 'all' -%}{%- continue -%}{%- endif -%}
-        {%- if priority_handles contains c.handle -%}
-          {%- assign priority_collections = priority_collections | append: c.handle | append: ',' -%}
-        {%- else -%}
-          {%- assign other_collections = other_collections | append: c.handle | append: ',' -%}
-        {%- endif -%}
-      {%- endfor -%}
-      {%- assign priority_list = priority_collections | split: ',' | compact -%}
-      {%- assign other_list = other_collections | split: ',' | compact -%}
-      {%- for handle in priority_list -%}
-        {%- assign collection = collections | find: 'handle', handle -%}
-        {%- if collection -%}
-          <a href="{{ collection.url }}" class="acg-card">
-            <div class="acg-card-image">
-              {%- if collection.image != blank -%}
-                <img src="{{ collection.image | image_url: width: 600 }}" alt="{{ collection.title }}" loading="lazy">
-              {%- else -%}
-                <img src="{{ 'dm-hero.jpg' | asset_url }}" alt="{{ collection.title }}" loading="lazy">
-              {%- endif -%}
-            </div>
-            <div class="acg-card-body">
-              <h3 class="acg-card-title">{{ collection.title }}</h3>
-              <p class="acg-card-count">{{ collection.products_count }} products</p>
-              <div class="acg-card-arrow">
-                Shop now
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </div>
-            </div>
-          </a>
-        {%- endif -%}
-      {%- endfor -%}
-      {%- for handle in other_list -%}
-        {%- assign collection = collections | find: 'handle', handle -%}
-        {%- if collection -%}
-          <a href="{{ collection.url }}" class="acg-card">
-            <div class="acg-card-image">
-              {%- if collection.image != blank -%}
-                <img src="{{ collection.image | image_url: width: 600 }}" alt="{{ collection.title }}" loading="lazy">
-              {%- else -%}
-                <img src="{{ 'dm-hero.jpg' | asset_url }}" alt="{{ collection.title }}" loading="lazy">
-              {%- endif -%}
-            </div>
-            <div class="acg-card-body">
-              <h3 class="acg-card-title">{{ collection.title }}</h3>
-              <p class="acg-card-count">{{ collection.products_count }} products</p>
-              <div class="acg-card-arrow">
-                Shop now
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </div>
-            </div>
-          </a>
-        {%- endif -%}
-      {%- endfor -%}
-    </div>
+    <a href="{{ routes.root_url }}products/helix-midnight-luxe" class="mattress-shop__featured">
+      <div class="mattress-shop__featured-image">
+        <img src="{{ 'dm-helix-midnight-luxe-new.jpg' | asset_url }}" alt="Helix Midnight Luxe mattress" width="1220" height="790" loading="eager">
+      </div>
+      <div class="mattress-shop__featured-copy">
+        <span>Balanced pick</span>
+        <h2>Helix Midnight Luxe</h2>
+        <p>Medium feel, premium pillow top, and zoned support. A strong starting point for side sleepers and couples.</p>
+        <strong>View mattress&nbsp; →</strong>
+      </div>
+    </a>
   </div>
-</div>
+
+  <div class="mattress-shop__body">
+    <section class="mattress-shop__section" aria-labelledby="ComfortHeading-{{ section.id }}">
+      <div class="mattress-shop__section-heading">
+        <div>
+          <p class="mattress-shop__eyebrow">Shop by comfort</p>
+          <h2 id="ComfortHeading-{{ section.id }}">What matters most tonight?</h2>
+        </div>
+        <p>Pick the benefit you care about. You can narrow by size and price on the next page.</p>
+      </div>
+      <div class="mattress-shop__comfort-grid">
+        <a href="{{ routes.collections_url }}/pressure-relief" class="mattress-shop__comfort-card">
+          <img src="{{ 'pressure-relief-mattress.jpg' | asset_img_url: '900x' }}" alt="Pressure-relieving mattress in a calm bedroom" width="800" height="575" loading="lazy">
+          <div><span>Side sleepers</span><h3>Pressure Relief</h3><p>Cushion shoulders, hips, and sensitive joints.</p></div>
+        </a>
+        <a href="{{ routes.collections_url }}/cooling-comfort" class="mattress-shop__comfort-card">
+          <img src="{{ 'dm-hero.jpg' | asset_img_url: '900x' }}" alt="Cooling mattress in a bright bedroom" width="2048" height="1936" loading="lazy">
+          <div><span>Hot sleepers</span><h3>Cooling Comfort</h3><p>Breathable covers and airflow-focused builds.</p></div>
+        </a>
+        <a href="{{ routes.collections_url }}/luxury-feel" class="mattress-shop__comfort-card">
+          <img src="{{ 'posh-hero-bg.png' | asset_img_url: '900x' }}" alt="Luxury mattress in an elegant bedroom" width="896" height="1152" loading="lazy">
+          <div><span>Premium comfort</span><h3>Luxury Feel</h3><p>Elevated materials, deeper comfort, and refined support.</p></div>
+        </a>
+        <a href="{{ routes.collections_url }}/organic-materials" class="mattress-shop__comfort-card">
+          <img src="{{ 'naturepedic-eos-card.jpg' | asset_img_url: '900x' }}" alt="Natural mattress made with organic materials" width="480" height="480" loading="lazy">
+          <div><span>Natural materials</span><h3>Organic Options</h3><p>Organic cotton, wool, and latex choices.</p></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="mattress-shop__section mattress-shop__section--brands" aria-labelledby="BrandHeading-{{ section.id }}">
+      <div class="mattress-shop__section-heading">
+        <div>
+          <p class="mattress-shop__eyebrow">Shop by brand</p>
+          <h2 id="BrandHeading-{{ section.id }}">Compare mattresses by maker.</h2>
+        </div>
+        <p>Explore each lineup without mixing pillows, sheets, and other accessories into your first view.</p>
+      </div>
+      <div class="mattress-shop__brand-grid">
+        {%- for handle in brand_handles -%}
+          {%- assign brand_collection = collections[handle] -%}
+          {%- if brand_collection != blank -%}
+            <a href="{{ brand_collection.url }}" class="mattress-shop__brand-card">
+              <div class="mattress-shop__brand-image">
+                {%- if brand_collection.image != blank -%}
+                  {{ brand_collection.image | image_url: width: 760 | image_tag: alt: brand_collection.title, widths: '380, 560, 760', sizes: '(max-width: 749px) 50vw, (max-width: 1099px) 33vw, 25vw', loading: 'lazy' }}
+                {%- else -%}
+                  <img src="{{ 'dm-hero.jpg' | asset_img_url: '760x' }}" alt="{{ brand_collection.title }} mattresses" width="760" height="620" loading="lazy">
+                {%- endif -%}
+              </div>
+              <div class="mattress-shop__brand-copy">
+                <h3>{{ brand_collection.title }}</h3>
+                <span>View mattresses →</span>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </section>
+
+    <aside class="mattress-shop__help">
+      <div><span>Prefer to compare in person?</span><strong>Visit a Bowling Green showroom.</strong></div>
+      <p>Our local team can help narrow the feel, size, and budget that fit you.</p>
+      <a href="{{ routes.root_url }}pages/locations">View locations</a>
+    </aside>
+  </div>
+</section>
+
+{% stylesheet %}
+  .mattress-shop { background: #f5f3ee; color: #13233f; font-family: Inter, 'Segoe UI', sans-serif; }
+  .mattress-shop__hero { display: grid; grid-template-columns: minmax(0,.9fr) minmax(420px,1.1fr); gap: 54px; align-items: center; max-width: 1320px; margin: 0 auto; padding: clamp(46px,6vw,86px) 24px; }
+  .mattress-shop__hero-copy h1 { max-width: 650px; margin: 0; font-size: clamp(42px,6vw,76px); line-height: .96; letter-spacing: -.055em; }
+  .mattress-shop__hero-copy > p:not(.mattress-shop__eyebrow) { max-width: 590px; margin: 22px 0 0; color: #59697f; font-size: 17px; line-height: 1.6; }
+  .mattress-shop__eyebrow { margin: 0 0 10px; color: #c9233b; font-size: 11px; font-weight: 850; letter-spacing: .18em; text-transform: uppercase; }
+  .mattress-shop__quick-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+  .mattress-shop__quick-links a { padding: 9px 13px; border: 1px solid #cfd6df; border-radius: 999px; background: #fff; color: #13233f; font-size: 12px; font-weight: 800; text-decoration: none; }
+  .mattress-shop__quick-links a:hover { border-color: #13233f; }
+  .mattress-shop__featured { display: grid; grid-template-columns: minmax(0,1.08fr) minmax(240px,.92fr); overflow: hidden; border-radius: 22px; background: #13233f; color: #fff; box-shadow: 0 28px 65px rgba(19,35,63,.17); text-decoration: none; }
+  .mattress-shop__featured-image { min-height: 390px; background: #eef1f5; }
+  .mattress-shop__featured-image img { width: 100%; height: 100%; object-fit: contain; transition: transform .35s ease; }
+  .mattress-shop__featured:hover .mattress-shop__featured-image img { transform: scale(1.025); }
+  .mattress-shop__featured-copy { display: flex; flex-direction: column; justify-content: center; padding: 32px; }
+  .mattress-shop__featured-copy span { width: fit-content; padding: 6px 10px; border-radius: 999px; background: #f2b705; color: #13233f; font-size: 10px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+  .mattress-shop__featured-copy h2 { margin: 18px 0 10px; color: #fff; font-size: clamp(27px,3vw,40px); line-height: 1; }
+  .mattress-shop__featured-copy p { margin: 0; color: #c8d1df; font-size: 13px; line-height: 1.6; }
+  .mattress-shop__featured-copy strong { margin-top: 24px; color: #f2b705; font-size: 13px; }
+  .mattress-shop__body { max-width: 1320px; margin: 0 auto; padding: 0 24px clamp(64px,8vw,110px); }
+  .mattress-shop__section { padding-top: clamp(58px,7vw,90px); border-top: 1px solid #d8d5ce; }
+  .mattress-shop__section + .mattress-shop__section { margin-top: clamp(64px,8vw,105px); }
+  .mattress-shop__section-heading { display: grid; grid-template-columns: minmax(0,1fr) minmax(260px,420px); gap: 42px; align-items: end; margin-bottom: 30px; }
+  .mattress-shop__section-heading h2 { margin: 0; font-size: clamp(31px,4vw,50px); line-height: 1; letter-spacing: -.04em; }
+  .mattress-shop__section-heading > p { margin: 0; color: #617087; font-size: 14px; line-height: 1.6; }
+  .mattress-shop__comfort-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+  .mattress-shop__comfort-card { position: relative; min-height: 385px; overflow: hidden; border-radius: 16px; background: #13233f; color: #fff; text-decoration: none; }
+  .mattress-shop__comfort-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,18,34,.94), rgba(8,18,34,.08) 72%); }
+  .mattress-shop__comfort-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s ease; }
+  .mattress-shop__comfort-card:hover img { transform: scale(1.035); }
+  .mattress-shop__comfort-card > div { position: absolute; right: 0; bottom: 0; left: 0; z-index: 1; padding: 23px; }
+  .mattress-shop__comfort-card span { color: #f2b705; font-size: 9px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+  .mattress-shop__comfort-card h3 { margin: 5px 0 6px; color: #fff; font-size: 22px; }
+  .mattress-shop__comfort-card p { margin: 0; color: #d1d9e5; font-size: 12px; line-height: 1.45; }
+  .mattress-shop__brand-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+  .mattress-shop__brand-card { overflow: hidden; border: 1px solid #dedbd4; border-radius: 14px; background: #fff; color: #13233f; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+  .mattress-shop__brand-card:hover { transform: translateY(-3px); border-color: #aab4c2; box-shadow: 0 15px 35px rgba(19,35,63,.09); }
+  .mattress-shop__brand-image { aspect-ratio: 4/3; overflow: hidden; background: #eef1f5; }
+  .mattress-shop__brand-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s ease; }
+  .mattress-shop__brand-card:hover img { transform: scale(1.035); }
+  .mattress-shop__brand-copy { padding: 18px 19px 20px; }
+  .mattress-shop__brand-copy h3 { margin: 0 0 8px; font-size: 18px; }
+  .mattress-shop__brand-copy span { color: #c9233b; font-size: 12px; font-weight: 800; }
+  .mattress-shop__help { display: grid; grid-template-columns: minmax(280px,.9fr) minmax(0,1fr) auto; gap: 28px; align-items: center; margin-top: 72px; padding: 28px 30px; border-radius: 16px; background: #13233f; color: #fff; }
+  .mattress-shop__help div { display: flex; flex-direction: column; gap: 4px; }
+  .mattress-shop__help span { color: #aebbd0; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .mattress-shop__help strong { font-size: 20px; }
+  .mattress-shop__help p { margin: 0; color: #c8d1df; font-size: 13px; line-height: 1.5; }
+  .mattress-shop__help a { padding: 11px 17px; border-radius: 8px; background: #f2b705; color: #13233f; font-size: 12px; font-weight: 850; text-decoration: none; white-space: nowrap; }
+  @media (max-width: 1050px) {
+    .mattress-shop__hero { grid-template-columns: 1fr; }
+    .mattress-shop__featured { max-width: 760px; }
+    .mattress-shop__comfort-grid, .mattress-shop__brand-grid { grid-template-columns: repeat(2,1fr); }
+  }
+  @media (max-width: 749px) {
+    .mattress-shop__hero { gap: 34px; padding: 38px 16px 48px; }
+    .mattress-shop__hero-copy h1 { font-size: clamp(38px,12vw,54px); }
+    .mattress-shop__featured { grid-template-columns: 1fr; }
+    .mattress-shop__featured-image { min-height: 250px; }
+    .mattress-shop__featured-copy { padding: 26px; }
+    .mattress-shop__body { padding-inline: 16px; }
+    .mattress-shop__section-heading { grid-template-columns: 1fr; gap: 14px; }
+    .mattress-shop__comfort-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+    .mattress-shop__comfort-card { min-width: min(82vw,320px); min-height: 360px; scroll-snap-align: start; }
+    .mattress-shop__brand-grid { gap: 10px; }
+    .mattress-shop__brand-copy { padding: 14px; }
+    .mattress-shop__brand-copy h3 { font-size: 15px; }
+    .mattress-shop__help { grid-template-columns: 1fr; gap: 15px; margin-top: 52px; padding: 24px; }
+    .mattress-shop__help a { text-align: center; }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
-  "name": "All Collections Grid",
+  "name": "Mattress discovery",
   "settings": []
 }
 {% endschema %}

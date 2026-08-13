@@ -1,6 +1,6 @@
 {% comment %}
   puffy-product-addons.liquid
-  Shows Puffy mattress tiers + compatible accessories on product pages
+  Shows the Puffy mattress tier comparison on product pages
   Only renders on Puffy products
 {% endcomment %}
 
@@ -13,7 +13,10 @@
   {% assign is_lux_hybrid = false %}
   {% assign is_royal = false %}
   {% assign is_monarch = false %}
-  {% if title_lower contains "monarch" %}
+  {% assign is_legacy = false %}
+  {% if title_lower contains "legacy" %}
+    {% assign is_legacy = true %}
+  {% elsif title_lower contains "monarch" %}
     {% assign is_monarch = true %}
   {% elsif title_lower contains "royal" %}
     {% assign is_royal = true %}
@@ -142,72 +145,6 @@
   }
   .puffy-compare-card:hover .puffy-compare-card__cta { gap: 8px; }
 
-  /* Accessories grid */
-  .puffy-accessories {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
-  }
-  .puffy-accessory-card {
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    text-decoration: none;
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-  }
-  .puffy-accessory-card:hover {
-    border-color: #5b9bd5;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
-    transform: translateY(-2px);
-  }
-  .puffy-accessory-card__icon {
-    font-size: 28px;
-    line-height: 1;
-  }
-  .puffy-accessory-card__name {
-    font-size: 15px;
-    font-weight: 800;
-    color: #1a2940;
-    margin: 0;
-  }
-  .puffy-accessory-card__desc {
-    font-size: 13px;
-    color: #64748b;
-    line-height: 1.55;
-    margin: 0;
-    flex-grow: 1;
-  }
-  .puffy-accessory-card__price {
-    font-size: 14px;
-    font-weight: 700;
-    color: #1a2940;
-    margin: 0;
-  }
-  .puffy-accessory-card__cta {
-    font-size: 12px;
-    font-weight: 800;
-    color: #5b9bd5;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: auto;
-  }
-  .puffy-accessory-card:hover .puffy-accessory-card__cta { gap: 8px; }
-
-  .puffy-accessories__heading {
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: #5b9bd5;
-    margin: 0 0 16px 0;
-  }
 </style>
 
 <div class="puffy-addons">
@@ -311,40 +248,26 @@
           <p class="puffy-compare-card__cta">View model →</p>
         </a>
       {% endif %}
+
+      {% if is_legacy %}
+        <div class="puffy-compare-card active">
+          <p class="puffy-compare-card__model">Handcrafted</p>
+          <h3 class="puffy-compare-card__name">Puffy Legacy</h3>
+          <p class="puffy-compare-card__price">From $4,899</p>
+          <p class="puffy-compare-card__tag">Cashmere, horsehair + Talalay latex</p>
+          <p class="puffy-compare-card__cta">You're viewing →</p>
+        </div>
+      {% else %}
+        <a href="/products/puffy-legacy" class="puffy-compare-card">
+          <p class="puffy-compare-card__model">Handcrafted</p>
+          <h3 class="puffy-compare-card__name">Puffy Legacy</h3>
+          <p class="puffy-compare-card__price">From $4,899</p>
+          <p class="puffy-compare-card__tag">Cashmere, horsehair + Talalay latex</p>
+          <p class="puffy-compare-card__cta">View model →</p>
+        </a>
+      {% endif %}
     </div>
 
-    <!-- Accessories heading -->
-    <p class="puffy-accessories__heading">Complete your sleep setup</p>
-    <div class="puffy-accessories">
-
-      <!-- Adjustable Base -->
-      <a href="/collections/bedtech" class="puffy-accessory-card">
-        <p class="puffy-accessory-card__icon">⚡</p>
-        <h3 class="puffy-accessory-card__name">Adjustable Bed Base</h3>
-        <p class="puffy-accessory-card__desc">Elevate your head or feet with a BedTech adjustable base. Zero-gravity positioning, massage, and under-bed lighting available across 7 models.</p>
-        <p class="puffy-accessory-card__price">From $499</p>
-        <p class="puffy-accessory-card__cta">Browse bases →</p>
-      </a>
-
-      <!-- Mattress Protector -->
-      <a href="/products/bedgear-dri-tec" class="puffy-accessory-card">
-        <p class="puffy-accessory-card__icon">🛡️</p>
-        <h3 class="puffy-accessory-card__name">Mattress Protector</h3>
-        <p class="puffy-accessory-card__desc">Keep your Puffy mattress in pristine condition. The Dri-Tec protector is waterproof, breathable, and machine washable.</p>
-        <p class="puffy-accessory-card__price">From $79</p>
-        <p class="puffy-accessory-card__cta">Add protection →</p>
-      </a>
-
-      <!-- Pillows -->
-      <a href="/collections/bedgear" class="puffy-accessory-card">
-        <p class="puffy-accessory-card__icon">🛏️</p>
-        <h3 class="puffy-accessory-card__name">Performance Pillows</h3>
-        <p class="puffy-accessory-card__desc">Pair your Puffy with a BedGear performance pillow. Choose from Storm (cooling), Balance (adjustable loft), or the Cuddle Curve contour shapes for added neck support.</p>
-        <p class="puffy-accessory-card__price">From $69</p>
-        <p class="puffy-accessory-card__cta">Shop pillows →</p>
-      </a>
-
-    </div>
   </div>
 </div>
 

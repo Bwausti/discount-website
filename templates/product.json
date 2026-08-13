@@ -72,7 +72,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<h1><strong>{{ product.vendor }}</strong></h1>",
+                "text": "<p><strong>{{ product.vendor }}</strong></p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -338,16 +338,16 @@
       "type": "pranasleep-product-addons",
       "settings": {}
     },
-    "serta_product_addons": {
-      "type": "serta-product-addons",
-      "settings": {}
-    },
     "naturepedic_product_addons": {
       "type": "naturepedic-product-addons",
       "settings": {}
     },
     "posh_and_lavish_product_addons": {
       "type": "posh-and-lavish-product-addons",
+      "settings": {}
+    },
+    "complete_your_setup": {
+      "type": "complete-your-setup",
       "settings": {}
     },
     "product_recommendations_qggXJq": {
@@ -504,9 +504,9 @@
     "bedtech_product_addons",
     "jamison_product_addons",
     "pranasleep_product_addons",
-    "serta_product_addons",
     "naturepedic_product_addons",
     "posh_and_lavish_product_addons",
+    "complete_your_setup",
     "product_recommendations_qggXJq"
   ]
 }

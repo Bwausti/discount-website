@@ -1,87 +1,306 @@
 {% comment %}
-  collection-seo-copy.liquid
-  Shows SEO intro copy + bottom copy on specific collection pages.
-  Only renders for Pressure Relief, Cooling Comfort, Luxury Feel, Organic Materials.
+  Bottom buying guide for the four comfort-led collection pages.
 {% endcomment %}
 
 {%- assign handle = collection.handle -%}
 {%- assign show = false -%}
-{%- assign intro = '' -%}
-{%- assign bottom = '' -%}
+{%- assign theme_label = '' -%}
+{%- assign heading = '' -%}
+{%- assign summary = '' -%}
+{%- assign accent = '#cf2333' -%}
 
-{%- if handle == 'pressure-relief' -%}
-  {%- assign show = true -%}
-  {%- capture intro -%}
-    Wake up sore or sleep mostly on your side? Pressure-relief mattresses are designed to cushion shoulders, hips, and joints while still supporting healthy alignment. Visit Discount Mattress in Bowling Green to compare foam and hybrid options side by side.
-  {%- endcapture -%}
-  {%- capture bottom -%}
-    Our pressure-relief collection includes mattresses built for side sleepers, joint comfort, and balanced support. Stop by our Bowling Green showroom to test different comfort levels and find the right fit before you buy.
-  {%- endcapture -%}
-{%- elsif handle == 'cooling-comfort' -%}
-  {%- assign show = true -%}
-  {%- capture intro -%}
-    If you sleep hot, cooling comfort matters. Compare mattresses with breathable covers, gel-infused foams, hybrid airflow, and cooling upgrades at Discount Mattress in Bowling Green.
-  {%- endcapture -%}
-  {%- capture bottom -%}
-    Cooling mattresses can help warmer sleepers stay more comfortable through the night. Visit our showroom to compare Nectar, Puffy, Serta, and other cooling options in person.
-  {%- endcapture -%}
-{%- elsif handle == 'luxury-feel' -%}
-  {%- assign show = true -%}
-  {%- capture intro -%}
-    Looking for a more elevated sleep experience? Our luxury-feel mattresses feature premium materials, enhanced support systems, plush comfort layers, and refined finishes.
-  {%- endcapture -%}
-  {%- capture bottom -%}
-    Compare luxury mattresses from brands like DreamCloud, Posh &amp; Lavish, Puffy, PranaSleep, and more at Discount Mattress in Bowling Green, KY.
-  {%- endcapture -%}
-{%- elsif handle == 'organic-materials' -%}
-  {%- assign show = true -%}
-  {%- capture intro -%}
-    Shop mattresses made with cleaner, more natural materials such as organic cotton, wool, and latex. Visit Discount Mattress to compare organic and natural-feel options in person.
-  {%- endcapture -%}
-  {%- capture bottom -%}
-    Organic-material mattresses are a strong choice for shoppers who care about cleaner materials, breathability, and comfort. Ask our team about Naturepedic and other natural mattress options.
-  {%- endcapture -%}
-{%- endif -%}
+{%- case handle -%}
+  {%- when 'pressure-relief' -%}
+    {%- assign show = true -%}
+    {%- assign theme_label = 'Pressure relief guide' -%}
+    {%- assign heading = 'How to choose a pressure-relief mattress in Bowling Green' -%}
+    {%- assign summary = 'The right pressure-relief mattress cushions high-pressure areas while keeping your body lifted. In the showroom, compare how your shoulders, hips, and lower back feel after a few minutes on each model.' -%}
+    {%- assign accent = '#cf2333' -%}
+    {%- capture detail_html -%}
+      <div>
+        <h3>Side sleepers</h3>
+        <p>Look for enough surface give at the shoulder and hip, then make sure your waist still feels supported.</p>
+      </div>
+      <div>
+        <h3>Back pain concerns</h3>
+        <p>Ask for medium, medium-firm, and zoned-support options so pressure relief does not turn into sagging.</p>
+      </div>
+      <div>
+        <h3>Foam vs. hybrid</h3>
+        <p>Foam can contour closely. Hybrids add lift, airflow, and easier movement. The right answer is usually obvious once you test both.</p>
+      </div>
+    {%- endcapture -%}
+    {%- capture faq_html -%}
+      <details><summary>Is a softer mattress always better for pressure relief?</summary><p>No. Softer comfort layers can help, but too much sink can create alignment problems. Test softness and support together.</p></details>
+      <details><summary>Which brands should I compare first?</summary><p>Helix, Puffy, Nectar, DreamCloud, and Naturepedic all give you different pressure-relief feels worth comparing in store.</p></details>
+    {%- endcapture -%}
+  {%- when 'cooling-comfort' -%}
+    {%- assign show = true -%}
+    {%- assign theme_label = 'Cooling mattress guide' -%}
+    {%- assign heading = 'How to shop cooling mattresses without falling for buzzwords' -%}
+    {%- assign summary = 'Cooling is a system: cover, foam, coils, pillow, protector, and room temperature all matter. The showroom advantage is that you can feel the difference between a cool-to-touch surface and a mattress that breathes well.' -%}
+    {%- assign accent = '#1d6f91' -%}
+    {%- capture detail_html -%}
+      <div>
+        <h3>Hot sleepers</h3>
+        <p>Start with breathable hybrid builds and cooling covers, then compare whether foam density changes how warm the bed feels.</p>
+      </div>
+      <div>
+        <h3>Pillows and protectors</h3>
+        <p>A warm protector can cancel out a cooler mattress. Test performance pillows and protectors with the mattress you like.</p>
+      </div>
+      <div>
+        <h3>Cooling upgrades</h3>
+        <p>Ask what is built in and what is optional. Some brands step up cooling by tier, while others rely more on accessories.</p>
+      </div>
+    {%- endcapture -%}
+    {%- capture faq_html -%}
+      <details><summary>Are hybrid mattresses cooler than foam?</summary><p>Often, because coils create more airflow. But cover materials, foam layers, and bedding still matter.</p></details>
+      <details><summary>Which brands should warm sleepers compare?</summary><p>Nectar, Puffy, Bedgear, Helix, DreamCloud, and Naturepedic all have cooling paths worth testing in person.</p></details>
+    {%- endcapture -%}
+  {%- when 'luxury-feel' -%}
+    {%- assign show = true -%}
+    {%- assign theme_label = 'Luxury mattress guide' -%}
+    {%- assign heading = 'What makes a mattress feel genuinely premium' -%}
+    {%- assign summary = 'Luxury feel is not only softness. A better premium mattress usually combines deeper comfort layers, more stable support, better edge performance, stronger materials, and a more finished feel when you move around.' -%}
+    {%- assign accent = '#162b49' -%}
+    {%- capture detail_html -%}
+      <div>
+        <h3>Premium comfort layers</h3>
+        <p>Compare pillow tops, latex, microcoils, and high-density foams to see which premium feel your body actually prefers.</p>
+      </div>
+      <div>
+        <h3>Support under the plush</h3>
+        <p>A luxury mattress should hold you up, not swallow you. Check edge support, motion control, and ease of movement.</p>
+      </div>
+      <div>
+        <h3>Hotel-style feel</h3>
+        <p>If you want a hotel-bed feel, ask to compare taller hybrids, plush euro tops, and premium medium comfort levels.</p>
+      </div>
+    {%- endcapture -%}
+    {%- capture faq_html -%}
+      <details><summary>Does luxury mean soft?</summary><p>Not always. Many premium mattresses feel plush on top while keeping medium or medium-firm support underneath.</p></details>
+      <details><summary>Which brands should I compare?</summary><p>DreamCloud, Posh & Lavish, Puffy, PranaSleep, Naturepedic, and upgraded Helix models are good starting points.</p></details>
+    {%- endcapture -%}
+  {%- when 'organic-materials' -%}
+    {%- assign show = true -%}
+    {%- assign theme_label = 'Organic mattress guide' -%}
+    {%- assign heading = 'How to compare organic and cleaner-material mattresses' -%}
+    {%- assign summary = 'Organic-material mattresses can feel very different from standard foam beds. Latex response, wool breathability, cotton covers, and coil support all change the way the mattress performs.' -%}
+    {%- assign accent = '#2f855a' -%}
+    {%- capture detail_html -%}
+      <div>
+        <h3>Materials to ask about</h3>
+        <p>Ask which models use organic cotton, wool, latex, cleaner adhesives, or certified components, and what those claims mean.</p>
+      </div>
+      <div>
+        <h3>Latex feel</h3>
+        <p>Latex is responsive and buoyant rather than slow-sinking. Try it beside foam so the difference is easy to feel.</p>
+      </div>
+      <div>
+        <h3>Cleaner does not mean one feel</h3>
+        <p>Organic and natural-feel mattresses can still range from firmer support to plush pillow-top comfort.</p>
+      </div>
+    {%- endcapture -%}
+    {%- capture faq_html -%}
+      <details><summary>Are organic mattresses only firm?</summary><p>No. Latex, wool, and coil designs can be built in several comfort levels, including plush options.</p></details>
+      <details><summary>Which brand should I start with?</summary><p>Naturepedic is the primary brand to compare for certified organic materials at Discount Mattress.</p></details>
+    {%- endcapture -%}
+{%- endcase -%}
 
 {%- if show -%}
-<style>
-  .seo-copy {
-    max-width: var(--page-width, 1200px);
-    margin: 0 auto;
-    padding: 32px 24px;
-  }
-  .seo-copy--intro {
-    padding-top: 40px;
-    padding-bottom: 16px;
-  }
-  .seo-copy--bottom {
-    padding-top: 16px;
-    padding-bottom: 48px;
-    border-top: 1px solid #e2e8f0;
-  }
-  .seo-copy__text {
-    font-size: 15px;
-    line-height: 1.7;
-    color: #475569;
-    margin: 0;
-    max-width: 720px;
-  }
-  @media (max-width: 640px) {
-    .seo-copy { padding: 20px 16px; }
-    .seo-copy--intro { padding-top: 24px; }
-    .seo-copy__text { font-size: 14px; }
-  }
-</style>
+  <style>
+    .seo-copy {
+      background: #fbfaf4;
+      border-top: 1px solid #dedbd2;
+      padding: 44px 20px 54px;
+    }
 
-<div class="seo-copy seo-copy--intro">
-  <p class="seo-copy__text">{{ intro }}</p>
-</div>
+    .seo-copy__inner {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      gap: 28px;
+      align-items: start;
+    }
 
-{%- if bottom != '' -%}
-<div class="seo-copy seo-copy--bottom">
-  <p class="seo-copy__text">{{ bottom }}</p>
-</div>
-{%- endif -%}
+    .seo-copy__intro {
+      border-radius: 8px;
+      border: 1px solid #dedbd2;
+      border-left: 5px solid {{ accent }};
+      background: #fff;
+      padding: 28px;
+      position: sticky;
+      top: 90px;
+    }
+
+    .seo-copy__eyebrow {
+      margin: 0 0 9px;
+      color: {{ accent }};
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .seo-copy h2 {
+      margin: 0;
+      color: #10233d;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.05;
+      letter-spacing: -.03em;
+    }
+
+    .seo-copy__summary {
+      margin: 16px 0 0;
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.75;
+      font-weight: 600;
+    }
+
+    .seo-copy__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .seo-copy__button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 11px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .seo-copy__button--call {
+      background: #cf2333;
+      color: #fff;
+    }
+
+    .seo-copy__button--map {
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #10233d;
+    }
+
+    .seo-copy__details {
+      display: grid;
+      gap: 14px;
+    }
+
+    .seo-copy__details-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .seo-copy__details-grid > div,
+    .seo-copy details {
+      border: 1px solid #dedbd2;
+      border-radius: 8px;
+      background: #fff;
+      padding: 20px;
+    }
+
+    .seo-copy h3,
+    .seo-copy summary {
+      margin: 0;
+      color: #10233d;
+      font-size: 16px;
+      line-height: 1.3;
+      font-weight: 900;
+    }
+
+    .seo-copy p {
+      color: #5a6878;
+    }
+
+    .seo-copy__details-grid p,
+    .seo-copy details p {
+      margin: 10px 0 0;
+      font-size: 13px;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+
+    .seo-copy details summary {
+      cursor: pointer;
+    }
+
+    .seo-copy__showroom {
+      border-radius: 8px;
+      background: #162b49;
+      padding: 22px;
+      color: #fff;
+    }
+
+    .seo-copy__showroom h3,
+    .seo-copy__showroom p {
+      color: #fff;
+    }
+
+    .seo-copy__showroom p {
+      margin: 8px 0 0;
+      opacity: .78;
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      .seo-copy__inner,
+      .seo-copy__details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .seo-copy__intro {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .seo-copy {
+        padding: 32px 16px 42px;
+      }
+
+      .seo-copy__button,
+      .seo-copy__actions {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <section class="seo-copy" aria-label="{{ collection.title | escape }} buying guide">
+    <div class="seo-copy__inner">
+      <div class="seo-copy__intro">
+        <p class="seo-copy__eyebrow">{{ theme_label }}</p>
+        <h2>{{ heading }}</h2>
+        <p class="seo-copy__summary">{{ summary }}</p>
+        <div class="seo-copy__actions">
+          <a class="seo-copy__button seo-copy__button--call" href="tel:2704951603">Call Discount Mattress</a>
+          <a class="seo-copy__button seo-copy__button--map" href="https://maps.google.com/?q=1555+Campbell+Ln+Bowling+Green+KY+42104" target="_blank" rel="noopener">Get directions</a>
+        </div>
+      </div>
+
+      <div class="seo-copy__details">
+        <div class="seo-copy__details-grid">
+          {{ detail_html }}
+        </div>
+        <div class="seo-copy__showroom">
+          <h3>Why visit the showroom?</h3>
+          <p>Mattress specs can narrow the list, but comfort is personal. Bring your shortlist to Discount Mattress in Bowling Green and compare feel, support, pillows, bases, financing, delivery, and current offers in one visit.</p>
+        </div>
+        {{ faq_html }}
+      </div>
+    </div>
+  </section>
 {%- endif -%}
 
 {% schema %}

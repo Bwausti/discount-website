@@ -1,0 +1,38 @@
+<script>
+  (() => {
+    const publish = (name, data = {}) => {
+      if (window.Shopify?.analytics?.publish) {
+        window.Shopify.analytics.publish(name, {
+          page_path: window.location.pathname,
+          ...data,
+        });
+      }
+    };
+
+    document.addEventListener('click', (event) => {
+      const link = event.target.closest('a[href]');
+      if (!link) return;
+
+      const rawHref = link.getAttribute('href') || '';
+      const label = (link.textContent || link.getAttribute('aria-label') || '').trim().slice(0, 80);
+      let url;
+      try {
+        url = new URL(link.href, window.location.origin);
+      } catch (_) {
+        return;
+      }
+
+      if (rawHref.startsWith('tel:')) {
+        publish('discount_mattress_call_click', { link_label: label });
+      } else if (/maps\.google|google\.com\/maps/i.test(url.href)) {
+        publish('discount_mattress_directions_click', { link_label: label });
+      } else if (url.pathname === '/pages/financing') {
+        publish('discount_mattress_financing_click', { link_label: label });
+      } else if (url.pathname.startsWith('/products/')) {
+        publish('discount_mattress_product_click', { product_path: url.pathname, link_label: label });
+      } else if (url.pathname === '/cart') {
+        publish('discount_mattress_cart_click', { link_label: label });
+      }
+    });
+  })();
+</script>

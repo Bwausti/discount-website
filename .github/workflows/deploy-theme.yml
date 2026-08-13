@@ -28,7 +28,6 @@ jobs:
         uses: shopify/theme-check-action@v2
         with:
           theme_root: .
-          version: ${{ env.SHOPIFY_CLI_VERSION }}
           flags: --fail-level error --no-color
 
   deploy-staging:
@@ -50,12 +49,16 @@ jobs:
         run: |
           response=$(curl --fail-with-body --silent --show-error \
             --request POST "https://${SHOPIFY_STORE}/admin/oauth/access_token" \
-            --header "Content-Type: application/json" \
-            --data "$(jq -nc \
-              --arg client_id "$CLIENT_ID" \
-              --arg client_secret "$CLIENT_SECRET" \
-              '{grant_type:"client_credentials",client_id:$client_id,client_secret:$client_secret,scopes:["write_themes"]}')")
+            --header "Content-Type: application/x-www-form-urlencoded" \
+            --data-urlencode "grant_type=client_credentials" \
+            --data-urlencode "client_id=${CLIENT_ID}" \
+            --data-urlencode "client_secret=${CLIENT_SECRET}")
           token=$(jq -er '.access_token' <<< "$response")
+          scope=$(jq -er '.scope' <<< "$response")
+          if [[ ",${scope}," != *",write_themes,"* ]]; then
+            echo "The deployment app is missing the write_themes scope."
+            exit 1
+          fi
           echo "::add-mask::$token"
           echo "SHOPIFY_ACCESS_TOKEN=$token" >> "$GITHUB_ENV"
 
@@ -70,6 +73,7 @@ jobs:
             --store "$SHOPIFY_STORE" \
             --theme "$STAGING_THEME_ID" \
             --password "$SHOPIFY_ACCESS_TOKEN" \
+            --ignore "assets/financing/**" \
             --strict \
             --json
 
@@ -83,7 +87,7 @@ jobs:
   deploy-live:
     name: Deploy live theme
     if: github.ref == 'refs/heads/master'
-    needs: deploy-staging
+    needs: smoke-staging
     runs-on: ubuntu-latest
     environment: Production
     steps:
@@ -99,12 +103,16 @@ jobs:
         run: |
           response=$(curl --fail-with-body --silent --show-error \
             --request POST "https://${SHOPIFY_STORE}/admin/oauth/access_token" \
-            --header "Content-Type: application/json" \
-            --data "$(jq -nc \
-              --arg client_id "$CLIENT_ID" \
-              --arg client_secret "$CLIENT_SECRET" \
-              '{grant_type:"client_credentials",client_id:$client_id,client_secret:$client_secret,scopes:["write_themes"]}')")
+            --header "Content-Type: application/x-www-form-urlencoded" \
+            --data-urlencode "grant_type=client_credentials" \
+            --data-urlencode "client_id=${CLIENT_ID}" \
+            --data-urlencode "client_secret=${CLIENT_SECRET}")
           token=$(jq -er '.access_token' <<< "$response")
+          scope=$(jq -er '.scope' <<< "$response")
+          if [[ ",${scope}," != *",write_themes,"* ]]; then
+            echo "The deployment app is missing the write_themes scope."
+            exit 1
+          fi
           echo "::add-mask::$token"
           echo "SHOPIFY_ACCESS_TOKEN=$token" >> "$GITHUB_ENV"
 
@@ -120,5 +128,104 @@ jobs:
             --theme "$LIVE_THEME_ID" \
             --password "$SHOPIFY_ACCESS_TOKEN" \
             --allow-live \
+            --ignore "assets/financing/**" \
             --strict \
             --json
+
+  smoke-staging:
+    name: Smoke test staging storefront
+    if: github.ref == 'refs/heads/master'
+    needs: deploy-staging
+    runs-on: ubuntu-latest
+    environment: Preview
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Get a theme-only Shopify token
+        env:
+          CLIENT_ID: ${{ secrets.SHOPIFY_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.SHOPIFY_CLIENT_SECRET }}
+        run: |
+          response=$(curl --fail-with-body --silent --show-error \
+            --request POST "https://${SHOPIFY_STORE}/admin/oauth/access_token" \
+            --header "Content-Type: application/x-www-form-urlencoded" \
+            --data-urlencode "grant_type=client_credentials" \
+            --data-urlencode "client_id=${CLIENT_ID}" \
+            --data-urlencode "client_secret=${CLIENT_SECRET}")
+          token=$(jq -er '.access_token' <<< "$response")
+          scope=$(jq -er '.scope' <<< "$response")
+          if [[ ",${scope}," != *",write_themes,"* ]]; then
+            echo "The deployment app is missing the write_themes scope."
+            exit 1
+          fi
+          echo "::add-mask::$token"
+          echo "SHOPIFY_ACCESS_TOKEN=$token" >> "$GITHUB_ENV"
+
+      - name: Install Shopify CLI
+        run: npm install --global "@shopify/cli@${SHOPIFY_CLI_VERSION}"
+
+      - name: Check key storefront journeys on the staging theme
+        env:
+          STAGING_THEME_ID: ${{ vars.SHOPIFY_STAGING_THEME_ID }}
+        run: |
+          set -euo pipefail
+
+          shopify theme dev \
+            --store "$SHOPIFY_STORE" \
+            --theme "$STAGING_THEME_ID" \
+            --password "$SHOPIFY_ACCESS_TOKEN" \
+            --host 127.0.0.1 \
+            --port 9292 \
+            --live-reload off \
+            --error-overlay silent \
+            --ignore "assets/financing/**" \
+            --no-color > theme-dev.log 2>&1 &
+          theme_dev_pid=$!
+          trap 'kill "$theme_dev_pid" 2>/dev/null || true' EXIT
+
+          ready=false
+          for _ in $(seq 1 45); do
+            if curl --fail --silent --show-error http://127.0.0.1:9292/ --output /dev/null; then
+              ready=true
+              break
+            fi
+            sleep 2
+          done
+          if [[ "$ready" != "true" ]]; then
+            tail -100 theme-dev.log
+            exit 1
+          fi
+
+          fetch() {
+            path="$1"
+            output="$2"
+            curl --fail --silent --show-error --location \
+              "http://127.0.0.1:9292${path}" \
+              --output "$output"
+          }
+
+          fetch "/" home.html
+          fetch "/collections/all" collection.html
+          fetch "/products/helix-midnight-luxe" product.html
+          fetch "/pages/faq" faq.html
+          fetch "/cart" cart.html
+
+          for page in home.html collection.html product.html faq.html cart.html; do
+            test "$(grep -oiE '<main([[:space:]>]|$)' "$page" | wc -l | tr -d ' ')" = "1"
+            grep -Eqi '<meta name="description" content="[^"]+' "$page"
+            grep -qi '<link rel="canonical"' "$page"
+          done
+
+          grep -q 'dm-hero-grid' home.html
+          grep -q 'Find the right mattress faster' collection.html
+          grep -q 'Choose your Helix' product.html
+          grep -q 'Mattress shopping questions, answered' faq.html
+          grep -q 'Clear next steps for your order' cart.html
+
+          if grep -Eqi 'Discount Mattress 4|4\.9-star Google rating|Lowest price guaranteed' home.html product.html collection.html faq.html cart.html; then
+            echo "Unsupported or legacy storefront copy was found."
+            exit 1
+          fi

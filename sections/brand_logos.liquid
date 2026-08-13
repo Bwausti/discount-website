@@ -64,12 +64,12 @@
 
     <!-- Featured brand cards -->
     <div class="brand-logos-featured">
-      <a href="/collections/helix" class="brand-feature-card">
+      <a href="{{ routes.collections_url }}/helix" class="brand-feature-card">
         <div class="brand-feature-image">
-          <img src="{{ 'dm-helix-midnight-luxe-bg.jpg' | asset_url }}" alt="" class="bg" style="object-position: center 55%;">
+          <img src="{{ 'dm-helix-midnight-luxe-bg.jpg' | asset_url }}" alt="" class="bg" style="object-position: center 55%;" width="1200" height="750" loading="lazy">
           <div class="overlay"></div>
           <div class="brand-feature-logo-wrap">
-            <img src="{{ 'logo-helix.png' | asset_url }}" alt="Helix" class="brand-feature-logo">
+            <img src="{{ 'logo-helix.png' | asset_url }}" alt="Helix" class="brand-feature-logo" width="320" height="100" loading="lazy">
           </div>
         </div>
         <div class="brand-feature-body">
@@ -83,12 +83,12 @@
         </div>
       </a>
 
-      <a href="/collections/puffy" class="brand-feature-card">
+      <a href="{{ routes.collections_url }}/puffy" class="brand-feature-card">
         <div class="brand-feature-image">
-          <img src="{{ 'hero-couple.jpg' | asset_url }}" alt="" class="bg" style="object-position: center 55%;">
+          <img src="{{ 'hero-couple.jpg' | asset_url }}" alt="" class="bg" style="object-position: center 55%;" width="1200" height="750" loading="lazy">
           <div class="overlay"></div>
           <div class="brand-feature-logo-wrap">
-            <img src="{{ 'logo-puffy.png' | asset_url }}" alt="Puffy" class="brand-feature-logo">
+            <img src="{{ 'logo-puffy.png' | asset_url }}" alt="Puffy" class="brand-feature-logo" width="320" height="100" loading="lazy">
           </div>
         </div>
         <div class="brand-feature-body">
@@ -102,12 +102,12 @@
         </div>
       </a>
 
-      <a href="/collections/dreamcloud" class="brand-feature-card">
+      <a href="{{ routes.collections_url }}/dreamcloud" class="brand-feature-card">
         <div class="brand-feature-image">
-          <img src="{{ 'dm-dreamcloud-bg.webp' | asset_url }}" alt="" class="bg" style="object-position: center 50%; transform: scale(2.8);">
+          <img src="{{ 'dm-dreamcloud-bg.webp' | asset_url }}" alt="" class="bg" style="object-position: center 50%; transform: scale(2.8);" width="1200" height="750" loading="lazy">
           <div class="overlay"></div>
           <div class="brand-feature-logo-wrap">
-            <img src="{{ 'logo-dreamcloud.png' | asset_url }}" alt="DreamCloud" class="brand-feature-logo">
+            <img src="{{ 'logo-dreamcloud.png' | asset_url }}" alt="DreamCloud" class="brand-feature-logo" width="320" height="100" loading="lazy">
           </div>
         </div>
         <div class="brand-feature-body">
@@ -124,29 +124,26 @@
 
     <!-- Secondary brand logos -->
     <div class="brand-secondary-grid">
-      <a href="/collections/nectar" class="brand-secondary-card">
-        <img src="{{ 'logo-nectar.png' | asset_url }}" alt="Nectar" class="brand-secondary-logo" style="max-height: 48px;">
+      <a href="{{ routes.collections_url }}/nectar" class="brand-secondary-card">
+        <img src="{{ 'logo-nectar.png' | asset_url }}" alt="Nectar" class="brand-secondary-logo" style="max-height: 48px;" width="220" height="80" loading="lazy">
       </a>
-      <a href="/collections/bedtech" class="brand-secondary-card">
-        <img src="{{ 'logo-bedtech.png' | asset_url }}" alt="BedTech" class="brand-secondary-logo">
+      <a href="{{ routes.collections_url }}/bedtech" class="brand-secondary-card">
+        <img src="{{ 'logo-bedtech.png' | asset_url }}" alt="BedTech" class="brand-secondary-logo" width="220" height="80" loading="lazy">
       </a>
-      <a href="/collections/bedgear" class="brand-secondary-card">
-        <img src="{{ 'logo-bedgear.png' | asset_url }}" alt="Bedgear" class="brand-secondary-logo">
+      <a href="{{ routes.collections_url }}/bedgear" class="brand-secondary-card">
+        <img src="{{ 'logo-bedgear.png' | asset_url }}" alt="Bedgear" class="brand-secondary-logo" width="220" height="80" loading="lazy">
       </a>
-      <a href="/collections/pranasleep" class="brand-secondary-card">
-        <img src="{{ 'logo-pranasleep.png' | asset_url }}" alt="PranaSleep" class="brand-secondary-logo" style="max-height: 48px;">
+      <a href="{{ routes.collections_url }}/pranasleep" class="brand-secondary-card">
+        <img src="{{ 'logo-pranasleep.png' | asset_url }}" alt="PranaSleep" class="brand-secondary-logo" style="max-height: 48px;" width="220" height="80" loading="lazy">
       </a>
-      <a href="/collections/serta" class="brand-secondary-card">
-        <img src="{{ 'logo-serta.svg' | asset_url }}" alt="Serta" class="brand-secondary-logo" style="max-height: 48px;">
+      <a href="{{ routes.collections_url }}/jamison" class="brand-secondary-card">
+        <img src="{{ 'logo-jamison.png' | asset_url }}" alt="Jamison" class="brand-secondary-logo" style="max-height: 48px;" width="220" height="80" loading="lazy">
       </a>
-      <a href="/collections/jamison" class="brand-secondary-card">
-        <img src="{{ 'logo-jamison.png' | asset_url }}" alt="Jamison" class="brand-secondary-logo" style="max-height: 48px;">
-      </a>
-      <a href="/collections/naturepedic" class="brand-secondary-card" style="display: flex; flex-direction: column; gap: 2px;">
+      <a href="{{ routes.collections_url }}/naturepedic" class="brand-secondary-card" style="display: flex; flex-direction: column; gap: 2px;">
         <span style="font-size: 15px; font-weight: 800; color: #2d6a4f; letter-spacing: -0.01em;">Naturepedic</span>
         <span style="font-size: 10px; font-weight: 600; color: #6b7280; letter-spacing: 0.05em;">ORGANIC</span>
       </a>
-      <a href="/collections/posh-and-lavish" class="brand-secondary-card" style="display: flex; flex-direction: column; gap: 2px;">
+      <a href="{{ routes.collections_url }}/posh-and-lavish" class="brand-secondary-card" style="display: flex; flex-direction: column; gap: 2px;">
         <span style="font-size: 14px; font-weight: 800; color: #7c3a50; letter-spacing: -0.01em;">Posh & Lavish</span>
         <span style="font-size: 10px; font-weight: 600; color: #6b7280; letter-spacing: 0.05em;">LUXURY</span>
       </a>
@@ -154,7 +151,7 @@
 
     <!-- View all link -->
     <div style="text-align: center; margin-top: 20px;">
-      <a href="/collections" style="display: inline-block; background: #162b49; color: white; padding: 14px 40px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 15px;">All Brands</a>
+      <a href="{{ routes.collections_url }}" style="display: inline-block; background: #162b49; color: white; padding: 14px 40px; border-radius: 8px; text-decoration: none; font-weight: 800; font-size: 15px;">All Brands</a>
     </div>
 
   </div>

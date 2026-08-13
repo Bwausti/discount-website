@@ -159,6 +159,31 @@
     font-weight: 600;
     color: #64748b;
   }
+  .htg-featured {
+    display: grid;
+    grid-template-columns: minmax(0,1.05fr) minmax(320px,.95fr);
+    overflow: hidden;
+    margin-bottom: 18px;
+    border-radius: 16px;
+    background: #13233f;
+    color: white;
+    text-decoration: none;
+  }
+  .htg-featured__image { min-height: 390px; background: #eef1f5; }
+  .htg-featured__image img { width: 100%; height: 100%; object-fit: contain; transition: transform .35s ease; }
+  .htg-featured:hover .htg-featured__image img { transform: scale(1.03); }
+  .htg-featured__copy { display: flex; flex-direction: column; justify-content: center; padding: clamp(28px,4vw,48px); }
+  .htg-featured__label { width: fit-content; margin-bottom: 19px; padding: 6px 10px; border-radius: 999px; background: #f2b705; color: #13233f; font-size: 10px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+  .htg-featured h3 { margin: 0 0 12px; color: white; font-size: clamp(31px,4vw,48px); line-height: 1; letter-spacing: -.04em; }
+  .htg-featured__copy p { margin: 0; color: #c7d0de; font-size: 14px; line-height: 1.6; }
+  .htg-featured__facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .htg-featured__facts span { padding: 7px 10px; border: 1px solid rgba(255,255,255,.2); border-radius: 999px; color: white; font-size: 11px; font-weight: 750; }
+  .htg-featured__price { margin-top: 24px; color: white; font-size: 18px; font-weight: 900; }
+  .htg-featured__cta { margin-top: 10px; color: #f2b705; font-size: 13px; font-weight: 850; }
+  @media (max-width: 760px) {
+    .htg-featured { grid-template-columns: 1fr; }
+    .htg-featured__image { min-height: 260px; }
+  }
 </style>
 
 <div class="htg-section">
@@ -201,8 +226,10 @@
 
   {% comment %} ── Luxe Tier ── {% endcomment %}
   {% assign luxe_count = 0 %}
+  {% assign featured_luxe = blank %}
   {% for p in all_products %}
     {% assign h = p.handle | downcase %}
+    {% if h == 'helix-midnight-luxe' %}{% assign featured_luxe = p %}{% endif %}
     {% if h contains 'cooling-cover' or h contains 'ergoalign' %}{% continue %}{% endif %}
     {% if h contains 'luxe' %}{% unless h contains 'elite' %}{% assign luxe_count = luxe_count | plus: 1 %}{% endunless %}{% endif %}
   {% endfor %}
@@ -214,13 +241,23 @@
       <span class="htg-tier__count">{{ luxe_count }} models</span>
       <span class="htg-tier__price-from">From <strong>$1,149</strong></span>
     </div>
+    {% if featured_luxe != blank %}
+      <a href="{{ featured_luxe.url }}" class="htg-featured">
+        <div class="htg-featured__image">
+          {{ featured_luxe.featured_image | image_url: width: 1100 | image_tag: alt: 'Helix Midnight Luxe mattress', widths: '550, 800, 1100', sizes: '(max-width: 760px) 100vw, 55vw', loading: 'lazy' }}
+        </div>
+        <div class="htg-featured__copy">
+          <span class="htg-featured__label">Balanced option</span>
+          <h3>Helix Midnight Luxe</h3>
+          <p>A medium-feel pillow top with zoned lumbar support. Start here if you want pressure relief without choosing an especially soft or firm mattress.</p>
+          <div class="htg-featured__facts"><span>Medium feel</span><span>Side sleepers</span><span>Couples</span></div>
+          <strong class="htg-featured__price">From {{ featured_luxe.price_min | money }}</strong>
+          <span class="htg-featured__cta">View Midnight Luxe →</span>
+        </div>
+      </a>
+    {% endif %}
     <div class="htg-grid-wrapper"><div class="htg-grid">
-      {% comment %} Midnight Luxe first (best seller) {% endcomment %}
-      {% for p in all_products %}
-        {% assign h = p.handle | downcase %}
-        {% if h == 'helix-midnight-luxe' %}{% render 'helix-product-card', product: p %}{% endif %}
-      {% endfor %}
-      {% comment %} Rest of Luxe {% endcomment %}
+      {% comment %} Remaining Luxe feels; Midnight Luxe is featured above. {% endcomment %}
       {% for p in all_products %}
         {% assign h = p.handle | downcase %}
         {% if h == 'helix-midnight-luxe' %}{% continue %}{% endif %}

@@ -1,0 +1,20 @@
+{%- assign breadcrumb_collection = product.collections.first -%}
+<nav class="dm-breadcrumbs" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="{{ routes.root_url }}">Home</a></li>
+    {%- if breadcrumb_collection != blank -%}
+      <li><a href="{{ breadcrumb_collection.url }}">{{ breadcrumb_collection.title | escape }}</a></li>
+    {%- else -%}
+      <li><a href="{{ routes.all_products_collection_url }}">Mattresses</a></li>
+    {%- endif -%}
+    <li aria-current="page">{{ product.title | replace: 'Discount Mattress 4', 'Discount Mattress' | escape }}</li>
+  </ol>
+</nav>
+
+<style>
+  .dm-breadcrumbs { max-width: var(--page-width); margin: 0 auto; padding: 14px max(var(--page-margin), 20px) 0; color: #64748b; }
+  .dm-breadcrumbs ol { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; font-size: 12px; }
+  .dm-breadcrumbs li:not(:last-child)::after { content: "/"; margin-left: 6px; color: #94a3b8; }
+  .dm-breadcrumbs a { color: #475569; text-decoration: none; }
+  .dm-breadcrumbs a:hover { color: #cf2333; text-decoration: underline; }
+</style>

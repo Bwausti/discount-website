@@ -6,6 +6,12 @@
     assign product = collections.all.products.first
   endif
 
+  assign product_title_downcase = product.title | downcase
+  assign is_helix_luxe = false
+  if product.vendor == 'Helix' and product.type == 'Mattress' and product_title_downcase contains 'luxe'
+    assign is_helix_luxe = true
+  endif
+
   assign variant = closest.product.selected_or_first_available_variant
   assign inventory_quantity = variant.inventory_quantity
   assign inventory_policy = variant.inventory_policy
@@ -63,6 +69,8 @@
           ref="variantId"
           value="{{ product.selected_or_first_available_variant.id }}"
         >
+        {% render 'product-fulfillment-status', product: product %}
+        {% render 'helix-pdp-configurator', product: product %}
         {%- if block_settings.gift_card_form and product.gift_card? -%}
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section, block: block -%}
           <span class="buy-buttons-block__bar">
@@ -88,6 +96,9 @@
             if variant.quantity_rule.min > 1 or variant.quantity_rule.increment > 1 or variant.quantity_rule.max != null
               assign has_quantity_rules = true
             endif
+            if is_helix_luxe
+              assign has_quantity_rules = false
+            endif
           -%}
 
           {%- if has_quantity_rules -%}
@@ -106,7 +117,9 @@
             </div>
           {%- endif -%}
 
-          {% content_for 'block', type: 'quantity', id: 'quantity' %}
+          {%- unless is_helix_luxe -%}
+            {% content_for 'block', type: 'quantity', id: 'quantity' %}
+          {%- endunless -%}
 
           {%- if has_quantity_rules -%}
             <div
@@ -131,7 +144,7 @@
             </div>
           {%- endif -%}
 
-          {%- if product.quantity_price_breaks_configured? and variant.quantity_price_breaks.size > 0 -%}
+          {%- if is_helix_luxe == false and product.quantity_price_breaks_configured? and variant.quantity_price_breaks.size > 0 -%}
             {%- liquid
               assign use_currency = settings.currency_code_enabled_product_pages
             -%}
@@ -224,12 +237,14 @@
             add_to_cart_text: add_to_cart_text
           %}
 
-          {% content_for 'block',
-            type: 'accelerated-checkout',
-            id: 'accelerated-checkout',
-            can_add_to_cart: can_add_to_cart,
-            form_obj: form
-          %}
+          {%- unless product.vendor == 'Helix' and product.type == 'Mattress' -%}
+            {% content_for 'block',
+              type: 'accelerated-checkout',
+              id: 'accelerated-checkout',
+              can_add_to_cart: can_add_to_cart,
+              form_obj: form
+            %}
+          {%- endunless -%}
         </div>
         {%- if block_settings.gift_card_form and product.gift_card? -%}
           </span>

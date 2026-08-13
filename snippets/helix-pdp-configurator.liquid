@@ -1,0 +1,335 @@
+{% comment %}
+  Compact Helix configuration UI for the product form.
+  Cooling upgrades that exist in the store catalog are added as a second cart line.
+  Integrated factory options without a store SKU are clearly routed to the showroom.
+{% endcomment %}
+
+{%- liquid
+  assign is_helix_mattress = false
+  if product.vendor == 'Helix' and product.type == 'Mattress'
+    assign is_helix_mattress = true
+  endif
+
+  assign title_downcase = product.title | downcase
+  assign helix_tier = 'Core'
+  assign helix_height = '11.5 in.'
+  assign tier_note = 'Best value'
+  if title_downcase contains 'elite'
+    assign helix_tier = 'Elite'
+    assign helix_height = '15 in.'
+    assign tier_note = 'Most advanced'
+  elsif title_downcase contains 'luxe'
+    assign helix_tier = 'Luxe'
+    assign helix_height = '13.5 in.'
+    assign tier_note = 'Most popular'
+  endif
+
+  assign base_handle = product.handle | remove: '-luxe' | remove: '-elite'
+  assign core_product = all_products[base_handle]
+  assign luxe_handle = base_handle | append: '-luxe'
+  assign luxe_product = all_products[luxe_handle]
+  assign elite_handle = base_handle | append: '-elite'
+  assign elite_product = all_products[elite_handle]
+
+  assign core_cooling = all_products['helix-cooling-cover']
+  assign luxe_cooling = all_products['helix-glaciotex-cooling-cover-luxe']
+  assign luxe_coolforce = all_products['helix-glaciotex-cooling-cover-coolforce-layer']
+  assign luxe_ergoalign = all_products['helix-ergoalign-layer-luxe']
+-%}
+
+{%- if is_helix_mattress -%}
+  <helix-configurator class="helix-config" data-product-id="{{ product.id }}">
+    <div class="helix-config__intro">
+      <div>
+        <p class="helix-config__eyebrow">Choose your Helix</p>
+        <p class="helix-config__tier">{{ helix_tier }} <span>{{ tier_note }}</span></p>
+      </div>
+      <p class="helix-config__height">{{ helix_height }} profile</p>
+    </div>
+
+    <nav class="helix-config__tiers" aria-label="Choose a Helix collection">
+      {%- if core_product != blank -%}
+        <a href="{{ core_product.url }}" class="helix-config__tier-link{% if helix_tier == 'Core' %} is-current{% endif %}"{% if helix_tier == 'Core' %} aria-current="page"{% endif %}>
+          <span>Core</span>
+          <small>{{ core_product.price | money }}+</small>
+        </a>
+      {%- endif -%}
+      {%- if luxe_product != blank -%}
+        <a href="{{ luxe_product.url }}" class="helix-config__tier-link{% if helix_tier == 'Luxe' %} is-current{% endif %}"{% if helix_tier == 'Luxe' %} aria-current="page"{% endif %}>
+          <span>Luxe</span>
+          <small>{{ luxe_product.price | money }}+</small>
+        </a>
+      {%- endif -%}
+      {%- if elite_product != blank -%}
+        <a href="{{ elite_product.url }}" class="helix-config__tier-link{% if helix_tier == 'Elite' %} is-current{% endif %}"{% if helix_tier == 'Elite' %} aria-current="page"{% endif %}>
+          <span>Elite</span>
+          <small>{{ elite_product.price | money }}+</small>
+        </a>
+      {%- endif -%}
+    </nav>
+
+    <fieldset class="helix-config__fieldset">
+      <legend>{% if helix_tier == 'Luxe' %}Cover{% else %}Cooling{% endif %}</legend>
+      <div class="helix-config__options">
+        {%- if helix_tier == 'Core' -%}
+          <label class="helix-config__option">
+            <input type="radio" name="helix_cover_{{ product.id }}" value="Breath Knit Cover" data-helix-addon-option data-helix-cover-option checked>
+            <span class="helix-config__check" aria-hidden="true"></span>
+            <span class="helix-config__option-copy"><strong>Breath Knit Cover</strong><small>Light and breathable</small></span>
+            <span class="helix-config__option-price">Included</span>
+          </label>
+          {%- if core_cooling.available -%}
+            <label class="helix-config__option">
+              <input type="radio" name="helix_cover_{{ product.id }}" value="GlacioTex Cooling Pillow Top" data-helix-addon-option data-helix-cover-option data-addon-variant-id="{{ core_cooling.selected_or_first_available_variant.id }}">
+              <span class="helix-config__check" aria-hidden="true"></span>
+              <span class="helix-config__option-copy"><strong>GlacioTex™ Pillow Top</strong><small>Cool-to-touch upgrade</small></span>
+              <span class="helix-config__option-price">+{{ core_cooling.price | money }}</span>
+            </label>
+          {%- endif -%}
+        {%- elsif helix_tier == 'Luxe' -%}
+          <label class="helix-config__option">
+            <input type="radio" name="helix_cover_{{ product.id }}" value="TENCEL Cover" data-helix-addon-option data-helix-cover-option checked>
+            <span class="helix-config__check" aria-hidden="true"></span>
+            <span class="helix-config__option-copy"><strong>TENCEL™ Cover</strong><small>Soft and breathable</small></span>
+            <span class="helix-config__option-price">Included</span>
+          </label>
+          {%- if luxe_cooling.available -%}
+            <label class="helix-config__option">
+              <input type="radio" name="helix_cover_{{ product.id }}" value="GlacioTex Cooling Cover" data-helix-addon-option data-helix-cover-option data-addon-variant-id="{{ luxe_cooling.selected_or_first_available_variant.id }}">
+              <span class="helix-config__check" aria-hidden="true"></span>
+              <span class="helix-config__option-copy"><strong>GlacioTex™ Cover</strong><small>Cool-to-touch surface</small></span>
+              <span class="helix-config__option-price">+{{ luxe_cooling.price | money }}</span>
+            </label>
+          {%- endif -%}
+          {%- if luxe_coolforce.available -%}
+            <label class="helix-config__option">
+              <input type="radio" name="helix_cover_{{ product.id }}" value="GlacioTex Cover and CoolForce Layer" data-helix-addon-option data-helix-cover-option data-addon-variant-id="{{ luxe_coolforce.selected_or_first_available_variant.id }}">
+              <span class="helix-config__check" aria-hidden="true"></span>
+              <span class="helix-config__option-copy"><strong>GlacioTex™ + CoolForce™</strong><small>Maximum cooling</small></span>
+              <span class="helix-config__option-price">+{{ luxe_coolforce.price | money }}</span>
+            </label>
+          {%- endif -%}
+        {%- else -%}
+          <div class="helix-config__included">
+            <span class="helix-config__included-icon" aria-hidden="true">✓</span>
+            <span><strong>GlacioTex™ Elite Cover included</strong><small>Cool-to-touch comfort comes standard.</small></span>
+          </div>
+          <a class="helix-config__special-order" href="tel:+12704951603">
+            <span><strong>Add CoolForce™</strong><small>Optional advanced cooling layer</small></span>
+            <span>Call to add</span>
+          </a>
+        {%- endif -%}
+      </div>
+    </fieldset>
+
+    {%- if helix_tier == 'Luxe' -%}
+      <fieldset class="helix-config__fieldset helix-config__fieldset--support">
+        <legend>Support layer</legend>
+        <div class="helix-config__options">
+          <label class="helix-config__option">
+            <input type="radio" name="helix_support_{{ product.id }}" value="Luxe Layer" data-helix-addon-option data-helix-support-option checked>
+            <span class="helix-config__check" aria-hidden="true"></span>
+            <span class="helix-config__option-copy"><strong>Luxe Layer</strong><small>Responsive support for your sleep style</small></span>
+            <span class="helix-config__option-price">Included</span>
+          </label>
+          {%- if luxe_ergoalign.available -%}
+            <label class="helix-config__option">
+              <input type="radio" name="helix_support_{{ product.id }}" value="ErgoAlign Layer" data-helix-addon-option data-helix-support-option data-addon-variant-id="{{ luxe_ergoalign.selected_or_first_available_variant.id }}">
+              <span class="helix-config__check" aria-hidden="true"></span>
+              <span class="helix-config__option-copy"><strong>ErgoAlign™ Layer</strong><small>Extra support across the lower back and hips</small></span>
+              <span class="helix-config__option-price">+{{ luxe_ergoalign.price | money }}</span>
+            </label>
+          {%- endif -%}
+        </div>
+      </fieldset>
+    {%- else -%}
+      <div class="helix-config__support">
+        <div>
+          <span class="helix-config__support-label">Support</span>
+          {%- if helix_tier == 'Elite' -%}
+            <strong>ErgoAlign™ contour layer included</strong>
+          {%- else -%}
+            <strong>{{ helix_tier }} support layer included</strong>
+          {%- endif -%}
+        </div>
+        {%- unless helix_tier == 'Elite' -%}
+          <a href="tel:+12704951603">Ask about ErgoAlign™</a>
+        {%- endunless -%}
+      </div>
+    {%- endif -%}
+  </helix-configurator>
+
+  <style>
+    .helix-config {
+      display: block;
+      margin: 4px 0 20px;
+      color: #12233f;
+    }
+    .helix-config__intro {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+    .helix-config__eyebrow {
+      margin: 0 0 2px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .helix-config__tier {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .helix-config__tier span {
+      margin-left: 6px;
+      color: #69788d;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .helix-config__height {
+      margin: 0 0 2px;
+      color: #52627a;
+      font-size: 12px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+    .helix-config__tiers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin-bottom: 20px;
+    }
+    .helix-config__tier-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 54px;
+      border: 1px solid #d9e0e8;
+      border-radius: 9px;
+      color: #334155;
+      line-height: 1.1;
+      text-decoration: none;
+      transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
+    }
+    .helix-config__tier-link:hover { border-color: #8ca0b9; }
+    .helix-config__tier-link.is-current {
+      border: 2px solid #172b4d;
+      background: #f4f7fb;
+      box-shadow: 0 0 0 1px rgba(23,43,77,.04);
+    }
+    .helix-config__tier-link span { font-size: 13px; font-weight: 800; }
+    .helix-config__tier-link small { margin-top: 4px; color: #69788d; font-size: 10px; }
+    .helix-config__fieldset {
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    .helix-config__fieldset--support { margin-top: 18px; }
+    .helix-config__fieldset legend,
+    .helix-config__support-label {
+      margin-bottom: 9px;
+      color: #12233f;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .helix-config__options { display: grid; gap: 8px; }
+    .helix-config__option {
+      position: relative;
+      display: grid;
+      grid-template-columns: 20px minmax(0,1fr) auto;
+      align-items: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 10px 12px;
+      border: 1px solid #d9e0e8;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
+    }
+    .helix-config__option:has(input:checked) {
+      border: 2px solid #172b4d;
+      background: #f4f7fb;
+      padding: 9px 11px;
+      box-shadow: 0 2px 8px rgba(18,35,63,.06);
+    }
+    .helix-config__option input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+    }
+    .helix-config__check {
+      display: grid;
+      place-items: center;
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid #9aa9ba;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .helix-config__option:has(input:checked) .helix-config__check { border: 5px solid #172b4d; }
+    .helix-config__option-copy { display: flex; min-width: 0; flex-direction: column; gap: 2px; }
+    .helix-config__option-copy strong { font-size: 13px; line-height: 1.25; }
+    .helix-config__option-copy small { color: #69788d; font-size: 11px; line-height: 1.3; }
+    .helix-config__option-price { font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .helix-config__included,
+    .helix-config__special-order {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid #d9e0e8;
+      border-radius: 10px;
+      color: #12233f;
+      text-decoration: none;
+    }
+    .helix-config__included { justify-content: flex-start; background: #f4f7fb; }
+    .helix-config__included-icon {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #172b4d;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+    .helix-config__included span:not(.helix-config__included-icon),
+    .helix-config__special-order span:first-child { display: flex; flex-direction: column; gap: 2px; }
+    .helix-config__included strong,
+    .helix-config__special-order strong { font-size: 13px; }
+    .helix-config__included small,
+    .helix-config__special-order small { color: #69788d; font-size: 11px; }
+    .helix-config__special-order > span:last-child { color: #c9233b; font-size: 11px; font-weight: 800; white-space: nowrap; }
+    .helix-config__support {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 12px;
+      padding: 12px 0 0;
+      border-top: 1px solid #e5e9ef;
+    }
+    .helix-config__support > div { display: flex; flex-direction: column; gap: 2px; }
+    .helix-config__support-label { margin: 0; color: #69788d; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+    .helix-config__support strong { font-size: 12px; line-height: 1.3; }
+    .helix-config__support a { color: #c9233b; font-size: 11px; font-weight: 800; text-align: right; text-decoration: none; }
+    @media (max-width: 420px) {
+      .helix-config__tier span { display: block; margin: 3px 0 0; }
+      .helix-config__height { display: none; }
+      .helix-config__support { align-items: flex-start; }
+    }
+  </style>
+{%- endif -%}

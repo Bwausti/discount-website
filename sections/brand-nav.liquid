@@ -13,7 +13,7 @@
 
         {% comment %}── Shop All ──{% endcomment %}
         <li class="brand-nav__item">
-          <a href="/collections/all" class="brand-nav__link">Shop All</a>
+          <a href="{{ routes.collections_url }}/all" class="brand-nav__link">Shop All</a>
         </li>
 
         {% comment %}── Top Brands (dropdown) ──{% endcomment %}
@@ -25,11 +25,11 @@
             </svg>
           </button>
           <ul class="brand-nav__dropdown">
-            <li><a href="/collections/helix" class="brand-nav__dropdown-link">Helix</a></li>
-            <li><a href="/collections/nectar" class="brand-nav__dropdown-link">Nectar</a></li>
-            <li><a href="/collections/puffy" class="brand-nav__dropdown-link">Puffy</a></li>
-            <li><a href="/collections/dreamcloud" class="brand-nav__dropdown-link">DreamCloud</a></li>
-            <li><a href="/collections/naturepedic" class="brand-nav__dropdown-link">Naturepedic</a></li>
+            <li><a href="{{ routes.collections_url }}/helix" class="brand-nav__dropdown-link">Helix</a></li>
+            <li><a href="{{ routes.collections_url }}/nectar" class="brand-nav__dropdown-link">Nectar</a></li>
+            <li><a href="{{ routes.collections_url }}/puffy" class="brand-nav__dropdown-link">Puffy</a></li>
+            <li><a href="{{ routes.collections_url }}/dreamcloud" class="brand-nav__dropdown-link">DreamCloud</a></li>
+            <li><a href="{{ routes.collections_url }}/naturepedic" class="brand-nav__dropdown-link">Naturepedic</a></li>
           </ul>
         </li>
 
@@ -42,12 +42,11 @@
             </svg>
           </button>
           <ul class="brand-nav__dropdown">
-            <li><a href="/collections/bedgear" class="brand-nav__dropdown-link">BedGear</a></li>
-            <li><a href="/collections/bedtech" class="brand-nav__dropdown-link">BedTech</a></li>
-            <li><a href="/collections/serta" class="brand-nav__dropdown-link">Serta</a></li>
-            <li><a href="/collections/jamison" class="brand-nav__dropdown-link">Jamison</a></li>
-            <li><a href="/collections/pranasleep" class="brand-nav__dropdown-link">PranaSleep</a></li>
-            <li><a href="/collections/posh-and-lavish" class="brand-nav__dropdown-link">Posh and Lavish</a></li>
+            <li><a href="{{ routes.collections_url }}/bedgear" class="brand-nav__dropdown-link">BedGear</a></li>
+            <li><a href="{{ routes.collections_url }}/bedtech" class="brand-nav__dropdown-link">BedTech</a></li>
+            <li><a href="{{ routes.collections_url }}/jamison" class="brand-nav__dropdown-link">Jamison</a></li>
+            <li><a href="{{ routes.collections_url }}/pranasleep" class="brand-nav__dropdown-link">PranaSleep</a></li>
+            <li><a href="{{ routes.collections_url }}/posh-and-lavish" class="brand-nav__dropdown-link">Posh and Lavish</a></li>
           </ul>
         </li>
 
