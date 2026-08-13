@@ -3,15 +3,19 @@
   assign dm_desc = page_description | default: shop.description | default: shop.name
   assign dm_type = 'website'
   assign dm_image = page_image
+  assign dm_image_url = ''
 
   if request.page_type == 'index'
     assign dm_title = 'Discount Mattress | Mattress Store in Bowling Green, KY'
-    assign dm_desc = 'Shop Helix, Puffy, Nectar, DreamCloud, Serta, and more online or at Discount Mattress in Bowling Green, Kentucky. Local help, financing, and Free Nationwide Delivery.'
+    assign dm_desc = 'Shop Helix, Puffy, Nectar, DreamCloud, Naturepedic, and more online or at Discount Mattress in Bowling Green, Kentucky. Local help, financing, and Free Nationwide Delivery.'
   elsif request.page_type == 'product'
     assign clean_product_title = product.title | replace: 'Discount Mattress 4', 'Discount Mattress'
     assign dm_title = clean_product_title | append: ' | Discount Mattress'
     assign dm_type = 'product'
     assign dm_image = product.featured_media.preview_image | default: product.featured_image
+    if product.handle == 'bedgear-m3'
+      assign dm_image_url = 'bedgear-m3-mattress-official.jpg' | asset_url
+    endif
     if product.vendor == 'Helix' and product.type == 'Mattress'
       assign dm_desc = 'Shop the ' | append: product.title | append: ' hybrid mattress at Discount Mattress. Compare Core, Luxe, and Elite options, choose cooling upgrades, and get local help in Bowling Green.'
     elsif page_description == blank
@@ -29,7 +33,7 @@
     assign dm_image = collection.image
   elsif request.page_type == 'list-collections'
     assign dm_title = 'Shop Mattresses | Discount Mattress'
-    assign dm_desc = 'Shop mattresses by comfort goal or compare leading brands including Helix, Puffy, Nectar, DreamCloud, Serta, Naturepedic, and more.'
+    assign dm_desc = 'Shop mattresses by comfort goal or compare leading brands including Helix, Puffy, Nectar, DreamCloud, Naturepedic, and more.'
   elsif request.page_type == 'policy'
     assign policy_title = page_title | default: 'Store Policy'
     assign dm_title = policy_title | append: ' | Discount Mattress'
@@ -97,7 +101,11 @@
 <meta property="og:type" content="{{ dm_type }}">
 <meta property="og:description" content="{{ dm_desc | strip_html | strip | escape }}">
 
-{%- if dm_image -%}
+{%- if dm_image_url != blank -%}
+  <meta property="og:image" content="https:{{ dm_image_url }}">
+  <meta property="og:image:secure_url" content="https:{{ dm_image_url }}">
+  <meta property="og:image:width" content="1000">
+{%- elsif dm_image -%}
   <meta property="og:image" content="https:{{ dm_image | image_url: width: 1200 }}">
   <meta property="og:image:secure_url" content="https:{{ dm_image | image_url: width: 1200 }}">
   <meta property="og:image:width" content="1200">
@@ -111,6 +119,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ dm_title | escape }}">
 <meta name="twitter:description" content="{{ dm_desc | strip_html | strip | escape }}">
-{%- if dm_image -%}
+{%- if dm_image_url != blank -%}
+  <meta name="twitter:image" content="https:{{ dm_image_url }}">
+{%- elsif dm_image -%}
   <meta name="twitter:image" content="https:{{ dm_image | image_url: width: 1200 }}">
 {%- endif -%}

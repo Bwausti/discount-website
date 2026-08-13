@@ -3,8 +3,12 @@
 {% liquid
   assign product_title_downcase = closest.product.title | downcase
   assign is_helix_luxe = false
+  assign is_bedgear_m3 = false
   if closest.product.vendor == 'Helix' and closest.product.type == 'Mattress' and product_title_downcase contains 'luxe'
     assign is_helix_luxe = true
+  endif
+  if closest.product.handle == 'bedgear-m3'
+    assign is_bedgear_m3 = true
   endif
 %}
 
@@ -230,16 +234,48 @@
       box-shadow: 0 5px 16px rgba(22,43,73,.07);
     }
   }
+
+  .dm-m3-product-media {
+    position: sticky;
+    top: var(--header-group-height, 0);
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+  }
+  .dm-m3-product-media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+  @media (max-width: 749px) {
+    .dm-m3-product-media { position: static; border-radius: 10px; }
+  }
 </style>
 
 {% render 'product-breadcrumbs', product: closest.product %}
 
 {% capture media_gallery %}
-  {%- content_for 'block',
-    type: '_product-media-gallery',
-    id: 'media-gallery',
-    closest.product: closest.product
-  -%}
+  {% if is_bedgear_m3 %}
+    <div class="dm-m3-product-media">
+      <img
+        src="{{ 'bedgear-m3-mattress-official.jpg' | asset_url }}"
+        alt="BEDGEAR M3 Performance Mattress"
+        width="1000"
+        height="1000"
+        loading="eager"
+        fetchpriority="high"
+      >
+    </div>
+  {% else %}
+    {%- content_for 'block',
+      type: '_product-media-gallery',
+      id: 'media-gallery',
+      closest.product: closest.product
+    -%}
+  {% endif %}
 {% endcapture %}
 
 {% capture product_details %}
@@ -279,7 +315,20 @@
       {% liquid
         assign image_to_show = current_variant.featured_image | default: product.featured_image
       %}
-      {% if image_to_show %}
+      {% if is_bedgear_m3 %}
+        <div class="sticky-add-to-cart__image">
+          <img
+            src="{{ 'bedgear-m3-mattress-official.jpg' | asset_url }}"
+            alt="BEDGEAR M3 Performance Mattress"
+            class="sticky-add-to-cart__image-img"
+            width="120"
+            height="120"
+            loading="lazy"
+            data-testid="sticky-product-image"
+            ref="productImage"
+          >
+        </div>
+      {% elsif image_to_show %}
         <div
           class="sticky-add-to-cart__image"
         >
@@ -399,8 +448,15 @@
 
 
 
+{% liquid
+  assign product_media_size = closest.product.media.size
+  if is_bedgear_m3
+    assign product_media_size = 1
+  endif
+%}
+
 {% render 'product-information-content',
-  product_media_size: closest.product.media.size,
+  product_media_size: product_media_size,
   section_id: section.id,
   settings: section.settings,
   is_helix_luxe: is_helix_luxe,

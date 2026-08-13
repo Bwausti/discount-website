@@ -1,6 +1,6 @@
 {% if collection.handle != 'puffy' %}{% break %}{% endif %}
 <!-- Section: puffy-collection-banner -->
-<!-- Brand: Puffy — Cloud, Lux, Lux Hybrid, Monarch, Royal Hybrid -->
+<!-- Brand: Puffy — Cloud, Lux, Lux Hybrid, Royal Hybrid, Monarch, Legacy -->
 <style>
   .puffy-section { font-family: 'Inter', 'Segoe UI', sans-serif; }
 
@@ -180,9 +180,9 @@
       <div class="puffy-hero__right">
         <p class="puffy-hero__showroom-note">See them all in store</p>
         <div class="puffy-models">
-          {% assign puffy_handles = 'puffy-cloud,puffy-lux,puffy-lux-hybrid,puffy-monarch,puffy-royal-hybrid' | split: ',' %}
-          {% assign puffy_names = 'Cloud,Lux,Lux Hybrid,Monarch,Royal Hybrid' | split: ',' %}
-          {% assign puffy_details = 'Medium-firm · All-foam,Medium · Cooling foam,Medium-firm · Hybrid,Medium · Premium hybrid,Plush · Top-tier hybrid' | split: ',' %}
+          {% assign puffy_handles = 'puffy-cloud,puffy-lux,puffy-lux-hybrid,puffy-royal-hybrid,puffy-monarch,puffy-legacy' | split: ',' %}
+          {% assign puffy_names = 'Cloud,Lux,Lux Hybrid,Royal Hybrid,Monarch,Legacy' | split: ',' %}
+          {% assign puffy_details = 'Medium-firm · All-foam,Medium · Cooling foam,Medium-plush · Hybrid,Ultra-plush · Premium hybrid,Luxury-plush · Natural materials,Ultimate-plush · Handcrafted hybrid' | split: ',' %}
           {% assign pffy = collections['puffy'].products %}
           {% for h in puffy_handles %}
             {% assign prod = pffy | where: 'handle', h | first %}
@@ -230,16 +230,16 @@
   <!-- MODEL GRID -->
   <section id="puffy-models" class="puffy-models-section">
     <div class="puffy-models-header">
-      <h2>Five models. One standard of comfort.</h2>
-      <p>From the entry-level Cloud to the premium Royal Hybrid — each Puffy mattress is built around pressure-relieving memory foam with a cooling gel layer.</p>
+      <h2>Six models. One standard of comfort.</h2>
+      <p>From the entry-level Cloud to the handcrafted Legacy, each Puffy mattress layers pressure relief, cooling, and support for a distinct comfort experience.</p>
     </div>
 
     <div class="puffy-models-grid">
-      {% assign puffy_cards = 'puffy-cloud,puffy-lux,puffy-lux-hybrid,puffy-monarch,puffy-royal-hybrid' | split: ',' %}
-      {% assign puffy_card_names = 'Puffy Cloud,Puffy Lux,Puffy Lux Hybrid,Puffy Monarch,Puffy Royal Hybrid' | split: ',' %}
-      {% assign puffy_card_subtitles = 'Entry-level comfort,All-foam premium,Cooling hybrid,Most popular luxury,Top-tier plush' | split: ',' %}
-      {% assign puffy_card_specs = 'Memory foam, 10"|Gel + foam, 12"|Coils + gel, 12"|Premium coils, 14"|Euro top, 16"' | split: ',' %}
-      {% assign puffy_card_spec2 = 'Medium-firm,All-foam,Cooling hybrid,Hybrid construction,Plush euro top' | split: ',' %}
+      {% assign puffy_cards = 'puffy-cloud,puffy-lux,puffy-lux-hybrid,puffy-royal-hybrid,puffy-monarch,puffy-legacy' | split: ',' %}
+      {% assign puffy_card_names = 'Puffy Cloud,Puffy Lux,Puffy Lux Hybrid,Puffy Royal Hybrid,Puffy Monarch,Puffy Legacy' | split: ',' %}
+      {% assign puffy_card_subtitles = 'Entry-level comfort,All-foam premium,Cooling hybrid,Premium choice,Ultimate luxury,Handcrafted flagship' | split: ',' %}
+      {% assign puffy_card_specs = 'Memory foam, 10"|Gel + foam, 12"|Coils + gel, 12"|Premium coils, 14"|Natural materials, 16"|Cashmere + horsehair, 16"' | split: ',' %}
+      {% assign puffy_card_spec2 = 'Medium-firm,All-foam,Medium-plush hybrid,Ultra-plush hybrid,Luxury-plush hybrid,Ultimate-plush hybrid' | split: ',' %}
 
       {% assign pffy = collections['puffy'].products %}
       {% for h in puffy_cards %}
@@ -280,7 +280,7 @@
         <span style="font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:0.22em;color:#2563eb;margin-bottom:8px;display:block;">Why Puffy</span>
         <h2>Pressure relief you can feel from day one.</h2>
         <p>Puffy's proprietary memory foam contours to your body to relieve pressure points at hips, shoulders, and lower back — while the cooling gel layer keeps the surface from overheating.</p>
-        <p>Every Puffy mattress is made in the USA and backed by a lifetime warranty. Come to our Bowling Green showroom to test all five models side-by-side.</p>
+        <p>Every Puffy mattress is assembled in the USA and backed by a lifetime warranty. Come to our Bowling Green showroom to compare all six models side-by-side.</p>
         <div class="puffy-story__badges">
           <span class="puffy-story__badge">101-Night Trial</span>
           <span class="puffy-story__badge">Lifetime Warranty</span>

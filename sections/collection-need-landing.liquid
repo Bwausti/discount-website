@@ -1,0 +1,379 @@
+{% comment %}
+  Enhanced landing content for the four comfort-led collection pages:
+  Pressure Relief, Cooling Comfort, Luxury Feel, and Organic Materials.
+{% endcomment %}
+
+{%- liquid
+  assign handle = collection.handle
+  assign show = false
+  assign eyebrow = ''
+  assign title = ''
+  assign intro = ''
+  assign image = ''
+  assign image_alt = ''
+  assign accent = '#cf2333'
+  assign metric_one = ''
+  assign metric_two = ''
+  assign metric_three = ''
+  assign card_one_title = ''
+  assign card_one_copy = ''
+  assign card_two_title = ''
+  assign card_two_copy = ''
+  assign card_three_title = ''
+  assign card_three_copy = ''
+  assign card_four_title = ''
+  assign card_four_copy = ''
+-%}
+
+{%- case handle -%}
+  {%- when 'pressure-relief' -%}
+    {%- liquid
+      assign show = true
+      assign eyebrow = 'Side sleepers and sore joints'
+      assign title = 'Pressure relief that still keeps you supported.'
+      assign intro = 'A good pressure-relief mattress should cushion shoulders, hips, and sensitive joints without letting your spine drift out of alignment. Use this collection to compare foam, hybrid, plush, and medium-feel options before you visit.'
+      assign image = 'pressure-relief-mattress.jpg'
+      assign image_alt = 'Pressure-relieving mattress in a calm bedroom'
+      assign accent = '#cf2333'
+      assign metric_one = 'Shoulders + hips'
+      assign metric_two = 'Foam + hybrid'
+      assign metric_three = 'Side-sleeper paths'
+      assign card_one_title = 'Best starting point'
+      assign card_one_copy = 'Start here if you sleep on your side, wake up sore, or feel pressure around your shoulders and hips.'
+      assign card_two_title = 'What to test'
+      assign card_two_copy = 'Try softer comfort layers first, then compare whether a hybrid core gives you better lift and easier movement.'
+      assign card_three_title = 'Watch for alignment'
+      assign card_three_copy = 'Pressure relief should not feel like sinking. Ask the team to check whether your midsection stays supported.'
+      assign card_four_title = 'Good brands to compare'
+      assign card_four_copy = 'Helix, Puffy, Nectar, DreamCloud, and Naturepedic all offer useful pressure-relief paths in different feels.'
+    -%}
+  {%- when 'cooling-comfort' -%}
+    {%- liquid
+      assign show = true
+      assign eyebrow = 'Hot sleepers'
+      assign title = 'Cooling mattresses you can actually compare in person.'
+      assign intro = 'Cooling comfort is more than a cold cover. Compare breathable fabrics, gel foams, hybrid airflow, performance pillows, and protectors together so the bed feels cool after the full setup is built.'
+      assign image = 'dm-hero.jpg'
+      assign image_alt = 'Cooling mattress displayed in a bright bedroom'
+      assign accent = '#1d6f91'
+      assign metric_one = 'Breathable covers'
+      assign metric_two = 'Hybrid airflow'
+      assign metric_three = 'Cooling pillows'
+      assign card_one_title = 'Best starting point'
+      assign card_one_copy = 'Start here if you kick off covers, wake up warm, or want a cooler feel without guessing from online claims.'
+      assign card_two_title = 'What to test'
+      assign card_two_copy = 'Compare cool-to-touch covers, gel memory foam, hybrid coils, and performance bedding as a full sleep system.'
+      assign card_three_title = 'Avoid the mismatch'
+      assign card_three_copy = 'A cooling mattress can feel different once a protector is added. Test the protector and pillow with the mattress.'
+      assign card_four_title = 'Good brands to compare'
+      assign card_four_copy = 'Nectar, Puffy, Bedgear, Helix, DreamCloud, and Naturepedic all approach cooling in different ways.'
+    -%}
+  {%- when 'luxury-feel' -%}
+    {%- liquid
+      assign show = true
+      assign eyebrow = 'Premium comfort'
+      assign title = 'Luxury-feel mattresses without the showroom guessing game.'
+      assign intro = 'Luxury feel usually comes from deeper comfort layers, better contouring, stronger support systems, and more refined materials. This collection helps you compare plush, hotel-style, and premium hybrid options side by side.'
+      assign image = 'dreamcloud-premier-card.jpg'
+      assign image_alt = 'Premium DreamCloud mattress detail'
+      assign accent = '#162b49'
+      assign metric_one = 'Premium builds'
+      assign metric_two = 'Deeper comfort'
+      assign metric_three = 'Refined support'
+      assign card_one_title = 'Best starting point'
+      assign card_one_copy = 'Start here if you want a more elevated bed feel, richer cushioning, or a hotel-style mattress experience.'
+      assign card_two_title = 'What to test'
+      assign card_two_copy = 'Compare surface plushness, edge support, motion transfer, height, and how easy it is to change positions.'
+      assign card_three_title = 'Balance matters'
+      assign card_three_copy = 'Luxury should feel substantial, not just soft. Ask which models add support under the premium comfort layers.'
+      assign card_four_title = 'Good brands to compare'
+      assign card_four_copy = 'DreamCloud, Posh & Lavish, Puffy, PranaSleep, Naturepedic, and Helix Luxe or Elite models are strong paths.'
+    -%}
+  {%- when 'organic-materials' -%}
+    {%- liquid
+      assign show = true
+      assign eyebrow = 'Cleaner materials'
+      assign title = 'Organic and natural-feel mattresses, explained plainly.'
+      assign intro = 'If materials matter to you, this collection focuses on mattresses built with organic cotton, wool, latex, and cleaner comfort layers. Visit the showroom to compare breathability, support, and feel before choosing.'
+      assign image = 'naturepedic-eos-card.jpg'
+      assign image_alt = 'Organic Naturepedic mattress made with cleaner materials'
+      assign accent = '#2f855a'
+      assign metric_one = 'Organic cotton'
+      assign metric_two = 'Latex comfort'
+      assign metric_three = 'Cleaner builds'
+      assign card_one_title = 'Best starting point'
+      assign card_one_copy = 'Start here if you care about organic materials, low-odor comfort, breathability, or a more natural mattress build.'
+      assign card_two_title = 'What to test'
+      assign card_two_copy = 'Compare latex responsiveness, wool breathability, coil support, and whether the comfort level works for your sleep position.'
+      assign card_three_title = 'Ask about certifications'
+      assign card_three_copy = 'The team can help explain material claims, construction differences, and which options are available to try now.'
+      assign card_four_title = 'Good brands to compare'
+      assign card_four_copy = 'Naturepedic is the key path here, with other natural-feel or cleaner-material options available to discuss in store.'
+    -%}
+{%- endcase -%}
+
+{%- if show -%}
+  <style>
+    .need-landing {
+      background: linear-gradient(180deg, #ffffff 0%, #fbfaf4 100%);
+      padding: 10px 20px 34px;
+    }
+
+    .need-landing__inner {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+    }
+
+    .need-landing__hero {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(320px, 1.05fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .need-landing__panel {
+      border: 1px solid #dedbd2;
+      border-radius: 8px;
+      background: #fff;
+      padding: clamp(24px, 4vw, 40px);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, .08);
+    }
+
+    .need-landing__eyebrow {
+      margin: 0 0 12px;
+      color: {{ accent }};
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .need-landing h2 {
+      margin: 0;
+      color: #10233d;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: .98;
+      letter-spacing: -.04em;
+    }
+
+    .need-landing__intro {
+      max-width: 660px;
+      margin: 18px 0 0;
+      color: #465569;
+      font-size: 16px;
+      line-height: 1.75;
+      font-weight: 600;
+    }
+
+    .need-landing__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .need-landing__button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .need-landing__button--primary {
+      background: #cf2333;
+      color: #fff;
+    }
+
+    .need-landing__button--secondary {
+      border: 1px solid #cbd5e1;
+      color: #10233d;
+      background: #fff;
+    }
+
+    .need-landing__media {
+      position: relative;
+      min-height: 390px;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #e8edf2;
+      border: 1px solid #dedbd2;
+    }
+
+    .need-landing__media img {
+      width: 100%;
+      height: 100%;
+      min-height: 390px;
+      display: block;
+      object-fit: cover;
+    }
+
+    .need-landing__metrics {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .need-landing__metric {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .94);
+      color: #10233d;
+      text-align: center;
+      padding: 12px;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.25;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, .16);
+    }
+
+    .need-landing__cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .need-landing__card {
+      border: 1px solid #dedbd2;
+      border-top: 4px solid {{ accent }};
+      border-radius: 8px;
+      background: #fff;
+      padding: 18px;
+    }
+
+    .need-landing__card h3 {
+      margin: 0;
+      color: #10233d;
+      font-size: 16px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    .need-landing__card p {
+      margin: 9px 0 0;
+      color: #5a6878;
+      font-size: 13px;
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .need-landing__product-note {
+      margin-top: 22px;
+      border: 1px solid rgba(22, 43, 73, .16);
+      border-radius: 8px;
+      background: #f7f8fb;
+      padding: 18px 20px;
+      color: #334155;
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 700;
+    }
+
+    @media (max-width: 960px) {
+      .need-landing__hero,
+      .need-landing__cards {
+        grid-template-columns: 1fr;
+      }
+
+      .need-landing__media,
+      .need-landing__media img {
+        min-height: 310px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .need-landing {
+        padding: 4px 16px 26px;
+      }
+
+      .need-landing__panel {
+        padding: 22px;
+      }
+
+      .need-landing__actions,
+      .need-landing__button {
+        width: 100%;
+      }
+
+      .need-landing__metrics {
+        position: static;
+        grid-template-columns: 1fr;
+        padding: 10px;
+        background: #10233d;
+      }
+
+      .need-landing__metric {
+        min-height: auto;
+      }
+    }
+  </style>
+
+  <section class="need-landing" aria-label="{{ collection.title | escape }} shopping guide">
+    <div class="need-landing__inner">
+      <div class="need-landing__hero">
+        <div class="need-landing__panel">
+          <p class="need-landing__eyebrow">{{ eyebrow }}</p>
+          <h2>{{ title }}</h2>
+          <p class="need-landing__intro">{{ intro }}</p>
+          <div class="need-landing__actions">
+            <a class="need-landing__button need-landing__button--primary" href="tel:2704951603">Call to confirm availability</a>
+            <a class="need-landing__button need-landing__button--secondary" href="https://maps.google.com/?q=1555+Campbell+Ln+Bowling+Green+KY+42104" target="_blank" rel="noopener">Get directions</a>
+          </div>
+        </div>
+        <div class="need-landing__media">
+          <img src="{{ image | asset_img_url: '1200x' }}" alt="{{ image_alt | escape }}" width="1200" height="760" loading="eager">
+          <div class="need-landing__metrics" aria-label="Collection highlights">
+            <span class="need-landing__metric">{{ metric_one }}</span>
+            <span class="need-landing__metric">{{ metric_two }}</span>
+            <span class="need-landing__metric">{{ metric_three }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="need-landing__cards">
+        <article class="need-landing__card">
+          <h3>{{ card_one_title }}</h3>
+          <p>{{ card_one_copy }}</p>
+        </article>
+        <article class="need-landing__card">
+          <h3>{{ card_two_title }}</h3>
+          <p>{{ card_two_copy }}</p>
+        </article>
+        <article class="need-landing__card">
+          <h3>{{ card_three_title }}</h3>
+          <p>{{ card_three_copy }}</p>
+        </article>
+        <article class="need-landing__card">
+          <h3>{{ card_four_title }}</h3>
+          <p>{{ card_four_copy }}</p>
+        </article>
+      </div>
+
+      <p class="need-landing__product-note">
+        Browse the products below, then call before you drive over if you want to try a specific model or size. Floor models, offers, and exact availability can vary by showroom.
+      </p>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collection Need Landing",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": []
+}
+{% endschema %}

@@ -25,6 +25,10 @@
       "type": "collection-heading-smart",
       "settings": {}
     },
+    "need-landing": {
+      "type": "collection-need-landing",
+      "settings": {}
+    },
     "main": {
       "type": "main-collection",
       "blocks": {
@@ -169,6 +173,7 @@
     "brand-collection",
     "collection-guide",
     "smart-heading",
+    "need-landing",
     "main",
     "seo-copy",
     "local-cta"

@@ -1,5 +1,5 @@
-
-
+{% comment %} BEDGEAR is intentionally limited to the curated top-seller cards in brand-collection. {% endcomment %}
+{% unless collection.handle == 'bedgear' %}
 <script
   src="{{ 'results-list.js' | asset_url }}"
   type="module"
@@ -75,6 +75,7 @@
     {% endpaginate %}
   </div>
 </results-list>
+{% endunless %}
 
 {% schema %}
 {

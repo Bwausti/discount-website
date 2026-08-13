@@ -1,5 +1,5 @@
 {% liquid
-  assign supported_brands = 'puffy,dreamcloud,nectar,bedgear,bedtech,naturepedic,serta,jamison,pranasleep,posh-and-lavish' | split: ','
+  assign supported_brands = 'puffy,dreamcloud,nectar,bedgear,bedtech,naturepedic,jamison,pranasleep,posh-and-lavish' | split: ','
   assign brand_handle = collection.handle
 %}
 
@@ -15,6 +15,7 @@
     assign logo_asset = ''
     assign logo_class = ''
     assign cta_label = 'Shop the collection'
+    assign cta_target = '#brand-shop-all'
     assign edit_title = 'A better place to start'
     assign edit_intro = 'Begin with these customer favorites, then compare every available option below.'
     assign featured_handles = ''
@@ -44,12 +45,12 @@
         assign brand_name = 'Puffy'
         assign cta_label = 'Compare Puffy mattresses'
         assign edit_title = 'Start with the Puffy favorites'
-        assign edit_intro = 'Three distinct steps from balanced comfort to elevated plushness.'
-        assign featured_handles = 'puffy-lux-hybrid|puffy-royal-hybrid|puffy-monarch'
-        assign featured_labels = 'Best place to start|Elevated pressure relief|Deepest luxury feel'
-        assign featured_notes = 'A responsive hybrid with a medium-plush feel.|A plusher design with zoned support.|The most substantial, luxury-forward Puffy in our lineup.'
+        assign edit_intro = 'Four distinct steps from balanced comfort to handcrafted luxury.'
+        assign featured_handles = 'puffy-lux-hybrid|puffy-royal-hybrid|puffy-monarch|puffy-legacy'
+        assign featured_labels = 'Best place to start|Elevated pressure relief|Deep luxury feel|Handcrafted flagship'
+        assign featured_notes = 'A responsive hybrid with a medium-plush feel.|A plusher design with zoned support.|An ultra-premium hybrid with responsive natural materials.|The ultimate-plush Puffy with cashmere, horsehair, and Talalay latex.'
         assign fact_two = 'Foam & hybrid options'
-        assign fact_three = 'Five comfort levels'
+        assign fact_three = 'Six comfort levels'
         assign story_title = 'Soft where you want it. Supportive where it matters.'
         assign story_copy = 'Puffy pairs contouring comfort with a clean, approachable model ladder. Choose the feel and construction that best match the way you sleep.'
         assign hero_background = '#e8f6ff'
@@ -105,19 +106,20 @@
       when 'bedgear'
         assign brand_name = 'BEDGEAR'
         assign eyebrow = 'Performance bedding, fit to you'
-        assign headline = 'Build a cooler, better-performing bed.'
-        assign intro = 'Shop performance pillows, sheets, protectors, and mattresses designed around airflow, feel, and a more personalized fit.'
+        assign headline = 'Meet the BEDGEAR best sellers.'
+        assign intro = 'Shop our most popular performance pillows, including classic and Cuddle Curve designs for cooler, more personalized sleep.'
         assign hero_asset = 'bedgear-hero-bg.jpg'
         assign logo_asset = 'logo-bedgear.png'
         assign image_fit = 'contain'
-        assign cta_label = 'Shop BEDGEAR'
-        assign edit_title = 'Start with the performance essentials'
-        assign edit_intro = 'Dial in your pillow first, then finish the bed with breathable protection and layers.'
-        assign featured_handles = 'bedgear-storm|bedgear-balance|bedgear-dri-tec'
-        assign featured_labels = 'Personalized cooling|Balanced comfort|Moisture-wicking essential'
-        assign featured_notes = 'A responsive performance pillow with cooling airflow.|A versatile pillow built for adaptable support.|A breathable protector designed for a cleaner sleep surface.'
-        assign fact_two = 'Pillows, sheets & protectors'
-        assign fact_three = 'Performance mattresses'
+        assign cta_label = 'Shop the best sellers'
+        assign cta_target = '#brand-featured'
+        assign edit_title = 'BEDGEAR top sellers'
+        assign edit_intro = 'Compare Storm and Balance in their classic and Cuddle Curve designs.'
+        assign featured_handles = 'bedgear-storm|storm-cuddle-curve-performance®-pillow|bedgear-balance|balance-cuddle-curve-performance®-pillow'
+        assign featured_labels = 'Personalized cooling|Cooling cuddle curve|Balanced comfort|Contoured comfort'
+        assign featured_notes = 'A responsive performance pillow with cooling airflow.|Storm cooling with a curved shape made for closer shoulder and neck support.|A versatile pillow built for adaptable support.|Balance comfort in a curved design that contours around the shoulder.'
+        assign fact_two = 'Storm & Balance pillows'
+        assign fact_three = 'Classic & Cuddle Curve'
         assign story_title = 'Treat sleep like performance.'
         assign story_copy = 'BEDGEAR brings an athletic mindset to the whole bed—more airflow, better-fitting pillows, and layers designed to work together.'
         assign shop_heading = 'Shop all BEDGEAR performance bedding'
@@ -173,28 +175,6 @@
         assign body_ink = '#243e31'
         assign accent = '#527451'
         assign soft_background = '#f6f5ed'
-      when 'serta'
-        assign brand_name = 'Serta'
-        assign eyebrow = 'Familiar comfort, refreshed'
-        assign headline = 'Find the Serta feel that fits.'
-        assign intro = 'From cooling iComfort foam to supportive hybrid designs, Serta makes it easy to compare familiar comfort in several feels.'
-        assign hero_asset = 'serta-hero-bg.jpg'
-        assign logo_asset = 'logo-serta.svg'
-        assign cta_label = 'Shop Serta mattresses'
-        assign edit_title = 'Start with the Serta standouts'
-        assign edit_intro = 'Compare cooling-focused foam, premium upgrades, and classic hybrid support.'
-        assign featured_handles = 'serta-icomfort-mattress|serta-icomfortpro-mattress|serta-cascade-canyon-medium'
-        assign featured_labels = 'Cooling comfort|Premium cooling step-up|Balanced hybrid feel'
-        assign featured_notes = 'A modern foam feel with cooling-focused materials.|More advanced materials and a more elevated finish.|A familiar medium comfort with supportive construction.'
-        assign fact_two = 'Foam & hybrid options'
-        assign fact_three = 'Multiple comfort feels'
-        assign story_title = 'A trusted name with more ways to get comfortable.'
-        assign story_copy = 'Serta spans cool-contouring foam and traditional-feeling hybrids, giving you a familiar brand with a surprisingly flexible range.'
-        assign hero_background = '#e9f4fb'
-        assign hero_ink = '#12385c'
-        assign body_ink = '#12385c'
-        assign accent = '#1976b9'
-        assign soft_background = '#f3f9fd'
       when 'jamison'
         assign brand_name = 'Jamison'
         assign eyebrow = 'Handmade American comfort since 1883'
@@ -412,7 +392,7 @@
             <h1 id="dm-brand-title-{{ section.id }}">{{ headline }}</h1>
             <p class="dm-brand-hero__intro">{{ intro }}</p>
             <div class="dm-brand-actions">
-              <a class="dm-brand-button" href="#brand-shop-all">{{ cta_label }}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <a class="dm-brand-button" href="{{ cta_target }}">{{ cta_label }}<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
               <a class="dm-brand-button dm-brand-button--secondary" href="/pages/locations">Try it in our showroom</a>
             </div>
           </div>
@@ -437,7 +417,7 @@
       {% endfor %}
     </div></div>
 
-    <section class="dm-brand-edit" aria-labelledby="dm-brand-edit-title-{{ section.id }}"><div class="dm-brand-shell">
+    <section class="dm-brand-edit" id="brand-featured" aria-labelledby="dm-brand-edit-title-{{ section.id }}"><div class="dm-brand-shell">
       <div class="dm-brand-edit__header"><div><p class="dm-brand-eyebrow">Our edit</p><h2 id="dm-brand-edit-title-{{ section.id }}">{{ edit_title }}</h2></div><p class="dm-brand-edit__intro">{{ edit_intro }}</p></div>
       <div class="dm-brand-edit__grid">
         {% for featured_handle in featured_handle_list %}
@@ -461,7 +441,9 @@
       </div>
     </div></section>
 
-    <div class="dm-brand-shop-heading" id="brand-shop-all"><p class="dm-brand-eyebrow">The complete collection</p><h2>{{ shop_heading }}</h2><p>{{ collection.products_count }} {% if collection.products_count == 1 %}product{% else %}products{% endif %}</p></div>
+    {% unless brand_handle == 'bedgear' %}
+      <div class="dm-brand-shop-heading" id="brand-shop-all"><p class="dm-brand-eyebrow">The complete collection</p><h2>{{ shop_heading }}</h2><p>{{ collection.products_count }} {% if collection.products_count == 1 %}product{% else %}products{% endif %}</p></div>
+    {% endunless %}
   </div>
 {% endif %}
 
